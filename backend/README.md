@@ -63,30 +63,3 @@ LangGraph Legal Assistant is an AI-powered tool designed to assist with legal qu
 ## Usage
 
 After installation, you can start the application with the following command:
-
-```bash
-python data_retriever.py
-```
-
-Once running, the LangGraph Legal Assistant provides an interface where users can input legal queries related to Pakistani law. Depending on the query type, it will retrieve relevant documents, generate answers, or route the question for a web search. The application also includes hallucination detection to ensure that all generated answers are grounded in authoritative legal sources.
-
-## Configuration
-
-To configure the application, update the configuration file located at:
-
-`.env`
-
-In this file, you can set parameters such as:
-
-- Vector store settings
-- API keys for external legal resources
-
-## Contributors
-
-- [Nouman-Usman](https://github.com/Nouman-Usman) – Lead Developer
-- [Contributor 2](https://github.com/contributor-2) – Collaborator
-- [Contributor 3](https://github.com/contributor-3) – Research Specialist
-
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
