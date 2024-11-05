@@ -1,0 +1,9 @@
+langchain
+langchain_huggingface
+langchain_pinecone
+langchain_groq
+langchain_community
+langgraph
+pinecone-client
+transformers
+python-dotenv
