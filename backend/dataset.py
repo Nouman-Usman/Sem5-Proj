@@ -2,7 +2,12 @@ import pandas as pd
 import random
 
 # Define lawyer specialties
-specialties = ["Tax", "Corporate", "Criminal", "Family", "Civil", "Immigration", "Intellectual Property", "Real Estate", "Bankruptcy", "Employment"]
+specialties = [
+    "Civil", "Criminal", "Corporate", "Constitutional", "Tax", "Family", 
+    "Intellectual Property", "Labor and Employment", "Immigration", 
+    "Human Rights", "Environmental", "Banking and Finance", "Cyber Law", 
+    "Alternate Dispute Resolution (ADR)"
+]
 
 # Dummy locations
 locations = ["Lahore", "Karachi", "Islamabad", "Peshawar", "Quetta"]
@@ -17,7 +22,7 @@ def generate_rating():
 
 # Generate random experience (in years)
 def generate_experience():
-    return random.randint(1, 40)
+    return random.randint(1, 20)
 
 # Generate random lawyer names by combining first and last names
 def generate_lawyer_name():

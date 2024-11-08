@@ -17,7 +17,7 @@ import json
 from transformers import pipeline
 import csv
 from dotenv import load_dotenv
-
+import recommend_lawyer
 load_dotenv()
 
 
@@ -74,20 +74,20 @@ class RAGAgent:
         print("---SENTIMENT ANALYSIS---")
         prompt = f"""
         Analyze the sentiment of the following text and categorize it into one of the following categories:
-        1. Civil Lawyers
-2. Criminal Lawyers
-3. Corporate Lawyers
-4. Constitutional Lawyers
-5. Tax Lawyers
-6. Family Lawyers
-7. Intellectual Property Lawyers
-8. Labor and Employment Lawyers
-9. Immigration Lawyers
-10. Human Rights Lawyers
-11. Environmental Lawyers
-12. Banking and Finance Lawyers
-13. Cyber Law Lawyers
-14. Alternate Dispute Resolution (ADR) Lawyers
+        1. Civil 
+2. Criminal 
+3. Corporate
+4. Constitutional
+5. Tax 
+6. Family
+7. Intellectual Property
+8. Labor and Employment 
+9. Immigration 
+10. Human Rights
+11. Environmental
+12. Banking and Finance
+13. Cyber Law 
+14. Alternate Dispute Resolution (ADR)
 
 Please return only the category name that best fits the text: "{question}"
 """
@@ -348,14 +348,18 @@ Please return only the category name that best fits the text: "{question}"
     def run(self, question: str):
         # Perform sentiment analysis on the question
         sentiment = self.analyze_sentiment(question)
-        print(sentiment)
-        # breakpoint()
+        print(f"Sentiment: {sentiment}")
+        
+        # Recommend a lawyer based on the sentiment category
+        recommendation = recommend_lawyer.recommend_lawyer(sentiment)
+        print(recommendation)
+        breakpoint()
+        # Continue with the existing workflow
         app = self.build_workflow()
         inputs = {"question": question}
         for output in app.stream(inputs):
             for key, value in output.items():
                 pprint(f"Finished running: {key}:")
-        # pprint(value["generation"])
         return value["generation"]
 
 
