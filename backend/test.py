@@ -140,6 +140,7 @@ Please return only the category name that best fits the text: "{question}"
         print("---ANSWERING QUESTION---")
         sentiment = self.analyze_sentiment(question)
         print(f"Sentiment: {sentiment}")
+
         lawyer_recommendation = self._recommend_lawyer(sentiment)
         print(f"Lawyer Recommendation: {lawyer_recommendation}")
 
@@ -245,6 +246,33 @@ Please return only the category name that best fits the text: "{question}"
             self.question_router_prompt | self.llm | JsonOutputParser()
         )
 
+    def is_legal_query(self, question: str) -> bool:
+        """Check if the query is law-related."""
+        prompt = """Determine if the following question is related to law, legal matters, or legal proceedings. 
+        Respond with only 'yes' or 'no'.
+        
+        Question: {question}
+        """
+        response = self.llm.invoke(prompt.format(question=question))
+        return response.content.strip().lower() == 'yes'
+
+    def route_question(self, state: Dict) -> str:
+        print("---ROUTE QUESTION---")
+        question = state["question"]
+        
+        # First check if it's a legal query
+        if not self.is_legal_query(question):
+            print("---NON-LEGAL QUERY DETECTED---")
+            return "end"  # Will end the workflow
+            
+        source = self.question_router.invoke({"question": question})
+        if source["datasource"] == "web_search":
+            print("---ROUTE QUESTION TO WEB SEARCH---")
+            return "websearch"
+        elif source["datasource"] == "vectorstore":
+            print("---ROUTE QUESTION TO RAG---")
+            return "vectorstore"
+
     def retrieve(self, state: Dict) -> Dict:
         print("---RETRIEVE---")
         question = state["question"]
@@ -258,8 +286,6 @@ Please return only the category name that best fits the text: "{question}"
         
         # Debug print for documents and metadata
         print("Documents received:", len(documents))
-        for doc in documents:
-            print("Document metadata:", doc.metadata if hasattr(doc, 'metadata') else "No metadata")
         
         # Get chat history from memory with proper input
         memory_vars = self.memory.load_memory_variables({"input": question})
@@ -269,11 +295,21 @@ Please return only the category name that best fits the text: "{question}"
             history_str = "\n".join([f"Human: {h.content}" if h.type == "human" else f"Assistant: {h.content}" 
                                    for h in history])
         
-        # Rest of your existing generate prompt code...
-        # ...existing code...
+        # Update generation prompt to include history
+        self.generate_prompt = PromptTemplate(
+            template="""<|begin_of_text|><|start_header_id|>system<|end_header_id|> You are a legal assistant for question-answering tasks in the context of Pakistani law. Use the following pieces of retrieved legal information to answer the query. Consider the chat history for context. If you are unsure about the answer, simply state that. Provide well structured answers.
+            
+            Previous conversation:
+            {chat_history}
+            
+            Current Question: {question} 
+            Context: {context} 
+            Answer: <|eot_id|><|start_header_id|>assistant<|end_header_id|>""",
+            input_variables=["question", "context", "chat_history"],
+        )
         
         generation = self.rag_chain.invoke({
-            "context": [doc.page_content for doc in documents], 
+            "context": [doc.page_content for doc in documents],
             "question": question,
             "chat_history": history_str
         })
@@ -284,29 +320,34 @@ Please return only the category name that best fits the text: "{question}"
             {"output": generation}
         )
         
-        # Extract metadata and create references
+        # Collect all references
+        references = []
+        
+        # Get Pinecone document references
         try:
-            metadata_files = []
-            for doc in documents:
-                if hasattr(doc, 'metadata') and 'file_name' in doc.metadata:
-                    metadata_files.append(doc.metadata['file_name'])
-            
-            if metadata_files:
-                print("Found metadata files:", metadata_files)
-                filtered_metadata = blob.get_blob_urls(metadata_files)
+            pinecone_files = [doc.metadata['file_name'] for doc in documents 
+                            if hasattr(doc, 'metadata') and 'file_name' in doc.metadata]
+            if pinecone_files:
+                filtered_metadata = blob.get_blob_urls(pinecone_files)
                 if filtered_metadata:
-                    final_answer = f"{generation}\nReferences:\n" + "\n".join(filtered_metadata)
-                else:
-                    final_answer = generation
-            else:
-                print("No metadata files found in documents")
-                final_answer = generation
-                
+                    references.extend([f"Document: {url}" for url in filtered_metadata])
         except Exception as e:
-            print(f"Error processing metadata: {e}")
+            print(f"Error processing Pinecone metadata: {e}")
+        
+        # Get web search references
+        web_references = [f"Web: {doc.metadata['source']}" for doc in documents 
+                        if hasattr(doc, 'metadata') and doc.metadata.get('is_web')]
+        if web_references:
+            references.extend(web_references)
+        
+        # Add references to the final answer
+        if references:
+            final_answer = f"{generation}\n\nReferences:\n" + "\n".join(references)
+        else:
             final_answer = generation
             
         print("Final answer with references:", final_answer)
+        
         return {
             "documents": documents,
             "question": question,
@@ -343,7 +384,6 @@ Please return only the category name that best fits the text: "{question}"
         print("---WEB SEARCH---")
         question = state["question"]
         documents = state.get("documents", [])
-        # metadata = state.get("metadata", [])
         docs = self.web_search_tool.invoke({"query": question})
 
         if isinstance(docs, str) and docs.strip():
@@ -353,28 +393,25 @@ Please return only the category name that best fits the text: "{question}"
                 print("Failed to decode JSON from docs")
                 docs = []
 
-        web_results = "\n".join([d["content"] for d in docs])
-        web_results = Document(page_content=web_results)
+        # Create documents with metadata including URLs
+        web_documents = []
+        for d in docs:
+            web_doc = Document(
+                page_content=d["content"],
+                metadata={
+                    "source": d.get("url", "No URL available"),
+                    "title": d.get("title", "No title available"),
+                    "is_web": True
+                }
+            )
+            web_documents.append(web_doc)
 
         if documents is not None:
-            documents.append(web_results)
-            # metadata.append({})
+            documents.extend(web_documents)
         else:
-            documents = [web_results]
-            # metadata = [{}]
+            documents = web_documents
 
         return {"documents": documents, "question": question}
-
-    def route_question(self, state: Dict) -> str:
-        print("---ROUTE QUESTION---")
-        question = state["question"]
-        source = self.question_router.invoke({"question": question})
-        if source["datasource"] == "web_search":
-            print("---ROUTE QUESTION TO WEB SEARCH---")
-            return "websearch"
-        elif source["datasource"] == "vectorstore":
-            print("---ROUTE QUESTION TO RAG---")
-            return "vectorstore"
 
     def decide_to_generate(self, state: Dict) -> str:
         print("---ASSESS GRADED DOCUMENTS---")
@@ -423,11 +460,13 @@ Please return only the category name that best fits the text: "{question}"
         workflow.add_node("retrieve", self.retrieve)
         workflow.add_node("grade_documents", self.grade_documents)
         workflow.add_node("generate", self.generate)
+        workflow.add_node("end", lambda x: {"question": x["question"], "generation": "I'm not able to answer this question as I only handle legal queries.", "documents": []})
         workflow.set_conditional_entry_point(
             self.route_question,
             {
                 "websearch": "websearch",
                 "vectorstore": "retrieve",
+                "end": "end"  # Add end route for non-legal queries
             },
         )
         workflow.add_edge("retrieve", "grade_documents")
@@ -452,32 +491,25 @@ Please return only the category name that best fits the text: "{question}"
         return workflow.compile()
 
     def run(self, question: str):
-        # Perform sentiment analysis on the question
-        sentiment = self.analyze_sentiment(question)
-        print(f"Sentiment: {sentiment}")
+        # Check if it's a legal query first
+        if not self.is_legal_query(question):
+            print("I'm not able to answer this question as I only handle legal queries.")
+            return "I'm not able to answer this question as I only handle legal queries."
         
-        # Recommend a lawyer based on the sentiment category
-        recommendation = recommend_lawyer.recommend_lawyer(sentiment)
-        print(recommendation)
-        # breakpoint()
-        # Continue with the existing workflow
+        # Continue with existing workflow for legal queries
         app = self.build_workflow()
         inputs = {"question": question}
         last_output = None
         for output in app.stream(inputs):
             for key, value in output.items():
                 pprint(f"Finished running: {key}:")
-                # print("Output:")
-                # pprint(value)
                 last_output = value
-        pprint(last_output["generation"])    
-        # return last_output["generation"]
-
+        pprint(last_output["generation"])
 
 if __name__ == "__main__":
     agent = RAGAgent()
-agent.run("Which types of proceedings are excluded from the application of this Act as per Section 3?")
-print("Now In Context")
-agent.run("Explain In detail")  # This will now understand the context of the previous question
-    # while True:
-    #     agent.run(input("What is your legal query: "))
+    # agent.run("Which types of proceedings are excluded from the application of this Act as per Section 3?")
+    # print("Now In Context")
+    # agent.run("Explain In detail")  # This will now understand the context of the previous question
+    while True:
+        agent.run(input("What is your legal query: "))
