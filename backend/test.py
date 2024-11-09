@@ -18,8 +18,40 @@ from transformers import pipeline
 import csv
 from dotenv import load_dotenv
 import recommend_lawyer
-from langchain.memory import ConversationBufferMemory
+from langchain.memory import ConversationBufferMemory, VectorStoreRetrieverMemory
+from langchain_core.vectorstores import VectorStoreRetriever
 load_dotenv()
+
+
+class CombinedMemory:
+    def __init__(self, vectorstore: PineconeVectorStore):
+        self.buffer_memory = ConversationBufferMemory(
+            memory_key="chat_history",
+            input_key="input",
+            return_messages=True
+        )
+        self.vector_memory = VectorStoreRetrieverMemory(
+            retriever=vectorstore.as_retriever(search_kwargs={"k": 5}),
+            memory_key="relevant_history",
+            input_key="input"
+        )
+
+    def save_context(self, inputs, outputs):
+        # Ensure inputs has the required key
+        if "input" not in inputs and len(inputs) > 0:
+            # Use the first available key as input if "input" is not present
+            first_key = next(iter(inputs))
+            inputs = {"input": inputs[first_key]}
+        self.buffer_memory.save_context(inputs, outputs)
+        self.vector_memory.save_context(inputs, outputs)
+
+    def load_memory_variables(self, inputs):
+        # Ensure inputs has the required key
+        if not inputs:
+            inputs = {"input": ""}
+        buffer_vars = self.buffer_memory.load_memory_variables(inputs)
+        vector_vars = self.vector_memory.load_memory_variables(inputs)
+        return {**buffer_vars, **vector_vars}
 
 
 class GraphState(TypedDict):
@@ -44,13 +76,16 @@ class RAGAgent:
         self.vectorstore = None
         self.retriever = None
         self.web_search_tool = TavilySearchResults(k=3)
-        self._initialize_vectorstore()
+        self._initialize_vectorstore()  # This will now properly initialize memory
         self._initialize_prompts()
-        self.memory = ConversationBufferMemory(
-            memory_key="chat_history",
-            return_messages=True
-        )
-        # self.sentiment_analyzer = pipeline("text-classification", model="Shreyagg2202/Bert-Custom-Sentiment-Analysis")
+
+    def _initialize_vectorstore(self):
+        embeddings = HuggingFaceEmbeddings(model_name="intfloat/multilingual-e5-large")
+        self.vectorstore = PineconeVectorStore(index=self.index, embedding=embeddings)
+        self.retriever = self.vectorstore.as_retriever()
+        # Initialize memory after vectorstore is created
+        self.memory = CombinedMemory(self.vectorstore)
+        print("Vectorstore initialized and memory created.")
 
     def _load_lawyers(self):
         with open("lawyers.csv", mode="r") as file:
@@ -98,25 +133,49 @@ Please return only the category name that best fits the text: "{question}"
 """
         sentiment_result = self.llm.invoke(prompt)
         sentiment = sentiment_result.content.strip()
-        return sentiment        
+        print(f"Sentiment: {sentiment}")
+        return sentiment
 
-    def _initialize_vectorstore(self):
-        # urls = [
-        #     "https://lilianweng.github.io/posts/2023-06-23-agent/",
-        #     "https://lilianweng.github.io/posts/2023-03-15-prompt-engineering/",
-        #     "https://lilianweng.github.io/posts/2023-10-25-adv-attack-llm/",
-        # ]
-        # docs = [WebBaseLoader(url).load() for url in urls]
-        # docs_list = [item for sublist in docs for item in sublist]
-        # text_splitter = RecursiveCharacterTextSplitter.from_tiktoken_encoder(
-        #     chunk_size=250, chunk_overlap=0
-        # )
-        # doc_splits = text_splitter.split_documents(docs_list)
-        embeddings = HuggingFaceEmbeddings(model_name="intfloat/multilingual-e5-large")
-        self.vectorstore = PineconeVectorStore(index=self.index, embedding=embeddings)
-        # self.vectorstore.add_documents(doc_splits)
-        self.retriever = self.vectorstore.as_retriever()
-        print("Vectorstore initialized and documents added.")
+    def answer_question(self, question: str) -> str:
+        print("---ANSWERING QUESTION---")
+        sentiment = self.analyze_sentiment(question)
+        print(f"Sentiment: {sentiment}")
+        lawyer_recommendation = self._recommend_lawyer(sentiment)
+        print(f"Lawyer Recommendation: {lawyer_recommendation}")
+
+        # Retrieve relevant documents
+        relevant_docs = self.retriever.get_relevant_documents(question)
+        print(f"Number of relevant documents: {len(relevant_docs)}")
+
+        # Perform web search
+        web_search_results = self.web_search_tool.run(question)
+        print(f"Web search results: {web_search_results}")
+
+        # Load memory variables
+        memory_variables = self.memory.load_memory_variables({"input": question})
+        chat_history = memory_variables.get("chat_history", [])
+        relevant_history = memory_variables.get("relevant_history", "")
+
+        # Combine all information
+        context = "\n".join([doc.page_content for doc in relevant_docs])
+        web_context = "\n".join([result['content'] for result in web_search_results])
+
+        # Generate answer
+        prompt = self.qa_prompt.format(
+            question=question,
+            context=context,
+            web_context=web_context,
+            lawyer_recommendation=lawyer_recommendation,
+            chat_history=chat_history,
+            relevant_history=relevant_history
+        )
+        response = self.llm.invoke(prompt)
+        print(f"Generated response: {response.content}")
+
+        # Save context
+        self.memory.save_context({"input": question}, {"output": response.content})
+
+        return response.content
 
     def _initialize_prompts(self):
         self.retrieval_grader_prompt = PromptTemplate(
@@ -197,30 +256,24 @@ Please return only the category name that best fits the text: "{question}"
         question = state["question"]
         documents = state["documents"]
         
-        # Get chat history from memory
-        chat_history = self.memory.load_memory_variables({})
+        # Debug print for documents and metadata
+        print("Documents received:", len(documents))
+        for doc in documents:
+            print("Document metadata:", doc.metadata if hasattr(doc, 'metadata') else "No metadata")
+        
+        # Get chat history from memory with proper input
+        memory_vars = self.memory.load_memory_variables({"input": question})
         history_str = ""
-        if "chat_history" in chat_history:
-            history = chat_history["chat_history"]
+        if "chat_history" in memory_vars:
+            history = memory_vars["chat_history"]
             history_str = "\n".join([f"Human: {h.content}" if h.type == "human" else f"Assistant: {h.content}" 
                                    for h in history])
         
-        # Update generation prompt to include history
-        self.generate_prompt = PromptTemplate(
-            template="""<|begin_of_text|><|start_header_id|>system<|end_header_id|> You are a legal assistant for question-answering tasks in the context of Pakistani law. Use the following pieces of retrieved legal information to answer the query. Consider the chat history for context. If you are unsure about the answer, simply state that. Provide well structured answers.
-            
-            Previous conversation:
-            {chat_history}
-            
-            Current Question: {question} 
-            Context: {context} 
-            Answer: <|eot_id|><|start_header_id|>assistant<|end_header_id|>""",
-            input_variables=["question", "context", "chat_history"],
-        )
-        self.rag_chain = self.generate_prompt | self.llm | StrOutputParser()
+        # Rest of your existing generate prompt code...
+        # ...existing code...
         
         generation = self.rag_chain.invoke({
-            "context": documents, 
+            "context": [doc.page_content for doc in documents], 
             "question": question,
             "chat_history": history_str
         })
@@ -231,11 +284,29 @@ Please return only the category name that best fits the text: "{question}"
             {"output": generation}
         )
         
-        if(filtered_metadata := blob.get_blob_urls([doc.metadata['file_name'] for doc in documents if 'file_name' in doc.metadata])):
-            final_answer = f"{generation} \n Reference: {', '.join(filtered_metadata)}"
-        else:
+        # Extract metadata and create references
+        try:
+            metadata_files = []
+            for doc in documents:
+                if hasattr(doc, 'metadata') and 'file_name' in doc.metadata:
+                    metadata_files.append(doc.metadata['file_name'])
+            
+            if metadata_files:
+                print("Found metadata files:", metadata_files)
+                filtered_metadata = blob.get_blob_urls(metadata_files)
+                if filtered_metadata:
+                    final_answer = f"{generation}\nReferences:\n" + "\n".join(filtered_metadata)
+                else:
+                    final_answer = generation
+            else:
+                print("No metadata files found in documents")
+                final_answer = generation
+                
+        except Exception as e:
+            print(f"Error processing metadata: {e}")
             final_answer = generation
             
+        print("Final answer with references:", final_answer)
         return {
             "documents": documents,
             "question": question,
@@ -396,17 +467,17 @@ Please return only the category name that best fits the text: "{question}"
         for output in app.stream(inputs):
             for key, value in output.items():
                 pprint(f"Finished running: {key}:")
-                print("Output:")
-                pprint(value)
+                # print("Output:")
+                # pprint(value)
                 last_output = value
-        
-        return last_output["generation"]
+        pprint(last_output["generation"])    
+        # return last_output["generation"]
 
 
 if __name__ == "__main__":
     agent = RAGAgent()
-agent.run("Hi I'm Nouman")
+agent.run("Which types of proceedings are excluded from the application of this Act as per Section 3?")
 print("Now In Context")
-agent.run("What is my name?")  # This will now understand the context of the previous question
+agent.run("Explain In detail")  # This will now understand the context of the previous question
     # while True:
     #     agent.run(input("What is your legal query: "))

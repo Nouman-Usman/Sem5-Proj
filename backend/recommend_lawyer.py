@@ -1,4 +1,12 @@
 import csv
+import random
+
+def calculate_weight(rating, experience):
+    # Normalize ratings (assuming 5 is max) and experience (assuming 40 years is max)
+    normalized_rating = float(rating) / 5
+    normalized_exp = float(experience) / 20
+    # Combined weight with 60% emphasis on rating and 40% on experience
+    return (0.6 * normalized_rating + 0.4 * normalized_exp)
 
 def recommend_lawyer(category):
     lawyers = []
@@ -14,9 +22,13 @@ def recommend_lawyer(category):
     if not relevant_lawyers:
         return "No lawyer found for this specialty."
     
-    best_lawyer = max(relevant_lawyers, key=lambda l: float(l["Ratings"]))
+    # Calculate weights for each relevant lawyer
+    weights = [calculate_weight(lawyer["Ratings"], lawyer["Experience (Years)"]) 
+              for lawyer in relevant_lawyers]
+    selected_lawyer = random.choices(relevant_lawyers, weights=weights, k=2)[0]
+    
     return (
-        f"Recommended lawyer: {best_lawyer['Lawyer Name']}, Specialty: {best_lawyer['Type (Specialty)']}, "
-        f"Experience: {best_lawyer['Experience (Years)']} years, Ratings: {best_lawyer['Ratings']}/5, "
-        f"Location: {best_lawyer['Location']}."
+        f"Recommended lawyer: {selected_lawyer['Lawyer Name']}, Specialty: {selected_lawyer['Type (Specialty)']}, "
+        f"Experience: {selected_lawyer['Experience (Years)']} years, Ratings: {selected_lawyer['Ratings']}/5, "
+        f"Location: {selected_lawyer['Location']}."
     )
