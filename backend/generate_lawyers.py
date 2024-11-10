@@ -1,3 +1,4 @@
+
 from faker import Faker
 import random
 import csv
@@ -5,10 +6,9 @@ import csv
 fake = Faker()
 
 specializations = [
-    "Civil", "Criminal", "Corporate", "Constitutional", "Tax",
-    "Family", "Intellectual Property", "Labor and Employment", "Immigration",
-    "Human Rights", "Environmental", "Banking and Finance", "Cyber Law",
-    "Alternate Dispute Resolution (ADR)"
+    "Family Law", "Corporate Law", "Criminal Law", "Constitutional Law", "Tax Law",
+    "Civil Law", "Property Law", "Immigration Law", "Labor Law", "Intellectual Property Law",
+    "Environmental Law", "Human Rights Law", "Banking Law", "Maritime Law", "Media Law"
 ]
 
 locations = ["Islamabad", "Lahore", "Karachi", "Peshawar", "Quetta", "Multan", 

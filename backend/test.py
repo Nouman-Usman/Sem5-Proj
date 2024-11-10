@@ -36,14 +36,33 @@ class CombinedMemory:
             input_key="input"
         )
 
+    def _truncate_text(self, text: str, max_bytes: int = 40000) -> str:
+        """Truncate text to stay within byte limit."""
+        encoded = text.encode('utf-8')
+        if len(encoded) <= max_bytes:
+            return text
+        return encoded[:max_bytes].decode('utf-8', errors='ignore')
+
     def save_context(self, inputs, outputs):
         # Ensure inputs has the required key
         if "input" not in inputs and len(inputs) > 0:
             # Use the first available key as input if "input" is not present
             first_key = next(iter(inputs))
             inputs = {"input": inputs[first_key]}
+        
+        # Save to buffer memory
         self.buffer_memory.save_context(inputs, outputs)
-        self.vector_memory.save_context(inputs, outputs)
+        
+        # Truncate outputs before saving to vector memory
+        if isinstance(outputs, dict):
+            truncated_outputs = {k: self._truncate_text(str(v)) for k, v in outputs.items()}
+        else:
+            truncated_outputs = self._truncate_text(str(outputs))
+        
+        try:
+            self.vector_memory.save_context(inputs, truncated_outputs)
+        except Exception as e:
+            print(f"Warning: Failed to save to vector memory: {e}")
 
     def load_memory_variables(self, inputs):
         # Ensure inputs has the required key
@@ -78,6 +97,7 @@ class RAGAgent:
         self.web_search_tool = TavilySearchResults(k=3)
         self._initialize_vectorstore()  # This will now properly initialize memory
         self._initialize_prompts()
+        self.lawyers = self._load_lawyers()  # Initialize lawyers list
 
     def _initialize_vectorstore(self):
         embeddings = HuggingFaceEmbeddings(model_name="intfloat/multilingual-e5-large")
@@ -88,27 +108,31 @@ class RAGAgent:
         print("Vectorstore initialized and memory created.")
 
     def _load_lawyers(self):
-        with open("lawyers.csv", mode="r") as file:
-            csv_reader = csv.DictReader(file)
-            for row in csv_reader:
-                self.lawyers.append(row)
-        print("Lawyers data loaded successfully.")
+        """Load lawyers from CSV file"""
+        lawyers_data = []
+        try:
+            csv_path = os.path.join(os.path.dirname(__file__), 'lawyers.csv')
+            with open(csv_path, mode='r', encoding='utf-8') as file:
+                csv_reader = csv.DictReader(file)
+                lawyers_data = list(csv_reader)
+                print(f"Successfully loaded {len(lawyers_data)} lawyers from CSV")
+        except Exception as e:
+            print(f"Error loading lawyers CSV: {e}")
+            # Fallback to empty list if CSV loading fails
+            lawyers_data = []
+        return lawyers_data
+    
+    def get_recommended_lawyers(self, question: str) -> list:
+        """Returns recommended lawyers based on question sentiment"""
+        sentiment = self.analyze_sentiment(question)
+        print(f"Sentiment: {sentiment}")
+        print (recommend_lawyer.recommend(sentiment))
+        return recommend_lawyer.recommend(sentiment)
 
-    def _recommend_lawyer(self, specialty):
-        relevant_lawyers = [
-            lawyer
-            for lawyer in self.lawyers
-            if lawyer["Type (Specialty)"].lower() == specialty.lower()
-        ]
-        if not relevant_lawyers:
-            return "No lawyer found for this specialty."
 
-        best_lawyer = max(relevant_lawyers, key=lambda l: float(l["Ratings"]))
-        return (
-            f"Recommended lawyer: {best_lawyer['Lawyer Name']}, Specialty: {best_lawyer['Type (Specialty)']}, "
-            f"Experience: {best_lawyer['Experience (Years)']} years, Ratings: {best_lawyer['Ratings']}/5, "
-            f"Location: {best_lawyer['Location']}."
-        )
+    def _recommend_lawyer(self, sentiment):
+        """Get lawyer recommendations based on sentiment analysis"""
+        return recommend_lawyer.recommend_lawyer(sentiment)
 
     def analyze_sentiment(self, question: str) -> str:
         print("---SENTIMENT ANALYSIS---")
@@ -141,8 +165,9 @@ Please return only the category name that best fits the text: "{question}"
         sentiment = self.analyze_sentiment(question)
         print(f"Sentiment: {sentiment}")
 
-        lawyer_recommendation = self._recommend_lawyer(sentiment)
-        print(f"Lawyer Recommendation: {lawyer_recommendation}")
+        # Get lawyer recommendations
+        lawyer_recommendations = self._recommend_lawyer(sentiment)
+        print(f"Lawyer Recommendations: {lawyer_recommendations}")
 
         # Retrieve relevant documents
         relevant_docs = self.retriever.get_relevant_documents(question)
@@ -162,14 +187,16 @@ Please return only the category name that best fits the text: "{question}"
         web_context = "\n".join([result['content'] for result in web_search_results])
 
         # Generate answer
-        prompt = self.qa_prompt.format(
-            question=question,
-            context=context,
-            web_context=web_context,
-            lawyer_recommendation=lawyer_recommendation,
-            chat_history=chat_history,
-            relevant_history=relevant_history
-        )
+        prompt = f"""Based on the following information, provide a comprehensive answer:
+        Question: {question}
+        Context: {context}
+        Web Context: {web_context}
+        Lawyer Recommendations: {lawyer_recommendations}
+        Chat History: {chat_history}
+        Relevant History: {relevant_history}
+
+        Provide the answer followed by the lawyer recommendations.
+        """
         response = self.llm.invoke(prompt)
         print(f"Generated response: {response.content}")
 
@@ -384,7 +411,32 @@ Please return only the category name that best fits the text: "{question}"
         print("---WEB SEARCH---")
         question = state["question"]
         documents = state.get("documents", [])
-        docs = self.web_search_tool.invoke({"query": question})
+        
+        # Get chat history from memory
+        memory_vars = self.memory.load_memory_variables({"input": question})
+        chat_history = memory_vars.get("chat_history", [])
+        
+        # Create a contextualized search query with Pakistani law focus
+        context_prompt = f"""
+        Given the following chat history and current question, create a focused search query 
+        specifically about Pakistani law and legal system. Always include "Pakistan law" or 
+        "Pakistani legal system" in the query:
+        
+        Chat History:
+        {chat_history}
+        
+        Current Question: {question}
+        
+        Create a search query that specifically focuses on Pakistani law context.
+        Search Query:"""
+        
+        contextualized_query = self.llm.invoke(context_prompt).content.strip()
+        # Ensure Pakistani law context is included
+        if not any(term in contextualized_query.lower() for term in ["pakistan", "pakistani"]):
+            contextualized_query = f"Pakistani law {contextualized_query}"
+        
+        # Perform web search with contextualized query
+        docs = self.web_search_tool.invoke({"query": contextualized_query})
 
         if isinstance(docs, str) and docs.strip():
             try:
@@ -393,18 +445,35 @@ Please return only the category name that best fits the text: "{question}"
                 print("Failed to decode JSON from docs")
                 docs = []
 
-        # Create documents with metadata including URLs
+        # Filter and enhance documents for Pakistani law context
         web_documents = []
         for d in docs:
-            web_doc = Document(
-                page_content=d["content"],
-                metadata={
-                    "source": d.get("url", "No URL available"),
-                    "title": d.get("title", "No title available"),
-                    "is_web": True
-                }
-            )
-            web_documents.append(web_doc)
+            # Verify and enhance content with Pakistani law context
+            context_verification_prompt = f"""
+            Verify if the following content is relevant to Pakistani law. If it is, enhance it with Pakistani legal context.
+            If it's not relevant to Pakistani law, return an empty string.
+            
+            Content: {d['content']}
+            """
+            
+            enhanced_content = self.llm.invoke(context_verification_prompt).content.strip()
+            
+            if enhanced_content and enhanced_content != "":
+                web_doc = Document(
+                    page_content=f"""
+                    Context: This information is about Pakistani law regarding {question}
+                    
+                    {enhanced_content}
+                    """,
+                    metadata={
+                        "source": d.get("url", "No URL available"),
+                        "title": d.get("title", "No title available"),
+                        "is_web": True,
+                        "context_query": contextualized_query,
+                        "jurisdiction": "Pakistan"
+                    }
+                )
+                web_documents.append(web_doc)
 
         if documents is not None:
             documents.extend(web_documents)
@@ -416,7 +485,7 @@ Please return only the category name that best fits the text: "{question}"
     def decide_to_generate(self, state: Dict) -> str:
         print("---ASSESS GRADED DOCUMENTS---")
         web_search = state["web_search"]
-        if web_search == "Yes":
+        if (web_search == "Yes"):
             print(
                 "---DECISION: ALL DOCUMENTS ARE NOT RELEVANT TO QUESTION, INCLUDE WEB SEARCH---"
             )
@@ -505,6 +574,7 @@ Please return only the category name that best fits the text: "{question}"
                 pprint(f"Finished running: {key}:")
                 last_output = value
         pprint(last_output["generation"])
+        return last_output["generation"]
 
 if __name__ == "__main__":
     agent = RAGAgent()
