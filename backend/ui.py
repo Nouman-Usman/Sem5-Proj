@@ -19,7 +19,7 @@ def get_rag_agent():
     return RAGAgent()
 
 # Main UI
-st.title("🤖 Legal Assistant")
+st.title("⚖️ Apna Waqeel")
 st.markdown("""
     Welcome to your AI Legal Assistant! Ask any legal question related to Pakistani law.
 """)
