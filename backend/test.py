@@ -126,7 +126,7 @@ class RAGAgent:
         """Returns recommended lawyers based on question sentiment"""
         sentiment = self.analyze_sentiment(question)
         print(f"Sentiment: {sentiment}")
-        print (recommend_lawyer.recommend(sentiment))
+        # print (recommend_lawyer.recommend(sentiment))
         return recommend_lawyer.recommend(sentiment)
 
 
@@ -311,48 +311,35 @@ Please return only the category name that best fits the text: "{question}"
         question = state["question"]
         documents = state["documents"]
         
-        # Debug print for documents and metadata
-        print("Documents received:", len(documents))
-        
-        # Get chat history from memory with proper input
+        # Get chat history
         memory_vars = self.memory.load_memory_variables({"input": question})
         history_str = ""
         if "chat_history" in memory_vars:
             history = memory_vars["chat_history"]
             history_str = "\n".join([f"Human: {h.content}" if h.type == "human" else f"Assistant: {h.content}" 
-                                   for h in history])
+                                   for h in history[-3:]])  # Only keep last 3 exchanges
         
-        # Update generation prompt to include history
-        self.generate_prompt = PromptTemplate(
-            template="""<|begin_of_text|><|start_header_id|>system<|end_header_id|> You are a legal assistant for question-answering tasks in the context of Pakistani law. Use the following pieces of retrieved legal information to answer the query. Consider the chat history for context. If you are unsure about the answer, simply state that. Provide well structured answers.
-            
-            Previous conversation:
-            {chat_history}
-            
-            Current Question: {question} 
-            Context: {context} 
-            Answer: <|eot_id|><|start_header_id|>assistant<|end_header_id|>""",
-            input_variables=["question", "context", "chat_history"],
-        )
+        # Truncate context
+        context_list = [doc.page_content for doc in documents]
+        truncated_context = self._truncate_context(context_list)
         
+        # Generate response with truncated context
         generation = self.rag_chain.invoke({
-            "context": [doc.page_content for doc in documents],
+            "context": truncated_context,
             "question": question,
             "chat_history": history_str
         })
         
-        # Save the interaction to memory
+        # Save interaction to memory
         self.memory.save_context(
             {"input": question},
             {"output": generation}
         )
         
-        # Collect all references
+        # Collect references
         references = []
-        
-        # Get Pinecone document references
         try:
-            pinecone_files = [doc.metadata['file_name'] for doc in documents 
+            pinecone_files = [doc.metadata['file_name'] for doc in documents[:len(truncated_context)]
                             if hasattr(doc, 'metadata') and 'file_name' in doc.metadata]
             if pinecone_files:
                 filtered_metadata = blob.get_blob_urls(pinecone_files)
@@ -361,25 +348,41 @@ Please return only the category name that best fits the text: "{question}"
         except Exception as e:
             print(f"Error processing Pinecone metadata: {e}")
         
-        # Get web search references
-        web_references = [f"Web: {doc.metadata['source']}" for doc in documents 
+        # Get web search references (limited to used context)
+        web_references = [f"Web: {doc.metadata['source']}" for doc in documents[:len(truncated_context)]
                         if hasattr(doc, 'metadata') and doc.metadata.get('is_web')]
         if web_references:
             references.extend(web_references)
         
-        # Add references to the final answer
+        # Add references to final answer
         if references:
             final_answer = f"{generation}\n\nReferences:\n" + "\n".join(references)
         else:
             final_answer = generation
             
-        print("Final answer with references:", final_answer)
-        
         return {
             "documents": documents,
             "question": question,
             "generation": final_answer,
         }
+
+    def _truncate_context(self, context_list, max_tokens=6000):
+        """Truncate context to fit within token limit"""
+        from transformers import AutoTokenizer
+        tokenizer = AutoTokenizer.from_pretrained("gpt2")  # Using GPT2 tokenizer for estimation
+        
+        total_tokens = 0
+        truncated_context = []
+        
+        for ctx in context_list:
+            tokens = tokenizer.encode(ctx)
+            if total_tokens + len(tokens) > max_tokens:
+                # If adding this context would exceed limit, stop
+                break
+            truncated_context.append(ctx)
+            total_tokens += len(tokens)
+        
+        return truncated_context
 
     def grade_documents(self, state: Dict) -> Dict:
         print("---CHECK DOCUMENT RELEVANCE TO QUESTION---")
