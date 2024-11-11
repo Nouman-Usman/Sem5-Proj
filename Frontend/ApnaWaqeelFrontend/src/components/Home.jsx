@@ -35,3 +35,30 @@ function Home() {
 }
 
 export default Home;
+
+
+// import { useNavigate } from 'react-router-dom';
+// import React, { useEffect, useState } from 'react';
+
+
+// function Home() {
+//   const [htmlContent, setHtmlContent] = useState('');
+
+//   useEffect(() => {
+//     // Fetch the HTML file from the public folder
+//     fetch('/landing/index.html')
+//       .then((response) => response.text())
+//       .then((data) => setHtmlContent(data))
+//       .catch((error) => console.error('Error loading HTML file:', error));
+//   }, []);
+
+//   return (
+//     <div>
+//       {/* Display the raw HTML content using dangerouslySetInnerHTML */}
+//       <div dangerouslySetInnerHTML={{ __html: htmlContent }} />
+//     </div>
+//   );
+// };
+
+
+// export default Home;
