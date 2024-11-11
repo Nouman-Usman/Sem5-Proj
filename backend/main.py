@@ -1,5 +1,6 @@
 import os
 from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langgraph.checkpoint.memory import MemorySaver
 # from langchain_community.document_loaders import WebBaseLoader
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_pinecone import PineconeVectorStore
@@ -18,7 +19,10 @@ from transformers import pipeline
 import csv
 from dotenv import load_dotenv
 import recommend_lawyer
-from langchain.memory import ConversationBufferMemory
+import gc  # Add at top with other imports
+from history import AzureTableChatMessageHistory
+from langchain.schema import HumanMessage, AIMessage
+from chat_summary_storage import AzureChatSummaryStorage
 load_dotenv()
 
 
@@ -27,13 +31,14 @@ class GraphState(TypedDict):
     generation: str
     web_search: str
     documents: List[Document]
+    session_id: str  # Add session_id to state schema
 
 
 class RAGAgent:
     def __init__(self):
         load_dotenv()
         self.api_key = os.getenv("PINECONE_API")
-        self.legal_index_name = "apna-waqeel"
+        self.legal_index_name = "apna-waqeel2"
         self.web_search_index_name = "web-search-legal"
         self.pc = Pinecone(api_key=self.api_key)
         self.index = self.pc.Index(self.legal_index_name)
@@ -46,11 +51,68 @@ class RAGAgent:
         self.web_search_tool = TavilySearchResults(k=3)
         self._initialize_vectorstore()
         self._initialize_prompts()
-        self.memory = ConversationBufferMemory(
-            memory_key="chat_history",
-            return_messages=True
+        self.connection_string = os.getenv("BLOB_CONN_STRING")
+        self.summary_storage = AzureChatSummaryStorage(self.connection_string)
+        self._initialize_summary_prompt()
+        gc.collect()
+        self.chat_summaries = {}
+        self._initialize_summary_prompt()
+
+    def _initialize_summary_prompt(self):
+        self.summary_prompt = PromptTemplate(
+            template="""<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+            Summarize the key points of this conversation in a concise way. Focus only on the most important information 
+            that would be relevant for future context. Keep the summary under 100 words.
+            
+            Previous summary: {prev_summary}
+            New messages:
+            {new_messages}
+            
+            Provide an updated summary that incorporates the new information with the previous summary.
+            <|eot_id|><|start_header_id|>assistant<|end_header_id|>""",
+            input_variables=["prev_summary", "new_messages"]
         )
-        # self.sentiment_analyzer = pipeline("text-classification", model="Shreyagg2202/Bert-Custom-Sentiment-Analysis")
+        self.summarize_chain = self.summary_prompt | self.llm | StrOutputParser()
+
+    def get_chat_history(self, session_id):
+        if session_id:
+            summary_data = self.summary_storage.get_summary(session_id)
+            if summary_data["expired"]:
+                print("Previous summary expired, starting fresh context")
+            return summary_data["summary"]
+        return ""
+
+    def update_chat_summary(self, session_id: str, new_messages: List[dict]) -> str:
+        prev_summary_data = self.summary_storage.get_summary(session_id)
+        prev_summary = prev_summary_data["summary"]
+        access_count = prev_summary_data["access_count"]
+        
+        formatted_messages = "\n".join([
+            f"Human: {msg['content']}" if msg['type'] == 'human' 
+            else f"Assistant: {msg['content']}" 
+            for msg in new_messages
+        ])
+        
+        # If frequently accessed, include more context from previous summary
+        if access_count > 5:
+            updated_summary = self.summarize_chain.invoke({
+                "prev_summary": prev_summary,
+                "new_messages": formatted_messages,
+                "instruction": "This is a frequently accessed conversation, maintain more detail in the summary."
+            })
+        else:
+            updated_summary = self.summarize_chain.invoke({
+                "prev_summary": prev_summary,
+                "new_messages": formatted_messages
+            })
+        
+        # Save with merge if not expired
+        self.summary_storage.save_summary(
+            session_id, 
+            updated_summary, 
+            merge=not prev_summary_data["expired"]
+        )
+        return updated_summary
 
     def _load_lawyers(self):
         with open("lawyers.csv", mode="r") as file:
@@ -80,19 +142,19 @@ class RAGAgent:
         prompt = f"""
         Analyze the sentiment of the following text and categorize it into one of the following categories:
         1. Civil 
-2. Criminal 
-3. Corporate
-4. Constitutional
-5. Tax 
-6. Family
-7. Intellectual Property
-8. Labor and Employment 
-9. Immigration 
-10. Human Rights
-11. Environmental
-12. Banking and Finance
-13. Cyber Law 
-14. Alternate Dispute Resolution (ADR)
+        2. Criminal 
+        3. Corporate
+        4. Constitutional
+        5. Tax 
+        6. Family
+        7. Intellectual Property
+        8. Labor and Employment 
+        9. Immigration 
+        10. Human Rights
+        11. Environmental
+        12. Banking and Finance
+        13. Cyber Law 
+        14. Alternate Dispute Resolution (ADR)
 
 Please return only the category name that best fits the text: "{question}"
 """
@@ -174,67 +236,84 @@ Please return only the category name that best fits the text: "{question}"
         self.answer_grader = self.answer_grader_prompt | self.llm | JsonOutputParser()
 
         self.question_router_prompt = PromptTemplate(
-            template="""<|begin_of_text|><|start_header_id|>system<|end_header_id|> You are an expert at routing a 
-            user question to a vectorstore or web search. Use the vectorstore for questions on LLM  agents, 
-            prompt engineering, and adversarial attacks. You do not need to be stringent with the keywords 
-            in the question related to these topics. Otherwise, use web-search. Give a binary choice 'web_search' 
-            or 'vectorstore' based on the question. Return the a JSON with a single key 'datasource' and 
-            no premable or explaination. Question to route: {question} <|eot_id|><|start_header_id|>assistant<|end_header_id|>""",
-            input_variables=["question"],
+        template="""<|begin_of_text|><|start_header_id|>system<|end_header_id|> You are an expert legal assistant specializing in routing user questions to a legal document repository or a web search. Use the legal document repository (vectorstore) for questions about case law, legal statutes, contracts, or legal research topics. Focus on legal terminology, even if the keywords are broadly related to legal topics. Otherwise, use web-search for general or factual inquiries. Provide a binary choice 'web_search' or 'vectorstore' based on the question. Return a JSON with a single key 'datasource' and no preamble or explanation. Question to route: {question} <|eot_id|><|start_header_id|>assistant<|end_header_id|>""",
+        input_variables=["question"],
         )
         self.question_router = (
             self.question_router_prompt | self.llm | JsonOutputParser()
         )
 
-    def retrieve(self, state: Dict) -> Dict:
-        print("---RETRIEVE---")
-        question = state["question"]
-        documents = self.retriever.invoke(question)
-        return {"documents": documents, "question": question}
+    def get_chat_history(self, session_id):
+        if session_id:
+            return self.summary_storage.get_summary(session_id)
+        return ""
+
+    def clear_session_memory(self, session_id: str):
+        self.summary_storage.delete_summary(session_id)
 
     def generate(self, state: Dict) -> Dict:
         print("---GENERATE---")
         question = state["question"]
         documents = state["documents"]
+        session_id = state.get("session_id")
         
-        # Get chat history from memory
-        chat_history = self.memory.load_memory_variables({})
-        history_str = ""
-        if "chat_history" in chat_history:
-            history = chat_history["chat_history"]
-            history_str = "\n".join([f"Human: {h.content}" if h.type == "human" else f"Assistant: {h.content}" 
-                                   for h in history])
+        session_id = state.get("session_id")
         
-        # Update generation prompt to include history
-        self.generate_prompt = PromptTemplate(
-            template="""<|begin_of_text|><|start_header_id|>system<|end_header_id|> You are a legal assistant for question-answering tasks in the context of Pakistani law. Use the following pieces of retrieved legal information to answer the query. Consider the chat history for context. If you are unsure about the answer, simply state that. Provide well structured answers.
-            
-            Previous conversation:
-            {chat_history}
-            
-            Current Question: {question} 
-            Context: {context} 
-            Answer: <|eot_id|><|start_header_id|>assistant<|end_header_id|>""",
-            input_variables=["question", "context", "chat_history"],
+        chat_history = self.get_chat_history(session_id)
+        
+        context = f"Previous conversation:\n{chat_history}\n\nRelevant documents:\n" + "\n".join(
+            [doc.page_content for doc in documents]
         )
-        self.rag_chain = self.generate_prompt | self.llm | StrOutputParser()
+        
+        gc.collect()
         
         generation = self.rag_chain.invoke({
-            "context": documents, 
+            "context": context, 
             "question": question,
-            "chat_history": history_str
         })
-        
-        # Save the interaction to memory
-        self.memory.save_context(
-            {"input": question},
-            {"output": generation}
-        )
         
         if(filtered_metadata := blob.get_blob_urls([doc.metadata['file_name'] for doc in documents if 'file_name' in doc.metadata])):
             final_answer = f"{generation} \n Reference: {', '.join(filtered_metadata)}"
         else:
             final_answer = generation
+            
+        del generation
+        gc.collect()
+            
+        return {
+            "documents": documents,
+            "question": question,
+            "generation": final_answer,
+            "session_id": session_id
+        }
+
+    def retrieve(self, state: Dict) -> Dict:
+        print("---RETRIEVE---")
+        question = state["question"]
+        session_id = state.get("session_id")
+        documents = self.retriever.invoke(question)
+        documents = documents[:5] if len(documents) > 5 else documents
+        gc.collect()
+        return {"documents": documents, "question": question, "session_id": session_id}
+
+    def generate(self, state: Dict) -> Dict:
+        print("---GENERATE---")
+        question = state["question"]
+        documents = state["documents"]
+        gc.collect()
+        
+        generation = self.rag_chain.invoke({
+            "context": documents, 
+            "question": question,
+        })
+        
+        # if(filtered_metadata := blob.get_blob_urls([doc.metadata['file_name'] for doc in documents if 'file_name' in doc.metadata])):
+        #     final_answer = f"{generation} \n Reference: {', '.join(filtered_metadata)}"
+        # else:
+        #     final_answer = generation
+        final_answer = generation    
+        del generation
+        gc.collect()
             
         return {
             "documents": documents,
@@ -246,6 +325,7 @@ Please return only the category name that best fits the text: "{question}"
         print("---CHECK DOCUMENT RELEVANCE TO QUESTION---")
         question = state["question"]
         documents = state["documents"]
+        session_id = state.get("session_id")
         filtered_docs = []
         web_search = "No"
         for d in (documents):
@@ -263,36 +343,27 @@ Please return only the category name that best fits the text: "{question}"
                 continue
         return {
             "documents": filtered_docs,
-            # "metadata": filtered_metadata,
             "question": question,
             "web_search": web_search,
+            "session_id": session_id
         }
 
     def web_search(self, state: Dict) -> Dict:
         print("---WEB SEARCH---")
         question = state["question"]
+        session_id = state.get("session_id")
         documents = state.get("documents", [])
-        # metadata = state.get("metadata", [])
+        
         docs = self.web_search_tool.invoke({"query": question})
+        
+        # Limit results to prevent memory issues
+        if isinstance(docs, list):
+            docs = docs[:3]
 
-        if isinstance(docs, str) and docs.strip():
-            try:
-                docs = json.loads(docs)
-            except json.JSONDecodeError:
-                print("Failed to decode JSON from docs")
-                docs = []
-
-        web_results = "\n".join([d["content"] for d in docs])
-        web_results = Document(page_content=web_results)
-
-        if documents is not None:
-            documents.append(web_results)
-            # metadata.append({})
-        else:
-            documents = [web_results]
-            # metadata = [{}]
-
-        return {"documents": documents, "question": question}
+        # ...existing code...
+        
+        gc.collect()
+        return {"documents": docs, "question": question, "session_id": session_id}
 
     def route_question(self, state: Dict) -> str:
         print("---ROUTE QUESTION---")
@@ -380,33 +451,62 @@ Please return only the category name that best fits the text: "{question}"
         )
         return workflow.compile()
 
-    def run(self, question: str):
-        # Perform sentiment analysis on the question
-        sentiment = self.analyze_sentiment(question)
-        print(f"Sentiment: {sentiment}")
+    def run(self, question: str, session_id: str = None):
+        try:
+            if session_id:
+                chat_history = AzureTableChatMessageHistory(
+                    session_id=session_id,
+                    connection_string=self.connection_string
+                )
+                
+                # Add user question to history
+                chat_history.add_message(HumanMessage(content=question))
+                
+                # Get last few messages for summary update
+                last_messages = [
+                    {"type": "human", "content": question}
+                ]
+                
+                # Update summary with new messages
+                self.update_chat_summary(session_id, last_messages)
+            
+            # Perform sentiment analysis on the question
+            sentiment = self.analyze_sentiment(question)
+            print(f"Sentiment: {sentiment}")
+            
+            # Recommend a lawyer based on the sentiment category
+            recommendation = recommend_lawyer.recommend_lawyer(sentiment)
+            print(recommendation)
+            # breakpoint()
+            # Continue with the existing workflow
+            app = self.build_workflow()
+            inputs = {"question": question, "session_id": session_id}
+            last_output = None
+            for output in app.stream(inputs):
+                for key, value in output.items():
+                    pprint(f"Finished running: {key}:")
+                    print("Output:")
+                    pprint(value)
+                    last_output = value
+                gc.collect()  # Collect garbage after each iteration
+            
+            result = last_output["generation"]
+            
+            if session_id:
+                chat_history.add_message(AIMessage(content=result))
+                self.update_chat_summary(session_id, [
+                    {"type": "assistant", "content": result}
+                ])
+            
+            gc.collect()
+            return result
         
-        # Recommend a lawyer based on the sentiment category
-        recommendation = recommend_lawyer.recommend_lawyer(sentiment)
-        print(recommendation)
-        # breakpoint()
-        # Continue with the existing workflow
-        app = self.build_workflow()
-        inputs = {"question": question}
-        last_output = None
-        for output in app.stream(inputs):
-            for key, value in output.items():
-                pprint(f"Finished running: {key}:")
-                print("Output:")
-                pprint(value)
-                last_output = value
-        
-        return last_output["generation"]
+        finally:
+            gc.collect()
 
 
 if __name__ == "__main__":
-    agent = RAGAgent()
-agent.run("Hi I'm Nouman")
-print("Now In Context")
-agent.run("What is my name?")  # This will now understand the context of the previous question
-    # while True:
-    #     agent.run(input("What is your legal query: "))
+    agent = RAGAgent()  
+    # First access
+    agent.run("What are my rights?", session_id="user123")
+    agent.run("Can you elaborate on that?", session_id="user123")
