@@ -1,34 +1,39 @@
-# Web Application Task Automation using Gulp
+# LangGraph Legal Assistant
 
-## Introduction
-This project is a web application that automates various development tasks using Gulp, a toolkit that streamlines repetitive tasks in the workflow. Key tasks include compiling SCSS to CSS, minifying CSS and JavaScript, adding vendor prefixes, optimizing images, and minifying HTML. By automating these processes, the project aims to make the development process faster and more efficient.
+## Overview
+
+LangGraph Legal Assistant is an AI-powered tool designed to assist with legal queries related to Pakistani law. It utilizes advanced language models and vector store technology to retrieve and generate accurate legal information, ensuring efficient responses to user questions. The tool is designed to help legal professionals, researchers, and individuals seeking guidance on Pakistani legal matters.
 
 ## Table of Contents
-- [Packages Used](#packages-used)
-  - [Gulp](#gulp)
-  - [gulp-sass](#gulp-sass)
-  - [gulp-clean-css](#gulp-clean-css)
-  - [gulp-uglify](#gulp-uglify)
-  - [gulp-autoprefixer](#gulp-autoprefixer)
-  - [gulp-htmlmin](#gulp-htmlmin)
-  - [gulp-imagemin](#gulp-imagemin)
-  - [gulp-concat](#gulp-concat)
-- [Gulp Tasks](#gulp-tasks)
-  - [Compile SCSS to CSS](#compile-scss-to-css)
-  - [Minify CSS](#minify-css)
-  - [Minify JavaScript](#minify-javascript)
-  - [Minify HTML](#minify-html)
-  - [Optimize Images](#optimize-images)
-  - [Default Task](#default-task)
+
+- [Overview](#overview)
+- [Features](#features)
 - [Installation](#installation)
-- [Running Gulp Tasks](#running-gulp-tasks)
-- [Conclusion](#conclusion)
+    - [Prerequisites](#prerequisites)
+    - [Steps](#steps)
+- [Usage](#usage)
+- [Configuration](#configuration)
+- [Contributors](#contributors)
+- [License](#license)
 
-## Packages Used
+## Features
 
-### Gulp
-**Gulp** is the core toolkit used for automating tasks such as file transformations, watching files, and running tasks in parallel or sequentially.
+- **Document Retrieval:** Fetches relevant legal documents from a vector store based on user queries.
+- **Question Routing:** Directs legal queries to either a vector store or web search depending on the type of query.
+- **Answer Generation:** Produces concise, accurate answers using the retrieved documents as references.
+- **Document Grading:** Evaluates and ranks the relevance of documents retrieved based on user queries.
+- **Hallucination Detection:** Ensures that generated answers are grounded in the provided documents, reducing inaccuracies or false information.
 
-#### Installation:
-```bash
-npm install --save-dev gulp
+## Installation
+
+### Prerequisites
+
+- Python 3.7 or higher
+- Virtual environment (recommended) for dependency management
+- `git` installed to clone the repository
+
+### Steps
+
+1. **Clone the repository:**
+
+    
