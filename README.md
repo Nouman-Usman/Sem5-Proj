@@ -35,5 +35,4 @@ LangGraph Legal Assistant is an AI-powered tool designed to assist with legal qu
 ### Steps
 
 1. **Clone the repository:**
-
     
