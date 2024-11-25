@@ -57,19 +57,13 @@ def ask_question():
         chat_history = rag_agent.get_chat_history_messages(user_id, chat_id) if chat_id else []
 
         # Process question with chat history
-        result, references = rag_agent.run(question, user_id, chat_id, chat_history)
+        result = rag_agent.run(question, user_id, chat_id, chat_history)
         
-        # Extract references and process response
-        answer = result
-        if "\nReference:" in result:
-            answer, refs = result.split("\nReference:", 1)
-            references.extend([ref.strip() for ref in refs.split(',')])
-            answer = answer.strip()
-
         response = {
-            "answer": answer,
+            "answer": result["chat_response"],
             "chat_id": chat_id,
-            "references": references
+            "references": result["references"],
+            "recommended_lawyers": result["recommended_lawyers"]
         }
 
         return jsonify(response)

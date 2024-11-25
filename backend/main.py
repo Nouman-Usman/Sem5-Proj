@@ -10,7 +10,7 @@ from langchain_groq import ChatGroq
 from langchain.schema import Document
 from langchain_community.tools.tavily_search import TavilySearchResults
 from langgraph.graph import END, StateGraph
-from typing import List, Dict, TypedDict
+from typing import List, Dict, TypedDict, Any
 from pprint import pprint
 import blob
 from pinecone import Pinecone
@@ -542,18 +542,15 @@ Question to route: {question}
 
         return workflow.compile()
 
-    def run(self, question: str, user_id: str, chat_id: str = None, chat_history: List[Dict] = None):
+    def run(self, question: str, user_id: str, chat_id: str = None, chat_history: List[Dict] = None) -> Dict[str, Any]:
         try:
             if chat_history is None:
                 chat_history = []
 
-            # Process the question
             sentiment = self.analyze_sentiment(question)
             logging.info(f"Sentiment: {sentiment}")
-            
-            # Get lawyer recommendations using LawyerStore
-            recommendation = self._get_lawyer_recommendations(sentiment)
-            logging.info(f"Lawyer recommendation: {recommendation}")
+            recommendations = self.lawyer_store.get_top_lawyers(sentiment)
+            logging.info(f"Lawyer recommendations: {recommendations}")
 
             app = self.build_workflow()
             inputs = {
@@ -590,14 +587,34 @@ Question to route: {question}
                     if "source" in doc.metadata:
                         references.append(doc.metadata["source"])
 
-                return result, references
+                # Format lawyer recommendations
+                formatted_recommendations = [
+                    {
+                        "name": lawyer['name'],
+                        "specialization": lawyer['specialization'],
+                        "experience": lawyer['experience'],
+                        "rating": lawyer['rating'],
+                        "location": lawyer['location'],
+                        "contact": lawyer['contact']
+                    }
+                    for lawyer in recommendations
+                ]
+
+                response = {
+                    "chat_response": result,
+                    "references": references,
+                    "recommended_lawyers": formatted_recommendations
+                }
+
+                return response
 
             except Exception as e:
                 print(f"Error in RAG workflow: {e}")
-                return (
-                    "I apologize, but I encountered an error processing your request.",
-                    []
-                )
+                return {
+                    "chat_response": "I apologize, but I encountered an error processing your request.",
+                    "references": [],
+                    "recommended_lawyers": []
+                }
 
         finally:
             gc.collect()

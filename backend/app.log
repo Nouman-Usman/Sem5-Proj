@@ -5478,3 +5478,820 @@ Response headers:
 2024-11-25 16:40:35,502 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
 2024-11-25 16:40:36,172 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
 2024-11-25 16:40:36,634 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-11-25 17:05:01,626 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://apnawaqeel.table.core.windows.net/Tables'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json;odata=nometadata'
+    'Content-Length': '29'
+    'x-ms-version': 'REDACTED'
+    'DataServiceVersion': 'REDACTED'
+    'Accept': 'application/json;odata=minimalmetadata'
+    'x-ms-client-request-id': '7faf3e5d-ab25-11ef-ac45-507b9df92581'
+    'x-ms-date': 'REDACTED'
+    'Date': 'Mon, 25 Nov 2024 12:05:01 GMT'
+    'User-Agent': 'azsdk-python-data-tables/12.5.0 Python/3.12.6 (Windows-11-10.0.22621-SP0)'
+    'Authorization': 'REDACTED'
+A body is sent with the request
+2024-11-25 17:05:02,691 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 409
+Response headers:
+    'Cache-Control': 'no-cache'
+    'Transfer-Encoding': 'chunked'
+    'Content-Type': 'application/json;odata=minimalmetadata;streaming=true;charset=utf-8'
+    'Server': 'Windows-Azure-Table/1.0 Microsoft-HTTPAPI/2.0'
+    'x-ms-request-id': 'aaea600c-e002-005d-7332-3fd7c9000000'
+    'x-ms-client-request-id': '7faf3e5d-ab25-11ef-ac45-507b9df92581'
+    'x-ms-version': 'REDACTED'
+    'X-Content-Type-Options': 'REDACTED'
+    'Date': 'Mon, 25 Nov 2024 12:05:02 GMT'
+2024-11-25 17:05:02,706 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://apnawaqeel.table.core.windows.net/Tables'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json;odata=nometadata'
+    'Content-Length': '29'
+    'x-ms-version': 'REDACTED'
+    'DataServiceVersion': 'REDACTED'
+    'Accept': 'application/json;odata=minimalmetadata'
+    'x-ms-client-request-id': '80565ad4-ab25-11ef-a549-507b9df92581'
+    'x-ms-date': 'REDACTED'
+    'Date': 'Mon, 25 Nov 2024 12:05:02 GMT'
+    'User-Agent': 'azsdk-python-data-tables/12.5.0 Python/3.12.6 (Windows-11-10.0.22621-SP0)'
+    'Authorization': 'REDACTED'
+A body is sent with the request
+2024-11-25 17:05:02,947 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 409
+Response headers:
+    'Cache-Control': 'no-cache'
+    'Transfer-Encoding': 'chunked'
+    'Content-Type': 'application/json;odata=minimalmetadata;streaming=true;charset=utf-8'
+    'Server': 'Windows-Azure-Table/1.0 Microsoft-HTTPAPI/2.0'
+    'x-ms-request-id': 'aaea6033-e002-005d-1332-3fd7c9000000'
+    'x-ms-client-request-id': '80565ad4-ab25-11ef-a549-507b9df92581'
+    'x-ms-version': 'REDACTED'
+    'X-Content-Type-Options': 'REDACTED'
+    'Date': 'Mon, 25 Nov 2024 12:05:02 GMT'
+2024-11-25 17:05:02,947 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://apnawaqeel.table.core.windows.net/Tables'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json;odata=nometadata'
+    'Content-Length': '29'
+    'x-ms-version': 'REDACTED'
+    'DataServiceVersion': 'REDACTED'
+    'Accept': 'application/json;odata=minimalmetadata'
+    'x-ms-client-request-id': '807b5125-ab25-11ef-9012-507b9df92581'
+    'x-ms-date': 'REDACTED'
+    'Date': 'Mon, 25 Nov 2024 12:05:02 GMT'
+    'User-Agent': 'azsdk-python-data-tables/12.5.0 Python/3.12.6 (Windows-11-10.0.22621-SP0)'
+    'Authorization': 'REDACTED'
+A body is sent with the request
+2024-11-25 17:05:03,194 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 409
+Response headers:
+    'Cache-Control': 'no-cache'
+    'Transfer-Encoding': 'chunked'
+    'Content-Type': 'application/json;odata=minimalmetadata;streaming=true;charset=utf-8'
+    'Server': 'Windows-Azure-Table/1.0 Microsoft-HTTPAPI/2.0'
+    'x-ms-request-id': 'aaea604e-e002-005d-2b32-3fd7c9000000'
+    'x-ms-client-request-id': '807b5125-ab25-11ef-9012-507b9df92581'
+    'x-ms-version': 'REDACTED'
+    'X-Content-Type-Options': 'REDACTED'
+    'Date': 'Mon, 25 Nov 2024 12:05:03 GMT'
+2024-11-25 17:05:03,210 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://apnawaqeel.table.core.windows.net/ChatMessages()?$select=REDACTED&$filter=REDACTED'
+Request method: 'GET'
+Request headers:
+    'x-ms-version': 'REDACTED'
+    'DataServiceVersion': 'REDACTED'
+    'Accept': 'application/json;odata=minimalmetadata'
+    'x-ms-client-request-id': '80a357d1-ab25-11ef-a364-507b9df92581'
+    'x-ms-date': 'REDACTED'
+    'Date': 'Mon, 25 Nov 2024 12:05:03 GMT'
+    'User-Agent': 'azsdk-python-data-tables/12.5.0 Python/3.12.6 (Windows-11-10.0.22621-SP0)'
+    'Authorization': 'REDACTED'
+No body was attached to the request
+2024-11-25 17:05:03,467 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Cache-Control': 'no-cache'
+    'Transfer-Encoding': 'chunked'
+    'Content-Type': 'application/json;odata=minimalmetadata;streaming=true;charset=utf-8'
+    'Server': 'Windows-Azure-Table/1.0 Microsoft-HTTPAPI/2.0'
+    'x-ms-request-id': 'aaea606c-e002-005d-4532-3fd7c9000000'
+    'x-ms-client-request-id': '80a357d1-ab25-11ef-a364-507b9df92581'
+    'x-ms-version': 'REDACTED'
+    'X-Content-Type-Options': 'REDACTED'
+    'Date': 'Mon, 25 Nov 2024 12:05:03 GMT'
+2024-11-25 17:05:03,467 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://apnawaqeel.table.core.windows.net/UserSessions()?$select=REDACTED&$filter=REDACTED'
+Request method: 'GET'
+Request headers:
+    'x-ms-version': 'REDACTED'
+    'DataServiceVersion': 'REDACTED'
+    'Accept': 'application/json;odata=minimalmetadata'
+    'x-ms-client-request-id': '80ca9c65-ab25-11ef-adc0-507b9df92581'
+    'x-ms-date': 'REDACTED'
+    'Date': 'Mon, 25 Nov 2024 12:05:03 GMT'
+    'User-Agent': 'azsdk-python-data-tables/12.5.0 Python/3.12.6 (Windows-11-10.0.22621-SP0)'
+    'Authorization': 'REDACTED'
+No body was attached to the request
+2024-11-25 17:05:03,728 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Cache-Control': 'no-cache'
+    'Transfer-Encoding': 'chunked'
+    'Content-Type': 'application/json;odata=minimalmetadata;streaming=true;charset=utf-8'
+    'Server': 'Windows-Azure-Table/1.0 Microsoft-HTTPAPI/2.0'
+    'x-ms-request-id': 'aaea6089-e002-005d-5d32-3fd7c9000000'
+    'x-ms-client-request-id': '80ca9c65-ab25-11ef-adc0-507b9df92581'
+    'x-ms-version': 'REDACTED'
+    'X-Content-Type-Options': 'REDACTED'
+    'Date': 'Mon, 25 Nov 2024 12:05:03 GMT'
+2024-11-25 17:05:03,728 - root - INFO - Found 0 chats for user demo_user
+2024-11-25 17:08:23,008 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://apnawaqeel.table.core.windows.net/Tables'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json;odata=nometadata'
+    'Content-Length': '29'
+    'x-ms-version': 'REDACTED'
+    'DataServiceVersion': 'REDACTED'
+    'Accept': 'application/json;odata=minimalmetadata'
+    'x-ms-client-request-id': 'f7ba2bf2-ab25-11ef-999b-507b9df92581'
+    'x-ms-date': 'REDACTED'
+    'Date': 'Mon, 25 Nov 2024 12:08:23 GMT'
+    'User-Agent': 'azsdk-python-data-tables/12.5.0 Python/3.12.6 (Windows-11-10.0.22621-SP0)'
+    'Authorization': 'REDACTED'
+A body is sent with the request
+2024-11-25 17:08:23,997 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 409
+Response headers:
+    'Cache-Control': 'no-cache'
+    'Transfer-Encoding': 'chunked'
+    'Content-Type': 'application/json;odata=minimalmetadata;streaming=true;charset=utf-8'
+    'Server': 'Windows-Azure-Table/1.0 Microsoft-HTTPAPI/2.0'
+    'x-ms-request-id': 'ecc02a50-b002-0040-3232-3fda75000000'
+    'x-ms-client-request-id': 'f7ba2bf2-ab25-11ef-999b-507b9df92581'
+    'x-ms-version': 'REDACTED'
+    'X-Content-Type-Options': 'REDACTED'
+    'Date': 'Mon, 25 Nov 2024 12:08:24 GMT'
+2024-11-25 17:08:24,012 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://apnawaqeel.table.core.windows.net/Tables'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json;odata=nometadata'
+    'Content-Length': '29'
+    'x-ms-version': 'REDACTED'
+    'DataServiceVersion': 'REDACTED'
+    'Accept': 'application/json;odata=minimalmetadata'
+    'x-ms-client-request-id': 'f85323b9-ab25-11ef-a9bf-507b9df92581'
+    'x-ms-date': 'REDACTED'
+    'Date': 'Mon, 25 Nov 2024 12:08:24 GMT'
+    'User-Agent': 'azsdk-python-data-tables/12.5.0 Python/3.12.6 (Windows-11-10.0.22621-SP0)'
+    'Authorization': 'REDACTED'
+A body is sent with the request
+2024-11-25 17:08:24,331 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 409
+Response headers:
+    'Cache-Control': 'no-cache'
+    'Transfer-Encoding': 'chunked'
+    'Content-Type': 'application/json;odata=minimalmetadata;streaming=true;charset=utf-8'
+    'Server': 'Windows-Azure-Table/1.0 Microsoft-HTTPAPI/2.0'
+    'x-ms-request-id': 'ecc02a7f-b002-0040-5332-3fda75000000'
+    'x-ms-client-request-id': 'f85323b9-ab25-11ef-a9bf-507b9df92581'
+    'x-ms-version': 'REDACTED'
+    'X-Content-Type-Options': 'REDACTED'
+    'Date': 'Mon, 25 Nov 2024 12:08:24 GMT'
+2024-11-25 17:08:24,331 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://apnawaqeel.table.core.windows.net/Tables'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json;odata=nometadata'
+    'Content-Length': '29'
+    'x-ms-version': 'REDACTED'
+    'DataServiceVersion': 'REDACTED'
+    'Accept': 'application/json;odata=minimalmetadata'
+    'x-ms-client-request-id': 'f883f039-ab25-11ef-97de-507b9df92581'
+    'x-ms-date': 'REDACTED'
+    'Date': 'Mon, 25 Nov 2024 12:08:24 GMT'
+    'User-Agent': 'azsdk-python-data-tables/12.5.0 Python/3.12.6 (Windows-11-10.0.22621-SP0)'
+    'Authorization': 'REDACTED'
+A body is sent with the request
+2024-11-25 17:08:24,683 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 409
+Response headers:
+    'Cache-Control': 'no-cache'
+    'Transfer-Encoding': 'chunked'
+    'Content-Type': 'application/json;odata=minimalmetadata;streaming=true;charset=utf-8'
+    'Server': 'Windows-Azure-Table/1.0 Microsoft-HTTPAPI/2.0'
+    'x-ms-request-id': 'ecc02aaf-b002-0040-7832-3fda75000000'
+    'x-ms-client-request-id': 'f883f039-ab25-11ef-97de-507b9df92581'
+    'x-ms-version': 'REDACTED'
+    'X-Content-Type-Options': 'REDACTED'
+    'Date': 'Mon, 25 Nov 2024 12:08:24 GMT'
+2024-11-25 17:08:24,688 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://apnawaqeel.table.core.windows.net/ChatMessages()?$select=REDACTED&$filter=REDACTED'
+Request method: 'GET'
+Request headers:
+    'x-ms-version': 'REDACTED'
+    'DataServiceVersion': 'REDACTED'
+    'Accept': 'application/json;odata=minimalmetadata'
+    'x-ms-client-request-id': 'f8ba8b28-ab25-11ef-9a74-507b9df92581'
+    'x-ms-date': 'REDACTED'
+    'Date': 'Mon, 25 Nov 2024 12:08:24 GMT'
+    'User-Agent': 'azsdk-python-data-tables/12.5.0 Python/3.12.6 (Windows-11-10.0.22621-SP0)'
+    'Authorization': 'REDACTED'
+No body was attached to the request
+2024-11-25 17:08:24,993 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Cache-Control': 'no-cache'
+    'Transfer-Encoding': 'chunked'
+    'Content-Type': 'application/json;odata=minimalmetadata;streaming=true;charset=utf-8'
+    'Server': 'Windows-Azure-Table/1.0 Microsoft-HTTPAPI/2.0'
+    'x-ms-request-id': 'ecc02b00-b002-0040-4132-3fda75000000'
+    'x-ms-client-request-id': 'f8ba8b28-ab25-11ef-9a74-507b9df92581'
+    'x-ms-version': 'REDACTED'
+    'X-Content-Type-Options': 'REDACTED'
+    'Date': 'Mon, 25 Nov 2024 12:08:25 GMT'
+2024-11-25 17:08:24,993 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://apnawaqeel.table.core.windows.net/UserSessions()?$select=REDACTED&$filter=REDACTED'
+Request method: 'GET'
+Request headers:
+    'x-ms-version': 'REDACTED'
+    'DataServiceVersion': 'REDACTED'
+    'Accept': 'application/json;odata=minimalmetadata'
+    'x-ms-client-request-id': 'f8e91274-ab25-11ef-9d88-507b9df92581'
+    'x-ms-date': 'REDACTED'
+    'Date': 'Mon, 25 Nov 2024 12:08:24 GMT'
+    'User-Agent': 'azsdk-python-data-tables/12.5.0 Python/3.12.6 (Windows-11-10.0.22621-SP0)'
+    'Authorization': 'REDACTED'
+No body was attached to the request
+2024-11-25 17:08:25,277 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Cache-Control': 'no-cache'
+    'Transfer-Encoding': 'chunked'
+    'Content-Type': 'application/json;odata=minimalmetadata;streaming=true;charset=utf-8'
+    'Server': 'Windows-Azure-Table/1.0 Microsoft-HTTPAPI/2.0'
+    'x-ms-request-id': 'ecc02b52-b002-0040-0c32-3fda75000000'
+    'x-ms-client-request-id': 'f8e91274-ab25-11ef-9d88-507b9df92581'
+    'x-ms-version': 'REDACTED'
+    'X-Content-Type-Options': 'REDACTED'
+    'Date': 'Mon, 25 Nov 2024 12:08:25 GMT'
+2024-11-25 17:08:25,285 - root - INFO - Found 0 chats for user demo_user
+2024-11-25 17:08:34,198 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://apnawaqeel.table.core.windows.net/Tables'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json;odata=nometadata'
+    'Content-Length': '29'
+    'x-ms-version': 'REDACTED'
+    'DataServiceVersion': 'REDACTED'
+    'Accept': 'application/json;odata=minimalmetadata'
+    'x-ms-client-request-id': 'fe633693-ab25-11ef-865a-507b9df92581'
+    'x-ms-date': 'REDACTED'
+    'Date': 'Mon, 25 Nov 2024 12:08:34 GMT'
+    'User-Agent': 'azsdk-python-data-tables/12.5.0 Python/3.12.6 (Windows-11-10.0.22621-SP0)'
+    'Authorization': 'REDACTED'
+A body is sent with the request
+2024-11-25 17:08:35,140 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 409
+Response headers:
+    'Cache-Control': 'no-cache'
+    'Transfer-Encoding': 'chunked'
+    'Content-Type': 'application/json;odata=minimalmetadata;streaming=true;charset=utf-8'
+    'Server': 'Windows-Azure-Table/1.0 Microsoft-HTTPAPI/2.0'
+    'x-ms-request-id': 'ef5ba61e-6002-001e-3332-3f3195000000'
+    'x-ms-client-request-id': 'fe633693-ab25-11ef-865a-507b9df92581'
+    'x-ms-version': 'REDACTED'
+    'X-Content-Type-Options': 'REDACTED'
+    'Date': 'Mon, 25 Nov 2024 12:08:34 GMT'
+2024-11-25 17:08:35,143 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://apnawaqeel.table.core.windows.net/Tables'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json;odata=nometadata'
+    'Content-Length': '29'
+    'x-ms-version': 'REDACTED'
+    'DataServiceVersion': 'REDACTED'
+    'Accept': 'application/json;odata=minimalmetadata'
+    'x-ms-client-request-id': 'fef5c65d-ab25-11ef-b0c2-507b9df92581'
+    'x-ms-date': 'REDACTED'
+    'Date': 'Mon, 25 Nov 2024 12:08:35 GMT'
+    'User-Agent': 'azsdk-python-data-tables/12.5.0 Python/3.12.6 (Windows-11-10.0.22621-SP0)'
+    'Authorization': 'REDACTED'
+A body is sent with the request
+2024-11-25 17:08:35,392 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 409
+Response headers:
+    'Cache-Control': 'no-cache'
+    'Transfer-Encoding': 'chunked'
+    'Content-Type': 'application/json;odata=minimalmetadata;streaming=true;charset=utf-8'
+    'Server': 'Windows-Azure-Table/1.0 Microsoft-HTTPAPI/2.0'
+    'x-ms-request-id': 'ef5ba630-6002-001e-4332-3f3195000000'
+    'x-ms-client-request-id': 'fef5c65d-ab25-11ef-b0c2-507b9df92581'
+    'x-ms-version': 'REDACTED'
+    'X-Content-Type-Options': 'REDACTED'
+    'Date': 'Mon, 25 Nov 2024 12:08:34 GMT'
+2024-11-25 17:08:35,392 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://apnawaqeel.table.core.windows.net/Tables'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json;odata=nometadata'
+    'Content-Length': '29'
+    'x-ms-version': 'REDACTED'
+    'DataServiceVersion': 'REDACTED'
+    'Accept': 'application/json;odata=minimalmetadata'
+    'x-ms-client-request-id': 'ff1bb531-ab25-11ef-8cdf-507b9df92581'
+    'x-ms-date': 'REDACTED'
+    'Date': 'Mon, 25 Nov 2024 12:08:35 GMT'
+    'User-Agent': 'azsdk-python-data-tables/12.5.0 Python/3.12.6 (Windows-11-10.0.22621-SP0)'
+    'Authorization': 'REDACTED'
+A body is sent with the request
+2024-11-25 17:08:35,831 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 409
+Response headers:
+    'Cache-Control': 'no-cache'
+    'Transfer-Encoding': 'chunked'
+    'Content-Type': 'application/json;odata=minimalmetadata;streaming=true;charset=utf-8'
+    'Server': 'Windows-Azure-Table/1.0 Microsoft-HTTPAPI/2.0'
+    'x-ms-request-id': 'ef5ba662-6002-001e-7332-3f3195000000'
+    'x-ms-client-request-id': 'ff1bb531-ab25-11ef-8cdf-507b9df92581'
+    'x-ms-version': 'REDACTED'
+    'X-Content-Type-Options': 'REDACTED'
+    'Date': 'Mon, 25 Nov 2024 12:08:35 GMT'
+2024-11-25 17:08:35,853 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://apnawaqeel.table.core.windows.net/ChatMessages()?$select=REDACTED&$filter=REDACTED'
+Request method: 'GET'
+Request headers:
+    'x-ms-version': 'REDACTED'
+    'DataServiceVersion': 'REDACTED'
+    'Accept': 'application/json;odata=minimalmetadata'
+    'x-ms-client-request-id': 'ff61b45d-ab25-11ef-910d-507b9df92581'
+    'x-ms-date': 'REDACTED'
+    'Date': 'Mon, 25 Nov 2024 12:08:35 GMT'
+    'User-Agent': 'azsdk-python-data-tables/12.5.0 Python/3.12.6 (Windows-11-10.0.22621-SP0)'
+    'Authorization': 'REDACTED'
+No body was attached to the request
+2024-11-25 17:08:36,288 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Cache-Control': 'no-cache'
+    'Transfer-Encoding': 'chunked'
+    'Content-Type': 'application/json;odata=minimalmetadata;streaming=true;charset=utf-8'
+    'Server': 'Windows-Azure-Table/1.0 Microsoft-HTTPAPI/2.0'
+    'x-ms-request-id': 'ef5ba69c-6002-001e-1132-3f3195000000'
+    'x-ms-client-request-id': 'ff61b45d-ab25-11ef-910d-507b9df92581'
+    'x-ms-version': 'REDACTED'
+    'X-Content-Type-Options': 'REDACTED'
+    'Date': 'Mon, 25 Nov 2024 12:08:35 GMT'
+2024-11-25 17:08:36,288 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://apnawaqeel.table.core.windows.net/UserSessions()?$select=REDACTED&$filter=REDACTED'
+Request method: 'GET'
+Request headers:
+    'x-ms-version': 'REDACTED'
+    'DataServiceVersion': 'REDACTED'
+    'Accept': 'application/json;odata=minimalmetadata'
+    'x-ms-client-request-id': 'ffa47ee0-ab25-11ef-a69f-507b9df92581'
+    'x-ms-date': 'REDACTED'
+    'Date': 'Mon, 25 Nov 2024 12:08:36 GMT'
+    'User-Agent': 'azsdk-python-data-tables/12.5.0 Python/3.12.6 (Windows-11-10.0.22621-SP0)'
+    'Authorization': 'REDACTED'
+No body was attached to the request
+2024-11-25 17:08:36,527 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Cache-Control': 'no-cache'
+    'Transfer-Encoding': 'chunked'
+    'Content-Type': 'application/json;odata=minimalmetadata;streaming=true;charset=utf-8'
+    'Server': 'Windows-Azure-Table/1.0 Microsoft-HTTPAPI/2.0'
+    'x-ms-request-id': 'ef5ba6bf-6002-001e-3032-3f3195000000'
+    'x-ms-client-request-id': 'ffa47ee0-ab25-11ef-a69f-507b9df92581'
+    'x-ms-version': 'REDACTED'
+    'X-Content-Type-Options': 'REDACTED'
+    'Date': 'Mon, 25 Nov 2024 12:08:35 GMT'
+2024-11-25 17:08:36,527 - root - INFO - Found 0 chats for user demo_user
+2024-11-25 17:28:50,356 - waitress - INFO - Serving on http://0.0.0.0:5000
+2024-11-25 17:28:53,779 - app - INFO - Initializing RAG agent...
+2024-11-25 17:28:53,790 - pinecone_plugin_interface.logging - INFO - Discovering subpackages in _NamespacePath(['C:\\Users\\Nouma\\OneDrive\\Desktop\\GenAi x Xavour\\ApnaWaqeel\\venv\\Lib\\site-packages\\pinecone_plugins'])
+2024-11-25 17:28:53,791 - pinecone_plugin_interface.logging - INFO - Looking for plugins in pinecone_plugins.inference
+2024-11-25 17:28:53,891 - pinecone_plugin_interface.logging - INFO - Installing plugin inference into Pinecone
+2024-11-25 17:29:00,320 - datasets - INFO - PyTorch version 2.4.1 available.
+2024-11-25 17:29:01,391 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2024-11-25 17:29:01,402 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2024-11-25 17:29:15,377 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://apnawaqeel.table.core.windows.net/Tables'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json;odata=nometadata'
+    'Content-Length': '38'
+    'x-ms-version': 'REDACTED'
+    'DataServiceVersion': 'REDACTED'
+    'Accept': 'application/json;odata=minimalmetadata'
+    'x-ms-client-request-id': 'e23152e3-ab28-11ef-9634-507b9df92581'
+    'x-ms-date': 'REDACTED'
+    'Date': 'Mon, 25 Nov 2024 12:29:15 GMT'
+    'User-Agent': 'azsdk-python-data-tables/12.5.0 Python/3.12.6 (Windows-11-10.0.22621-SP0)'
+    'Authorization': 'REDACTED'
+A body is sent with the request
+2024-11-25 17:29:16,567 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 409
+Response headers:
+    'Cache-Control': 'no-cache'
+    'Transfer-Encoding': 'chunked'
+    'Content-Type': 'application/json;odata=minimalmetadata;streaming=true;charset=utf-8'
+    'Server': 'Windows-Azure-Table/1.0 Microsoft-HTTPAPI/2.0'
+    'x-ms-request-id': '8979f9ff-2002-006d-3c35-3f6906000000'
+    'x-ms-client-request-id': 'e23152e3-ab28-11ef-9634-507b9df92581'
+    'x-ms-version': 'REDACTED'
+    'X-Content-Type-Options': 'REDACTED'
+    'Date': 'Mon, 25 Nov 2024 12:29:15 GMT'
+2024-11-25 17:29:16,851 - app - INFO - RAG agent initialized successfully
+2024-11-25 17:29:17,722 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-11-25 17:29:17,782 - root - INFO - Sentiment: Civil
+2024-11-25 17:29:17,788 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://apnawaqeel.table.core.windows.net/LawyerRecommendations()?$filter=REDACTED'
+Request method: 'GET'
+Request headers:
+    'x-ms-version': 'REDACTED'
+    'DataServiceVersion': 'REDACTED'
+    'Accept': 'application/json;odata=minimalmetadata'
+    'x-ms-client-request-id': 'e3a2308b-ab28-11ef-b43f-507b9df92581'
+    'x-ms-date': 'REDACTED'
+    'Date': 'Mon, 25 Nov 2024 12:29:17 GMT'
+    'User-Agent': 'azsdk-python-data-tables/12.5.0 Python/3.12.6 (Windows-11-10.0.22621-SP0)'
+    'Authorization': 'REDACTED'
+No body was attached to the request
+2024-11-25 17:29:19,263 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Cache-Control': 'no-cache'
+    'Transfer-Encoding': 'chunked'
+    'Content-Type': 'application/json;odata=minimalmetadata;streaming=true;charset=utf-8'
+    'Server': 'Windows-Azure-Table/1.0 Microsoft-HTTPAPI/2.0'
+    'x-ms-request-id': '37ee05d1-8002-0074-5635-3fe9bd000000'
+    'x-ms-client-request-id': 'e3a2308b-ab28-11ef-b43f-507b9df92581'
+    'x-ms-version': 'REDACTED'
+    'X-Content-Type-Options': 'REDACTED'
+    'Date': 'Mon, 25 Nov 2024 12:29:18 GMT'
+2024-11-25 17:29:19,272 - root - INFO - Lawyer recommendations: [{'name': 'Adv. Alexis Swanson', 'specialization': 'Civil', 'experience': '34 years', 'rating': '5.0', 'location': 'Gujranwala', 'contact': '+92-321-8647931'}, {'name': 'Adv. Sara Becker', 'specialization': 'Civil', 'experience': '33 years', 'rating': '4.9', 'location': 'Quetta', 'contact': '+92-346-2562537'}]
+2024-11-25 17:29:19,714 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-11-25 17:29:26,668 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-11-25 17:29:27,364 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-11-25 17:29:27,829 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-11-25 17:29:28,366 - app - ERROR - Error processing question: too many values to unpack (expected 2)
+2024-11-25 17:31:24,308 - waitress - INFO - Serving on http://0.0.0.0:5000
+2024-11-25 17:42:39,658 - app - INFO - Initializing RAG agent...
+2024-11-25 17:42:39,679 - pinecone_plugin_interface.logging - INFO - Discovering subpackages in _NamespacePath(['C:\\Users\\Nouma\\OneDrive\\Desktop\\GenAi x Xavour\\ApnaWaqeel\\venv\\Lib\\site-packages\\pinecone_plugins'])
+2024-11-25 17:42:39,681 - pinecone_plugin_interface.logging - INFO - Looking for plugins in pinecone_plugins.inference
+2024-11-25 17:42:39,760 - pinecone_plugin_interface.logging - INFO - Installing plugin inference into Pinecone
+2024-11-25 17:42:46,771 - datasets - INFO - PyTorch version 2.4.1 available.
+2024-11-25 17:42:47,469 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2024-11-25 17:42:47,470 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2024-11-25 17:42:56,921 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://apnawaqeel.table.core.windows.net/Tables'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json;odata=nometadata'
+    'Content-Length': '38'
+    'x-ms-version': 'REDACTED'
+    'DataServiceVersion': 'REDACTED'
+    'Accept': 'application/json;odata=minimalmetadata'
+    'x-ms-client-request-id': 'cbdf54b8-ab2a-11ef-9f74-507b9df92581'
+    'x-ms-date': 'REDACTED'
+    'Date': 'Mon, 25 Nov 2024 12:42:56 GMT'
+    'User-Agent': 'azsdk-python-data-tables/12.5.0 Python/3.12.6 (Windows-11-10.0.22621-SP0)'
+    'Authorization': 'REDACTED'
+A body is sent with the request
+2024-11-25 17:42:58,081 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 409
+Response headers:
+    'Cache-Control': 'no-cache'
+    'Transfer-Encoding': 'chunked'
+    'Content-Type': 'application/json;odata=minimalmetadata;streaming=true;charset=utf-8'
+    'Server': 'Windows-Azure-Table/1.0 Microsoft-HTTPAPI/2.0'
+    'x-ms-request-id': '31babaa8-7002-0012-7d37-3fa69d000000'
+    'x-ms-client-request-id': 'cbdf54b8-ab2a-11ef-9f74-507b9df92581'
+    'x-ms-version': 'REDACTED'
+    'X-Content-Type-Options': 'REDACTED'
+    'Date': 'Mon, 25 Nov 2024 12:42:57 GMT'
+2024-11-25 17:42:58,516 - app - INFO - RAG agent initialized successfully
+2024-11-25 17:42:59,649 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-11-25 17:42:59,686 - root - INFO - Sentiment: 1. Civil
+2024-11-25 17:42:59,687 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://apnawaqeel.table.core.windows.net/LawyerRecommendations()?$filter=REDACTED'
+Request method: 'GET'
+Request headers:
+    'x-ms-version': 'REDACTED'
+    'DataServiceVersion': 'REDACTED'
+    'Accept': 'application/json;odata=minimalmetadata'
+    'x-ms-client-request-id': 'cd863988-ab2a-11ef-90a9-507b9df92581'
+    'x-ms-date': 'REDACTED'
+    'Date': 'Mon, 25 Nov 2024 12:42:59 GMT'
+    'User-Agent': 'azsdk-python-data-tables/12.5.0 Python/3.12.6 (Windows-11-10.0.22621-SP0)'
+    'Authorization': 'REDACTED'
+No body was attached to the request
+2024-11-25 17:43:00,639 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Cache-Control': 'no-cache'
+    'Transfer-Encoding': 'chunked'
+    'Content-Type': 'application/json;odata=minimalmetadata;streaming=true;charset=utf-8'
+    'Server': 'Windows-Azure-Table/1.0 Microsoft-HTTPAPI/2.0'
+    'x-ms-request-id': '12ced561-b002-0022-1f37-3f1852000000'
+    'x-ms-client-request-id': 'cd863988-ab2a-11ef-90a9-507b9df92581'
+    'x-ms-version': 'REDACTED'
+    'X-Content-Type-Options': 'REDACTED'
+    'Date': 'Mon, 25 Nov 2024 12:43:00 GMT'
+2024-11-25 17:43:00,642 - root - INFO - Lawyer recommendations: []
+2024-11-25 17:43:01,221 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-11-25 17:43:07,948 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-11-25 17:43:08,771 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-11-25 17:43:09,669 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-11-25 17:49:33,927 - waitress - INFO - Serving on http://0.0.0.0:5000
+2024-11-25 17:49:36,262 - app - INFO - Initializing RAG agent...
+2024-11-25 17:49:36,266 - pinecone_plugin_interface.logging - INFO - Discovering subpackages in _NamespacePath(['C:\\Users\\Nouma\\OneDrive\\Desktop\\GenAi x Xavour\\ApnaWaqeel\\venv\\Lib\\site-packages\\pinecone_plugins'])
+2024-11-25 17:49:36,267 - pinecone_plugin_interface.logging - INFO - Looking for plugins in pinecone_plugins.inference
+2024-11-25 17:49:36,343 - pinecone_plugin_interface.logging - INFO - Installing plugin inference into Pinecone
+2024-11-25 17:49:43,687 - datasets - INFO - PyTorch version 2.4.1 available.
+2024-11-25 17:49:44,241 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2024-11-25 17:49:44,242 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2024-11-25 17:49:50,406 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://apnawaqeel.table.core.windows.net/Tables'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json;odata=nometadata'
+    'Content-Length': '38'
+    'x-ms-version': 'REDACTED'
+    'DataServiceVersion': 'REDACTED'
+    'Accept': 'application/json;odata=minimalmetadata'
+    'x-ms-client-request-id': 'c254e63f-ab2b-11ef-987a-507b9df92581'
+    'x-ms-date': 'REDACTED'
+    'Date': 'Mon, 25 Nov 2024 12:49:50 GMT'
+    'User-Agent': 'azsdk-python-data-tables/12.5.0 Python/3.12.6 (Windows-11-10.0.22621-SP0)'
+    'Authorization': 'REDACTED'
+A body is sent with the request
+2024-11-25 17:49:51,590 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 409
+Response headers:
+    'Cache-Control': 'no-cache'
+    'Transfer-Encoding': 'chunked'
+    'Content-Type': 'application/json;odata=minimalmetadata;streaming=true;charset=utf-8'
+    'Server': 'Windows-Azure-Table/1.0 Microsoft-HTTPAPI/2.0'
+    'x-ms-request-id': 'fed8b382-6002-0088-3a38-3f3844000000'
+    'x-ms-client-request-id': 'c254e63f-ab2b-11ef-987a-507b9df92581'
+    'x-ms-version': 'REDACTED'
+    'X-Content-Type-Options': 'REDACTED'
+    'Date': 'Mon, 25 Nov 2024 12:49:50 GMT'
+2024-11-25 17:49:51,796 - app - INFO - RAG agent initialized successfully
+2024-11-25 17:49:52,616 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-11-25 17:49:52,710 - root - INFO - Sentiment: Alternate Dispute Resolution (ADR)
+2024-11-25 17:49:52,740 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://apnawaqeel.table.core.windows.net/LawyerRecommendations()?$filter=REDACTED'
+Request method: 'GET'
+Request headers:
+    'x-ms-version': 'REDACTED'
+    'DataServiceVersion': 'REDACTED'
+    'Accept': 'application/json;odata=minimalmetadata'
+    'x-ms-client-request-id': 'c3b8ed66-ab2b-11ef-98b0-507b9df92581'
+    'x-ms-date': 'REDACTED'
+    'Date': 'Mon, 25 Nov 2024 12:49:52 GMT'
+    'User-Agent': 'azsdk-python-data-tables/12.5.0 Python/3.12.6 (Windows-11-10.0.22621-SP0)'
+    'Authorization': 'REDACTED'
+No body was attached to the request
+2024-11-25 17:49:54,422 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Cache-Control': 'no-cache'
+    'Transfer-Encoding': 'chunked'
+    'Content-Type': 'application/json;odata=minimalmetadata;streaming=true;charset=utf-8'
+    'Server': 'Windows-Azure-Table/1.0 Microsoft-HTTPAPI/2.0'
+    'x-ms-request-id': '94215a03-9002-001a-5038-3fbc92000000'
+    'x-ms-client-request-id': 'c3b8ed66-ab2b-11ef-98b0-507b9df92581'
+    'x-ms-version': 'REDACTED'
+    'X-Content-Type-Options': 'REDACTED'
+    'Date': 'Mon, 25 Nov 2024 12:49:53 GMT'
+2024-11-25 17:49:54,487 - root - INFO - Lawyer recommendations: [{'name': 'Adv. Amy Warren', 'specialization': 'Alternate Dispute Resolution (ADR)', 'experience': '34 years', 'rating': '5.0', 'location': 'Karachi', 'contact': '+92-314-5281790'}, {'name': 'Adv. Courtney Cortez', 'specialization': 'Alternate Dispute Resolution (ADR)', 'experience': '35 years', 'rating': '4.7', 'location': 'Lahore', 'contact': '+92-322-2433859'}]
+2024-11-25 17:49:54,911 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-11-25 17:50:17,103 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-11-25 17:50:17,567 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-11-25 17:50:18,004 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-11-25 17:50:18,427 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-11-25 17:50:36,862 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-11-25 17:50:38,051 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-11-25 17:50:38,888 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-11-25 17:59:16,596 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://apnawaqeel.table.core.windows.net/Tables'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json;odata=nometadata'
+    'Content-Length': '29'
+    'x-ms-version': 'REDACTED'
+    'DataServiceVersion': 'REDACTED'
+    'Accept': 'application/json;odata=minimalmetadata'
+    'x-ms-client-request-id': '13cde278-ab2d-11ef-b600-507b9df92581'
+    'x-ms-date': 'REDACTED'
+    'Date': 'Mon, 25 Nov 2024 12:59:16 GMT'
+    'User-Agent': 'azsdk-python-data-tables/12.5.0 Python/3.12.6 (Windows-11-10.0.22621-SP0)'
+    'Authorization': 'REDACTED'
+A body is sent with the request
+2024-11-25 17:59:17,846 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 409
+Response headers:
+    'Cache-Control': 'no-cache'
+    'Transfer-Encoding': 'chunked'
+    'Content-Type': 'application/json;odata=minimalmetadata;streaming=true;charset=utf-8'
+    'Server': 'Windows-Azure-Table/1.0 Microsoft-HTTPAPI/2.0'
+    'x-ms-request-id': '8576d155-8002-0080-0739-3f224b000000'
+    'x-ms-client-request-id': '13cde278-ab2d-11ef-b600-507b9df92581'
+    'x-ms-version': 'REDACTED'
+    'X-Content-Type-Options': 'REDACTED'
+    'Date': 'Mon, 25 Nov 2024 12:59:17 GMT'
+2024-11-25 17:59:17,878 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://apnawaqeel.table.core.windows.net/Tables'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json;odata=nometadata'
+    'Content-Length': '29'
+    'x-ms-version': 'REDACTED'
+    'DataServiceVersion': 'REDACTED'
+    'Accept': 'application/json;odata=minimalmetadata'
+    'x-ms-client-request-id': '1491f6fa-ab2d-11ef-a386-507b9df92581'
+    'x-ms-date': 'REDACTED'
+    'Date': 'Mon, 25 Nov 2024 12:59:17 GMT'
+    'User-Agent': 'azsdk-python-data-tables/12.5.0 Python/3.12.6 (Windows-11-10.0.22621-SP0)'
+    'Authorization': 'REDACTED'
+A body is sent with the request
+2024-11-25 17:59:18,165 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 409
+Response headers:
+    'Cache-Control': 'no-cache'
+    'Transfer-Encoding': 'chunked'
+    'Content-Type': 'application/json;odata=minimalmetadata;streaming=true;charset=utf-8'
+    'Server': 'Windows-Azure-Table/1.0 Microsoft-HTTPAPI/2.0'
+    'x-ms-request-id': '8576d17b-8002-0080-2839-3f224b000000'
+    'x-ms-client-request-id': '1491f6fa-ab2d-11ef-a386-507b9df92581'
+    'x-ms-version': 'REDACTED'
+    'X-Content-Type-Options': 'REDACTED'
+    'Date': 'Mon, 25 Nov 2024 12:59:18 GMT'
+2024-11-25 17:59:18,181 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://apnawaqeel.table.core.windows.net/Tables'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json;odata=nometadata'
+    'Content-Length': '29'
+    'x-ms-version': 'REDACTED'
+    'DataServiceVersion': 'REDACTED'
+    'Accept': 'application/json;odata=minimalmetadata'
+    'x-ms-client-request-id': '14c054e1-ab2d-11ef-8e96-507b9df92581'
+    'x-ms-date': 'REDACTED'
+    'Date': 'Mon, 25 Nov 2024 12:59:18 GMT'
+    'User-Agent': 'azsdk-python-data-tables/12.5.0 Python/3.12.6 (Windows-11-10.0.22621-SP0)'
+    'Authorization': 'REDACTED'
+A body is sent with the request
+2024-11-25 17:59:18,486 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 409
+Response headers:
+    'Cache-Control': 'no-cache'
+    'Transfer-Encoding': 'chunked'
+    'Content-Type': 'application/json;odata=minimalmetadata;streaming=true;charset=utf-8'
+    'Server': 'Windows-Azure-Table/1.0 Microsoft-HTTPAPI/2.0'
+    'x-ms-request-id': '8576d18a-8002-0080-3239-3f224b000000'
+    'x-ms-client-request-id': '14c054e1-ab2d-11ef-8e96-507b9df92581'
+    'x-ms-version': 'REDACTED'
+    'X-Content-Type-Options': 'REDACTED'
+    'Date': 'Mon, 25 Nov 2024 12:59:18 GMT'
+2024-11-25 17:59:18,518 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://apnawaqeel.table.core.windows.net/ChatMessages()?$select=REDACTED&$filter=REDACTED'
+Request method: 'GET'
+Request headers:
+    'x-ms-version': 'REDACTED'
+    'DataServiceVersion': 'REDACTED'
+    'Accept': 'application/json;odata=minimalmetadata'
+    'x-ms-client-request-id': '14f3a046-ab2d-11ef-874b-507b9df92581'
+    'x-ms-date': 'REDACTED'
+    'Date': 'Mon, 25 Nov 2024 12:59:18 GMT'
+    'User-Agent': 'azsdk-python-data-tables/12.5.0 Python/3.12.6 (Windows-11-10.0.22621-SP0)'
+    'Authorization': 'REDACTED'
+No body was attached to the request
+2024-11-25 17:59:18,811 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Cache-Control': 'no-cache'
+    'Transfer-Encoding': 'chunked'
+    'Content-Type': 'application/json;odata=minimalmetadata;streaming=true;charset=utf-8'
+    'Server': 'Windows-Azure-Table/1.0 Microsoft-HTTPAPI/2.0'
+    'x-ms-request-id': '8576d1c1-8002-0080-5d39-3f224b000000'
+    'x-ms-client-request-id': '14f3a046-ab2d-11ef-874b-507b9df92581'
+    'x-ms-version': 'REDACTED'
+    'X-Content-Type-Options': 'REDACTED'
+    'Date': 'Mon, 25 Nov 2024 12:59:18 GMT'
+2024-11-25 17:59:18,836 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://apnawaqeel.table.core.windows.net/UserSessions()?$select=REDACTED&$filter=REDACTED'
+Request method: 'GET'
+Request headers:
+    'x-ms-version': 'REDACTED'
+    'DataServiceVersion': 'REDACTED'
+    'Accept': 'application/json;odata=minimalmetadata'
+    'x-ms-client-request-id': '15248187-ab2d-11ef-a3e6-507b9df92581'
+    'x-ms-date': 'REDACTED'
+    'Date': 'Mon, 25 Nov 2024 12:59:18 GMT'
+    'User-Agent': 'azsdk-python-data-tables/12.5.0 Python/3.12.6 (Windows-11-10.0.22621-SP0)'
+    'Authorization': 'REDACTED'
+No body was attached to the request
+2024-11-25 17:59:19,131 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Cache-Control': 'no-cache'
+    'Transfer-Encoding': 'chunked'
+    'Content-Type': 'application/json;odata=minimalmetadata;streaming=true;charset=utf-8'
+    'Server': 'Windows-Azure-Table/1.0 Microsoft-HTTPAPI/2.0'
+    'x-ms-request-id': '8576d1e2-8002-0080-7839-3f224b000000'
+    'x-ms-client-request-id': '15248187-ab2d-11ef-a3e6-507b9df92581'
+    'x-ms-version': 'REDACTED'
+    'X-Content-Type-Options': 'REDACTED'
+    'Date': 'Mon, 25 Nov 2024 12:59:19 GMT'
+2024-11-25 17:59:19,136 - root - INFO - Found 0 chats for user demo_user
+2024-11-25 18:01:13,719 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-11-25 18:01:13,735 - root - INFO - Sentiment: Alternate Dispute Resolution (ADR)
+2024-11-25 18:01:13,738 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://apnawaqeel.table.core.windows.net/LawyerRecommendations()?$filter=REDACTED'
+Request method: 'GET'
+Request headers:
+    'x-ms-version': 'REDACTED'
+    'DataServiceVersion': 'REDACTED'
+    'Accept': 'application/json;odata=minimalmetadata'
+    'x-ms-client-request-id': '59a0e3bc-ab2d-11ef-8545-507b9df92581'
+    'x-ms-date': 'REDACTED'
+    'Date': 'Mon, 25 Nov 2024 13:01:13 GMT'
+    'User-Agent': 'azsdk-python-data-tables/12.5.0 Python/3.12.6 (Windows-11-10.0.22621-SP0)'
+    'Authorization': 'REDACTED'
+No body was attached to the request
+2024-11-25 18:01:15,451 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Cache-Control': 'no-cache'
+    'Transfer-Encoding': 'chunked'
+    'Content-Type': 'application/json;odata=minimalmetadata;streaming=true;charset=utf-8'
+    'Server': 'Windows-Azure-Table/1.0 Microsoft-HTTPAPI/2.0'
+    'x-ms-request-id': '624f81bf-5002-0058-713a-3f0512000000'
+    'x-ms-client-request-id': '59a0e3bc-ab2d-11ef-8545-507b9df92581'
+    'x-ms-version': 'REDACTED'
+    'X-Content-Type-Options': 'REDACTED'
+    'Date': 'Mon, 25 Nov 2024 13:01:14 GMT'
+2024-11-25 18:01:15,503 - root - INFO - Lawyer recommendations: [{'name': 'Adv. Amy Warren', 'specialization': 'Alternate Dispute Resolution (ADR)', 'experience': '34 years', 'rating': '5.0', 'location': 'Karachi', 'contact': '+92-314-5281790'}, {'name': 'Adv. Courtney Cortez', 'specialization': 'Alternate Dispute Resolution (ADR)', 'experience': '35 years', 'rating': '4.7', 'location': 'Lahore', 'contact': '+92-322-2433859'}]
+2024-11-25 18:01:16,676 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-11-25 18:01:38,124 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-11-25 18:01:39,274 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-11-25 18:01:39,719 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-11-25 18:01:40,145 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-11-25 18:01:46,676 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-11-25 18:01:47,383 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-11-25 18:01:47,883 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-11-25 18:02:07,344 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-11-25 18:02:07,348 - root - INFO - Sentiment: Alternate Dispute Resolution (ADR)
+2024-11-25 18:02:07,352 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://apnawaqeel.table.core.windows.net/LawyerRecommendations()?$filter=REDACTED'
+Request method: 'GET'
+Request headers:
+    'x-ms-version': 'REDACTED'
+    'DataServiceVersion': 'REDACTED'
+    'Accept': 'application/json;odata=minimalmetadata'
+    'x-ms-client-request-id': '7995ac63-ab2d-11ef-a16a-507b9df92581'
+    'x-ms-date': 'REDACTED'
+    'Date': 'Mon, 25 Nov 2024 13:02:07 GMT'
+    'User-Agent': 'azsdk-python-data-tables/12.5.0 Python/3.12.6 (Windows-11-10.0.22621-SP0)'
+    'Authorization': 'REDACTED'
+No body was attached to the request
+2024-11-25 18:02:08,009 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Cache-Control': 'no-cache'
+    'Transfer-Encoding': 'chunked'
+    'Content-Type': 'application/json;odata=minimalmetadata;streaming=true;charset=utf-8'
+    'Server': 'Windows-Azure-Table/1.0 Microsoft-HTTPAPI/2.0'
+    'x-ms-request-id': '624f9b21-5002-0058-353a-3f0512000000'
+    'x-ms-client-request-id': '7995ac63-ab2d-11ef-a16a-507b9df92581'
+    'x-ms-version': 'REDACTED'
+    'X-Content-Type-Options': 'REDACTED'
+    'Date': 'Mon, 25 Nov 2024 13:02:07 GMT'
+2024-11-25 18:02:08,050 - root - INFO - Lawyer recommendations: [{'name': 'Adv. Amy Warren', 'specialization': 'Alternate Dispute Resolution (ADR)', 'experience': '34 years', 'rating': '5.0', 'location': 'Karachi', 'contact': '+92-314-5281790'}, {'name': 'Adv. Courtney Cortez', 'specialization': 'Alternate Dispute Resolution (ADR)', 'experience': '35 years', 'rating': '4.7', 'location': 'Lahore', 'contact': '+92-322-2433859'}]
+2024-11-25 18:02:08,456 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-11-25 18:02:17,876 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-11-25 18:02:18,306 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-11-25 18:02:18,766 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-11-25 18:02:19,217 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-11-25 18:02:48,530 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-11-25 18:02:49,526 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2024-11-25 18:02:49,526 - groq._base_client - INFO - Retrying request to /openai/v1/chat/completions in 6.000000 seconds
+2024-11-25 18:02:56,497 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+2024-11-25 18:02:56,501 - groq._base_client - INFO - Retrying request to /openai/v1/chat/completions in 1.572442 seconds
+2024-11-25 18:02:58,756 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+2024-11-25 18:03:14,321 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-11-25 18:03:14,326 - root - INFO - Sentiment: Alternate Dispute Resolution (ADR)
+2024-11-25 18:03:14,329 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://apnawaqeel.table.core.windows.net/LawyerRecommendations()?$filter=REDACTED'
+Request method: 'GET'
+Request headers:
+    'x-ms-version': 'REDACTED'
+    'DataServiceVersion': 'REDACTED'
+    'Accept': 'application/json;odata=minimalmetadata'
+    'x-ms-client-request-id': 'a181c1c4-ab2d-11ef-8de9-507b9df92581'
+    'x-ms-date': 'REDACTED'
+    'Date': 'Mon, 25 Nov 2024 13:03:14 GMT'
+    'User-Agent': 'azsdk-python-data-tables/12.5.0 Python/3.12.6 (Windows-11-10.0.22621-SP0)'
+    'Authorization': 'REDACTED'
+No body was attached to the request
+2024-11-25 18:03:15,694 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Cache-Control': 'no-cache'
+    'Transfer-Encoding': 'chunked'
+    'Content-Type': 'application/json;odata=minimalmetadata;streaming=true;charset=utf-8'
+    'Server': 'Windows-Azure-Table/1.0 Microsoft-HTTPAPI/2.0'
+    'x-ms-request-id': '624fc2cb-5002-0058-3a3a-3f0512000000'
+    'x-ms-client-request-id': 'a181c1c4-ab2d-11ef-8de9-507b9df92581'
+    'x-ms-version': 'REDACTED'
+    'X-Content-Type-Options': 'REDACTED'
+    'Date': 'Mon, 25 Nov 2024 13:03:14 GMT'
+2024-11-25 18:03:15,730 - root - INFO - Lawyer recommendations: [{'name': 'Adv. Amy Warren', 'specialization': 'Alternate Dispute Resolution (ADR)', 'experience': '34 years', 'rating': '5.0', 'location': 'Karachi', 'contact': '+92-314-5281790'}, {'name': 'Adv. Courtney Cortez', 'specialization': 'Alternate Dispute Resolution (ADR)', 'experience': '35 years', 'rating': '4.7', 'location': 'Lahore', 'contact': '+92-322-2433859'}]
+2024-11-25 18:03:16,150 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-11-25 18:05:55,076 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-11-25 18:05:55,081 - root - INFO - Sentiment: Alternate Dispute Resolution (ADR)
+2024-11-25 18:05:55,081 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://apnawaqeel.table.core.windows.net/LawyerRecommendations()?$filter=REDACTED'
+Request method: 'GET'
+Request headers:
+    'x-ms-version': 'REDACTED'
+    'DataServiceVersion': 'REDACTED'
+    'Accept': 'application/json;odata=minimalmetadata'
+    'x-ms-client-request-id': '01529dcc-ab2e-11ef-a4aa-507b9df92581'
+    'x-ms-date': 'REDACTED'
+    'Date': 'Mon, 25 Nov 2024 13:05:55 GMT'
+    'User-Agent': 'azsdk-python-data-tables/12.5.0 Python/3.12.6 (Windows-11-10.0.22621-SP0)'
+    'Authorization': 'REDACTED'
+No body was attached to the request
+2024-11-25 18:05:56,195 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Cache-Control': 'no-cache'
+    'Transfer-Encoding': 'chunked'
+    'Content-Type': 'application/json;odata=minimalmetadata;streaming=true;charset=utf-8'
+    'Server': 'Windows-Azure-Table/1.0 Microsoft-HTTPAPI/2.0'
+    'x-ms-request-id': '62501978-5002-0058-523a-3f0512000000'
+    'x-ms-client-request-id': '01529dcc-ab2e-11ef-a4aa-507b9df92581'
+    'x-ms-version': 'REDACTED'
+    'X-Content-Type-Options': 'REDACTED'
+    'Date': 'Mon, 25 Nov 2024 13:05:54 GMT'
+2024-11-25 18:05:56,207 - root - INFO - Lawyer recommendations: [{'name': 'Adv. Amy Warren', 'specialization': 'Alternate Dispute Resolution (ADR)', 'experience': '34 years', 'rating': '5.0', 'location': 'Karachi', 'contact': '+92-314-5281790'}, {'name': 'Adv. Courtney Cortez', 'specialization': 'Alternate Dispute Resolution (ADR)', 'experience': '35 years', 'rating': '4.7', 'location': 'Lahore', 'contact': '+92-322-2433859'}]
+2024-11-25 18:05:57,325 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-11-25 18:06:00,918 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-11-25 18:06:01,350 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-11-25 18:06:01,797 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-11-25 18:06:02,267 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-11-25 18:06:19,011 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-11-25 18:06:20,194 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-11-25 18:06:21,369 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"

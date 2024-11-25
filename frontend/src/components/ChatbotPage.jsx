@@ -19,9 +19,11 @@ const LawyerCard = ({ lawyer }) => (
       <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">{lawyer.specialization}</p>
       <div className="flex items-center mt-1">
         <Star className="h-4 w-4 text-yellow-400 fill-current" />
-        <span className="ml-1 text-sm">{lawyer.rating} ({lawyer.reviewCount} reviews)</span>
+        <span className="ml-1 text-sm">{lawyer.rating}</span>
       </div>
-      <p className="mt-2 text-sm">{lawyer.description}</p>
+      <p className="mt-2 text-sm">{lawyer.experience}</p>
+      <p className="mt-2 text-sm">{lawyer.location}</p>
+      <p className="mt-2 text-sm">{lawyer.contact}</p>
       <a href="#" className="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
         Contact {lawyer.name}
         <svg className="w-3.5 h-3.5 ms-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
