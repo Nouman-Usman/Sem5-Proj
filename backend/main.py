@@ -24,6 +24,7 @@ import gc  # Add at top with other imports
 from history import AzureTableChatMessageHistory
 from langchain.schema import HumanMessage, AIMessage, BaseMessage
 from lawyer_store import LawyerStore
+from langchain.memory import ConversationBufferWindowMemory  # Update import
 
 load_dotenv()
 
@@ -38,7 +39,7 @@ class GraphState(TypedDict):
 
 
 class RAGAgent:
-    def __init__(self):
+    def __init__(self, user_id: str, chat_id: str = None):
         load_dotenv()
         self.api_key = os.getenv("PINECONE_API")
         self.legal_index_name = "apna-waqeel3"
@@ -58,6 +59,12 @@ class RAGAgent:
         self.lawyer_store = LawyerStore(connection_string=self.connection_string)
         gc.collect()
         self.max_context_length = 4096  # Add max context length
+        self.memory = ConversationBufferWindowMemory(k=5)  # Initialize conversation buffer window memory with window size 5
+
+        self.user_id = user_id
+        self.chat_id = chat_id
+        if chat_id:
+            self.load_previous_chats(user_id, chat_id)  # Load previous chats if chat_id is not null
 
     def get_chat_history(self, chat_id):  # Changed from chat_id
         if (chat_id):
@@ -67,7 +74,7 @@ class RAGAgent:
                     user_id=self.user_id,
                     connection_string=self.connection_string
                 )
-                messages = chat_history.messages[-4:]  # Get last 4 messages
+                messages = chat_history.messages[-5:]  # Get last 5 messages
                 return "\n".join(
                     [
                         (
@@ -229,23 +236,8 @@ Question to route: {question}
         documents = state["documents"]
         chat_id = state.get("chat_id")
         user_id = state.get("user_id")
-        chat_context = ""
-        if chat_id and user_id:
-            try:
-                chat_history = self.get_chat_messages(user_id, chat_id)[-2:]
-                if chat_history:
-                    chat_context = "\n".join(
-                        [
-                            (
-                                f"Human: {msg.content[:500]}"  
-                                if isinstance(msg, HumanMessage)
-                                else f"Assistant: {msg.content[:500]}"
-                            )
-                            for msg in chat_history
-                        ]
-                    )
-            except Exception as e:
-                print(f"Error getting chat history: {e}")
+        chat_context = self.memory.load_memory_variables({})["history"]  # Use conversation buffer memory
+
         doc_texts = []
         total_length = len(question) + len(chat_context)
         for doc in documents:
@@ -279,11 +271,8 @@ Question to route: {question}
                 else:
                     source = [] 
             
-            # Source is a list of sources, so we need to join them in the final generation
-            # final_answer = f"{generation} \n Source: {', '.join(source)}"
-            # breakpoint()
             final_answer = f"{generation}"
-            # final_answer = generation
+
         del generation
         gc.collect()
 
@@ -435,7 +424,7 @@ Question to route: {question}
         print("---ROUTE QUESTION---")
         question = state["question"]
         try:
-            route = self.question_router.invoke({"question": question}).strip().lower()
+            route = "vectorstore"
             if route == "web_search":
                 print("---ROUTE QUESTION TO WEB SEARCH---")
                 return "websearch"
@@ -498,6 +487,25 @@ Question to route: {question}
             print(f"JSON decode error: {e}")
             return "useful"  # Fall back to accepting the generation
 
+    def update_query(self, question: str, chat_history: str) -> str:
+        print("---UPDATE QUERY---")
+        print("Chat History: ", chat_history)
+        # print(chat_history)
+        # breakpoint()
+        prompt = f"""
+        Given the following chat history, update the user's query to be more structured and clear:
+        
+        Chat History:
+        {chat_history}
+        
+        Original Query: {question}
+        
+        Updated Query:
+        """
+        updated_query_result = self.llm.invoke(prompt)
+        updated_query = updated_query_result.content.strip()
+        return updated_query
+
     def build_workflow(self):
         workflow = StateGraph(state_schema=GraphState)
 
@@ -505,6 +513,7 @@ Question to route: {question}
         workflow.add_node("websearch", self.web_search)
         workflow.add_node("retrieve", self.retrieve)
         workflow.add_node("grade_documents", self.grade_documents)
+        workflow.add_node("update_query", self.update_query)  # Add update_query node
         workflow.add_node(
             "generate",
             lambda x: {**x, "attempts": x.get("attempts", 0) + 1} | self.generate(x),
@@ -527,10 +536,11 @@ Question to route: {question}
             self.decide_to_generate,
             {
                 "websearch": "websearch",
-                "generate": "generate",
+                "generate": "update_query",  # Route to update_query before generate
             },
         )
 
+        workflow.add_edge("update_query", "generate")  # Add edge from update_query to generate
         workflow.add_edge("websearch", "generate")
 
         # Add conditional edges for generation grading
@@ -542,22 +552,39 @@ Question to route: {question}
 
         return workflow.compile()
 
+    def load_previous_chats(self, user_id: str, chat_id: str):
+        """Load previous chats into the conversation buffer memory"""
+        self.memory.clear()  # Clear memory at the start of each session
+        chat_history = self.get_chat_messages(user_id, chat_id)
+        for msg in chat_history[-5:]:  # Load only the last 5 messages
+            if isinstance(msg, HumanMessage):
+                self.memory.add_user_message(msg.content)
+            else:
+                self.memory.add_ai_message(msg.content)
+
     def run(self, question: str, user_id: str, chat_id: str = None, chat_history: List[Dict] = None) -> Dict[str, Any]:
         try:
             if chat_history is None:
                 chat_history = []
 
-            sentiment = self.analyze_sentiment(question)
+            # Load previous chats into the conversation buffer memory
+            if chat_id:
+                self.load_previous_chats(user_id, chat_id)
+
+            chat_context = self.memory.load_memory_variables({})["history"]  # Use conversation buffer memory
+            updated_question = self.update_query(question, chat_context)  # Update the query based on chat history
+
+            sentiment = self.analyze_sentiment(updated_question)
             logging.info(f"Sentiment: {sentiment}")
             recommendations = self.lawyer_store.get_top_lawyers(sentiment)
             logging.info(f"Lawyer recommendations: {recommendations}")
 
             app = self.build_workflow()
             inputs = {
-                "question": question,
+                "question": updated_question,  # Use updated question
                 "chat_id": chat_id,
                 "user_id": user_id,
-                "chat_history": chat_history  # Include chat history in inputs
+                "chat_history": chat_context  # Use conversation buffer memory
             }
             last_output = None
 
@@ -699,9 +726,11 @@ Question to route: {question}
             return "Unable to retrieve lawyer recommendations at this time."
 
 if __name__ == "__main__":
-    agent = RAGAgent()
-    question = "How to file a FIR in Pakistan?"
     user_id = "test_user"
-    chat_id = "test_session"  # Changed from chat_id
-    result = agent.run(question, user_id, chat_id)
-    print(result)
+    chat_id = "test_session"
+    agent = RAGAgent(user_id=user_id, chat_id=chat_id)
+    while(True):
+        user_input = input("User: ")
+        result = agent.run(user_input, user_id, chat_id)
+        print(f"Assistant: {result}")
+    # question = "What is the procedure for filing a divorce in Pakistan?"

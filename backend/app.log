@@ -12663,3 +12663,96 @@ Response headers:
 2024-11-26 09:13:01,747 - __main__ - ERROR - Error retrieving chats: HTTPSConnectionPool(host='api.pinecone.io', port=443): Max retries exceeded with url: /indexes/apna-waqeel3 (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x0000011F4EE99DC0>: Failed to resolve 'api.pinecone.io' ([Errno 11001] getaddrinfo failed)"))
 2024-11-26 09:13:01,749 - werkzeug - INFO - 127.0.0.1 - - [26/Nov/2024 09:13:01] "[35m[1mGET /api/user/demo_user/chats HTTP/1.1[0m" 500 -
 2024-11-26 09:23:30,555 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-11-26 09:24:21,116 - app - INFO - Initializing RAG agent...
+2024-11-26 09:24:21,122 - pinecone_plugin_interface.logging - INFO - Discovering subpackages in _NamespacePath(['C:\\Users\\Nouma\\OneDrive\\Desktop\\GenAi x Xavour\\ApnaWaqeel\\venv\\Lib\\site-packages\\pinecone_plugins'])
+2024-11-26 09:24:21,132 - pinecone_plugin_interface.logging - INFO - Looking for plugins in pinecone_plugins.inference
+2024-11-26 09:24:21,242 - pinecone_plugin_interface.logging - INFO - Installing plugin inference into Pinecone
+2024-11-26 09:24:30,364 - datasets - INFO - PyTorch version 2.4.1 available.
+2024-11-26 09:24:31,766 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2024-11-26 09:24:31,767 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2024-11-26 09:24:47,441 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://apnawaqeel.table.core.windows.net/Tables'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json;odata=nometadata'
+    'Content-Length': '38'
+    'x-ms-version': 'REDACTED'
+    'DataServiceVersion': 'REDACTED'
+    'Accept': 'application/json;odata=minimalmetadata'
+    'x-ms-client-request-id': '5ec4ab84-abae-11ef-96b2-507b9df92581'
+    'x-ms-date': 'REDACTED'
+    'Date': 'Tue, 26 Nov 2024 04:24:47 GMT'
+    'User-Agent': 'azsdk-python-data-tables/12.5.0 Python/3.12.6 (Windows-11-10.0.22621-SP0)'
+    'Authorization': 'REDACTED'
+A body is sent with the request
+2024-11-26 09:24:51,040 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 409
+Response headers:
+    'Cache-Control': 'no-cache'
+    'Transfer-Encoding': 'chunked'
+    'Content-Type': 'application/json;odata=minimalmetadata;streaming=true;charset=utf-8'
+    'Server': 'Windows-Azure-Table/1.0 Microsoft-HTTPAPI/2.0'
+    'x-ms-request-id': '4f80a53b-7002-005f-6abb-3f6971000000'
+    'x-ms-client-request-id': '5ec4ab84-abae-11ef-96b2-507b9df92581'
+    'x-ms-version': 'REDACTED'
+    'X-Content-Type-Options': 'REDACTED'
+    'Date': 'Tue, 26 Nov 2024 04:24:50 GMT'
+2024-11-26 09:24:51,358 - app - INFO - RAG agent initialized successfully
+2024-11-26 09:24:52,892 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-11-26 09:24:52,957 - root - INFO - Sentiment: 1. Civil
+2024-11-26 09:24:52,961 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://apnawaqeel.table.core.windows.net/LawyerRecommendations()?$filter=REDACTED'
+Request method: 'GET'
+Request headers:
+    'x-ms-version': 'REDACTED'
+    'DataServiceVersion': 'REDACTED'
+    'Accept': 'application/json;odata=minimalmetadata'
+    'x-ms-client-request-id': '620f0f60-abae-11ef-aef8-507b9df92581'
+    'x-ms-date': 'REDACTED'
+    'Date': 'Tue, 26 Nov 2024 04:24:52 GMT'
+    'User-Agent': 'azsdk-python-data-tables/12.5.0 Python/3.12.6 (Windows-11-10.0.22621-SP0)'
+    'Authorization': 'REDACTED'
+No body was attached to the request
+2024-11-26 09:24:54,825 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Cache-Control': 'no-cache'
+    'Transfer-Encoding': 'chunked'
+    'Content-Type': 'application/json;odata=minimalmetadata;streaming=true;charset=utf-8'
+    'Server': 'Windows-Azure-Table/1.0 Microsoft-HTTPAPI/2.0'
+    'x-ms-request-id': '44d7545d-5002-0048-25bb-3fc07a000000'
+    'x-ms-client-request-id': '620f0f60-abae-11ef-aef8-507b9df92581'
+    'x-ms-version': 'REDACTED'
+    'X-Content-Type-Options': 'REDACTED'
+    'Date': 'Tue, 26 Nov 2024 04:24:53 GMT'
+2024-11-26 09:24:54,896 - root - INFO - Lawyer recommendations: []
+2024-11-26 09:24:55,639 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-11-26 09:25:05,162 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-11-26 09:25:06,086 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-11-26 09:25:06,696 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-11-26 09:33:01,108 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-11-26 09:33:01,134 - root - INFO - Sentiment: Civil
+2024-11-26 09:33:01,134 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://apnawaqeel.table.core.windows.net/LawyerRecommendations()?$filter=REDACTED'
+Request method: 'GET'
+Request headers:
+    'x-ms-version': 'REDACTED'
+    'DataServiceVersion': 'REDACTED'
+    'Accept': 'application/json;odata=minimalmetadata'
+    'x-ms-client-request-id': '8508d567-abaf-11ef-970a-507b9df92581'
+    'x-ms-date': 'REDACTED'
+    'Date': 'Tue, 26 Nov 2024 04:33:01 GMT'
+    'User-Agent': 'azsdk-python-data-tables/12.5.0 Python/3.12.6 (Windows-11-10.0.22621-SP0)'
+    'Authorization': 'REDACTED'
+No body was attached to the request
+2024-11-26 09:33:04,480 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Cache-Control': 'no-cache'
+    'Transfer-Encoding': 'chunked'
+    'Content-Type': 'application/json;odata=minimalmetadata;streaming=true;charset=utf-8'
+    'Server': 'Windows-Azure-Table/1.0 Microsoft-HTTPAPI/2.0'
+    'x-ms-request-id': 'c5291548-4002-006b-65bc-3f5ab9000000'
+    'x-ms-client-request-id': '8508d567-abaf-11ef-970a-507b9df92581'
+    'x-ms-version': 'REDACTED'
+    'X-Content-Type-Options': 'REDACTED'
+    'Date': 'Tue, 26 Nov 2024 04:33:02 GMT'
+2024-11-26 09:33:04,514 - root - INFO - Lawyer recommendations: [{'name': 'Adv. Alexis Swanson', 'specialization': 'Civil', 'experience': '34 years', 'rating': '5.0', 'location': 'Gujranwala', 'contact': '+92-321-8647931'}, {'name': 'Adv. Sara Becker', 'specialization': 'Civil', 'experience': '33 years', 'rating': '4.9', 'location': 'Quetta', 'contact': '+92-346-2562537'}]
+2024-11-26 09:33:05,564 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-11-26 09:33:16,182 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-11-26 09:33:17,984 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-11-26 09:33:20,023 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"

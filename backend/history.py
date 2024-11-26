@@ -64,7 +64,6 @@ class AzureTableChatMessageHistory(BaseChatMessageHistory):
             # breakpoint()
             messages = []
             for entity in sorted(entities, key=lambda x: x['timestamp']):
-                print("In the for loop")
                 try:
                     content = entity.get('message_content', '')
                     if not content:
