@@ -22,10 +22,9 @@ from dotenv import load_dotenv
 import recommend_lawyer
 import gc  # Add at top with other imports
 from history import AzureTableChatMessageHistory
-from langchain.schema import HumanMessage, AIMessage, BaseMessage
+from langchain.schema import HumanMessage, AIMessage, BaseMessage  # Update import
 from lawyer_store import LawyerStore
 from langchain.memory import ConversationBufferWindowMemory  # Update import
-
 load_dotenv()
 
 
@@ -63,6 +62,7 @@ class RAGAgent:
 
         self.user_id = user_id
         self.chat_id = chat_id
+        self.chats_loaded = False  # Add flag to track if chats are loaded
         if chat_id:
             self.load_previous_chats(user_id, chat_id)  # Load previous chats if chat_id is not null
 
@@ -554,22 +554,23 @@ Question to route: {question}
 
     def load_previous_chats(self, user_id: str, chat_id: str):
         """Load previous chats into the conversation buffer memory"""
-        self.memory.clear()  # Clear memory at the start of each session
+        self.memory.clear()
         chat_history = self.get_chat_messages(user_id, chat_id)
-        for msg in chat_history[-5:]:  # Load only the last 5 messages
+        for msg in chat_history[-5:]:
             if isinstance(msg, HumanMessage):
-                self.memory.add_user_message(msg.content)
-            else:
-                self.memory.add_ai_message(msg.content)
+                self.memory.save_context({"input": msg.content}, {"output": ""})
+            elif isinstance(msg, AIMessage):
+                self.memory.save_context({"input": ""}, {"output": msg.content})
 
     def run(self, question: str, user_id: str, chat_id: str = None, chat_history: List[Dict] = None) -> Dict[str, Any]:
         try:
             if chat_history is None:
                 chat_history = []
 
-            # Load previous chats into the conversation buffer memory
-            if chat_id:
+            # Load previous chats into the conversation buffer memory only once
+            if chat_id and not self.chats_loaded:
                 self.load_previous_chats(user_id, chat_id)
+                self.chats_loaded = True  # Set flag to indicate chats are loaded
 
             chat_context = self.memory.load_memory_variables({})["history"]  # Use conversation buffer memory
             updated_question = self.update_query(question, chat_context)  # Update the query based on chat history
@@ -659,7 +660,7 @@ Question to route: {question}
     def get_chat_messages(self, user_id: str, chat_id: str) -> List[BaseMessage]:
         """Get all messages for a specific chat"""
         chat_history = AzureTableChatMessageHistory(
-            chat_id=chat_id,  # Changed from chat_id
+            chat_id=chat_id,  
             user_id=user_id,
             connection_string=self.connection_string,
         )
@@ -725,6 +726,9 @@ Question to route: {question}
             logging.error(f"Error getting lawyer recommendations: {e}")
             return "Unable to retrieve lawyer recommendations at this time."
 
+    def save_context(self, user_input: str, assistant_output: str):
+        self.memory.save_context({"input": user_input}, {"output": assistant_output})
+
 if __name__ == "__main__":
     user_id = "test_user"
     chat_id = "test_session"
@@ -733,4 +737,5 @@ if __name__ == "__main__":
         user_input = input("User: ")
         result = agent.run(user_input, user_id, chat_id)
         print(f"Assistant: {result}")
+        agent.save_context(user_input, result["chat_response"])  
     # question = "What is the procedure for filing a divorce in Pakistan?"

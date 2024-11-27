@@ -7,27 +7,24 @@ function Home() {
 
   useEffect(() => {
     const handleMessage = (event) => {
-      // console.log("Message received from iframe:", event.data); // Debug: Check received message
 
       if (event.data.action === "navigate" && event.data.path) {
-        // console.log("Navigating to:", event.data.path); // Debug: Confirm path
-        navigate(event.data.path); // Navigate to specified path
+        navigate(event.data.path); 
       }
     };
 
     window.addEventListener("message", handleMessage);
 
-    // Clean up the event listener on component unmount
     return () => {
       window.removeEventListener("message", handleMessage);
     };
   }, [navigate]);
 
   return (
-    <div style={{ height: '100vh', display: 'flex', flexDirection: 'column' }}>
+    <div className="min-h-screen flex flex-col">
       <iframe
         src="/landing/index.html"
-        style={{ width: '100%', height: '100vh', border: 'none', flex: 1 }}
+        className="w-full h-full border-none flex-1"
         title="Standalone Page"
       />
     </div>

@@ -56,20 +56,16 @@ class AzureTableChatMessageHistory(BaseChatMessageHistory):
     def get_chat_messages(self, user_id: str, chat_id: str) -> List[BaseMessage]:
         """Retrieve all messages for a specific chat"""
         try:
-            chat_filter = f"user_id eq '{user_id}' and chat_id eq '{chat_id}'"
+            chat_filter = f"PartitionKey eq '{self._get_message_partition_key()}'"
             entities = self.messages_table.query_entities(
                 query_filter=chat_filter
             )
-            # print(entities)
-            # breakpoint()
             messages = []
             for entity in sorted(entities, key=lambda x: x['timestamp']):
                 try:
-                    content = entity.get('message_content', '')
+                    content = entity.get('content', '')
                     if not content:
                         continue
-                    # print(content)
-                    # breakpoint()
                     msg_type = entity.get('message_type', '')
                     if msg_type == 'HumanMessage':
                         messages.append(HumanMessage(content=content))
@@ -277,3 +273,9 @@ class AzureTableChatMessageHistory(BaseChatMessageHistory):
         except Exception as e:
             logging.error(f"Error retrieving metadata: {e}")
             return None
+
+if __name__ == "__main__":
+    user_id = "tese_user"
+    chat_id = "test_session"
+    user = AzureTableChatMessageHistory(chat_id="test_session", user_id="test_user", connection_string=os.getenv("BLOB_CONN_STRING"))
+    print (user.get_chat_messages(chat_id=chat_id, user_id=user_id))

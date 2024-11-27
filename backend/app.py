@@ -23,12 +23,12 @@ CORS(app)
 # Initialize agent globally but lazily
 agent = None
 
-def get_agent():
+def get_agent(user_id, chat_id):
     global agent
     if agent is None:
         try:
             logger.info("Initializing RAG agent...")
-            agent = RAGAgent()
+            agent = RAGAgent(user_id=user_id, chat_id=chat_id)
             logger.info("RAG agent initialized successfully")
         except Exception as e:
             logger.error(f"Failed to initialize RAG agent: {e}")
@@ -51,7 +51,7 @@ def ask_question():
             return jsonify({"error": "Missing required parameters"}), 400
 
         # Get or initialize agent
-        rag_agent = get_agent()
+        rag_agent = get_agent(user_id=user_id, chat_id=chat_id)
         
         # Retrieve chat history
         chat_history = rag_agent.get_chat_history_messages(user_id, chat_id) if chat_id else []
@@ -75,11 +75,11 @@ def ask_question():
         gc.collect()
 
 # Basic routes without complex session management
-@app.route('/api/user/<user_id>/chats', methods=['GET'])
-def get_user_chats(user_id):
+@app.route('/api/user/<user_id>/chats/<chat_id>', methods=['GET'])
+def get_user_chats(user_id, chat_id):
     try:
-        rag_agent = get_agent()
-        chat_history = rag_agent.get_user_chat_history(user_id, "temp")
+        rag_agent = get_agent(user_id=user_id, chat_id=chat_id)
+        chat_history = rag_agent.get_user_chat_history(user_id, chat_id=chat_id)
         return jsonify({
             "user_id": user_id,
             "chat_ids": chat_history,

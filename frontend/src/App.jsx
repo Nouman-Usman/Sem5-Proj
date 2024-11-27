@@ -16,7 +16,12 @@ function App() {
       <Routes>
         // ...existing routes...
         <Route path="/chatbot" element={<ChatbotPage />} />
-        // ...existing routes...
+        <Route path="/lawyers" element={<LawyerRecommendationPage />} />
+        <Route path="/user-home" element={<UserHome />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/Signup" element={<LoginSignup />} />
+        <Route path="/login" element={<LoginSignup />} />
+        <Route path="/" element={<Home />} />
       </Routes>
     </Router>
   );

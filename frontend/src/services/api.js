@@ -12,8 +12,8 @@ const api = axios.create({
 export const apiService = {
   askQuestion: (question, userId, chatId = null) => 
     api.post('/ask', { question, user_id: userId, chat_id: chatId }),
-  getUserChats: (userId) => 
-    api.get(`/user/${userId}/chats`),
+  getUserChats: (userId,chatId ) => 
+    api.get(`/user/${userId}/chats/${chatId}`),
   getChatMessages: (userId, chatId) => 
     api.get(`/user/${userId}/chat/${chatId}/messages`),
   clearChat: (userId, chatId) => 
