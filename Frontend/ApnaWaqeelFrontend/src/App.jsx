@@ -33,7 +33,9 @@ function NavbarWithConditionalRender() {
   const location = useLocation(); // This is now safe because it's inside the Router
 
   // Hide navbar on Login/Signup pages
-  const shouldHideNavbar = location.pathname === '/Login' || location.pathname === '/Signup' ;
+  const shouldHideNavbar = location.pathname === '/Login' || location.pathname === '/Signup' 
+  //  || location.pathname === '/' 
+   ;
 
   return !shouldHideNavbar ? <Navbar /> : null; // Render Navbar conditionally
 }
