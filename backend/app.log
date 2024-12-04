@@ -10032,3 +10032,27 @@ A body is sent with the request
 2024-12-04 20:38:18,358 - datasets - INFO - PyTorch version 2.4.1 available.
 2024-12-04 20:38:19,677 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
 2024-12-04 20:38:19,679 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2024-12-05 00:49:07,951 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-12-05 00:49:07,982 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2024-12-05 00:56:49,327 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-12-05 00:56:49,327 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2024-12-05 00:56:52,278 - werkzeug - INFO - 127.0.0.1 - - [05/Dec/2024 00:56:52] "GET /api/ HTTP/1.1" 200 -
+2024-12-05 00:56:54,192 - werkzeug - INFO - 127.0.0.1 - - [05/Dec/2024 00:56:54] "GET /api/ HTTP/1.1" 200 -
+2024-12-05 01:03:20,787 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-12-05 01:03:20,787 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2024-12-05 01:03:20,886 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2024-12-05 01:03:32,902 - werkzeug - WARNING -  * Debugger is active!
+2024-12-05 01:03:32,902 - werkzeug - INFO -  * Debugger PIN: 603-212-552
+2024-12-05 01:03:33,359 - werkzeug - INFO - 127.0.0.1 - - [05/Dec/2024 01:03:33] "GET /api/ HTTP/1.1" 200 -
+2024-12-05 01:03:36,024 - werkzeug - INFO - 127.0.0.1 - - [05/Dec/2024 01:03:36] "GET /api/ HTTP/1.1" 200 -
+2024-12-05 01:03:36,903 - werkzeug - INFO - 127.0.0.1 - - [05/Dec/2024 01:03:36] "GET /api/ HTTP/1.1" 200 -
+2024-12-05 01:04:17,735 - werkzeug - INFO -  * Detected change in 'D:\\UET BSCS\\Apna Waqeel Project\\Sem5-Proj\\backend\\app.py', reloading
+2024-12-05 01:04:17,735 - werkzeug - INFO -  * Detected change in 'D:\\UET BSCS\\Apna Waqeel Project\\Sem5-Proj\\backend\\app.py', reloading
+2024-12-05 01:04:17,735 - werkzeug - INFO -  * Detected change in 'D:\\UET BSCS\\Apna Waqeel Project\\Sem5-Proj\\backend\\app.py', reloading
+2024-12-05 01:08:41,135 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-12-05 01:08:41,137 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2024-12-05 01:08:52,242 - werkzeug - INFO - 127.0.0.1 - - [05/Dec/2024 01:08:52] "GET /api/ HTTP/1.1" 200 -

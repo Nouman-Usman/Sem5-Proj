@@ -5,6 +5,13 @@ from main import RAGAgent
 import gc
 import tracemalloc
 import httpx  # Add this import
+from datetime import timedelta
+
+from flask_sqlalchemy import SQLAlchemy
+from flask_bcrypt import Bcrypt
+from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
+from werkzeug.security import generate_password_hash, check_password_hash
+
 
 logging.basicConfig(
     level=logging.INFO,
@@ -46,6 +53,107 @@ def get_agent(user_id, chat_id):
             logger.error(f"Failed to initialize RAG agent: {e}")
             raise
     return agent
+
+
+# Configure the database and other settings
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'  # Use Azure Database URI here
+app.config['SECRET_KEY'] = 'your_secret_key'  # Change this to a secure key
+app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(hours=1)
+
+db = SQLAlchemy(app)
+jwt = JWTManager(app)
+
+
+# User model for SQLite (you can adjust to Azure DB model)
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False)
+    email = db.Column(db.String(100), unique=True, nullable=False)
+    password = db.Column(db.String(200), nullable=False)
+    role = db.Column(db.String(50), nullable=False)
+
+    def __repr__(self):
+        return f'<User {self.email}>'
+    
+
+
+# api routes for front end
+
+# Route for Signup
+@app.route('/api/signup', methods=['POST'])
+def signup():
+    data = request.get_json()
+    name = data.get('name')
+    email = data.get('email')
+    password = data.get('password')
+    role = data.get('role', 'client')  # Default to 'client' if role is not provided
+
+    # Validate input
+    if not all([name, email, password, role]):
+        return jsonify({"error": "Missing data"}), 400
+
+    # Check if user already exists
+    user = User.query.filter_by(email=email).first()
+    if user:
+        return jsonify({"error": "User already exists"}), 409
+
+    # Hash the password
+    hashed_password = generate_password_hash(password, method='sha256')
+
+    # Create new user
+    new_user = User(name=name, email=email, password=hashed_password, role=role)
+    db.session.add(new_user)
+    db.session.commit()
+
+    return jsonify({"message": "User created successfully"}), 201
+
+# Route for Login
+@app.route('/api/login', methods=['POST'])
+def login():
+    data = request.get_json()
+    email = data.get('email')
+    password = data.get('password')
+
+    # Validate input
+    if not email or not password:
+        return jsonify({"error": "Missing email or password"}), 400
+
+    # Find user by email
+    user = User.query.filter_by(email=email).first()
+    if not user or not check_password_hash(user.password, password):
+        return jsonify({"error": "Invalid credentials"}), 401
+
+    # Generate JWT token
+    access_token = create_access_token(identity=user.id, additional_claims={"role": user.role})
+
+    return jsonify({
+        "message": "Login successful",
+        "access_token": access_token
+    }), 200
+
+# Route for User Profile (Example)
+@app.route('/api/user-profile', methods=['GET'])
+@jwt_required()
+def user_profile():
+    current_user_id = get_jwt_identity()
+    user = User.query.get(current_user_id)
+    return jsonify({
+        "id": user.id,
+        "name": user.name,
+        "email": user.email,
+        "role": user.role
+    })
+
+
+@app.route('/api/', methods=['GET'])
+def health_check2():
+    return jsonify({"status": "healthy"})
+
+
+
+
+###########
+
 
 @app.route('/api/health', methods=['GET'])
 def health_check():
@@ -114,20 +222,27 @@ def get_user_chats(user_id, chat_id):
         logger.error(f"Error retrieving chats: {e}")
         return jsonify({"error": str(e)}), 500
 
+
+def keep_alive():
+    while True:
+        time.sleep(1)
+
 if __name__ == '__main__':
     import threading
     import time
+    try:
+        # Start the keep_alive thread
+        threading.Thread(target=keep_alive, daemon=True).start()
 
-    def keep_alive():
-        while True:
-            time.sleep(1)
-
-    threading.Thread(target=keep_alive).start()
-
-    app.run(
-        host='127.0.0.1',  
-        port=5000,
-        debug=False,  
-        use_reloader=False  
-    )
-    print(f"Backend server running at http://")
+        # Run the Flask app
+        app.run(
+            host='127.0.0.1',
+            port=5000,
+            debug=True,  # Disable in production
+            use_reloader=False  # Set to False in production
+        )
+        print("Backend server started...")
+    except KeyboardInterrupt:
+        print("\nServer stopped by user (Ctrl+C).")
+    except Exception as e:
+        print(f"An error occurred: {e}")
