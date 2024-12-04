@@ -11,10 +11,9 @@ import { ChatbotPage } from './components/ChatbotPage.jsx';
 
 function App() {
   return (    
-    <Router>
-      <NavbarWithConditionalRender />
+<Router>
+      {/* <NavbarWithConditionalRender /> */}
       <Routes>
-        // ...existing routes...
         <Route path="/chatbot" element={<ChatbotPage />} />
         <Route path="/lawyers" element={<LawyerRecommendationPage />} />
         <Route path="/user-home" element={<UserHome />} />

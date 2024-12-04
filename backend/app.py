@@ -3,8 +3,8 @@ from flask_cors import CORS
 import logging
 from main import RAGAgent
 import gc
+import tracemalloc
 
-# Configure logging with file output
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -15,6 +15,17 @@ logging.basicConfig(
 )
 
 logger = logging.getLogger(__name__)
+
+# Start tracing memory allocations
+tracemalloc.start()
+
+def log_memory_usage():
+    snapshot = tracemalloc.take_snapshot()
+    top_stats = snapshot.statistics('lineno')
+
+    logger.info("[ Top 10 memory usage ]")
+    for stat in top_stats[:10]:
+        logger.info(stat)
 
 # Create Flask app
 app = Flask(__name__)
@@ -72,7 +83,10 @@ def ask_question():
         logger.error(f"Error processing question: {e}")
         return jsonify({"error": str(e)}), 500
     finally:
+        # Explicitly delete large objects and force garbage collection
+        del data, question, user_id, chat_id, rag_agent, chat_history, result
         gc.collect()
+        log_memory_usage()  # Log memory usage after each request
 
 # Basic routes without complex session management
 @app.route('/api/user/<user_id>/chats/<chat_id>', methods=['GET'])
@@ -90,8 +104,17 @@ def get_user_chats(user_id, chat_id):
         return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
+    import threading
+    import time
+
+    def keep_alive():
+        while True:
+            time.sleep(1)
+
+    threading.Thread(target=keep_alive).start()
+
     app.run(
-        host='127.0.0.1',  # Only allow local connections
+        host='127.0.0.1',  
         port=5000,
         debug=False,  
         use_reloader=False  

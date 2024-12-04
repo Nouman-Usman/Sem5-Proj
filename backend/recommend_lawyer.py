@@ -1,5 +1,6 @@
 import csv
-import heapq
+import numpy as np
+from sklearn.decomposition import NMF
 
 def calculate_weight(rating, experience):
     try:
@@ -11,58 +12,45 @@ def calculate_weight(rating, experience):
         print(f"Error calculating weight: {e}")
         return 0
 
-def recommend(category):
+def load_lawyer_data():
     try:
-        # Read the CSV file
         with open("lawyers.csv", mode="r", encoding='utf-8') as file:
             lawyers = list(csv.DictReader(file))
-            
+        return lawyers
+    except Exception as e:
+        print(f"Error loading lawyer data: {e}")
+        return []
+
+def create_rating_matrix(lawyers):
+    categories = list(set(lawyer["Specialization"].strip() for lawyer in lawyers))
+    lawyer_names = [lawyer["Name"] for lawyer in lawyers]
+    rating_matrix = np.zeros((len(lawyer_names), len(categories)))
+
+    for i, lawyer in enumerate(lawyers):
+        category_index = categories.index(lawyer["Specialization"].strip())
+        rating_matrix[i, category_index] = float(lawyer["Rating"])
+
+    return rating_matrix, lawyer_names, categories
+
+def recommend(category):
+    try:
+        lawyers = load_lawyer_data()
         if not lawyers:
             print("No lawyers found in database")
             return []
 
-        # Standardize the category mapping
-        specialty_mapping = {
-            "Civil": "Civil",
-            "Criminal": "Criminal",
-            "Corporate": "Corporate",
-            "Constitutional": "Constitutional",
-            "Tax": "Tax",
-            "Family": "Family",
-            "Intellectual Property": "Intellectual Property",
-            "Labor and Employment": "Labor and Employment",
-            "Immigration": "Immigration",
-            "Human Rights": "Human Rights",
-            "Environmental": "Environmental",
-            "Banking and Finance": "Banking and Finance",
-            "Cyber Law": "Cyber Law",
-            "Alternate Dispute Resolution (ADR)": "Alternate Dispute Resolution (ADR)"
-        }
+        rating_matrix, lawyer_names, categories = create_rating_matrix(lawyers)
+        category_index = categories.index(category)
 
-        mapped_category = specialty_mapping.get(category, category)
-        print(f"Looking for lawyers with specialization: {mapped_category}")
+        model = NMF(n_components=2, init='random', random_state=0)
+        W = model.fit_transform(rating_matrix)
+        H = model.components_
 
-        # Filter and rank lawyers
-        relevant_lawyers = []
-        for lawyer in lawyers:
-            try:
-                if lawyer["Specialization"].strip() == mapped_category:
-                    weight = calculate_weight(
-                        lawyer["Rating"],
-                        lawyer["Experience"]
-                    )
-                    relevant_lawyers.append((lawyer, weight))
-            except KeyError as e:
-                print(f"Missing field in lawyer data: {e}")
-                continue
+        category_scores = H[:, category_index]
+        top_indices = np.argsort(category_scores)[-2:][::-1]
+        top_lawyers = [lawyers[i] for i in top_indices]
 
-        if not relevant_lawyers:
-            print(f"No lawyers found for category: {mapped_category}")
-            return []
-
-        # Get top 2 lawyers based on weights
-        top_lawyers = heapq.nlargest(2, relevant_lawyers, key=lambda x: x[1])
-        return [lawyer for lawyer, _ in top_lawyers]
+        return top_lawyers
 
     except Exception as e:
         print(f"Error in recommend function: {e}")

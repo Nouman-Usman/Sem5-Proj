@@ -490,8 +490,7 @@ Question to route: {question}
     def update_query(self, question: str, chat_history: str) -> str:
         print("---UPDATE QUERY---")
         print("Chat History: ", chat_history)
-        # print(chat_history)
-        # breakpoint()
+
         prompt = f"""
         Given the following chat history, update the user's query to be more structured and clear:
         
