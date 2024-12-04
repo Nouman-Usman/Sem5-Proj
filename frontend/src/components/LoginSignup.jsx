@@ -8,7 +8,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 export function LoginSignup() {
   const [showPassword, setShowPassword] = useState(false)
-
+  const [name, setName] = useState("");
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [role, setRole] = useState("client");
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword)
   }
@@ -40,6 +43,8 @@ export function LoginSignup() {
                         type="email"
                         placeholder="Enter your email"
                         className="pl-10"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                         required />
                     </div>
                   </div>
@@ -53,6 +58,8 @@ export function LoginSignup() {
                         type={showPassword ? "text" : "password"}
                         placeholder="Enter your password"
                         className="pl-10 pr-10"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
                         required />
                       <button
                         type="button"
@@ -83,6 +90,8 @@ export function LoginSignup() {
                         type="text"
                         placeholder="Enter your full name"
                         className="pl-10"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
                         required />
                     </div>
                   </div>
@@ -96,6 +105,8 @@ export function LoginSignup() {
                         type="email"
                         placeholder="Enter your email"
                         className="pl-10"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                         required />
                     </div>
                   </div>
@@ -109,6 +120,8 @@ export function LoginSignup() {
                         type={showPassword ? "text" : "password"}
                         placeholder="Create a password"
                         className="pl-10 pr-10"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
                         required />
                       <button
                         type="button"
@@ -120,6 +133,41 @@ export function LoginSignup() {
                           <Eye className="h-5 w-5 text-gray-400" />
                         )}
                       </button>
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="signup-password">I am a </Label>
+                    <div className="flex justify-around gap-5 pl-10 pr-10 border border-neutral-200 rounded-md" style={{ padding: "4px" }}>
+                      <div className="form-check">
+                        <input
+                          className="form-check-input"
+                          style={{ marginRight: "4px" }}
+                          type="radio"
+                          name="role"
+                          id="client"
+                          value="client"
+                        checked={role === 'client'}
+                        onClick={()=>setRole('client')}
+                        />
+                        <label className="form-check-label" htmlFor="client">
+                          Client
+                        </label>
+                      </div>
+                      <div className="form-check">
+                        <input
+                          className="form-check-input"
+                          type="radio"
+                          style={{ marginRight: "4px" }}
+                          name="role"
+                          id="lawyer"
+                          value="lawyer"
+                        checked={role === 'lawyer'}
+                        onClick={()=>setRole('lawyer')}
+                        />
+                        <label className="form-check-label" htmlFor="lawyer">
+                          Lawyer
+                        </label>
+                      </div>
                     </div>
                   </div>
                   <Button type="submit" className="w-full">Sign Up</Button>
