@@ -25,27 +25,27 @@ class LawyerStore:
         self.table_client = TableClient.from_connection_string(
             conn_str=connection_string, table_name=self.LAWYERS_TABLE
         )
-        # self._load_lawyers_from_csv()
+        self._load_lawyers_from_csv()
 
-    # def _load_lawyers_from_csv(self):
-    #     """Load lawyers from CSV and store in Azure Table"""
-    #     try:
-    #         with open("lawyers.csv", mode="r", encoding='utf-8') as file:
-    #             lawyers = csv.DictReader(file)
-    #             for lawyer in lawyers:
-    #                 lawyer_id = str(uuid.uuid4())
-    #                 self.add_lawyer({
-    #                     'lawyer_id': lawyer_id,
-    #                     'name': lawyer['Name'],
-    #                     'specialization': lawyer['Specialization'],
-    #                     'experience': lawyer['Experience'],
-    #                     'rating': lawyer['Rating'],
-    #                     'location': lawyer['Location'],
-    #                     'contact': lawyer['Contact']
-    #                 })
-    #         logging.info("Successfully loaded lawyers from CSV")
-    #     except Exception as e:
-    #         logging.error(f"Error loading lawyers from CSV: {e}")
+    def _load_lawyers_from_csv(self):
+        """Load lawyers from CSV and store in Azure Table"""
+        try:
+            with open("lawyers.csv", mode="r", encoding='utf-8') as file:
+                lawyers = csv.DictReader(file)
+                for lawyer in lawyers:
+                    lawyer_id = str(uuid.uuid4())
+                    self.add_lawyer({
+                        'lawyer_id': lawyer_id,
+                        'name': lawyer['Name'],
+                        'specialization': lawyer['Specialization'],
+                        'experience': lawyer['Experience'],
+                        'rating': lawyer['Rating'],
+                        'location': lawyer['Location'],
+                        'contact': lawyer['Contact']
+                    })
+            logging.info("Successfully loaded lawyers from CSV")
+        except Exception as e:
+            logging.error(f"Error loading lawyers from CSV: {e}")
 
     def calculate_weight(self, rating: str, experience: str) -> float:
         """Calculate weight for lawyer ranking"""
@@ -141,4 +141,4 @@ class LawyerStore:
 
 if __name__ == "__main__":
     user = LawyerStore(connection_string=os.getenv("BLOB_CONN_STRING"))
-    print(user.get_top_lawyers("Banking and Finance", limit=3))
+    # print(user.get_top_lawyers("Banking and Finance", limit=3))

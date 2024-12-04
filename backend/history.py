@@ -1,6 +1,6 @@
 import uuid
 from langchain.schema import BaseChatMessageHistory, BaseMessage, _message_to_dict, HumanMessage, AIMessage
-from typing import Optional, List
+from typing import Optional, List, Dict  # Add Dict to imports
 from azure.data.tables import TableServiceClient, TableClient
 from dotenv import load_dotenv
 import os
@@ -13,6 +13,7 @@ load_dotenv()
 class AzureTableChatMessageHistory(BaseChatMessageHistory):
     CHAT_MESSAGES_TABLE = "ChatMessages"
     USER_SESSIONS_TABLE = "UserSessions"
+    CHAT_TOPICS_TABLE = "ChatTopics"  
     
     def __init__(
             self,
@@ -32,6 +33,7 @@ class AzureTableChatMessageHistory(BaseChatMessageHistory):
         # Create tables if they don't exist
         self.table_service.create_table_if_not_exists(self.CHAT_MESSAGES_TABLE)
         self.table_service.create_table_if_not_exists(self.USER_SESSIONS_TABLE)
+        self.table_service.create_table_if_not_exists(self.CHAT_TOPICS_TABLE)  
         self.table_service.create_table_if_not_exists(self.table_name)
         self.messages_table = self.table_service.get_table_client(self.CHAT_MESSAGES_TABLE)
         self.sessions_table = self.table_service.get_table_client(self.USER_SESSIONS_TABLE)
@@ -157,29 +159,38 @@ class AzureTableChatMessageHistory(BaseChatMessageHistory):
             logging.error(f"Error retrieving chats: {e}")
             raise  # Propagate error for better handling
 
-    def chat_exists(self, user_id: str, chat_id: str) -> bool:
-        """Check if a chat exists for the given user"""
+    def check_chat_exists(self, user_id: str, chat_id: str) -> bool:
+        """Check if a chat exists across all relevant tables"""
         try:
             # Check messages table
             message_filter = f"user_id eq '{user_id}' and chat_id eq '{chat_id}'"
-            messages = list(self.messages_table.query_entities(
+            messages_exist = any(self.messages_table.query_entities(
                 query_filter=message_filter,
                 select=['RowKey'],
                 top=1
             ))
-            
+
             # Check sessions table
             session_filter = f"user_id eq '{user_id}' and chat_id eq '{chat_id}'"
-            sessions = list(self.sessions_table.query_entities(
+            sessions_exist = any(self.sessions_table.query_entities(
                 query_filter=session_filter,
                 select=['RowKey'],
                 top=1
             ))
-            
-            return len(messages) > 0 or len(sessions) > 0
-            
+
+            # Check topics table
+            topics_table = self.table_service.get_table_client(self.CHAT_TOPICS_TABLE)
+            topic_filter = f"PartitionKey eq 'chat_topic:{user_id}' and chat_id eq '{chat_id}'"
+            topics_exist = any(topics_table.query_entities(
+                query_filter=topic_filter,
+                select=['RowKey'],
+                top=1
+            ))
+
+            return messages_exist or sessions_exist or topics_exist
+
         except Exception as e:
-            logging.error(f"Error checking chat existence: {e}")
+            logging.error(f"Error in check_chat_exists: {e}")
             return False
 
     def load_user_sessions(self, user_id: str) -> List[dict]:
@@ -274,6 +285,32 @@ class AzureTableChatMessageHistory(BaseChatMessageHistory):
             logging.error(f"Error retrieving metadata: {e}")
             return None
 
+    def get_chat_topics(self, user_id: str) -> List[Dict]:
+        """Retrieve all chat topics for a given user"""
+        try:
+            table_client = self.table_service.get_table_client(self.CHAT_TOPICS_TABLE)
+            query_filter = f"PartitionKey eq 'chat_topic:{user_id}'"
+            entities = table_client.query_entities(query_filter=query_filter)
+            topics = []
+            for entity in entities:
+                topics.append({
+                    'chat_id': entity['chat_id'],
+                    'topic': entity['topic'],
+                    'timestamp': entity['timestamp']
+                })
+            return topics
+        except Exception as e:
+            logging.error(f"Error retrieving chat topics: {e}")
+            return []
+    def if_chat_exist(self, user_id: str, chat_id: str) -> bool:
+        """Check if chat exists for a given user"""
+        try:
+            query_filter = f"PartitionKey eq '{self._get_message_partition_key()}' and chat_id eq '{chat_id}'"
+            entities = self.messages_table.query_entities(query_filter=query_filter)
+            return len(entities) > 0
+        except Exception as e:
+            logging.error(f"Error checking chat existence: {e}")
+            return False
 if __name__ == "__main__":
     user_id = "tese_user"
     chat_id = "test_session"

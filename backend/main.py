@@ -25,6 +25,7 @@ from history import AzureTableChatMessageHistory
 from langchain.schema import HumanMessage, AIMessage, BaseMessage  # Update import
 from lawyer_store import LawyerStore
 from langchain.memory import ConversationBufferWindowMemory  # Update import
+import datetime  # Add this import
 load_dotenv()
 
 
@@ -561,6 +562,12 @@ Question to route: {question}
             elif isinstance(msg, AIMessage):
                 self.memory.save_context({"input": ""}, {"output": msg.content})
 
+    def handle_new_chat(self, user_id, chat_id, topic):
+        if not self.chat_exists(user_id, chat_id):
+            recommend_lawyer.store_chat_topic(user_id, chat_id, topic, self.connection_string)
+            self.load_previous_chats(user_id, chat_id)
+            self.chats_loaded = True
+
     def run(self, question: str, user_id: str, chat_id: str = None, chat_history: List[Dict] = None) -> Dict[str, Any]:
         try:
             if chat_history is None:
@@ -568,6 +575,7 @@ Question to route: {question}
 
             # Load previous chats into the conversation buffer memory only once
             if chat_id and not self.chats_loaded:
+                self.handle_new_chat(user_id, chat_id, question)  # Use the new function
                 self.load_previous_chats(user_id, chat_id)
                 self.chats_loaded = True  # Set flag to indicate chats are loaded
 
@@ -728,6 +736,19 @@ Question to route: {question}
     def save_context(self, user_input: str, assistant_output: str):
         self.memory.save_context({"input": user_input}, {"output": assistant_output})
 
+    def chat_exists(self, user_id: str, chat_id: str) -> bool:
+        """Check if a chat exists for the given user"""
+        try:
+            chat_history = AzureTableChatMessageHistory(
+                chat_id=chat_id,
+                user_id=user_id, 
+                connection_string=self.connection_string
+            )
+            return chat_history.check_chat_exists(user_id, chat_id)
+        except Exception as e:
+            logging.error(f"Error checking chat existence: {e}")
+            return False
+
 if __name__ == "__main__":
     user_id = "test_user"
     chat_id = "test_session"
@@ -736,5 +757,4 @@ if __name__ == "__main__":
         user_input = input("User: ")
         result = agent.run(user_input, user_id, chat_id)
         print(f"Assistant: {result}")
-        agent.save_context(user_input, result["chat_response"])  
-    # question = "What is the procedure for filing a divorce in Pakistan?"
+        agent.save_context(user_input, result["chat_response"])

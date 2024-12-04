@@ -1,6 +1,8 @@
 import csv
+import datetime
 import numpy as np
 from sklearn.decomposition import NMF
+from azure.data.tables import TableServiceClient  # Add this import
 
 def calculate_weight(rating, experience):
     try:
@@ -55,6 +57,27 @@ def recommend(category):
     except Exception as e:
         print(f"Error in recommend function: {e}")
         return []
+
+def store_chat_topic(user_id, chat_id, topic, connection_string):
+    try:
+        table_service = TableServiceClient.from_connection_string(conn_str=connection_string)
+        table_name = "ChatTopics"
+        table_service.create_table_if_not_exists(table_name)
+        table_client = table_service.get_table_client(table_name)
+        
+        entity = {
+            'PartitionKey': f"chat_topic:{user_id}",
+            'RowKey': chat_id,
+            'user_id': user_id,
+            'chat_id': chat_id,
+            'topic': topic,
+            'timestamp': datetime.datetime.utcnow()
+        }
+        
+        table_client.create_entity(entity=entity)
+        print(f"Stored chat topic for chat {chat_id}")
+    except Exception as e:
+        print(f"Error storing chat topic: {e}")
 
 def recommend_lawyer(category):
     """Legacy function that returns formatted string instead of lawyer objects"""
