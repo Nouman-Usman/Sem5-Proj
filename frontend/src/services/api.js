@@ -13,9 +13,11 @@ const api = axios.create({
 // Add response interceptor for error handling
 api.interceptors.response.use(
   response => {
+    // Handle 204 responses
     if (response.status === 204) {
-      console.warn('Received 204 No Content response');
-      return { data: { answer: "I'm sorry, I couldn't process that request. Please try again." } };
+      console.warn('Received 204 No Content response, retrying request...');
+      // Return a rejected promise to trigger retry
+      return Promise.reject(new Error('No content received, retrying...'));
     }
     return response;
   },
@@ -27,35 +29,41 @@ api.interceptors.response.use(
     if (error.response?.status === 503) {
       throw new Error('Service is currently unavailable. Please try again later.');
     }
-    if (error.response?.status === 204) {
-      throw new Error('No content received from server. Please try again.');
-    }
     throw new Error(error.response?.data?.error || error.message || 'An unexpected error occurred');
   }
 );
 
 export const apiService = {
   async askQuestion(question, userId, chatId = null) {
-    try {
-      const response = await api.post('/ask', { 
-        question, 
-        user_id: userId, 
-        chat_id: chatId 
-      });
-      
-      if (!response.data || !response.data.answer) {
-        throw new Error('Invalid response from server');
-      }
+    const maxRetries = 3;
+    let retries = 0;
 
-      return {
-        answer: response.data.answer,
-        chatId: response.data.chat_id,
-        references: response.data.references || [],
-        recommendedLawyers: response.data.recommended_lawyers || []
-      };
-    } catch (error) {
-      console.error('Ask Question Error:', error);
-      throw error;
+    while (retries < maxRetries) {
+      try {
+        const response = await api.post('/ask', { 
+          question, 
+          user_id: userId, 
+          chat_id: chatId 
+        });
+        
+        if (!response.data) {
+          throw new Error('Empty response received');
+        }
+
+        return {
+          answer: response.data.answer,
+          chatId: response.data.chat_id,
+          references: response.data.references || [],
+          recommendedLawyers: response.data.recommended_lawyers || []
+        };
+      } catch (error) {
+        retries++;
+        if (retries === maxRetries) {
+          throw error;
+        }
+        // Wait before retrying
+        await new Promise(resolve => setTimeout(resolve, 1000));
+      }
     }
   },
   getUserChats: (userId, chatId) => 

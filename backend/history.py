@@ -14,6 +14,9 @@ class AzureTableChatMessageHistory(BaseChatMessageHistory):
     CHAT_MESSAGES_TABLE = "ChatMessages"
     USER_SESSIONS_TABLE = "UserSessions"
     CHAT_TOPICS_TABLE = "ChatTopics"  
+    USERS_TABLE = "Users"
+    CUSTOMERS_TABLE = "Customers"
+    LAWYERS_TABLE = "Lawyers"
     
     def __init__(
             self,
@@ -35,9 +38,16 @@ class AzureTableChatMessageHistory(BaseChatMessageHistory):
         self.table_service.create_table_if_not_exists(self.USER_SESSIONS_TABLE)
         self.table_service.create_table_if_not_exists(self.CHAT_TOPICS_TABLE)  
         self.table_service.create_table_if_not_exists(self.table_name)
+        self.table_service.create_table_if_not_exists(self.USERS_TABLE)
+        self.table_service.create_table_if_not_exists(self.CUSTOMERS_TABLE)
+        self.table_service.create_table_if_not_exists(self.LAWYERS_TABLE)
+        
         self.messages_table = self.table_service.get_table_client(self.CHAT_MESSAGES_TABLE)
         self.sessions_table = self.table_service.get_table_client(self.USER_SESSIONS_TABLE)
         self.table_client = self.table_service.get_table_client(self.table_name)
+        self.users_table = self.table_service.get_table_client(self.USERS_TABLE)
+        self.customers_table = self.table_service.get_table_client(self.CUSTOMERS_TABLE)
+        self.lawyers_table = self.table_service.get_table_client(self.LAWYERS_TABLE)
 
     def _get_message_partition_key(self) -> str:
         return f"chat_history:{self.user_id}:{self.chat_id}"
@@ -311,8 +321,66 @@ class AzureTableChatMessageHistory(BaseChatMessageHistory):
         except Exception as e:
             logging.error(f"Error checking chat existence: {e}")
             return False
+
+    def create_user(self, email: str, name: str, password: str, role: str) -> bool:
+        """Create a new user"""
+        try:
+            entity = {
+                'PartitionKey': role,
+                'RowKey': email,
+                'name': name,
+                'password': password,  # Note: Should be hashed in production
+                'created_at': datetime.datetime.utcnow()
+            }
+            self.users_table.create_entity(entity=entity)
+            return True
+        except Exception as e:
+            logging.error(f"Error creating user: {e}")
+            return False
+
+    def create_customer(self, user_id: str, subscription: str) -> bool:
+        """Create a new customer record"""
+        try:
+            entity = {
+                'PartitionKey': 'customer',
+                'RowKey': user_id,
+                'current_subscription': subscription,
+                'created_at': datetime.datetime.utcnow()
+            }
+            self.customers_table.create_entity(entity=entity)
+            return True
+        except Exception as e:
+            logging.error(f"Error creating customer: {e}")
+            return False
+
+    def create_lawyer(self, user_id: str) -> bool:
+        """Create a new lawyer record"""
+        try:
+            entity = {
+                'PartitionKey': 'lawyer',
+                'RowKey': user_id,
+                'created_at': datetime.datetime.utcnow()
+            }
+            self.lawyers_table.create_entity(entity=entity)
+            return True
+        except Exception as e:
+            logging.error(f"Error creating lawyer: {e}")
+            return False
+
+    def get_user(self, email: str) -> Optional[Dict]:
+        """Retrieve user by email"""
+        try:
+            users = self.users_table.query_entities(
+                query_filter=f"RowKey eq '{email}'"
+            )
+            user_list = list(users)
+            return user_list[0] if user_list else None
+        except Exception as e:
+            logging.error(f"Error retrieving user: {e}")
+            return None
+
 if __name__ == "__main__":
     user_id = "tese_user"
     chat_id = "test_session"
     user = AzureTableChatMessageHistory(chat_id="test_session", user_id="test_user", connection_string=os.getenv("BLOB_CONN_STRING"))
-    print (user.get_chat_messages(chat_id=chat_id, user_id=user_id))
+    # print (user.get_chat_messages(chat_id=chat_id, user_id=user_id))

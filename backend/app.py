@@ -5,6 +5,7 @@ from main import RAGAgent
 import gc
 import tracemalloc
 import httpx  # Add this import
+import time  # Add this import
 
 logging.basicConfig(
     level=logging.INFO,
@@ -53,51 +54,76 @@ def health_check():
 
 @app.route('/api/ask', methods=['POST'])
 def ask_question():
-    result = None 
-    try:
-        data = request.get_json()
-        if not data:
-            logger.error("No JSON data received")
-            return jsonify({"error": "No data provided"}), 400
+    result = None
+    retries = 0
+    max_retries = 3
+    
+    while retries < max_retries:
+        try:
+            data = request.get_json()
+            if not data:
+                logger.error("No JSON data received")
+                return jsonify({"error": "No data provided"}), 400
 
-        question = data.get('question')
-        user_id = data.get('user_id')
-        chat_id = data.get('chat_id')
+            question = data.get('question')
+            user_id = data.get('user_id')
+            chat_id = data.get('chat_id')
 
-        if not question or not user_id:
-            logger.error(f"Missing parameters: question={bool(question)}, user_id={bool(user_id)}")
-            return jsonify({"error": "Missing required parameters"}), 400
+            if not question or not user_id:
+                logger.error(f"Missing parameters: question={bool(question)}, user_id={bool(user_id)}")
+                return jsonify({"error": "Missing required parameters"}), 400
 
-        logger.info(f"Processing question for user {user_id}, chat {chat_id}")
-        
-        rag_agent = get_agent(user_id=user_id, chat_id=chat_id)
-        chat_history = rag_agent.get_chat_history_messages(user_id, chat_id) if chat_id else []
+            logger.info(f"Processing question for user {user_id}, chat {chat_id}")
+            
+            rag_agent = get_agent(user_id=user_id, chat_id=chat_id)
+            chat_history = rag_agent.get_chat_history_messages(user_id, chat_id) if chat_id else []
+            result = rag_agent.run(question, user_id, chat_id, chat_history)
+            
+            if not result or 'chat_response' not in result:
+                logger.error("Invalid result from RAG agent")
+                retries += 1
+                if retries == max_retries:
+                    return jsonify({"error": "Failed to generate response"}), 500
+                time.sleep(1)
+                continue
 
-        result = rag_agent.run(question, user_id, chat_id, chat_history)
-        
-        if not result or 'chat_response' not in result:
-            logger.error("Invalid result from RAG agent")
-            return jsonify({"error": "Failed to generate response"}), 500
+            response = {
+                "answer": result["chat_response"],
+                "chat_id": chat_id or "new_chat",
+                "references": result.get("references", []),
+                "recommended_lawyers": result.get("recommended_lawyers", [])
+            }
 
-        response = {
-            "answer": result["chat_response"],
-            "chat_id": chat_id or "new_chat",
-            "references": result.get("references", []),
-            "recommended_lawyers": result.get("recommended_lawyers", [])
-        }
+            # Validate response
+            if not response["answer"]:
+                logger.error("Empty response generated")
+                retries += 1
+                if retries == max_retries:
+                    return jsonify({"error": "Empty response generated"}), 500
+                time.sleep(1)
+                continue
 
-        logger.info(f"Successfully generated response for user {user_id}")
-        return jsonify(response), 200
+            logger.info(f"Successfully generated response for user {user_id}")
+            return jsonify(response), 200
 
-    except Exception as e:
-        logger.error(f"Error processing question: {str(e)}", exc_info=True)
-        return jsonify({"error": str(e)}), 500
-    finally:
-        del data, question, user_id, chat_id, rag_agent, chat_history
-        if result:
-            del result
-        gc.collect()
-        log_memory_usage()  # Log memory usage after each request
+        except Exception as e:
+            logger.error(f"Error processing question (attempt {retries + 1}): {str(e)}", exc_info=True)
+            retries += 1
+            if retries == max_retries:
+                return jsonify({"error": str(e)}), 500
+            time.sleep(1)
+            continue
+        finally:
+            if 'data' in locals(): del data
+            if 'question' in locals(): del question
+            if 'user_id' in locals(): del user_id
+            if 'chat_id' in locals(): del chat_id
+            if 'rag_agent' in locals(): del rag_agent
+            if 'chat_history' in locals(): del chat_history
+            if result:
+                del result
+            gc.collect()
+            log_memory_usage()
 
 # Basic routes without complex session management
 @app.route('/api/user/<user_id>/chats/<chat_id>', methods=['GET'])
