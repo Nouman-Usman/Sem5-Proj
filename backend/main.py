@@ -7,6 +7,7 @@ from langchain_pinecone import PineconeVectorStore
 from langchain.prompts import PromptTemplate
 from langchain_core.output_parsers import JsonOutputParser, StrOutputParser
 from langchain_groq import ChatGroq
+import uuid
 from langchain.schema import Document
 from langchain_community.tools.tavily_search import TavilySearchResults
 from langgraph.graph import END, StateGraph
@@ -21,11 +22,12 @@ import csv
 from dotenv import load_dotenv
 import recommend_lawyer
 import gc  # Add at top with other imports
-from history import AzureTableChatMessageHistory
+from history import AzureTableChatMessageHistory  # Update import to match new class name
 from langchain.schema import HumanMessage, AIMessage, BaseMessage  # Update import
 from lawyer_store import LawyerStore
 from langchain.memory import ConversationBufferWindowMemory  # Update import
 import datetime  # Add this import
+import pyodbc  # Add this import
 load_dotenv()
 
 
@@ -286,20 +288,30 @@ Question to route: {question}
         }
 
     def store_session(self, chat_id: str, session_data: dict):
-        """Store session data in Azure Table"""
+        """Store session data in MS SQL"""
         try:
-            chat_history = AzureTableChatMessageHistory(
-                chat_id=chat_id,
-                user_id=session_data['user_id'],
-                connection_string=self.connection_string
-            )
-            
-            # Store session data (already contains serialized dates)
-            chat_history.store_session_data(session_data)
-            
+            connection = pyodbc.connect(self.connection_string)
+            cursor = connection.cursor()
+            query = """
+                INSERT INTO Sessions (SessionId, UserId, ChatId, StartTime, EndTime, SessionData)
+                VALUES (?, ?, ?, ?, ?, ?)
+            """
+            cursor.execute(query, (
+                str(uuid.uuid4()),
+                session_data['user_id'],
+                chat_id,
+                datetime.datetime.utcnow(),
+                None,  # EndTime can be updated later
+                json.dumps(session_data)
+            ))
+            connection.commit()
+            logging.info(f"Stored session data for chat {chat_id}")
         except Exception as e:
             logging.error(f"Error storing session: {e}")
             raise
+        finally:
+            cursor.close()
+            connection.close()
 
     def web_search(self, state: Dict) -> Dict:
         print("---WEB SEARCH---")
@@ -656,22 +668,49 @@ Question to route: {question}
 
     def get_user_chat_history(self, user_id: str, chat_id: str) -> List[str]:
         """Get all chat sessions for a user"""
-        chat_history = AzureTableChatMessageHistory(
-            chat_id=chat_id,  
-            user_id=user_id,
-            connection_string=self.connection_string
-        )
-
-        return chat_history.get_user_chats(user_id)
+        try:
+            connection = pyodbc.connect(self.connection_string)
+            cursor = connection.cursor()
+            query = f"SELECT DISTINCT chat_id FROM ChatMessages WHERE user_id = '{user_id}'"
+            cursor.execute(query)
+            rows = cursor.fetchall()
+            chat_ids = [row.chat_id for row in rows]
+            logging.info(f"Found {len(chat_ids)} chats for user {user_id}")
+            return chat_ids
+        except Exception as e:
+            logging.error(f"Error retrieving chats: {e}")
+            raise
+        finally:
+            cursor.close()
+            connection.close()
 
     def get_chat_messages(self, user_id: str, chat_id: str) -> List[BaseMessage]:
         """Get all messages for a specific chat"""
-        chat_history = AzureTableChatMessageHistory(
-            chat_id=chat_id,  
-            user_id=user_id,
-            connection_string=self.connection_string,
-        )
-        return chat_history.get_chat_messages(user_id, chat_id)
+        try:
+            connection = pyodbc.connect(self.connection_string)
+            cursor = connection.cursor()
+            query = f"SELECT * FROM ChatMessages WHERE user_id = '{user_id}' AND chat_id = '{chat_id}' ORDER BY timestamp"
+            cursor.execute(query)
+            rows = cursor.fetchall()
+            messages = []
+            for row in rows:
+                content = row.content
+                if not content:
+                    continue
+                msg_type = row.message_type
+                if msg_type == 'HumanMessage':
+                    messages.append(HumanMessage(content=content))
+                elif msg_type == 'AIMessage':
+                    messages.append(AIMessage(content=content))
+                logging.info(f"Retrieved {msg_type}: {content[:50]}...")
+            logging.info(f"Retrieved {len(messages)} messages for chat {chat_id}")
+            return messages
+        except Exception as e:
+            logging.error(f"Error retrieving chat messages: {e}")
+            raise
+        finally:
+            cursor.close()
+            connection.close()
 
     def retrieve_dataset(self):
         """Retrieve all documents from the Pinecone index"""
@@ -690,24 +729,28 @@ Question to route: {question}
         except Exception as e:
             print(f"Error retrieving dataset: {e}")
             return []
+
     def get_chat_history_messages(self, user_id: str, chat_id: str) -> List[Dict]:
         """Get full chat history with messages for a specific chat"""
         try:
-            chat_history = AzureTableChatMessageHistory(
-                chat_id=chat_id,
-                user_id=user_id,
-                connection_string=self.connection_string
-            )
+            connection = pyodbc.connect(self.connection_string)
+            cursor = connection.cursor()
+            query = f"SELECT * FROM ChatMessages WHERE user_id = '{user_id}' AND chat_id = '{chat_id}' ORDER BY timestamp"
+            cursor.execute(query)
+            rows = cursor.fetchall()
             messages = []
-            for msg in chat_history.messages:
+            for row in rows:
                 messages.append({
-                    "role": "user" if isinstance(msg, HumanMessage) else "assistant",
-                    "content": msg.content,
+                    "role": "user" if row.message_type == 'HumanMessage' else "assistant",
+                    "content": row.content,
                 })
             return messages
         except Exception as e:
             logging.error(f"Error retrieving chat history: {e}")
             return []
+        finally:
+            cursor.close()
+            connection.close()
 
     def _get_lawyer_recommendations(self, category: str) -> str:
         """Get formatted lawyer recommendations"""
@@ -739,15 +782,18 @@ Question to route: {question}
     def chat_exists(self, user_id: str, chat_id: str) -> bool:
         """Check if a chat exists for the given user"""
         try:
-            chat_history = AzureTableChatMessageHistory(
-                chat_id=chat_id,
-                user_id=user_id, 
-                connection_string=self.connection_string
-            )
-            return chat_history.check_chat_exists(user_id, chat_id)
+            connection = pyodbc.connect(self.connection_string)
+            cursor = connection.cursor()
+            query = f"SELECT 1 FROM ChatMessages WHERE user_id = '{user_id}' AND chat_id = '{chat_id}'"
+            cursor.execute(query)
+            exists = cursor.fetchone() is not None
+            return exists
         except Exception as e:
             logging.error(f"Error checking chat existence: {e}")
             return False
+        finally:
+            cursor.close()
+            connection.close()
 
 if __name__ == "__main__":
     user_id = "test_user"
