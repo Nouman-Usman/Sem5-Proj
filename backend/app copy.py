@@ -75,7 +75,7 @@ def signup():
     name = data.get('name')
     email = data.get('email')
     password = data.get('password')
-    role = data.get('role', 'customer')  # Default to 'customer' if role is not provided
+    role = data.get('role', 'client')  # Default to 'client' if role is not provided
 
     # Validate input
     if not all([name, email, password, role]):
@@ -111,8 +111,8 @@ def login():
 
     # Generate JWT token
     access_token = create_access_token(
-        identity="123",  
-        additional_claims={"role": "customer"}   
+        identity="123",  ## put user id here
+        additional_claims={"role": "customer"}   ## put user role here
     )
 
     return jsonify({
@@ -149,16 +149,15 @@ def user_profile():
 @jwt_required()  # This will automatically get the token from the Authorization header
 def verify_token():
     # The token is already verified by @jwt_required, so no need to manually check it
-    claims = get_jwt()  # This gets the user info stored in the token (e.g., user ID, role)
-    role = claims.get('role')
-
-    if not role:
+    current_user = get_jwt_identity()  # This gets the user info stored in the token (e.g., user ID, role)
+   
+    if not current_user:
         return jsonify({"message": "Invalid or expired token!"}), 401
 
     # Check the role of the user
-    if role == 'lawyer':
+    if current_user.get('role') == 'lawyer':
         return jsonify({"role": 'lawyer'}), 200
-    elif role == 'customer':
+    elif current_user.get('role') == 'customer':
         return jsonify({"role": 'customer'}), 200
     else:
         return jsonify({"message": "Unauthorized access!"}), 403
@@ -259,7 +258,7 @@ if __name__ == '__main__':
             host='127.0.0.1',
             port=5000,
             debug=True,  # Disable in production
-            use_reloader=True  # Set to False in production
+            use_reloader=False  # Set to False in production
         )
         print("Backend server started...")
     except KeyboardInterrupt:

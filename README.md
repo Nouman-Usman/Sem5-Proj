@@ -33,6 +33,15 @@ LangGraph Legal Assistant is an AI-powered tool designed to assist with legal qu
 - `git` installed to clone the repository
 
 ### Steps
+goto backend with cd backend
+start venv
+    if on bash, use source venv/Scripts/activate
+to run local dependency env
+do python install requirement.txt to install all dependencies
+do python app.py to run server 
+
+for frontend, goto frontend folder
+do npm i to install all dependency, and npm run dev to start local server.
 
 1. **Clone the repository:**
     - waitress-serve --host=127.0.0.1 --port=5000 app:app
