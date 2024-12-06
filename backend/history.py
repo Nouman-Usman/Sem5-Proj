@@ -23,11 +23,13 @@ class AzureTableChatMessageHistory(BaseChatMessageHistory):
             chat_id: str,
             user_id: str,
             connection_string: str,
-            table_name: str = "ChatMessages",  
+            email: str = None,  # Add email parameter
+            table_name: str = "ChatMessages",
             key_prefix: str = "chat_history:"
         ):
         self.chat_id = chat_id  # Changed from chat_id
         self.user_id = user_id
+        self.email = email  # Store email
         self.connection_string = connection_string
         self.key_prefix = key_prefix
         self.table_name = table_name
@@ -136,38 +138,51 @@ class AzureTableChatMessageHistory(BaseChatMessageHistory):
         except Exception as e:
             print(f"Error clearing messages: {e}")
 
-    def get_user_chats(self, user_id: str) -> List[str]:
-        """Retrieve all chat IDs for a given user"""
+    def get_user_chats(self, user_id: str) -> List[Dict]:
         try:
-            # Query directly using user_id
-            query_filter = f"user_id eq '{user_id}'"
-            
-            # Query both messages and sessions tables
-            message_entities = self.messages_table.query_entities(
-                query_filter=query_filter,
-                select=['chat_id']
-            )
-            session_entities = self.sessions_table.query_entities(
-                query_filter=query_filter,
-                select=['chat_id']
-            )
-            
-            # Combine and deduplicate chat IDs
-            chat_ids = set()
-            for entity in message_entities:
-                if 'chat_id' in entity:
-                    chat_ids.add(entity['chat_id'])
-            
-            for entity in session_entities:
-                if 'chat_id' in entity:
-                    chat_ids.add(entity['chat_id'])
-            
-            logging.info(f"Found {len(chat_ids)} chats for user {user_id}")
-            return list(chat_ids)
-            
+            message_filter = f"user_id eq '{user_id}'"
+            message_entities = list(self.messages_table.query_entities(
+                query_filter=message_filter,
+                select=['chat_id', 'timestamp', 'content']
+            ))
+            topics_table = self.table_service.get_table_client(self.CHAT_TOPICS_TABLE)
+            topic_filter = f"PartitionKey eq 'chat_topic:{user_id}'"
+            topic_entities = list(topics_table.query_entities(query_filter=topic_filter))
+            chat_info = {}
+            for msg in message_entities:
+                chat_id = msg.get('chat_id')
+                if chat_id:
+                    if chat_id not in chat_info:
+                        chat_info[chat_id] = {
+                            'chat_id': chat_id,
+                            'last_message': None,
+                            'last_timestamp': None,
+                            'message_count': 0,
+                            'topic': None
+                        }
+                    chat_info[chat_id]['message_count'] += 1
+                    msg_timestamp = msg.get('timestamp')
+                    if msg_timestamp and (not chat_info[chat_id]['last_timestamp'] 
+                                    or msg_timestamp > chat_info[chat_id]['last_timestamp']):
+                        chat_info[chat_id]['last_timestamp'] = msg_timestamp
+                        chat_info[chat_id]['last_message'] = msg.get('content', '')[:100]  # First 100 chars
+
+            # Add topics to chat info
+            for topic in topic_entities:
+                chat_id = topic.get('chat_id')
+                if chat_id in chat_info:
+                    chat_info[chat_id]['topic'] = topic.get('topic')
+
+            # Convert to list and sort by last_timestamp
+            chats_list = list(chat_info.values())
+            chats_list.sort(key=lambda x: x['last_timestamp'] or datetime.datetime.min, reverse=True)
+
+            logging.info(f"Found {len(chats_list)} chats for user {user_id}")
+            return chats_list
+
         except Exception as e:
-            logging.error(f"Error retrieving chats: {e}")
-            raise  # Propagate error for better handling
+            logging.error(f"Error retrieving chats for user {user_id}: {str(e)}")
+            raise  # Re-raise the exception for proper error handling in the API layer
 
     def check_chat_exists(self, user_id: str, chat_id: str) -> bool:
         """Check if a chat exists across all relevant tables"""
@@ -328,8 +343,10 @@ class AzureTableChatMessageHistory(BaseChatMessageHistory):
             entity = {
                 'PartitionKey': role,
                 'RowKey': email,
+                'email': email,  # Add email explicitly
                 'name': name,
-                'password': password,  # Note: Should be hashed in production
+                'password': password,
+                'user_id': str(uuid.uuid4()), 
                 'created_at': datetime.datetime.utcnow()
             }
             self.users_table.create_entity(entity=entity)
@@ -374,7 +391,16 @@ class AzureTableChatMessageHistory(BaseChatMessageHistory):
                 query_filter=f"RowKey eq '{email}'"
             )
             user_list = list(users)
-            return user_list[0] if user_list else None
+            if user_list:
+                user = user_list[0]
+                return {
+                    'email': user.get('email'),
+                    'name': user.get('name'),
+                    'user_id': user.get('user_id'),
+                    'role': user.get('PartitionKey'),
+                    'created_at': user.get('created_at')
+                }
+            return None
         except Exception as e:
             logging.error(f"Error retrieving user: {e}")
             return None

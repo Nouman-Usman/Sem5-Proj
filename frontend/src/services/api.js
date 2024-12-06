@@ -16,7 +16,6 @@ api.interceptors.response.use(
     // Handle 204 responses
     if (response.status === 204) {
       console.warn('Received 204 No Content response, retrying request...');
-      // Return a rejected promise to trigger retry
       return Promise.reject(new Error('No content received, retrying...'));
     }
     return response;

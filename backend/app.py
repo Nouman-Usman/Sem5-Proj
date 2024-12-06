@@ -5,17 +5,15 @@ from main import RAGAgent
 import gc
 import tracemalloc
 import httpx  # Add this import
-# <<<<<<< HEAD
 import time  # Add this import
-# =======
 from datetime import timedelta
-
-from flask_sqlalchemy import SQLAlchemy
-from flask_bcrypt import Bcrypt
-from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
+from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity, get_jwt
 from werkzeug.security import generate_password_hash, check_password_hash
+from history import AzureTableChatMessageHistory
+import os
+from dotenv import load_dotenv
 
-# >>>>>>> e71aab6bb9d18cd9af7ada11aedcdd7e1e0d801d
+load_dotenv()
 
 logging.basicConfig(
     level=logging.INFO,
@@ -27,8 +25,6 @@ logging.basicConfig(
 )
 
 logger = logging.getLogger(__name__)
-
-# Start tracing memory allocations
 tracemalloc.start()
 
 def log_memory_usage():
@@ -43,7 +39,6 @@ def log_memory_usage():
 app = Flask(__name__)
 CORS(app)
 
-# Initialize agent globally but lazily
 agent = None
 
 def get_agent(user_id, chat_id):
@@ -60,26 +55,17 @@ def get_agent(user_id, chat_id):
 
 
 # Configure the database and other settings
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'  # Use Azure Database URI here
 app.config['SECRET_KEY'] = 'your_secret_key'  # Change this to a secure key
 app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(hours=1)
 
-db = SQLAlchemy(app)
 jwt = JWTManager(app)
 
-
-# User model for SQLite (you can adjust to Azure DB model)
-class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100), nullable=False)
-    email = db.Column(db.String(100), unique=True, nullable=False)
-    password = db.Column(db.String(200), nullable=False)
-    role = db.Column(db.String(50), nullable=False)
-
-    def __repr__(self):
-        return f'<User {self.email}>'
-    
-
+# Initialize Azure Table storage
+azure_tables = AzureTableChatMessageHistory(
+    chat_id="system",
+    user_id="system",
+    connection_string=os.getenv("BLOB_CONN_STRING")
+)
 
 # api routes for front end
 
@@ -90,24 +76,31 @@ def signup():
     name = data.get('name')
     email = data.get('email')
     password = data.get('password')
-    role = data.get('role', 'client')  # Default to 'client' if role is not provided
-
-    # Validate input
+    role = data.get('role', 'client') 
     if not all([name, email, password, role]):
         return jsonify({"error": "Missing data"}), 400
 
-    # Check if user already exists
-    user = User.query.filter_by(email=email).first()
-    if user:
+    # Check if user exists
+    existing_user = azure_tables.get_user(email)
+    if existing_user:
         return jsonify({"error": "User already exists"}), 409
 
-    # Hash the password
-    hashed_password = generate_password_hash(password, method='sha256')
+    # Create user
+    success = azure_tables.create_user(email, name, password, role)
+    if not success:
+        return jsonify({"error": "Failed to create user"}), 500
 
-    # Create new user
-    new_user = User(name=name, email=email, password=hashed_password, role=role)
-    db.session.add(new_user)
-    db.session.commit()
+    # If user is a customer, create customer record
+    if role == 'client':
+        user = azure_tables.get_user(email)
+        if user:
+            azure_tables.create_customer(user['user_id'], 'free')
+    
+    # If user is a lawyer, create lawyer record
+    elif role == 'lawyer':
+        user = azure_tables.get_user(email)
+        if user:
+            azure_tables.create_lawyer(user['user_id'])
 
     return jsonify({"message": "User created successfully"}), 201
 
@@ -118,34 +111,47 @@ def login():
     email = data.get('email')
     password = data.get('password')
 
-    # Validate input
     if not email or not password:
         return jsonify({"error": "Missing email or password"}), 400
 
-    # Find user by email
-    user = User.query.filter_by(email=email).first()
-    if not user or not check_password_hash(user.password, password):
+    user = azure_tables.get_user(email)
+    if not user or user.get('password') != password:  # In production, use proper password hashing
         return jsonify({"error": "Invalid credentials"}), 401
 
-    # Generate JWT token
-    access_token = create_access_token(identity=user.id, additional_claims={"role": user.role})
+    access_token = create_access_token(
+        identity=user['user_id'],
+        additional_claims={
+            "role": user['role'],
+            "email": user['email']
+        }
+    )
 
     return jsonify({
         "message": "Login successful",
-        "access_token": access_token
+        "access_token": access_token,
+        "user": {
+            "email": user['email'],
+            "name": user['name'],
+            "role": user['role']
+        }
     }), 200
 
-# Route for User Profile (Example)
 @app.route('/api/user-profile', methods=['GET'])
 @jwt_required()
 def user_profile():
     current_user_id = get_jwt_identity()
-    user = User.query.get(current_user_id)
+    jwt_claims = get_jwt()
+    email = jwt_claims.get('email')
+    
+    user = azure_tables.get_user(email)
+    if not user:
+        return jsonify({"error": "User not found"}), 404
+
     return jsonify({
-        "id": user.id,
-        "name": user.name,
-        "email": user.email,
-        "role": user.role
+        "user_id": user['user_id'],
+        "name": user['name'],
+        "email": user['email'],
+        "role": user['role']
     })
 
 
@@ -236,17 +242,18 @@ def ask_question():
             gc.collect()
             log_memory_usage()
 
-# Basic routes without complex session management
 @app.route('/api/user/<user_id>/chats/<chat_id>', methods=['GET'])
 def get_user_chats(user_id, chat_id):
     try:
         rag_agent = get_agent(user_id=user_id, chat_id=chat_id)
+
         chat_history = rag_agent.get_user_chat_history(user_id, chat_id=chat_id)
-        return jsonify({
-            "user_id": user_id,
-            "chat_ids": chat_history,
-            "count": len(chat_history)
-        })
+        # return jsonify({
+        #     "user_id": user_id,
+        #     "chat_ids": chat_history,
+        #     "count": len(chat_history)
+        # })
+        return None
     except Exception as e:
         logger.error(f"Error retrieving chats: {e}")
         return jsonify({"error": str(e)}), 500

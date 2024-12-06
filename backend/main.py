@@ -657,7 +657,7 @@ Question to route: {question}
     def get_user_chat_history(self, user_id: str, chat_id: str) -> List[str]:
         """Get all chat sessions for a user"""
         chat_history = AzureTableChatMessageHistory(
-            chat_id=chat_id,  # Changed from chat_id
+            chat_id=chat_id,  
             user_id=user_id,
             connection_string=self.connection_string
         )
