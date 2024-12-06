@@ -5,17 +5,13 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { useNavigate } from 'react-router-dom';
-
 
 export function LoginSignup() {
-  const navigate = useNavigate();
-
   const [showPassword, setShowPassword] = useState(false)
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
-  const [role, setRole] = useState("customer");
+  const [role, setRole] = useState("client");
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword)
   }
@@ -24,9 +20,7 @@ export function LoginSignup() {
 
   const handleSignup = async () => {
     const data = { name, email, password, role };
-    if (!name || !email || !password || !role || !email.includes('@')) {
-      return
-    }
+
     try {
       const response = await fetch("http://127.0.0.1:5000/api/signup", {
         method: "POST",
@@ -51,9 +45,7 @@ export function LoginSignup() {
   // Login handler
   const handleLogin = async () => {
     const data = { email, password };
-    if (!email || !password || !email.includes('@')) {
-      return
-    }
+
     try {
       const response = await fetch("http://127.0.0.1:5000/api/login", {
         method: "POST",
@@ -74,7 +66,6 @@ export function LoginSignup() {
       // Store JWT token in localStorage
       localStorage.setItem("access_token", access_token);
       alert("Login successful");
-      verifyToken();
     } catch (error) {
       console.error("Login error", error.message);
       alert("Login failed: " + error.message);
@@ -82,46 +73,47 @@ export function LoginSignup() {
   };
 
   useEffect(() => {
-    if (authenticatedRole === "customer") {
-      navigate("/user-home"); // Navigate to user-home for "customer"
-    } else if (authenticatedRole === "lawyer") {
-      navigate("/lawyers"); // Navigate to lawyers for "lawyer"
-    }
-  }, [authenticatedRole])
+    const verifyToken = async () => {
+      const token = localStorage.getItem("access_token");
 
-  useEffect(() => {
+      if (!token) {
+        console.log("No token found, please log in.");
+        return;
+      }
+      try {
+        const response = await fetch("http://127.0.0.1:5000/api/verify-token", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}` // Send the token as a Bearer token in the header
+          }
+        });
+
+        const data = await response.json();  // Make sure to extract the JSON response
+        if (response.ok && data.role === 'lawyer') {
+          setAuthenticatedRole("lawyer");
+        } else if (response.ok && data.role === 'customer') {
+          setAuthenticatedRole("customer");
+        } else {
+          console.log("Access denied, role not authorized.");
+        }
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+
     verifyToken();
   }, []);
 
-  const verifyToken = async () => {
-    const token = localStorage.getItem("access_token");
 
-    if (!token) {
-      console.log("No token found, please log in.");
-      return;
-    }
-    try {
-      const response = await fetch("http://127.0.0.1:5000/api/verify-token", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}` // Send the token as a Bearer token in the header
-        }
-      });
 
-      const data = await response.json();  // Make sure to extract the JSON response
-      if (response.ok && data.role === 'lawyer') {
-        setAuthenticatedRole("lawyer");
-      } else if (response.ok && data.role === 'customer') {
-        setAuthenticatedRole("customer");
-      } else {
-        console.log("Access denied, role not authorized.");
-      }
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
 
+  if (authenticatedRole === "customer") {
+    return <Redirect to="/user-home" />;
+  }
+  else if (authenticatedRole === "lawyer") {
+    return <Redirect to="/lawyers" />
+  }
 
   return (
     (<div
@@ -251,13 +243,13 @@ export function LoginSignup() {
                           style={{ marginRight: "4px" }}
                           type="radio"
                           name="role"
-                          id="customer"
-                          value="customer"
-                          checked={role === 'customer'}
-                          onChange={() => setRole('customer')}
+                          id="client"
+                          value="client"
+                          checked={role === 'client'}
+                          onChange={() => setRole('client')}
                         />
-                        <label className="form-check-label" htmlFor="customer">
-                          Customer
+                        <label className="form-check-label" htmlFor="client">
+                          Client
                         </label>
                       </div>
                       <div className="form-check">

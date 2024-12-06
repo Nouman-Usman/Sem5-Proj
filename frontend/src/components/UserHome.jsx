@@ -1,9 +1,58 @@
-import React from "react"
+import React , {useEffect}from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { MessageSquare, Users, Info } from "lucide-react"
+import { useNavigate } from 'react-router-dom';
+
 
 export function UserHome() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const authenticateUser = async ()=>{
+      const role = await verifyToken();
+      if (role === "customer") {
+        navigate("/user-home"); // Navigate to user-home for "customer"
+      } else {
+        navigate("/login"); // Navigate to lawyers for "lawyer"
+      }
+    }
+
+    authenticateUser();
+  }, []);
+
+  const verifyToken = async () => {
+    const token = localStorage.getItem("access_token");
+
+    if (!token) {
+      console.log("No token found, please log in.");
+      return;
+    }
+    try {
+      const response = await fetch("http://127.0.0.1:5000/api/verify-token", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}` // Send the token as a Bearer token in the header
+        }
+      });
+
+      const data = await response.json();  // Make sure to extract the JSON response
+      if (response.ok && data.role === 'lawyer') {
+        return "lawyer";
+      } else if (response.ok && data.role === 'customer') {
+        return "customer";
+      } else {
+        console.log("Access denied, role not authorized.");
+        return null;
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+
+
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold mb-8">Welcome to Apna Waqeel</h1>

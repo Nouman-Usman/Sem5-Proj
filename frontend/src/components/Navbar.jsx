@@ -5,6 +5,11 @@ import { Menu } from "@headlessui/react"
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
 
+
+  const handleLogout = ()=>{
+    localStorage.removeItem("access_token");
+  }
+
   return (
     (<nav className="bg-white shadow-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -59,7 +64,9 @@ export function Navbar() {
                         href="/Signup"
                         className={`${
                           active ? "bg-gray-100" : ""
-                        } flex items-center px-4 py-2 text-sm text-gray-700`}>
+                        } flex items-center px-4 py-2 text-sm text-gray-700`}
+                        onClick={handleLogout}
+                        >
                         <LogOut className="mr-2 h-4 w-4" />
                         Logout
                       </a>
@@ -126,7 +133,7 @@ export function Navbar() {
                 className="block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-gray-200">Login</a>
               <a
                 href="#"
-                className="block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-gray-200">Logout</a>
+                className="block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-gray-200" onClick={handleLogout} >Logout</a>
               <a
                 href="#"
                 className="block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-gray-200">Account Settings</a>
