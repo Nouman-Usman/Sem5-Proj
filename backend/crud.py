@@ -98,24 +98,20 @@ class UserCRUD(Database):
 
             # Verify the user was created
             logging.info("Verifying user creation")
-            cursor.execute("SELECT 1 FROM Users WHERE UserId = CAST(? AS UNIQUEIDENTIFIER)", (user_id,))
-            if not cursor.fetchone():
-                raise Exception("User creation verification failed")
+            cursor.execute("""
+                SELECT COUNT(1) FROM Users 
+                WHERE UserId = ?
+            """, (user_id,))
+            
+            result = cursor.fetchone()
+            if not result or result[0] == 0:
+                logging.error("User verification failed before commit")
+                raise Exception("User creation failed - verification error")
 
-            logging.info("Committing transaction")
+            logging.info("Verification successful, committing transaction")
             conn.commit()
             logging.info(f"Successfully created user with ID: {user_id}")
-
-            # Verify in a new connection
-            logging.info(f"Successfully created user. Verifying in new connection...")
-            verify_conn = self.get_connection()
-            verify_cursor = verify_conn.cursor()
-            verify_cursor.execute("SELECT 1 FROM Users WHERE UserId = ?", (user_id,))
-            if not verify_cursor.fetchone():
-                raise Exception("User creation verification failed in new connection")
-            verify_cursor.close()
-            verify_conn.close()
-
+            
             return user_id
 
         except Exception as e:

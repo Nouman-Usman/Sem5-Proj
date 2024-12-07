@@ -74,3 +74,86 @@ bdb.BdbQuit
 2024-12-07 20:34:46,875 - root - INFO - Successfully created user with ID: 043fc475-9a11-4964-8e1f-3f32057eedc7
 2024-12-07 20:34:46,876 - root - INFO - Successfully created user. Verifying in new connection...
 2024-12-07 20:42:22,952 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-07 20:43:17,706 - root - INFO - Starting transaction for user creation: noumanmughal0123@gmail.com
+2024-12-07 20:43:17,709 - root - INFO - Checking email existence: noumanmughal0123@gmail.com
+2024-12-07 20:43:17,717 - root - INFO - Creating user record with ID: 6ea27ff5-a75a-4d3a-9cbb-0ed5d0050345
+2024-12-07 20:43:17,725 - root - INFO - Creating user profile for ID: 6ea27ff5-a75a-4d3a-9cbb-0ed5d0050345
+2024-12-07 20:43:17,756 - root - INFO - Creating customer record
+2024-12-07 20:43:17,760 - root - INFO - Verifying user creation
+2024-12-07 20:43:17,765 - root - INFO - Committing transaction
+2024-12-07 20:43:17,769 - root - INFO - Successfully created user with ID: 6ea27ff5-a75a-4d3a-9cbb-0ed5d0050345
+2024-12-07 20:43:17,769 - root - INFO - Successfully created user. Verifying in new connection...
+2024-12-07 20:46:49,472 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-07 20:46:54,591 - root - INFO - Starting transaction for user creation: noumanmughal0123@gmail.com
+2024-12-07 20:46:54,593 - root - INFO - Checking email existence: noumanmughal0123@gmail.com
+2024-12-07 20:46:54,602 - root - INFO - Creating user record with ID: e87e1eee-ffe9-407b-8769-806705a2ef5a
+2024-12-07 20:46:54,608 - root - INFO - Creating user profile for ID: e87e1eee-ffe9-407b-8769-806705a2ef5a
+2024-12-07 20:46:54,612 - root - INFO - Creating customer record
+2024-12-07 20:46:54,616 - root - INFO - Verifying user creation
+2024-12-07 20:46:54,620 - root - INFO - Committing transaction
+2024-12-07 20:46:54,624 - root - INFO - Successfully created user with ID: e87e1eee-ffe9-407b-8769-806705a2ef5a
+2024-12-07 20:46:54,625 - root - INFO - Successfully created user. Verifying in new connection...
+2024-12-07 20:46:54,626 - root - ERROR - Error in create user: User creation verification failed in new connection
+2024-12-07 20:46:54,626 - root - INFO - Rolling back transaction
+2024-12-07 20:46:54,626 - root - ERROR - Rollback failed: Attempt to use a closed connection.
+2024-12-07 20:46:54,626 - root - ERROR - Error closing cursor: The cursor's connection has been closed.
+2024-12-07 20:46:54,626 - root - ERROR - Error closing connection: Attempt to use a closed connection.
+2024-12-07 20:46:54,626 - app - ERROR - Signup error: User creation verification failed in new connection
+2024-12-07 20:48:12,558 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-07 20:48:26,550 - root - INFO - Starting transaction for user creation: noumanmughal0123@gmail.com
+2024-12-07 20:48:26,552 - root - INFO - Checking email existence: noumanmughal0123@gmail.com
+2024-12-07 20:48:26,556 - root - INFO - Creating user record with ID: 7b3859da-dedf-4a90-aa49-c2a7dc27e4e7
+2024-12-07 20:48:26,560 - root - INFO - Creating user profile for ID: 7b3859da-dedf-4a90-aa49-c2a7dc27e4e7
+2024-12-07 20:48:26,563 - root - INFO - Creating customer record
+2024-12-07 20:48:26,568 - root - INFO - Verifying user creation
+2024-12-07 20:48:26,570 - root - INFO - Committing transaction
+2024-12-07 20:48:26,571 - root - INFO - Successfully created user with ID: 7b3859da-dedf-4a90-aa49-c2a7dc27e4e7
+2024-12-07 20:48:26,572 - root - INFO - Successfully created user. Verifying in new connection...
+2024-12-07 20:49:53,136 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-07 20:50:05,394 - root - INFO - Starting transaction for user creation: noumanmughal0123@gmail.com
+2024-12-07 20:50:05,396 - root - INFO - Checking email existence: noumanmughal0123@gmail.com
+2024-12-07 20:50:05,402 - root - INFO - Creating user record with ID: 7d44d676-f7dd-4aa9-ae6d-abc3f26729ca
+2024-12-07 20:50:05,411 - root - INFO - Creating user profile for ID: 7d44d676-f7dd-4aa9-ae6d-abc3f26729ca
+2024-12-07 20:50:05,415 - root - INFO - Creating customer record
+2024-12-07 20:50:05,418 - root - INFO - Verifying user creation
+2024-12-07 20:50:05,430 - root - ERROR - Error in create user: User creation verification failed
+2024-12-07 20:50:05,431 - root - INFO - Rolling back transaction
+2024-12-07 20:50:05,434 - app - ERROR - Signup error: User creation verification failed
+2024-12-07 20:51:06,274 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-07 20:51:14,550 - root - INFO - Starting transaction for user creation: noumanmughal0123@gmail.com
+2024-12-07 20:51:14,551 - root - INFO - Checking email existence: noumanmughal0123@gmail.com
+2024-12-07 20:51:14,556 - root - INFO - Creating user record with ID: de71c3a7-a355-4058-b187-04697d082054
+2024-12-07 20:51:14,562 - root - INFO - Creating user profile for ID: de71c3a7-a355-4058-b187-04697d082054
+2024-12-07 20:51:14,566 - root - INFO - Creating customer record
+2024-12-07 20:51:14,570 - root - INFO - Verifying user creation
+2024-12-07 20:51:14,574 - root - ERROR - Error in create user: User creation verification failed
+2024-12-07 20:51:14,575 - root - INFO - Rolling back transaction
+2024-12-07 20:51:14,576 - app - ERROR - Signup error: User creation verification failed
+2024-12-07 20:53:06,971 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-07 20:53:19,472 - root - INFO - Starting transaction for user creation: noumanmughal0123@gmail.com
+2024-12-07 20:53:19,473 - root - INFO - Checking email existence: noumanmughal0123@gmail.com
+2024-12-07 20:53:19,479 - root - INFO - Creating user record with ID: daa121a7-8792-4420-8e58-25ac25ec28ae
+2024-12-07 20:53:19,485 - root - INFO - Creating user profile for ID: daa121a7-8792-4420-8e58-25ac25ec28ae
+2024-12-07 20:53:19,490 - root - INFO - Creating customer record
+2024-12-07 20:53:19,494 - root - INFO - Verifying user creation
+2024-12-07 20:53:19,496 - root - INFO - Committing transaction
+2024-12-07 20:53:19,497 - root - INFO - Successfully created user with ID: daa121a7-8792-4420-8e58-25ac25ec28ae
+2024-12-07 20:53:19,499 - root - INFO - Successfully created user. Verifying in new connection...
+2024-12-07 20:55:17,637 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-07 20:55:35,089 - root - INFO - Starting transaction for user creation: noumanmughal0123@gmail.com
+2024-12-07 20:55:35,091 - root - INFO - Checking email existence: noumanmughal0123@gmail.com
+2024-12-07 20:55:35,097 - root - INFO - Creating user record with ID: 13ae595f-6d1a-470c-affa-60368059dace
+2024-12-07 20:55:35,108 - root - INFO - Creating user profile for ID: 13ae595f-6d1a-470c-affa-60368059dace
+2024-12-07 20:55:35,112 - root - INFO - Creating customer record
+2024-12-07 20:55:35,118 - root - INFO - Verifying user creation
+2024-12-07 20:55:35,119 - root - INFO - Committing transaction
+2024-12-07 20:55:35,120 - root - INFO - Successfully created user with ID: 13ae595f-6d1a-470c-affa-60368059dace
+2024-12-07 21:00:34,848 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-07 21:18:22,389 - root - INFO - Starting transaction for user creation: noumanmughal0123@gmail.com
+2024-12-07 21:18:22,392 - root - INFO - Checking email existence: noumanmughal0123@gmail.com
+2024-12-07 21:18:22,415 - root - INFO - Creating user record with ID: fe032527-1a13-4dd3-aed5-5ba56a840cee
+2024-12-07 21:18:22,423 - root - INFO - Creating user profile for ID: fe032527-1a13-4dd3-aed5-5ba56a840cee
+2024-12-07 21:18:22,449 - root - INFO - Creating customer record
+2024-12-07 21:18:22,459 - root - INFO - Verifying user creation
+2024-12-07 21:18:22,464 - root - INFO - Verification successful, committing transaction
+2024-12-07 21:18:22,465 - root - INFO - Successfully created user with ID: fe032527-1a13-4dd3-aed5-5ba56a840cee
