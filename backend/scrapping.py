@@ -3,7 +3,6 @@ from bs4 import BeautifulSoup
 import csv
 import os
 
-# Function to download PDFs from a URL with conditional headers
 def download_pdf(url, save_directory, last_modified=None, etag=None):
     try:
         # Set up headers for conditional requests

@@ -35,4 +35,5 @@ LangGraph Legal Assistant is an AI-powered tool designed to assist with legal qu
 ### Steps
 
 1. **Clone the repository:**
-    - waitress-serve --host=127.0.0.1 --port=5000 app:app
+    - 
+    waitress-serve --host=127.0.0.1 --port=5000 app:app

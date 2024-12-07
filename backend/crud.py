@@ -23,82 +23,121 @@ class Database:
 
 class UserCRUD(Database):
     def create(self, username: str, email: str, user_type: str) -> Optional[str]:
+        conn = None
+        cursor = None
         try:
             conn = self.get_connection()
+            conn.autocommit = False  # Explicitly disable autocommit
             cursor = conn.cursor()
             user_id = str(uuid.uuid4())
             profile_id = str(uuid.uuid4())
-            
+
             # Map the user type correctly
             db_user_type = VALID_USER_TYPES.get(user_type.lower())
             if not db_user_type:
                 raise ValueError(f"Invalid user type: {user_type}")
             
+            logging.info(f"Starting transaction for user creation: {email}")
             cursor.execute("BEGIN TRANSACTION")
-            
-            # Check if email already exists
+
+            # Check email existence
+            logging.info(f"Checking email existence: {email}")
             cursor.execute("SELECT 1 FROM Users WHERE Email = ?", (email,))
             if cursor.fetchone():
                 raise ValueError("Email already exists")
 
-            # Create user with CAST for UUID
+            # Create user
+            logging.info(f"Creating user record with ID: {user_id}")
             user_query = """
                 INSERT INTO Users (UserId, UserName, Email, UserType, CreatedAt)
-                VALUES (CAST(? AS UNIQUEIDENTIFIER), ?, ?, ?, GETDATE())
+                VALUES (?, ?, ?, ?, GETDATE());
             """
             cursor.execute(user_query, (user_id, username, email, db_user_type))
+            
+            # Verify user creation immediately
+            cursor.execute("SELECT 1 FROM Users WHERE UserId = ?", (user_id,))
+            if not cursor.fetchone():
+                raise Exception("User creation failed - no record found")
+
+            # Create profile
+            logging.info(f"Creating user profile for ID: {user_id}")
             profile_query = """
                 INSERT INTO UserProfiles (ProfileId, UserId)
-                VALUES (CAST(? AS UNIQUEIDENTIFIER), CAST(? AS UNIQUEIDENTIFIER))
+                VALUES (?, ?);
             """
             cursor.execute(profile_query, (profile_id, user_id))
 
+            # Create role-specific records
             if user_type.lower() == 'lawyer':
+                logging.info("Creating lawyer details")
                 license_id = f"TBD-{str(uuid.uuid4())[:8]}"
                 lawyer_query = """
                     INSERT INTO LawyerDetails 
                     (LawyerId, Specialization, Experience, LicenseNumber, Rating, Location)
-                    VALUES (CAST(? AS UNIQUEIDENTIFIER), ?, ?, ?, ?, ?)
+                    VALUES (?, ?, ?, ?, ?, ?);
                 """
                 cursor.execute(lawyer_query, (
-                    user_id,      # Cast to UNIQUEIDENTIFIER
-                    'General',    # Specialization
-                    3,           # Experience
-                    license_id,  # Unique license number
-                    2.0,        # Rating
-                    'TBD'       # Location
+                    user_id,
+                    'General',
+                    3,
+                    license_id,
+                    2.0,
+                    'TBD'
                 ))
-            elif (user_type.lower() == 'client'):
+            elif user_type.lower() == 'client':
+                logging.info("Creating customer record")
                 customer_query = """
                     INSERT INTO Customers (CustomerId, CustomerName, ContactInfo, CreatedAt)
                     VALUES (CAST(? AS UNIQUEIDENTIFIER), ?, ?, GETDATE())
                 """
                 cursor.execute(customer_query, (
-                    user_id,      # Cast to UNIQUEIDENTIFIER
-                    username,     # Customer name
-                    '03228429291',         # Empty contact info
-                    ))
+                    user_id,
+                    username,
+                    '{}',
+                ))
+
+            # Verify the user was created
+            logging.info("Verifying user creation")
+            cursor.execute("SELECT 1 FROM Users WHERE UserId = CAST(? AS UNIQUEIDENTIFIER)", (user_id,))
+            if not cursor.fetchone():
+                raise Exception("User creation verification failed")
+
+            logging.info("Committing transaction")
             conn.commit()
             logging.info(f"Successfully created user with ID: {user_id}")
+
+            # Verify in a new connection
+            logging.info(f"Successfully created user. Verifying in new connection...")
+            verify_conn = self.get_connection()
+            verify_cursor = verify_conn.cursor()
+            verify_cursor.execute("SELECT 1 FROM Users WHERE UserId = ?", (user_id,))
+            if not verify_cursor.fetchone():
+                raise Exception("User creation verification failed in new connection")
+            verify_cursor.close()
+            verify_conn.close()
+
             return user_id
 
-        except pyodbc.Error as e:
-            if 'conn' in locals():
-                conn.rollback()
-            logging.error(f"Database error creating user: {str(e)}")
-            if 'duplicate' in str(e).lower():
-                raise ValueError("Email already exists")
-            raise
         except Exception as e:
-            if 'conn' in locals():
-                conn.rollback()
-            logging.error(f"Error creating user: {str(e)}")
+            logging.error(f"Error in create user: {str(e)}")
+            if conn:
+                try:
+                    logging.info("Rolling back transaction")
+                    conn.rollback()
+                except Exception as rollback_error:
+                    logging.error(f"Rollback failed: {str(rollback_error)}")
             raise
         finally:
-            if 'cursor' in locals():
-                cursor.close()
-            if 'conn' in locals():
-                conn.close()
+            if cursor:
+                try:
+                    cursor.close()
+                except Exception as e:
+                    logging.error(f"Error closing cursor: {str(e)}")
+            if conn:
+                try:
+                    conn.close()
+                except Exception as e:
+                    logging.error(f"Error closing connection: {str(e)}")
 
     def read(self, user_id: str) -> Optional[Dict]:
         try:
