@@ -9,9 +9,14 @@ import time  # Add this import
 from datetime import timedelta
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity, get_jwt
 from werkzeug.security import generate_password_hash, check_password_hash
-from history import AzureTableChatMessageHistory
+from history import SQLChatMessageHistory  # Changed from AzureTableChatMessageHistory
 import os
 from dotenv import load_dotenv
+import pyodbc
+import uuid
+from lawyer_store import LawyerStore  # Add this import
+from crud import UserCRUD, LawyerCRUD, LawyerDetailsCRUD
+from crud import VALID_USER_TYPES
 
 load_dotenv()
 
@@ -60,14 +65,20 @@ app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(hours=1)
 
 jwt = JWTManager(app)
 
-# Initialize Azure Table storage
-azure_tables = AzureTableChatMessageHistory(
+# Initialize SQL storage instead of Azure Tables
+sql_storage = SQLChatMessageHistory(
     chat_id="system",
     user_id="system",
-    connection_string=os.getenv("BLOB_CONN_STRING")
+    connection_string=os.getenv("SQL_CONN_STRING")  # Update environment variable name
 )
 
 # api routes for front end
+
+VALID_USER_TYPES = ['client', 'lawyer']
+
+user_crud = UserCRUD()
+lawyer_crud = LawyerCRUD()
+lawyer_details_crud = LawyerDetailsCRUD()
 
 # Route for Signup
 @app.route('/api/signup', methods=['POST'])
@@ -76,33 +87,52 @@ def signup():
     name = data.get('name')
     email = data.get('email')
     password = data.get('password')
-    role = data.get('role', 'client') 
-    if not all([name, email, password, role]):
-        return jsonify({"error": "Missing data"}), 400
-
-    # Check if user exists
-    existing_user = azure_tables.get_user(email)
-    if existing_user:
-        return jsonify({"error": "User already exists"}), 409
-
-    # Create user
-    success = azure_tables.create_user(email, name, password, role)
-    if not success:
-        return jsonify({"error": "Failed to create user"}), 500
-
-    # If user is a customer, create customer record
-    if role == 'client':
-        user = azure_tables.get_user(email)
-        if user:
-            azure_tables.create_customer(user['user_id'], 'free')
+    role = data.get('role', 'client').lower()
     
-    # If user is a lawyer, create lawyer record
-    elif role == 'lawyer':
-        user = azure_tables.get_user(email)
-        if user:
-            azure_tables.create_lawyer(user['user_id'])
+    if not all([name, email, password]):
+        return jsonify({"error": "Missing required fields"}), 400
+    
+    if role not in VALID_USER_TYPES:
+        return jsonify({"error": f"Invalid role. Must be one of: {', '.join(VALID_USER_TYPES.keys())}"}), 400
 
-    return jsonify({"message": "User created successfully"}), 201
+    try:
+        # Create user with role mapping
+        user_id = user_crud.create(
+            username=name,
+            email=email,
+            user_type=role  # UserCRUD will handle the proper case conversion
+        )
+        
+        if not user_id:
+            return jsonify({"error": "Failed to create user"}), 500
+
+        # Create JWT token with original role for frontend consistency
+        access_token = create_access_token(
+            identity=user_id,
+            additional_claims={
+                "role": role,
+                "email": email
+            }
+        )
+
+        return jsonify({
+            "message": "User created successfully",
+            "access_token": access_token,
+            "user": {
+                "id": user_id,
+                "email": email,
+                "name": name,
+                "role": role
+            }
+        }), 201
+
+    except ValueError as e:
+        print({"error": str(e)})
+        return jsonify({"error": str(e)}), 400
+    except Exception as e:
+
+        logger.error(f"Signup error: {str(e)}")
+        return jsonify({"error": "Failed to create user"}), 500
 
 # Route for Login
 @app.route('/api/login', methods=['POST'])
@@ -114,46 +144,72 @@ def login():
     if not email or not password:
         return jsonify({"error": "Missing email or password"}), 400
 
-    user = azure_tables.get_user(email)
-    if not user or user.get('password') != password:  # In production, use proper password hashing
-        return jsonify({"error": "Invalid credentials"}), 401
+    try:
+        user = sql_storage.check_email_exist(email)
+        if not user:
+            return jsonify({"error": "Invalid credentials"}), 401
 
-    access_token = create_access_token(
-        identity=user['user_id'],
-        additional_claims={
-            "role": user['role'],
-            "email": user['email']
-        }
-    )
+        # TODO: Add password verification here
+        # if not check_password_hash(user['password_hash'], password):
+        #     return jsonify({"error": "Invalid credentials"}), 401
 
-    return jsonify({
-        "message": "Login successful",
-        "access_token": access_token,
-        "user": {
-            "email": user['email'],
-            "name": user['name'],
-            "role": user['role']
-        }
-    }), 200
+        # Create JWT token
+        access_token = create_access_token(
+            identity=user['user_id'],
+            additional_claims={
+                "role": user['user_type'],
+                "email": user['email']
+            }
+        )
+
+        return jsonify({
+            "message": "Login successful",
+            "access_token": access_token,
+            "user": {
+                "id": user['user_id'],
+                "email": user['email'],
+                "name": user['username'],
+                "role": user['user_type']
+            }
+        }), 200
+
+    except Exception as e:
+        logger.error(f"Login error: {str(e)}")
+        return jsonify({"error": "Login failed"}), 500
 
 @app.route('/api/user-profile', methods=['GET'])
 @jwt_required()
 def user_profile():
-    current_user_id = get_jwt_identity()
-    jwt_claims = get_jwt()
-    email = jwt_claims.get('email')
-    
-    user = azure_tables.get_user(email)
-    if not user:
-        return jsonify({"error": "User not found"}), 404
+    try:
+        current_user_id = get_jwt_identity()
+        user = user_crud.read(current_user_id)
+        
+        if not user:
+            return jsonify({"error": "User not found"}), 404
 
-    return jsonify({
-        "user_id": user['user_id'],
-        "name": user['name'],
-        "email": user['email'],
-        "role": user['role']
-    })
+        profile_data = {
+            "id": user['user_id'],
+            "name": user['username'],
+            "email": user['email'],
+            "role": user['user_type']
+        }
 
+        # Add lawyer-specific data if user is a lawyer
+        if user['user_type'] == 'lawyer':
+            lawyer_details = lawyer_details_crud.read(current_user_id)
+            if lawyer_details:
+                profile_data.update({
+                    "specialization": lawyer_details['specialization'],
+                    "experience": lawyer_details['experience'],
+                    "rating": lawyer_details['rating'],
+                    "location": lawyer_details['location']
+                })
+
+        return jsonify(profile_data)
+
+    except Exception as e:
+        logger.error(f"Profile fetch error: {str(e)}")
+        return jsonify({"error": "Failed to fetch profile"}), 500
 
 @app.route('/api/', methods=['GET'])
 def health_check2():
@@ -162,7 +218,7 @@ def health_check2():
 
 
 
-###########
+
 
 
 @app.route('/api/health', methods=['GET'])
@@ -258,6 +314,65 @@ def get_user_chats(user_id, chat_id):
         logger.error(f"Error retrieving chats: {e}")
         return jsonify({"error": str(e)}), 500
 
+@app.route('/api/lawyer/register', methods=['POST'])
+@jwt_required()
+def register_lawyer():
+    try:
+        data = request.get_json()
+        lawyer_store = LawyerStore(connection_string=os.getenv("SQL_CONN_STRING"))
+        
+        lawyer_data = {
+            "name": data["name"],
+            "email": data["email"],
+            "specialization": data["specialization"],
+            "experience": data["experience"],
+            "license_number": data["license_number"],
+            "rating": 0.0,  # Default rating for new lawyers
+            "location": data["location"],
+            "specializations": data.get("specializations", [])
+        }
+        
+        lawyer_store.add_lawyer(lawyer_data)
+        return jsonify({"message": "Lawyer registered successfully"}), 201
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/api/chat/start', methods=['POST'])
+@jwt_required()
+def start_chat():
+    try:
+        data = request.get_json()
+        initiator_id = get_jwt_identity()
+        recipient_id = data.get('recipient_id', "00000000-0000-0000-0000-000000000000")  # Default to system ID
+        
+        # Get agent instance to use its methods
+        agent = get_agent(initiator_id, None)
+        
+        # Ensure both users exist
+        if not (agent.ensure_user_exists(initiator_id) and agent.ensure_user_exists(recipient_id)):
+            return jsonify({"error": "Failed to ensure users exist"}), 500
+        
+        chat_id = str(uuid.uuid4())
+        conn = pyodbc.connect(os.getenv("SQL_CONN_STRING"))
+        cursor = conn.cursor()
+        
+        query = """
+            INSERT INTO ChatSessions 
+            (ChatId, InitiatorId, RecipientId, Status, StartTime)
+            VALUES (?, ?, ?, 'Active', GETDATE())
+        """
+        cursor.execute(query, (chat_id, initiator_id, recipient_id))
+        conn.commit()
+        
+        return jsonify({"chat_id": chat_id}), 201
+    except Exception as e:
+        logger.error(f"Error starting chat: {e}")
+        return jsonify({"error": str(e)}), 500
+    finally:
+        if 'cursor' in locals():
+            cursor.close()
+        if 'conn' in locals():
+            conn.close()
 
 def keep_alive():
     while True:

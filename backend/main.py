@@ -1,7 +1,6 @@
 import os
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langgraph.checkpoint.memory import MemorySaver
-# from langchain_community.document_loaders import WebBaseLoader
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_pinecone import PineconeVectorStore
 from langchain.prompts import PromptTemplate
@@ -21,13 +20,13 @@ import logging
 import csv
 from dotenv import load_dotenv
 import recommend_lawyer
-import gc  # Add at top with other imports
-from history import AzureTableChatMessageHistory  # Update import to match new class name
-from langchain.schema import HumanMessage, AIMessage, BaseMessage  # Update import
+import gc  
+from history import SQLChatMessageHistory  
+from langchain.schema import HumanMessage, AIMessage, BaseMessage  
 from lawyer_store import LawyerStore
-from langchain.memory import ConversationBufferWindowMemory  # Update import
-import datetime  # Add this import
-import pyodbc  # Add this import
+from langchain.memory import ConversationBufferWindowMemory  
+import datetime  
+import pyodbc  
 load_dotenv()
 
 
@@ -36,7 +35,7 @@ class GraphState(TypedDict):
     generation: str
     web_search: str
     documents: List[Document]
-    chat_id: str  # Add chat_id to state schema
+    chat_id: str
     user_id: str
 
 
@@ -57,7 +56,9 @@ class RAGAgent:
         self.web_search_tool = TavilySearchResults(k=3)
         self._initialize_vectorstore()
         self._initialize_prompts()
-        self.connection_string = os.getenv("BLOB_CONN_STRING")
+        self.connection_string = os.getenv("SQL_CONN_STRING")
+        if not self.connection_string:
+            raise ValueError("SQL_CONN_STRING environment variable is not set")
         self.lawyer_store = LawyerStore(connection_string=self.connection_string)
         gc.collect()
         self.max_context_length = 4096  # Add max context length
@@ -65,19 +66,23 @@ class RAGAgent:
 
         self.user_id = user_id
         self.chat_id = chat_id
-        self.chats_loaded = False  # Add flag to track if chats are loaded
+        self.chats_loaded = False  
         if chat_id:
-            self.load_previous_chats(user_id, chat_id)  # Load previous chats if chat_id is not null
+            self.chat_history = SQLChatMessageHistory(  # Changed from AzureTableChatMessageHistory
+                chat_id=chat_id,
+                user_id=user_id,
+                connection_string=self.connection_string
+            )
 
-    def get_chat_history(self, chat_id):  # Changed from chat_id
+    def get_chat_history(self, chat_id):
         if (chat_id):
             try:
-                chat_history = AzureTableChatMessageHistory(
-                    chat_id=chat_id,  # Changed from chat_id
+                chat_history = SQLChatMessageHistory(
+                    chat_id=chat_id, 
                     user_id=self.user_id,
                     connection_string=self.connection_string
                 )
-                messages = chat_history.messages[-5:]  # Get last 5 messages
+                messages = chat_history.messages[-5:]  
                 return "\n".join(
                     [
                         (
@@ -301,7 +306,7 @@ Question to route: {question}
                 session_data['user_id'],
                 chat_id,
                 datetime.datetime.utcnow(),
-                None,  # EndTime can be updated later
+                None,
                 json.dumps(session_data)
             ))
             connection.commit()
@@ -565,35 +570,102 @@ Question to route: {question}
         return workflow.compile()
 
     def load_previous_chats(self, user_id: str, chat_id: str):
-        """Load previous chats into the conversation buffer memory"""
         self.memory.clear()
         chat_history = self.get_chat_messages(user_id, chat_id)
         for msg in chat_history[-5:]:
             if isinstance(msg, HumanMessage):
                 self.memory.save_context({"input": msg.content}, {"output": ""})
             elif isinstance(msg, AIMessage):
-                self.memory.save_context({"input": ""}, {"output": msg.content})
+                self.memory.save_context({"input": "", "output": msg.content})
 
-    def handle_new_chat(self, user_id, chat_id, topic):
+    def ensure_user_exists(self, user_id: str) -> bool:
+        """Ensure user exists, create if not"""
+        try:
+            connection = pyodbc.connect(self.connection_string)
+            cursor = connection.cursor()
+            
+            # Check if user exists
+            check_query = """
+                SELECT TOP 1 1 FROM Users WHERE UserId = CAST(? AS UNIQUEIDENTIFIER)
+            """
+            cursor.execute(check_query, (user_id,))
+            exists = cursor.fetchone() is not None
+
+            if not exists:
+                # Create user as system type
+                create_query = """
+                    INSERT INTO Users (UserId, UserName, Email, UserType, CreatedAt)
+                    VALUES (?, 'System User', 'system@example.com', 'System', GETDATE())
+                """
+                cursor.execute(create_query, (user_id,))
+                connection.commit()
+                return True
+            return exists
+
+        except Exception as e:
+            logging.error(f"Error ensuring user exists: {e}")
+            return False
+        finally:
+            cursor.close()
+            connection.close()
+
+    def handle_new_chat(self, user_id: str, chat_id: str, topic: str):
         if not self.chat_exists(user_id, chat_id):
-            recommend_lawyer.store_chat_topic(user_id, chat_id, topic, self.connection_string)
-            self.load_previous_chats(user_id, chat_id)
-            self.chats_loaded = True
+            try:
+                # Ensure valid UUIDs
+                if not self.is_valid_uuid(chat_id):
+                    chat_id = str(uuid.uuid4())
+                if not self.is_valid_uuid(user_id):
+                    user_id = str(uuid.uuid4())
+                system_id = "00000000-0000-0000-0000-000000000000"
+
+                self.ensure_user_exists(user_id)
+                # self.ensure_user_exists(system_id)
+
+                # Create new chat session
+                connection = pyodbc.connect(self.connection_string)
+                cursor = connection.cursor()
+                
+                query = """
+                    INSERT INTO ChatSessions 
+                    (ChatId, InitiatorId, RecipientId, Status, StartTime)
+                    VALUES (?, ?, ?, 'Active', GETDATE())
+                """
+                cursor.execute(query, (chat_id, user_id, system_id))
+                
+                # Store chat topic
+                topic_id = str(uuid.uuid4())
+                topic_query = """
+                    INSERT INTO ChatTopics (TopicId, UserId, Topic, Timestamp)
+                    VALUES (?, ?, ?, GETDATE())
+                """
+                cursor.execute(topic_query, (topic_id, user_id, topic))
+                connection.commit()
+                
+                self.load_previous_chats(user_id, chat_id)
+                self.chats_loaded = True
+            except Exception as e:
+                logging.error(f"Error creating new chat: {e}")
+                raise
+            finally:
+                cursor.close()
+                connection.close()
 
     def run(self, question: str, user_id: str, chat_id: str = None, chat_history: List[Dict] = None) -> Dict[str, Any]:
         try:
             if chat_history is None:
                 chat_history = []
+            if not self.is_valid_uuid(user_id):
+                user_id = str(uuid.uuid4())
+            if chat_id and not self.is_valid_uuid(chat_id):
+                chat_id = str(uuid.uuid4())
 
-            # Load previous chats into the conversation buffer memory only once
-            if chat_id and not self.chats_loaded:
-                self.handle_new_chat(user_id, chat_id, question)  # Use the new function
-                self.load_previous_chats(user_id, chat_id)
-                self.chats_loaded = True  # Set flag to indicate chats are loaded
-
-            chat_context = self.memory.load_memory_variables({})["history"]  # Use conversation buffer memory
-            updated_question = self.update_query(question, chat_context)  # Update the query based on chat history
-
+            if not chat_id and not self.chats_loaded:
+                self.handle_new_chat(user_id, question)  
+                # self.load_previous_chats(user_id, chat_id)
+                self.chats_loaded = True  
+            chat_context = self.memory.load_memory_variables({})["history"]  
+            updated_question = self.update_query(question, chat_context)  
             sentiment = self.analyze_sentiment(updated_question)
             logging.info(f"Sentiment: {sentiment}")
             recommendations = self.lawyer_store.get_top_lawyers(sentiment)
@@ -620,7 +692,7 @@ Question to route: {question}
                 result = last_output["generation"]
 
                 if chat_id and result:
-                    chat_history_obj = AzureTableChatMessageHistory(
+                    chat_history_obj = SQLChatMessageHistory(
                         chat_id=chat_id,
                         user_id=user_id,
                         connection_string=self.connection_string,
@@ -666,20 +738,24 @@ Question to route: {question}
         finally:
             gc.collect()
 
-    def get_user_chat_history(self, user_id: str, chat_id: str) -> List[str]:
+    def get_user_chat_history(self, user_id: str, chat_id: str = None) -> List[str]:
         """Get all chat sessions for a user"""
         try:
             connection = pyodbc.connect(self.connection_string)
             cursor = connection.cursor()
-            query = f"SELECT DISTINCT chat_id FROM ChatMessages WHERE user_id = '{user_id}'"
-            cursor.execute(query)
+            query = """
+                SELECT DISTINCT ChatId 
+                FROM ChatMessages 
+                WHERE SenderId = ?
+            """
+            cursor.execute(query, (user_id,))
             rows = cursor.fetchall()
-            chat_ids = [row.chat_id for row in rows]
+            chat_ids = [row.ChatId for row in rows]
             logging.info(f"Found {len(chat_ids)} chats for user {user_id}")
             return chat_ids
         except Exception as e:
             logging.error(f"Error retrieving chats: {e}")
-            raise
+            return []
         finally:
             cursor.close()
             connection.close()
@@ -689,25 +765,27 @@ Question to route: {question}
         try:
             connection = pyodbc.connect(self.connection_string)
             cursor = connection.cursor()
-            query = f"SELECT * FROM ChatMessages WHERE user_id = '{user_id}' AND chat_id = '{chat_id}' ORDER BY timestamp"
-            cursor.execute(query)
-            rows = cursor.fetchall()
+            query = """
+                SELECT [Message], [MessageType], [Timestamp] 
+                FROM ChatMessages 
+                WHERE [SenderId] = CAST(? AS UNIQUEIDENTIFIER)
+                AND [ChatId] = CAST(? AS UNIQUEIDENTIFIER)
+                ORDER BY [Timestamp]
+            """
+            cursor.execute(query, (user_id, chat_id))
             messages = []
-            for row in rows:
-                content = row.content
-                if not content:
-                    continue
-                msg_type = row.message_type
-                if msg_type == 'HumanMessage':
-                    messages.append(HumanMessage(content=content))
-                elif msg_type == 'AIMessage':
-                    messages.append(AIMessage(content=content))
-                logging.info(f"Retrieved {msg_type}: {content[:50]}...")
-            logging.info(f"Retrieved {len(messages)} messages for chat {chat_id}")
+            for row in cursor.fetchall():
+                if hasattr(row, 'Message') and hasattr(row, 'MessageType'):
+                    content = row.Message
+                    msg_type = row.MessageType
+                    if msg_type == 'HumanMessage':
+                        messages.append(HumanMessage(content=content))
+                    elif msg_type == 'AIMessage':
+                        messages.append(AIMessage(content=content))
             return messages
         except Exception as e:
             logging.error(f"Error retrieving chat messages: {e}")
-            raise
+            return []
         finally:
             cursor.close()
             connection.close()
@@ -735,14 +813,19 @@ Question to route: {question}
         try:
             connection = pyodbc.connect(self.connection_string)
             cursor = connection.cursor()
-            query = f"SELECT * FROM ChatMessages WHERE user_id = '{user_id}' AND chat_id = '{chat_id}' ORDER BY timestamp"
-            cursor.execute(query)
-            rows = cursor.fetchall()
+            query = """
+                SELECT [Message], [MessageType], [Timestamp]
+                FROM ChatMessages 
+                WHERE [SenderId] = ? AND [ChatId] = ? 
+                ORDER BY [Timestamp]
+            """
+            cursor.execute(query, (user_id, chat_id))
             messages = []
-            for row in rows:
+            for row in cursor.fetchall():
                 messages.append({
-                    "role": "user" if row.message_type == 'HumanMessage' else "assistant",
-                    "content": row.content,
+                    "role": "user" if row.MessageType == 'HumanMessage' else "assistant",
+                    "content": row.Message,
+                    "timestamp": row.Timestamp.isoformat() if hasattr(row, 'Timestamp') else None
                 })
             return messages
         except Exception as e:
@@ -784,8 +867,13 @@ Question to route: {question}
         try:
             connection = pyodbc.connect(self.connection_string)
             cursor = connection.cursor()
-            query = f"SELECT 1 FROM ChatMessages WHERE user_id = '{user_id}' AND chat_id = '{chat_id}'"
-            cursor.execute(query)
+            query = """
+                SELECT TOP 1 1 
+                FROM ChatMessages 
+                WHERE [SenderId] = CAST(? AS UNIQUEIDENTIFIER) 
+                AND [ChatId] = CAST(? AS UNIQUEIDENTIFIER)
+            """
+            cursor.execute(query, (user_id, chat_id))
             exists = cursor.fetchone() is not None
             return exists
         except Exception as e:
@@ -795,12 +883,20 @@ Question to route: {question}
             cursor.close()
             connection.close()
 
+    def is_valid_uuid(self, uuid_str: str) -> bool:
+        try:
+            uuid.UUID(uuid_str)
+            return True
+        except (ValueError, AttributeError, TypeError):
+            return False
+
 if __name__ == "__main__":
-    user_id = "test_user"
-    chat_id = "test_session"
+    # Create valid UUIDs for testing
+    user_id = str(uuid.uuid4())
+    chat_id = str(uuid.uuid4())
     agent = RAGAgent(user_id=user_id, chat_id=chat_id)
     while(True):
         user_input = input("User: ")
-        result = agent.run(user_input, user_id, chat_id)
+        result = agent.run(user_input, user_id)
         print(f"Assistant: {result}")
         agent.save_context(user_input, result["chat_response"])
