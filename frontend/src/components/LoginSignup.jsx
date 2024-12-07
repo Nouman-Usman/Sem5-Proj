@@ -37,11 +37,11 @@ export function LoginSignup() {
   const handleSignup = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setError("");
     try {
+      setError("SignUp..");
       await authService.signup(name, email, password, role);
       // Auto login after successful signup
-      await authService.login(email, password);
+      // await authService.login(email, password);
       window.location.href = '/dashboard';
     } catch (err) {
       setError(err.message);

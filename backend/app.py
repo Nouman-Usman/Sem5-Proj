@@ -96,22 +96,19 @@ def signup():
         return jsonify({"error": f"Invalid role. Must be one of: {', '.join(VALID_USER_TYPES.keys())}"}), 400
 
     try:
-        # Create user with role mapping
+        # Create user with proper role mapping
         user_id = user_crud.create(
             username=name,
             email=email,
-            user_type=role  # UserCRUD will handle the proper case conversion
+            user_type=role
         )
-        
-        if not user_id:
-            return jsonify({"error": "Failed to create user"}), 500
 
-        # Create JWT token with original role for frontend consistency
         access_token = create_access_token(
             identity=user_id,
             additional_claims={
                 "role": role,
-                "email": email
+                "email": email,
+                "name": name
             }
         )
 
@@ -127,12 +124,10 @@ def signup():
         }), 201
 
     except ValueError as e:
-        print({"error": str(e)})
         return jsonify({"error": str(e)}), 400
     except Exception as e:
-
         logger.error(f"Signup error: {str(e)}")
-        return jsonify({"error": "Failed to create user"}), 500
+        return jsonify({"error": "Failed to create user. Please try again."}), 500
 
 # Route for Login
 @app.route('/api/login', methods=['POST'])
@@ -214,12 +209,6 @@ def user_profile():
 @app.route('/api/', methods=['GET'])
 def health_check2():
     return jsonify({"status": "healthy"})
-
-
-
-
-
-
 
 @app.route('/api/health', methods=['GET'])
 def health_check():

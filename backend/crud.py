@@ -27,53 +27,73 @@ class UserCRUD(Database):
             conn = self.get_connection()
             cursor = conn.cursor()
             user_id = str(uuid.uuid4())
+            profile_id = str(uuid.uuid4())
             
-            # Convert user_type to proper case for database
+            # Map the user type correctly
             db_user_type = VALID_USER_TYPES.get(user_type.lower())
             if not db_user_type:
                 raise ValueError(f"Invalid user type: {user_type}")
             
             cursor.execute("BEGIN TRANSACTION")
             
-            # Create user with correct UserType case
+            # Check if email already exists
+            cursor.execute("SELECT 1 FROM Users WHERE Email = ?", (email,))
+            if cursor.fetchone():
+                raise ValueError("Email already exists")
+
+            # Create user with CAST for UUID
             user_query = """
                 INSERT INTO Users (UserId, UserName, Email, UserType, CreatedAt)
-                VALUES (?, ?, ?, ?, GETDATE())
+                VALUES (CAST(? AS UNIQUEIDENTIFIER), ?, ?, ?, GETDATE())
             """
             cursor.execute(user_query, (user_id, username, email, db_user_type))
-            
-            # 2. Create user profile
             profile_query = """
-                INSERT INTO UserProfiles (UserId)
-                VALUES (?)
+                INSERT INTO UserProfiles (ProfileId, UserId)
+                VALUES (CAST(? AS UNIQUEIDENTIFIER), CAST(? AS UNIQUEIDENTIFIER))
             """
-            cursor.execute(profile_query, (user_id,))
+            cursor.execute(profile_query, (profile_id, user_id))
 
-            # 3. Create role-specific records for lawyers
             if user_type.lower() == 'lawyer':
-                # Create base lawyer record
+                license_id = f"TBD-{str(uuid.uuid4())[:8]}"
                 lawyer_query = """
                     INSERT INTO LawyerDetails 
                     (LawyerId, Specialization, Experience, LicenseNumber, Rating, Location)
-                    VALUES (?, ?, ?, ?, ?, ?)
+                    VALUES (CAST(? AS UNIQUEIDENTIFIER), ?, ?, ?, ?, ?)
                 """
                 cursor.execute(lawyer_query, (
-                    user_id,
-                    'General',  # Default specialization
-                    0,          # Default experience
-                    'TBD',      # Default license number
-                    0.0,        # Default rating
-                    'TBD'       # Default location
+                    user_id,      # Cast to UNIQUEIDENTIFIER
+                    'General',    # Specialization
+                    3,           # Experience
+                    license_id,  # Unique license number
+                    2.0,        # Rating
+                    'TBD'       # Location
                 ))
-
+            elif (user_type.lower() == 'client'):
+                customer_query = """
+                    INSERT INTO Customers (CustomerId, CustomerName, ContactInfo, CreatedAt)
+                    VALUES (CAST(? AS UNIQUEIDENTIFIER), ?, ?, GETDATE())
+                """
+                cursor.execute(customer_query, (
+                    user_id,      # Cast to UNIQUEIDENTIFIER
+                    username,     # Customer name
+                    '03228429291',         # Empty contact info
+                    ))
             conn.commit()
+            logging.info(f"Successfully created user with ID: {user_id}")
             return user_id
 
+        except pyodbc.Error as e:
+            if 'conn' in locals():
+                conn.rollback()
+            logging.error(f"Database error creating user: {str(e)}")
+            if 'duplicate' in str(e).lower():
+                raise ValueError("Email already exists")
+            raise
         except Exception as e:
             if 'conn' in locals():
                 conn.rollback()
-            logging.error(f"Error creating user: {e}")
-            return None
+            logging.error(f"Error creating user: {str(e)}")
+            raise
         finally:
             if 'cursor' in locals():
                 cursor.close()
