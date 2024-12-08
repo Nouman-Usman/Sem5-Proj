@@ -328,34 +328,36 @@ class ChatSessionCRUD(Database):
             cursor = conn.cursor()
             chat_id = str(uuid.uuid4())
             
-            # Verify both users exist
-            
-            # Verify both users exist
+            # First check if chat session already exists
             cursor.execute("""
-                SELECT COUNT(*) FROM Users 
-                WHERE UserId IN (?, ?)
+                SELECT ChatId FROM ChatSessions 
+                WHERE InitiatorId = ? AND RecipientId = ?
             """, (initiator_id, recipient_id))
             
-            if cursor.fetchone()[0] != 2:
-                raise Exception("One or both users do not exist")
+            existing = cursor.fetchone()
+            if existing:
+                return existing[0]
             
-            # Create chat session
+            # Create new chat session
             query = """
                 INSERT INTO ChatSessions 
                 (ChatId, InitiatorId, RecipientId, Status, StartTime)
                 VALUES (?, ?, ?, 'Active', GETDATE())
             """
             cursor.execute(query, (chat_id, initiator_id, recipient_id))
-            
             conn.commit()
             return chat_id
+
         except Exception as e:
-            conn.rollback()
             logging.error(f"Error creating chat session: {e}")
+            if 'conn' in locals():
+                conn.rollback()
             return None
         finally:
-            cursor.close()
-            conn.close()
+            if 'cursor' in locals():
+                cursor.close()
+            if 'conn' in locals():
+                conn.close()
 
     def delete(self, chat_id: str) -> bool:
         try:
@@ -391,8 +393,16 @@ class ChatMessageCRUD(Database):
         try:
             conn = self.get_connection()
             cursor = conn.cursor()
-            message_id = str(uuid.uuid4())
             
+            # First verify chat session exists
+            cursor.execute("""
+                SELECT 1 FROM ChatSessions WHERE ChatId = ?
+            """, (chat_id,))
+            
+            if not cursor.fetchone():
+                raise ValueError(f"Chat session {chat_id} does not exist")
+            
+            message_id = str(uuid.uuid4())
             query = """
                 INSERT INTO ChatMessages 
                 (MessageId, ChatId, SenderId, Message, MessageType, Timestamp)
@@ -401,14 +411,58 @@ class ChatMessageCRUD(Database):
             cursor.execute(query, (message_id, chat_id, sender_id, message, message_type))
             conn.commit()
             return message_id
+            
         except Exception as e:
             logging.error(f"Error creating message: {e}")
+            if 'conn' in locals():
+                conn.rollback()
             return None
         finally:
-            cursor.close()
-            conn.close()
+            if 'cursor' in locals():
+                cursor.close()
+            if 'conn' in locals():
+                conn.close()
 
-    # Add read, update, delete methods...
+    def get_chat_messages(self, user_id: str, chat_id: str) -> Optional[List[Dict]]:
+        """Get messages for a specific chat"""
+        try:
+            # Handle cases where chat_id is None or invalid
+            if not chat_id:
+                return []
+
+            conn = self.get_connection()
+            cursor = conn.cursor()
+            
+            chat_query = """
+                SELECT Message, MessageType, Timestamp 
+                FROM ChatMessages cm
+                JOIN ChatSessions cs ON cs.ChatId = cm.ChatId
+                WHERE cs.ChatId = CAST(? AS UNIQUEIDENTIFIER)
+                AND (cs.InitiatorId = CAST(? AS UNIQUEIDENTIFIER) 
+                     OR cs.RecipientId = CAST(? AS UNIQUEIDENTIFIER))
+                ORDER BY Timestamp DESC
+            """
+            
+            cursor.execute(chat_query, (str(chat_id), str(user_id), str(user_id)))
+            
+            messages = []
+            for row in cursor.fetchall():
+                messages.append({
+                    'content': row.Message,
+                    'role': 'user' if row.MessageType == 'HumanMessage' else 'assistant',
+                    'timestamp': row.Timestamp.isoformat() if row.Timestamp else None
+                })
+            
+            return messages
+            
+        except Exception as e:
+            logging.error(f"Error getting chat messages: {e}")
+            return []
+        finally:
+            if 'cursor' in locals():
+                cursor.close()
+            if 'conn' in locals():
+                conn.close()
 
 class LawyerDetailsCRUD(Database):
     def create(self, lawyer_id: str, specialization: str, experience: int, 

@@ -566,38 +566,37 @@ Question to route: {question}
 
         return workflow.compile()
 
-    def load_previous_chats(self, user_id: str, chat_id: str):
-        self.memory.clear()
-        chat_history = self.get_chat_messages(user_id, chat_id)
-        for msg in chat_history[-5:]:
-            if isinstance(msg, HumanMessage):
-                self.memory.save_context({"input": msg.content}, {"output": ""})
-            elif isinstance(msg, AIMessage):
-                self.memory.save_context({"input": "", "output": msg.content})
+    # def load_previous_chats(self, user_id: str, chat_id: str):
+    #     self.memory.clear()
+    #     chat_history = self.get_chat_messages(user_id, chat_id)
+    #     for msg in chat_history[-5:]:
+    #         if isinstance(msg, HumanMessage):
+    #             self.memory.save_context({"input": msg.content}, {"output": ""})
+    #         elif isinstance(msg, AIMessage):
+    #             self.memory.save_context({"input": "", "output": msg.content})
 
     def ensure_user_exists(self, user_id: str) -> bool:
-        """Ensure user exists, create if not"""
         try:
             connection = pyodbc.connect(self.connection_string)
             cursor = connection.cursor()
             
             # Check if user exists
             check_query = """
-                SELECT TOP 1 1 FROM Users WHERE UserId = CAST(? AS UNIQUEIDENTIFIER)
+                SELECT TOP 1 FROM Users WHERE UserId = CAST(? AS UNIQUEIDENTIFIER)
             """
             cursor.execute(check_query, (user_id,))
             exists = cursor.fetchone() is not None
 
             if not exists:
-                # Create user as system type
-                create_query = """
-                    INSERT INTO Users (UserId, UserName, Email, UserType, CreatedAt)
-                    VALUES (?, 'System User', 'system@example.com', 'System', GETDATE())
-                """
-                cursor.execute(create_query, (user_id,))
-                connection.commit()
-                return True
-            return exists
+                return False                
+                # create_query = """
+                #     INSERT INTO Users (UserId, UserName, Email, UserType, CreatedAt)
+                #     VALUES (?, 'System User', 'system@example.com', 'System', GETDATE())
+                # """
+                # cursor.execute(create_query, (user_id,))
+                # connection.commit()
+                # return True
+            return True
 
         except Exception as e:
             logging.error(f"Error ensuring user exists: {e}")
@@ -616,9 +615,8 @@ Question to route: {question}
                     user_id = str(uuid.uuid4())
                 system_id = "00000000-0000-0000-0000-000000000000"
 
-                self.ensure_user_exists(user_id)
+                # self.ensure_user_exists(user_id)
                 # self.ensure_user_exists(system_id)
-
                 # Create new chat session
                 connection = pyodbc.connect(self.connection_string)
                 cursor = connection.cursor()
@@ -629,17 +627,15 @@ Question to route: {question}
                     VALUES (?, ?, ?, 'Active', GETDATE())
                 """
                 cursor.execute(query, (chat_id, user_id, system_id))
-                
-                # Store chat topic
                 topic_id = str(uuid.uuid4())
                 topic_query = """
-                    INSERT INTO ChatTopics (TopicId, UserId, Topic, Timestamp)
-                    VALUES (?, ?, ?, GETDATE())
+                    INSERT INTO ChatTopics (TopicId, UserId, Topic, ChatId, Timestamp, )
+                    VALUES (?, ?, ?, ?,GETDATE())
                 """
-                cursor.execute(topic_query, (topic_id, user_id, topic))
+                cursor.execute(topic_query, (topic_id, user_id, topic,chat_id))
                 connection.commit()
                 
-                self.load_previous_chats(user_id, chat_id)
+                # self.load_previous_chats(user_id, chat_id)
                 self.chats_loaded = True
             except Exception as e:
                 logging.error(f"Error creating new chat: {e}")
@@ -656,11 +652,9 @@ Question to route: {question}
                 user_id = str(uuid.uuid4())
             if chat_id and not self.is_valid_uuid(chat_id):
                 chat_id = str(uuid.uuid4())
-
             if not chat_id and not self.chats_loaded:
                 self.handle_new_chat(user_id, question)  
-                # self.load_previous_chats(user_id, chat_id)
-                self.chats_loaded = True  
+                # self.chats_loaded = True  
             chat_context = self.memory.load_memory_variables({})["history"]  
             updated_question = self.update_query(question, chat_context)  
             sentiment = self.analyze_sentiment(updated_question)
@@ -670,13 +664,12 @@ Question to route: {question}
 
             app = self.build_workflow()
             inputs = {
-                "question": updated_question,  # Use updated question
+                "question": updated_question,  
                 "chat_id": chat_id,
                 "user_id": user_id,
-                "chat_history": chat_context  # Use conversation buffer memory
+                "chat_history": chat_context  
             }
             last_output = None
-
             try:
                 for output in app.stream(inputs):
                     for key, value in output.items():
@@ -685,50 +678,30 @@ Question to route: {question}
                         pprint(value)
                         last_output = value
                     gc.collect()
-
                 result = last_output["generation"]
-
-                if chat_id and result:
-                    # Save user question
-                    self.save_chat_message(
-                        chat_id=chat_id,
-                        sender_id=user_id,
-                        message=question,
-                        message_type='HumanMessage'
-                    )
-                    # Save AI response
-                    self.save_chat_message(
-                        chat_id=chat_id,
-                        sender_id=user_id,
-                        message=result["chat_response"],
-                        message_type='AIMessage'
-                    )
-
-                # Extract references from documents
-                references = []
-                for doc in last_output["documents"]:
-                    if "source" in doc.metadata:
-                        references.append(doc.metadata["source"])
-
-                # Format lawyer recommendations
-                formatted_recommendations = [
-                    {
-                        "name": lawyer['name'],
-                        "specialization": lawyer['specialization'],
-                        "experience": lawyer['experience'],
-                        "rating": lawyer['rating'],
-                        "location": lawyer['location'],
-                        "contact": lawyer['contact']
-                    }
-                    for lawyer in recommendations
-                ]
-
+                if chat_id := self.ensure_chat_session_exists(chat_id, user_id):
+                    response_text = result if isinstance(result, str) else str(result)
+                    # self.save_chat_message(chat_id, user_id, question, 'HumanMessage')
+                    # self.save_chat_message(chat_id, user_id, response_text, 'AIMessage')
                 response = {
-                    "chat_response": result,
-                    "references": references,
-                    "recommended_lawyers": formatted_recommendations
+                    "chat_response": response_text,
+                    "references": [
+                        doc.metadata.get("source", "") 
+                        for doc in last_output["documents"] 
+                        if "source" in doc.metadata
+                    ],
+                    "recommended_lawyers": [
+                        {
+                            "name": lawyer['name'],
+                            "specialization": lawyer['specialization'],
+                            "experience": lawyer['experience'],
+                            "rating": lawyer['rating'],
+                            "location": lawyer['location'],
+                            "contact": lawyer['contact']
+                        }
+                        for lawyer in recommendations
+                    ] if recommendations else []
                 }
-
                 return response
 
             except Exception as e:
@@ -764,35 +737,40 @@ Question to route: {question}
     #         cursor.close()
     #         connection.close()
 
-    def get_chat_messages(self, user_id: str, chat_id: str) -> List[BaseMessage]:
-        """Get all messages for a specific chat"""
-        try:
-            connection = pyodbc.connect(self.connection_string)
-            cursor = connection.cursor()
-            query = """
-                SELECT [Message], [MessageType], [Timestamp] 
-                FROM ChatMessages 
-                WHERE [SenderId] = CAST(? AS UNIQUEIDENTIFIER)
-                AND [ChatId] = CAST(? AS UNIQUEIDENTIFIER)
-                ORDER BY [Timestamp]
-            """
-            cursor.execute(query, (user_id, chat_id))
-            messages = []
-            for row in cursor.fetchall():
-                if hasattr(row, 'Message') and hasattr(row, 'MessageType'):
-                    content = row.Message
-                    msg_type = row.MessageType
-                    if msg_type == 'HumanMessage':
-                        messages.append(HumanMessage(content=content))
-                    elif msg_type == 'AIMessage':
-                        messages.append(AIMessage(content=content))
-            return messages
-        except Exception as e:
-            logging.error(f"Error retrieving chat messages: {e}")
-            return []
-        finally:
-            cursor.close()
-            connection.close()
+    # def get_chat_messages(self, user_id: str, chat_id: str) -> List[BaseMessage]:
+    #     """Get all messages for a specific chat"""
+    #     try:
+    #         if not self.is_valid_uuid(user_id) or not self.is_valid_uuid(chat_id):
+    #             return []
+                
+    #         connection = pyodbc.connect(self.connection_string)
+    #         cursor = connection.cursor()
+    #         query = """
+    #             SELECT [Message], [MessageType], [Timestamp] 
+    #             FROM ChatMessages 
+    #             WHERE [SenderId] = CAST(? AS UNIQUEIDENTIFIER)
+    #             AND [ChatId] = CAST(? AS UNIQUEIDENTIFIER)
+    #             ORDER BY [Timestamp]
+    #         """
+    #         cursor.execute(query, (str(user_id), str(chat_id)))
+    #         messages = []
+    #         for row in cursor.fetchall():
+    #             if hasattr(row, 'Message') and hasattr(row, 'MessageType'):
+    #                 content = row.Message
+    #                 msg_type = row.MessageType
+    #                 if msg_type == 'HumanMessage':
+    #                     messages.append(HumanMessage(content=content))
+    #                 elif msg_type == 'AIMessage':
+    #                     messages.append(AIMessage(content=content))
+    #         return messages
+    #     except Exception as e:
+    #         logging.error(f"Error retrieving chat messages: {e}")
+    #         return []
+    #     finally:
+    #         if 'cursor' in locals():
+    #             cursor.close()
+    #         if 'connection' in locals():
+    #             connection.close()
 
     def retrieve_dataset(self):
         """Retrieve all documents from the Pinecone index"""
@@ -812,32 +790,38 @@ Question to route: {question}
             print(f"Error retrieving dataset: {e}")
             return []
 
-    def get_chat_history_messages(self, user_id: str, chat_id: str) -> List[Dict]:
-        """Get full chat history with messages for a specific chat"""
-        try:
-            connection = pyodbc.connect(self.connection_string)
-            cursor = connection.cursor()
-            query = """
-                SELECT [Message], [MessageType], [Timestamp]
-                FROM ChatMessages 
-                WHERE [SenderId] = ? AND [ChatId] = ? 
-                ORDER BY [Timestamp]
-            """
-            cursor.execute(query, (user_id, chat_id))
-            messages = []
-            for row in cursor.fetchall():
-                messages.append({
-                    "role": "user" if row.MessageType == 'HumanMessage' else "assistant",
-                    "content": row.Message,
-                    "timestamp": row.Timestamp.isoformat() if hasattr(row, 'Timestamp') else None
-                })
-            return messages
-        except Exception as e:
-            logging.error(f"Error retrieving chat history: {e}")
-            return []
-        finally:
-            cursor.close()
-            connection.close()
+    # def get_chat_history_messages(self, user_id: str, chat_id: str) -> List[Dict]:
+    #     """Get full chat history with messages for a specific chat"""
+    #     try:
+    #         if not self.is_valid_uuid(user_id) or not self.is_valid_uuid(chat_id):
+    #             return []
+                
+    #         connection = pyodbc.connect(self.connection_string)
+    #         cursor = connection.cursor()
+    #         query = """
+    #             SELECT [Message], [MessageType], [Timestamp]
+    #             FROM ChatMessages 
+    #             WHERE [SenderId] = CAST(? AS UNIQUEIDENTIFIER)
+    #             AND [ChatId] = CAST(? AS UNIQUEIDENTIFIER)
+    #             ORDER BY [Timestamp]
+    #         """
+    #         cursor.execute(query, (str(user_id), str(chat_id)))
+    #         messages = []
+    #         for row in cursor.fetchall():
+    #             messages.append({
+    #                 "role": "user" if row.MessageType == 'HumanMessage' else "assistant",
+    #                 "content": row.Message,
+    #                 "timestamp": row.Timestamp.isoformat() if hasattr(row, 'Timestamp') else None
+    #             })
+    #         return messages
+    #     except Exception as e:
+    #         logging.error(f"Error retrieving chat history: {e}")
+    #         return []
+    #     finally:
+    #         if 'cursor' in locals():
+    #             cursor.close()
+    #         if 'connection' in locals():
+    #             connection.close()
 
     def _get_lawyer_recommendations(self, category: str) -> str:
         """Get formatted lawyer recommendations"""
@@ -897,6 +881,9 @@ Question to route: {question}
     def save_chat_message(self, chat_id: str, sender_id: str, message: str, message_type: str) -> Optional[str]:
         """Save a chat message using ChatMessageCRUD"""
         try:
+            # Ensure chat session exists first
+            chat_id = self.ensure_chat_session_exists(chat_id, sender_id)
+            
             if not hasattr(self, 'chat_message_crud'):
                 self.chat_message_crud = ChatMessageCRUD()
             
@@ -910,6 +897,26 @@ Question to route: {question}
         except Exception as e:
             logging.error(f"Error saving chat message: {e}")
             return None
+
+    def ensure_chat_session_exists(self, chat_id: str, user_id: str) -> str:
+        """Ensure chat session exists and return chat_id"""
+        try:
+            if not hasattr(self, 'chat_session_crud'):
+                self.chat_session_crud = ChatSessionCRUD()
+            
+            # Try to create new session if one doesn't exist
+            if not chat_id:
+                chat_id = self.chat_session_crud.create(
+                    initiator_id=user_id,
+                    recipient_id="00000000-0000-0000-0000-000000000000"
+                )
+                if not chat_id:
+                    raise Exception("Failed to create chat session")
+            return chat_id
+            
+        except Exception as e:
+            logging.error(f"Error ensuring chat session: {e}")
+            raise
 
 if __name__ == "__main__":
     # Create valid UUIDs for testing

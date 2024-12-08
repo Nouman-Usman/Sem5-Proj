@@ -64,6 +64,7 @@ VALID_USER_TYPES = ['client', 'lawyer']
 user_crud = UserCRUD()
 lawyer_crud = LawyerCRUD()
 lawyer_details_crud = LawyerDetailsCRUD()
+chat_message_crud = ChatMessageCRUD()
 
 # Route for Signup
 @app.route('/api/signup', methods=['POST'])
@@ -217,8 +218,6 @@ def ask_question():
 
             question = data.get('question')
             chat_id = data.get('chat_id')
-
-            # Create new chat session if none exists
             if not chat_id:
                 chat_session_crud = ChatSessionCRUD()
                 chat_id = chat_session_crud.create(
@@ -227,17 +226,20 @@ def ask_question():
                 )
                 if not chat_id:
                     raise Exception("Failed to create chat session")
-
             if not question:
                 logger.error("Missing question parameter")
                 return jsonify({"error": "Missing required parameter: question"}), 400
-
-            logger.info(f"Processing question for user {current_user_id}, chat {chat_id}")
-            
+            logger.info(f"Processing question for user {current_user_id}, chat {chat_id}")            
             rag_agent = get_agent(user_id=current_user_id, chat_id=chat_id)
-            # Convert chat_id to string if it's UUID object
             chat_id_str = str(chat_id) if chat_id else None
-            chat_history = rag_agent.get_chat_history_messages(current_user_id, chat_id_str)
+            if chat_id_str:
+                chat_history = chat_message_crud.get_chat_messages(
+                    user_id=str(current_user_id),
+                    chat_id=chat_id_str
+                )
+            else:
+                chat_history = []
+            
             result = rag_agent.run(question, current_user_id, chat_id_str, chat_history)
             
             if not result or 'chat_response' not in result:
