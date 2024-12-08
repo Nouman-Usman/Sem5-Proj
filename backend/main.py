@@ -20,13 +20,14 @@ import logging
 import csv
 from dotenv import load_dotenv
 import recommend_lawyer
-import gc  
-from langchain.schema import HumanMessage, AIMessage, BaseMessage  
+import gc
+from langchain.schema import HumanMessage, AIMessage, BaseMessage
 from lawyer_store import LawyerStore
-from langchain.memory import ConversationBufferWindowMemory  
-import datetime  
-import pyodbc  
+from langchain.memory import ConversationBufferWindowMemory
+import datetime
+import pyodbc
 from crud import ChatMessageCRUD, ChatSessionCRUD  # Add this import
+
 load_dotenv()
 
 
@@ -61,12 +62,12 @@ class RAGAgent:
             raise ValueError("SQL_CONN_STRING environment variable is not set")
         self.lawyer_store = LawyerStore(connection_string=self.connection_string)
         gc.collect()
-        self.max_context_length = 4096 
-        self.memory = ConversationBufferWindowMemory(k=5)  
+        self.max_context_length = 4096
+        self.memory = ConversationBufferWindowMemory(k=5)
 
         self.user_id = user_id
         self.chat_id = chat_id
-        self.chats_loaded = False  
+        self.chats_loaded = False
         if chat_id:
             self.chat_message_crud = ChatMessageCRUD()
             self.chat_session_crud = ChatSessionCRUD()
@@ -75,11 +76,11 @@ class RAGAgent:
     #     if (chat_id):
     #         try:
     #             chat_history = SQLChatMessageHistory(
-    #                 chat_id=chat_id, 
+    #                 chat_id=chat_id,
     #                 user_id=self.user_id,
     #                 connection_string=self.connection_string
     #             )
-    #             messages = chat_history.messages[-5:]  
+    #             messages = chat_history.messages[-5:]
     #             return "\n".join(
     #                 [
     #                     (
@@ -241,12 +242,14 @@ Question to route: {question}
         documents = state["documents"]
         chat_id = state.get("chat_id")
         user_id = state.get("user_id")
-        chat_context = self.memory.load_memory_variables({})["history"]  # Use conversation buffer memory
+        chat_context = self.memory.load_memory_variables({})[
+            "history"
+        ]  # Use conversation buffer memory
 
         doc_texts = []
         total_length = len(question) + len(chat_context)
         for doc in documents:
-            doc_text = doc.page_content[:1000]  
+            doc_text = doc.page_content[:1000]
             if total_length + len(doc_text) > self.max_context_length:
                 break
             doc_texts.append(doc_text)
@@ -274,8 +277,8 @@ Question to route: {question}
                     source = doc.metadata["source"]
                     print(f"Source: {source}")
                 else:
-                    source = [] 
-            
+                    source = []
+
             final_answer = f"{generation}"
 
         del generation
@@ -298,14 +301,17 @@ Question to route: {question}
                 INSERT INTO Sessions (SessionId, UserId, ChatId, StartTime, EndTime, SessionData)
                 VALUES (?, ?, ?, ?, ?, ?)
             """
-            cursor.execute(query, (
-                str(uuid.uuid4()),
-                session_data['user_id'],
-                chat_id,
-                datetime.datetime.utcnow(),
-                None,
-                json.dumps(session_data)
-            ))
+            cursor.execute(
+                query,
+                (
+                    str(uuid.uuid4()),
+                    session_data["user_id"],
+                    chat_id,
+                    datetime.datetime.utcnow(),
+                    None,
+                    json.dumps(session_data),
+                ),
+            )
             connection.commit()
             logging.info(f"Stored session data for chat {chat_id}")
         except Exception as e:
@@ -453,7 +459,7 @@ Question to route: {question}
     def decide_to_generate(self, state: Dict) -> str:
         print("---ASSESS GRADED DOCUMENTS---")
         web_search = state["web_search"]
-        if (web_search == "Yes"):
+        if web_search == "Yes":
             print(
                 "---DECISION: ALL DOCUMENTS ARE NOT RELEVANT TO QUESTION, INCLUDE WEB SEARCH---"
             )
@@ -519,6 +525,7 @@ Question to route: {question}
         updated_query_result = self.llm.invoke(prompt)
         updated_query = updated_query_result.content.strip()
         return updated_query
+
     def get_chat_topic(self, question: str) -> str:
         print("---GET CHAT TOPIC---")
         # provide me the three to four words that best describe the topic of the chat
@@ -529,8 +536,6 @@ Question to route: {question}
         topic_result = self.llm.invoke(prompt)
         topic = topic_result.content.strip()
         return topic
-
-    
 
     def build_workflow(self):
         workflow = StateGraph(state_schema=GraphState)
@@ -566,7 +571,9 @@ Question to route: {question}
             },
         )
 
-        workflow.add_edge("update_query", "generate")  # Add edge from update_query to generate
+        workflow.add_edge(
+            "update_query", "generate"
+        )  # Add edge from update_query to generate
         workflow.add_edge("websearch", "generate")
 
         # Add conditional edges for generation grading
@@ -591,7 +598,7 @@ Question to route: {question}
         try:
             connection = pyodbc.connect(self.connection_string)
             cursor = connection.cursor()
-            
+
             # Check if user exists
             check_query = """
                 SELECT TOP 1 FROM Users WHERE UserId = CAST(? AS UNIQUEIDENTIFIER)
@@ -600,7 +607,7 @@ Question to route: {question}
             exists = cursor.fetchone() is not None
 
             if not exists:
-                return False                
+                return False
                 # create_query = """
                 #     INSERT INTO Users (UserId, UserName, Email, UserType, CreatedAt)
                 #     VALUES (?, 'System User', 'system@example.com', 'System', GETDATE())
@@ -618,38 +625,59 @@ Question to route: {question}
             connection.close()
 
     def handle_new_chat(self, user_id: str, question: str):
-        if not self.chat_exists(user_id, chat_id):
-            try:
-                topic = self.get_chat_topic(question)
-                if not self.is_valid_uuid(chat_id):
-                    chat_id = str(uuid.uuid4())
-                if not self.is_valid_uuid(user_id):
-                    user_id = str(uuid.uuid4())
-                system_id = "00000000-0000-0000-0000-000000000000"
-                connection = pyodbc.connect(self.connection_string)
-                cursor = connection.cursor()
-                query = """
-                    INSERT INTO ChatSessions 
-                    (ChatId, InitiatorId, RecipientId, Status, StartTime)
-                    VALUES (?, ?, ?, 'Active', GETDATE())
-                """
-                cursor.execute(query, (chat_id, user_id, system_id))
-                topic_id = str(uuid.uuid4())
-                topic_query = """
-                    INSERT INTO ChatTopics (TopicId, UserId, Topic, ChatId, Timestamp, )
-                    VALUES (?, ?, ?, ?,GETDATE())
-                """
-                cursor.execute(topic_query, (topic_id, user_id, topic,chat_id))
-                connection.commit()                
-                self.chats_loaded = True
-            except Exception as e:
-                logging.error(f"Error creating new chat: {e}")
-                raise
-            finally:
-                cursor.close()
-                connection.close()
+        """Create a new chat session and save initial chat topic"""
+        conn = None
+        cursor = None
+        try:
+            chat_id = str(uuid.uuid4())
+            topic = self.get_chat_topic(question)
+            system_id = "00000000-0000-0000-0000-000000000000"
 
-    def run(self, question: str, user_id: str, chat_id: str = None, chat_history: List[Dict] = None) -> Dict[str, Any]:
+            conn = pyodbc.connect(self.connection_string)
+            cursor = conn.cursor()
+            
+            # Start transaction
+            cursor.execute("BEGIN TRANSACTION")
+
+            # Create chat session
+            query = """
+                INSERT INTO ChatSessions 
+                (ChatId, InitiatorId, RecipientId, Status, StartTime)
+                VALUES (?, ?, ?, 'Active', GETDATE())
+            """
+            cursor.execute(query, (chat_id, user_id, system_id))
+
+            # Create chat topic
+            topic_id = str(uuid.uuid4())
+            topic_query = """
+                INSERT INTO ChatTopics (TopicId, UserId, Topic, ChatId, Timestamp)
+                VALUES (?, ?, ?, ?, GETDATE())
+            """
+            cursor.execute(topic_query, (topic_id, user_id, topic, chat_id))
+            
+            conn.commit()
+            self.chat_id = chat_id
+            self.chats_loaded = True
+            return chat_id
+
+        except Exception as e:
+            if conn:
+                conn.rollback()
+            logging.error(f"Error creating new chat: {e}")
+            raise
+        finally:
+            if cursor:
+                cursor.close()
+            if conn:
+                conn.close()
+
+    def run(
+        self,
+        question: str,
+        user_id: str,
+        chat_id: str = None,
+        chat_history: List[Dict] = None,
+    ) -> Dict[str, Any]:
         try:
             if chat_history is None:
                 chat_history = []
@@ -658,9 +686,9 @@ Question to route: {question}
             if chat_id and not self.is_valid_uuid(chat_id):
                 chat_id = str(uuid.uuid4())
             if not chat_id and not self.chats_loaded:
-                self.handle_new_chat(user_id, question)  
-            chat_context = self.memory.load_memory_variables({})["history"]  
-            updated_question = self.update_query(question, chat_context)  
+                self.handle_new_chat(user_id, question)
+            chat_context = self.memory.load_memory_variables({})["history"]
+            updated_question = self.update_query(question, chat_context)
             sentiment = self.analyze_sentiment(updated_question)
             logging.info(f"Sentiment: {sentiment}")
             recommendations = self.lawyer_store.get_top_lawyers(sentiment)
@@ -668,10 +696,10 @@ Question to route: {question}
 
             app = self.build_workflow()
             inputs = {
-                "question": updated_question,  
+                "question": updated_question,
                 "chat_id": chat_id,
                 "user_id": user_id,
-                "chat_history": chat_context  
+                "chat_history": chat_context,
             }
             last_output = None
             try:
@@ -690,21 +718,25 @@ Question to route: {question}
                 response = {
                     "chat_response": response_text,
                     "references": [
-                        doc.metadata.get("source", "") 
-                        for doc in last_output["documents"] 
+                        doc.metadata.get("source", "")
+                        for doc in last_output["documents"]
                         if "source" in doc.metadata
                     ],
-                    "recommended_lawyers": [
-                        {
-                            "name": lawyer['name'],
-                            "specialization": lawyer['specialization'],
-                            "experience": lawyer['experience'],
-                            "rating": lawyer['rating'],
-                            "location": lawyer['location'],
-                            "contact": lawyer['contact']
-                        }
-                        for lawyer in recommendations
-                    ] if recommendations else []
+                    "recommended_lawyers": (
+                        [
+                            {
+                                "name": lawyer["name"],
+                                "specialization": lawyer["specialization"],
+                                "experience": lawyer["experience"],
+                                "rating": lawyer["rating"],
+                                "location": lawyer["location"],
+                                "contact": lawyer["contact"],
+                            }
+                            for lawyer in recommendations
+                        ]
+                        if recommendations
+                        else []
+                    ),
                 }
                 return response
 
@@ -713,7 +745,7 @@ Question to route: {question}
                 return {
                     "chat_response": "I apologize, but I encountered an error processing your request.",
                     "references": [],
-                    "recommended_lawyers": []
+                    "recommended_lawyers": [],
                 }
 
         finally:
@@ -725,8 +757,8 @@ Question to route: {question}
     #         connection = pyodbc.connect(self.connection_string)
     #         cursor = connection.cursor()
     #         query = """
-    #             SELECT DISTINCT ChatId 
-    #             FROM ChatMessages 
+    #             SELECT DISTINCT ChatId
+    #             FROM ChatMessages
     #             WHERE SenderId = ?
     #         """
     #         cursor.execute(query, (user_id,))
@@ -746,12 +778,12 @@ Question to route: {question}
     #     try:
     #         if not self.is_valid_uuid(user_id) or not self.is_valid_uuid(chat_id):
     #             return []
-                
+
     #         connection = pyodbc.connect(self.connection_string)
     #         cursor = connection.cursor()
     #         query = """
-    #             SELECT [Message], [MessageType], [Timestamp] 
-    #             FROM ChatMessages 
+    #             SELECT [Message], [MessageType], [Timestamp]
+    #             FROM ChatMessages
     #             WHERE [SenderId] = CAST(? AS UNIQUEIDENTIFIER)
     #             AND [ChatId] = CAST(? AS UNIQUEIDENTIFIER)
     #             ORDER BY [Timestamp]
@@ -780,16 +812,14 @@ Question to route: {question}
         """Retrieve all documents from the Pinecone index"""
         try:
             # Use vectorstore's similarity search to get all documents
-            documents = self.vectorstore.similarity_search(
-                query="",  
-                k=100  
-            )            
+            documents = self.vectorstore.similarity_search(query="", k=100)
             documents = [
-                doc for doc in documents 
+                doc
+                for doc in documents
                 if doc.page_content and doc.page_content.strip()
-            ]            
+            ]
             print(f"Retrieved {len(documents)} documents from vectorstore")
-            return documents            
+            return documents
         except Exception as e:
             print(f"Error retrieving dataset: {e}")
             return []
@@ -799,12 +829,12 @@ Question to route: {question}
     #     try:
     #         if not self.is_valid_uuid(user_id) or not self.is_valid_uuid(chat_id):
     #             return []
-                
+
     #         connection = pyodbc.connect(self.connection_string)
     #         cursor = connection.cursor()
     #         query = """
     #             SELECT [Message], [MessageType], [Timestamp]
-    #             FROM ChatMessages 
+    #             FROM ChatMessages
     #             WHERE [SenderId] = CAST(? AS UNIQUEIDENTIFIER)
     #             AND [ChatId] = CAST(? AS UNIQUEIDENTIFIER)
     #             ORDER BY [Timestamp]
@@ -831,10 +861,10 @@ Question to route: {question}
         """Get formatted lawyer recommendations"""
         try:
             top_lawyers = self.lawyer_store.get_top_lawyers(category, limit=2)
-            
+
             if not top_lawyers:
                 return "No lawyers found for this specialty."
-            
+
             recommendation = "Top recommended lawyers:\n\n"
             for lawyer in top_lawyers:
                 recommendation += (
@@ -845,7 +875,7 @@ Question to route: {question}
                     f"  Location: {lawyer['location']}\n"
                     f"  Contact: {lawyer['contact']}\n\n"
                 )
-            
+
             return recommendation
         except Exception as e:
             logging.error(f"Error getting lawyer recommendations: {e}")
@@ -882,20 +912,22 @@ Question to route: {question}
         except (ValueError, AttributeError, TypeError):
             return False
 
-    def save_chat_message(self, chat_id: str, sender_id: str, message: str, message_type: str) -> Optional[str]:
+    def save_chat_message(
+        self, chat_id: str, sender_id: str, message: str, message_type: str
+    ) -> Optional[str]:
         """Save a chat message using ChatMessageCRUD"""
         try:
             # Ensure chat session exists first
             chat_id = self.ensure_chat_session_exists(chat_id, sender_id)
-            
-            if not hasattr(self, 'chat_message_crud'):
+
+            if not hasattr(self, "chat_message_crud"):
                 self.chat_message_crud = ChatMessageCRUD()
-            
+
             message_id = self.chat_message_crud.create(
                 chat_id=chat_id,
                 sender_id=sender_id,
                 message=message,
-                message_type=message_type
+                message_type=message_type,
             )
             return message_id
         except Exception as e:
@@ -905,29 +937,30 @@ Question to route: {question}
     def ensure_chat_session_exists(self, chat_id: str, user_id: str) -> str:
         """Ensure chat session exists and return chat_id"""
         try:
-            if not hasattr(self, 'chat_session_crud'):
+            if not hasattr(self, "chat_session_crud"):
                 self.chat_session_crud = ChatSessionCRUD()
-            
+
             # Try to create new session if one doesn't exist
             if not chat_id:
                 chat_id = self.chat_session_crud.create(
                     initiator_id=user_id,
-                    recipient_id="00000000-0000-0000-0000-000000000000"
+                    recipient_id="00000000-0000-0000-0000-000000000000",
                 )
                 if not chat_id:
                     raise Exception("Failed to create chat session")
             return chat_id
-            
+
         except Exception as e:
             logging.error(f"Error ensuring chat session: {e}")
             raise
+
 
 if __name__ == "__main__":
     # Create valid UUIDs for testing
     user_id = str(uuid.uuid4())
     chat_id = str(uuid.uuid4())
     agent = RAGAgent(user_id=user_id, chat_id=chat_id)
-    while(True):
+    while True:
         user_input = input("User: ")
         result = agent.run(user_input, user_id)
         print(f"Assistant: {result}")

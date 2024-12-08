@@ -496,3 +496,707 @@ Traceback (most recent call last):
     if not self.chat_exists(user_id, chat_id):
                                      ^^^^^^^
 UnboundLocalError: cannot access local variable 'chat_id' where it is not associated with a value
+2024-12-08 20:01:28,574 - app - INFO - [ Top 10 memory usage ]
+2024-12-08 20:01:28,579 - app - INFO - <frozen importlib._bootstrap_external>:753: size=8777 KiB, count=55240, average=163 B
+2024-12-08 20:01:28,579 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\sentence_transformers\SentenceTransformer.py:1560: size=622 KiB, count=2, average=311 KiB
+2024-12-08 20:01:28,589 - app - INFO - <frozen abc>:123: size=439 KiB, count=4741, average=95 B
+2024-12-08 20:01:28,594 - app - INFO - <frozen abc>:106: size=365 KiB, count=1244, average=300 B
+2024-12-08 20:01:28,596 - app - INFO - <frozen importlib._bootstrap_external>:1673: size=311 KiB, count=2527, average=126 B
+2024-12-08 20:01:28,605 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\dataclasses.py:473: size=256 KiB, count=2099, average=125 B
+2024-12-08 20:01:28,614 - app - INFO - <frozen importlib._bootstrap_external>:123: size=221 KiB, count=1279, average=177 B
+2024-12-08 20:01:28,620 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\torch\nn\modules\module.py:451: size=189 KiB, count=898, average=216 B
+2024-12-08 20:01:28,628 - app - INFO - <frozen importlib._bootstrap>:488: size=187 KiB, count=1639, average=117 B
+2024-12-08 20:01:28,634 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\safetensors\torch.py:315: size=139 KiB, count=2609, average=54 B
+2024-12-08 20:01:41,205 - app - INFO - RAG agent initialized successfully
+2024-12-08 20:01:41,212 - app - WARNING - Invalid UUID - chat_id: None, user_id: C5927098-B045-4E70-ABFB-F1FBBF266510
+2024-12-08 20:01:41,444 - app - INFO - Processing question for user C5927098-B045-4E70-ABFB-F1FBBF266510, chat None
+2024-12-08 20:01:41,444 - app - WARNING - Invalid UUID - chat_id: None, user_id: C5927098-B045-4E70-ABFB-F1FBBF266510
+2024-12-08 20:01:41,444 - app - ERROR - Error processing question (attempt 1): cannot access local variable 'chat_id' where it is not associated with a value
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 251, in ask_question
+    result = rag_agent.run(question, current_user_id, chat_id_str, chat_history)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\main.py", line 661, in run
+    self.handle_new_chat(user_id, question)
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\main.py", line 621, in handle_new_chat
+    if not self.chat_exists(user_id, chat_id):
+                                     ^^^^^^^
+UnboundLocalError: cannot access local variable 'chat_id' where it is not associated with a value
+2024-12-08 20:01:43,353 - app - ERROR - Error processing question (attempt 1): cannot access local variable 'chat_id' where it is not associated with a value
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 251, in ask_question
+    result = rag_agent.run(question, current_user_id, chat_id_str, chat_history)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\main.py", line 661, in run
+    self.handle_new_chat(user_id, question)
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\main.py", line 621, in handle_new_chat
+    if not self.chat_exists(user_id, chat_id):
+                                     ^^^^^^^
+UnboundLocalError: cannot access local variable 'chat_id' where it is not associated with a value
+2024-12-08 20:01:47,068 - app - INFO - [ Top 10 memory usage ]
+2024-12-08 20:01:47,090 - app - INFO - <frozen importlib._bootstrap_external>:753: size=8777 KiB, count=55240, average=163 B
+2024-12-08 20:01:47,106 - app - INFO - <frozen abc>:123: size=438 KiB, count=4737, average=95 B
+2024-12-08 20:01:47,142 - app - INFO - <frozen abc>:106: size=365 KiB, count=1244, average=300 B
+2024-12-08 20:01:47,174 - app - INFO - <frozen importlib._bootstrap_external>:1673: size=311 KiB, count=2527, average=126 B
+2024-12-08 20:01:47,200 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\sentence_transformers\SentenceTransformer.py:1560: size=311 KiB, count=1, average=311 KiB
+2024-12-08 20:01:47,209 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\dataclasses.py:473: size=256 KiB, count=2099, average=125 B
+2024-12-08 20:01:47,226 - app - INFO - <frozen importlib._bootstrap_external>:123: size=221 KiB, count=1279, average=177 B
+2024-12-08 20:01:47,234 - app - INFO - <frozen importlib._bootstrap>:488: size=187 KiB, count=1637, average=117 B
+2024-12-08 20:01:47,246 - app - INFO - <frozen importlib._bootstrap_external>:1670: size=132 KiB, count=235, average=577 B
+2024-12-08 20:01:47,275 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\linecache.py:139: size=108 KiB, count=1187, average=93 B
+2024-12-08 20:01:47,356 - app - INFO - Processing question for user C5927098-B045-4E70-ABFB-F1FBBF266510, chat None
+2024-12-08 20:01:47,388 - app - WARNING - Invalid UUID - chat_id: None, user_id: C5927098-B045-4E70-ABFB-F1FBBF266510
+2024-12-08 20:01:47,653 - app - ERROR - Error processing question (attempt 2): cannot access local variable 'chat_id' where it is not associated with a value
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 251, in ask_question
+    result = rag_agent.run(question, current_user_id, chat_id_str, chat_history)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\main.py", line 661, in run
+    self.handle_new_chat(user_id, question)
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\main.py", line 621, in handle_new_chat
+    if not self.chat_exists(user_id, chat_id):
+                                     ^^^^^^^
+UnboundLocalError: cannot access local variable 'chat_id' where it is not associated with a value
+2024-12-08 20:01:48,364 - app - INFO - [ Top 10 memory usage ]
+2024-12-08 20:01:48,364 - app - INFO - <frozen importlib._bootstrap_external>:753: size=8777 KiB, count=55240, average=163 B
+2024-12-08 20:01:48,364 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\tracemalloc.py:505: size=727 KiB, count=8033, average=93 B
+2024-12-08 20:01:48,364 - app - INFO - <frozen abc>:123: size=438 KiB, count=4736, average=95 B
+2024-12-08 20:01:48,364 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\tracemalloc.py:498: size=377 KiB, count=8033, average=48 B
+2024-12-08 20:01:48,364 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\tracemalloc.py:193: size=376 KiB, count=8031, average=48 B
+2024-12-08 20:01:48,364 - app - INFO - <frozen abc>:106: size=365 KiB, count=1244, average=300 B
+2024-12-08 20:01:48,377 - app - INFO - <frozen importlib._bootstrap_external>:1673: size=311 KiB, count=2527, average=126 B
+2024-12-08 20:01:48,378 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\sentence_transformers\SentenceTransformer.py:1560: size=311 KiB, count=1, average=311 KiB
+2024-12-08 20:01:48,380 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\tracemalloc.py:499: size=288 KiB, count=1, average=288 KiB
+2024-12-08 20:01:48,380 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\dataclasses.py:473: size=256 KiB, count=2099, average=125 B
+2024-12-08 20:01:48,441 - app - INFO - Processing question for user C5927098-B045-4E70-ABFB-F1FBBF266510, chat None
+2024-12-08 20:01:48,443 - app - WARNING - Invalid UUID - chat_id: None, user_id: C5927098-B045-4E70-ABFB-F1FBBF266510
+2024-12-08 20:01:48,621 - app - ERROR - Error processing question (attempt 2): cannot access local variable 'chat_id' where it is not associated with a value
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 251, in ask_question
+    result = rag_agent.run(question, current_user_id, chat_id_str, chat_history)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\main.py", line 661, in run
+    self.handle_new_chat(user_id, question)
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\main.py", line 621, in handle_new_chat
+    if not self.chat_exists(user_id, chat_id):
+                                     ^^^^^^^
+UnboundLocalError: cannot access local variable 'chat_id' where it is not associated with a value
+2024-12-08 20:01:50,896 - app - INFO - [ Top 10 memory usage ]
+2024-12-08 20:01:50,922 - app - INFO - <frozen importlib._bootstrap_external>:753: size=8777 KiB, count=55240, average=163 B
+2024-12-08 20:01:50,956 - app - INFO - <frozen abc>:123: size=438 KiB, count=4734, average=95 B
+2024-12-08 20:01:50,992 - app - INFO - <frozen abc>:106: size=365 KiB, count=1244, average=300 B
+2024-12-08 20:01:51,021 - app - INFO - <frozen importlib._bootstrap_external>:1673: size=311 KiB, count=2527, average=126 B
+2024-12-08 20:01:51,031 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\sentence_transformers\SentenceTransformer.py:1560: size=311 KiB, count=1, average=311 KiB
+2024-12-08 20:01:51,057 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\dataclasses.py:473: size=256 KiB, count=2099, average=125 B
+2024-12-08 20:01:51,091 - app - INFO - <frozen importlib._bootstrap_external>:123: size=221 KiB, count=1279, average=177 B
+2024-12-08 20:01:51,106 - app - INFO - <frozen importlib._bootstrap>:488: size=187 KiB, count=1637, average=117 B
+2024-12-08 20:01:51,122 - app - INFO - <frozen importlib._bootstrap_external>:1670: size=132 KiB, count=235, average=577 B
+2024-12-08 20:01:51,141 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\linecache.py:139: size=108 KiB, count=1187, average=93 B
+2024-12-08 20:01:51,205 - app - INFO - Processing question for user C5927098-B045-4E70-ABFB-F1FBBF266510, chat None
+2024-12-08 20:01:51,241 - app - WARNING - Invalid UUID - chat_id: None, user_id: C5927098-B045-4E70-ABFB-F1FBBF266510
+2024-12-08 20:01:51,468 - app - ERROR - Error processing question (attempt 3): cannot access local variable 'chat_id' where it is not associated with a value
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 251, in ask_question
+    result = rag_agent.run(question, current_user_id, chat_id_str, chat_history)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\main.py", line 661, in run
+    self.handle_new_chat(user_id, question)
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\main.py", line 621, in handle_new_chat
+    if not self.chat_exists(user_id, chat_id):
+                                     ^^^^^^^
+UnboundLocalError: cannot access local variable 'chat_id' where it is not associated with a value
+2024-12-08 20:01:52,838 - app - INFO - [ Top 10 memory usage ]
+2024-12-08 20:01:52,969 - app - INFO - <frozen importlib._bootstrap_external>:753: size=8777 KiB, count=55240, average=163 B
+2024-12-08 20:01:52,991 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\tracemalloc.py:505: size=685 KiB, count=7262, average=97 B
+2024-12-08 20:01:53,314 - app - INFO - <frozen abc>:123: size=438 KiB, count=4734, average=95 B
+2024-12-08 20:01:53,342 - app - INFO - <frozen abc>:106: size=365 KiB, count=1244, average=300 B
+2024-12-08 20:01:53,370 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\tracemalloc.py:498: size=340 KiB, count=7261, average=48 B
+2024-12-08 20:01:53,652 - app - INFO - [ Top 10 memory usage ]
+2024-12-08 20:01:53,672 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\tracemalloc.py:193: size=340 KiB, count=7260, average=48 B
+2024-12-08 20:01:53,672 - app - INFO - <frozen importlib._bootstrap_external>:753: size=8777 KiB, count=55240, average=163 B
+2024-12-08 20:01:53,672 - app - INFO - <frozen importlib._bootstrap_external>:1673: size=311 KiB, count=2527, average=126 B
+2024-12-08 20:01:53,781 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\tracemalloc.py:505: size=719 KiB, count=7889, average=93 B
+2024-12-08 20:01:53,783 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\sentence_transformers\SentenceTransformer.py:1560: size=311 KiB, count=1, average=311 KiB
+2024-12-08 20:01:53,786 - app - INFO - <frozen abc>:123: size=438 KiB, count=4734, average=95 B
+2024-12-08 20:01:53,794 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\tracemalloc.py:499: size=288 KiB, count=1, average=288 KiB
+2024-12-08 20:01:53,796 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\tracemalloc.py:498: size=370 KiB, count=7888, average=48 B
+2024-12-08 20:01:53,822 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\dataclasses.py:473: size=256 KiB, count=2099, average=125 B
+2024-12-08 20:01:53,822 - app - INFO - <frozen abc>:106: size=365 KiB, count=1244, average=300 B
+2024-12-08 20:01:53,892 - app - INFO - Processing question for user C5927098-B045-4E70-ABFB-F1FBBF266510, chat None
+2024-12-08 20:01:53,892 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\tracemalloc.py:193: size=365 KiB, count=7777, average=48 B
+2024-12-08 20:01:53,892 - app - WARNING - Invalid UUID - chat_id: None, user_id: C5927098-B045-4E70-ABFB-F1FBBF266510
+2024-12-08 20:01:53,892 - app - INFO - <frozen importlib._bootstrap_external>:1673: size=311 KiB, count=2527, average=126 B
+2024-12-08 20:01:54,094 - app - ERROR - Error processing question (attempt 3): cannot access local variable 'chat_id' where it is not associated with a value
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 251, in ask_question
+    result = rag_agent.run(question, current_user_id, chat_id_str, chat_history)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\main.py", line 661, in run
+    self.handle_new_chat(user_id, question)
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\main.py", line 621, in handle_new_chat
+    if not self.chat_exists(user_id, chat_id):
+                                     ^^^^^^^
+UnboundLocalError: cannot access local variable 'chat_id' where it is not associated with a value
+2024-12-08 20:01:54,096 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\sentence_transformers\SentenceTransformer.py:1560: size=311 KiB, count=1, average=311 KiB
+2024-12-08 20:01:54,502 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\tracemalloc.py:499: size=288 KiB, count=1, average=288 KiB
+2024-12-08 20:01:54,534 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\dataclasses.py:473: size=256 KiB, count=2099, average=125 B
+2024-12-08 20:01:55,821 - app - INFO - [ Top 10 memory usage ]
+2024-12-08 20:01:55,822 - app - INFO - <frozen importlib._bootstrap_external>:753: size=8777 KiB, count=55240, average=163 B
+2024-12-08 20:01:55,823 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\tracemalloc.py:505: size=580 KiB, count=10603, average=56 B
+2024-12-08 20:01:55,824 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\tracemalloc.py:498: size=497 KiB, count=10603, average=48 B
+2024-12-08 20:01:55,825 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\tracemalloc.py:193: size=497 KiB, count=10603, average=48 B
+2024-12-08 20:01:55,826 - app - INFO - <frozen abc>:123: size=438 KiB, count=4733, average=95 B
+2024-12-08 20:01:55,827 - app - INFO - <frozen abc>:106: size=365 KiB, count=1244, average=300 B
+2024-12-08 20:01:55,829 - app - INFO - <frozen importlib._bootstrap_external>:1673: size=311 KiB, count=2527, average=126 B
+2024-12-08 20:01:55,830 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\sentence_transformers\SentenceTransformer.py:1560: size=311 KiB, count=1, average=311 KiB
+2024-12-08 20:01:55,831 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\dataclasses.py:473: size=256 KiB, count=2099, average=125 B
+2024-12-08 20:01:55,832 - app - INFO - <frozen importlib._bootstrap_external>:123: size=221 KiB, count=1279, average=177 B
+2024-12-08 20:03:59,051 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-08 20:04:10,006 - app - INFO - Processing question for user C5927098-B045-4E70-ABFB-F1FBBF266510, chat None
+2024-12-08 20:04:10,007 - app - INFO - Initializing RAG agent...
+2024-12-08 20:04:10,023 - pinecone_plugin_interface.logging - INFO - Discovering subpackages in _NamespacePath(['C:\\Users\\Nouma\\OneDrive\\Desktop\\GenAi x Xavour\\ApnaWaqeel\\venv\\Lib\\site-packages\\pinecone_plugins'])
+2024-12-08 20:04:10,029 - pinecone_plugin_interface.logging - INFO - Looking for plugins in pinecone_plugins.inference
+2024-12-08 20:04:10,165 - pinecone_plugin_interface.logging - INFO - Installing plugin inference into Pinecone
+2024-12-08 20:04:18,328 - datasets - INFO - PyTorch version 2.4.1 available.
+2024-12-08 20:04:20,043 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2024-12-08 20:04:20,043 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2024-12-08 20:04:34,267 - app - INFO - RAG agent initialized successfully
+2024-12-08 20:04:34,268 - app - WARNING - Invalid UUID - chat_id: None, user_id: C5927098-B045-4E70-ABFB-F1FBBF266510
+2024-12-08 20:04:35,244 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-08 20:04:35,356 - root - ERROR - Error creating new chat: cannot access local variable 'chat_id' where it is not associated with a value
+2024-12-08 20:04:35,553 - app - ERROR - Error processing question (attempt 1): cannot access local variable 'cursor' where it is not associated with a value
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\main.py", line 631, in handle_new_chat
+    if not self.is_valid_uuid(chat_id):
+                              ^^^^^^^
+UnboundLocalError: cannot access local variable 'chat_id' where it is not associated with a value
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 251, in ask_question
+    result = rag_agent.run(question, current_user_id, chat_id_str, chat_history)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\main.py", line 674, in run
+    self.handle_new_chat(user_id, question)
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\main.py", line 656, in handle_new_chat
+    cursor.close()
+    ^^^^^^
+UnboundLocalError: cannot access local variable 'cursor' where it is not associated with a value
+2024-12-08 20:04:38,579 - app - INFO - [ Top 10 memory usage ]
+2024-12-08 20:04:38,581 - app - INFO - <frozen importlib._bootstrap_external>:753: size=8778 KiB, count=55243, average=163 B
+2024-12-08 20:04:38,583 - app - INFO - <frozen abc>:123: size=551 KiB, count=5877, average=96 B
+2024-12-08 20:04:38,585 - app - INFO - <frozen abc>:106: size=365 KiB, count=1244, average=300 B
+2024-12-08 20:04:38,590 - app - INFO - <frozen importlib._bootstrap_external>:1673: size=311 KiB, count=2527, average=126 B
+2024-12-08 20:04:38,601 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\sentence_transformers\SentenceTransformer.py:1560: size=311 KiB, count=1, average=311 KiB
+2024-12-08 20:04:38,603 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\dataclasses.py:473: size=256 KiB, count=2099, average=125 B
+2024-12-08 20:04:38,605 - app - INFO - <frozen importlib._bootstrap_external>:123: size=221 KiB, count=1279, average=177 B
+2024-12-08 20:04:38,607 - app - INFO - <frozen importlib._bootstrap>:488: size=187 KiB, count=1632, average=117 B
+2024-12-08 20:04:38,610 - app - INFO - <frozen importlib._bootstrap_external>:1670: size=132 KiB, count=235, average=577 B
+2024-12-08 20:04:38,622 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\linecache.py:139: size=108 KiB, count=1187, average=93 B
+2024-12-08 20:04:38,673 - app - INFO - Processing question for user C5927098-B045-4E70-ABFB-F1FBBF266510, chat None
+2024-12-08 20:04:38,674 - app - WARNING - Invalid UUID - chat_id: None, user_id: C5927098-B045-4E70-ABFB-F1FBBF266510
+2024-12-08 20:04:39,116 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-08 20:04:39,124 - root - ERROR - Error creating new chat: cannot access local variable 'chat_id' where it is not associated with a value
+2024-12-08 20:04:39,325 - app - ERROR - Error processing question (attempt 2): cannot access local variable 'cursor' where it is not associated with a value
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\main.py", line 631, in handle_new_chat
+    if not self.is_valid_uuid(chat_id):
+                              ^^^^^^^
+UnboundLocalError: cannot access local variable 'chat_id' where it is not associated with a value
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 251, in ask_question
+    result = rag_agent.run(question, current_user_id, chat_id_str, chat_history)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\main.py", line 674, in run
+    self.handle_new_chat(user_id, question)
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\main.py", line 656, in handle_new_chat
+    cursor.close()
+    ^^^^^^
+UnboundLocalError: cannot access local variable 'cursor' where it is not associated with a value
+2024-12-08 20:04:41,828 - app - INFO - [ Top 10 memory usage ]
+2024-12-08 20:04:41,830 - app - INFO - <frozen importlib._bootstrap_external>:753: size=8778 KiB, count=55243, average=163 B
+2024-12-08 20:04:41,831 - app - INFO - <frozen abc>:123: size=550 KiB, count=5855, average=96 B
+2024-12-08 20:04:41,832 - app - INFO - <frozen abc>:106: size=365 KiB, count=1244, average=300 B
+2024-12-08 20:04:41,833 - app - INFO - <frozen importlib._bootstrap_external>:1673: size=311 KiB, count=2527, average=126 B
+2024-12-08 20:04:41,834 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\sentence_transformers\SentenceTransformer.py:1560: size=311 KiB, count=1, average=311 KiB
+2024-12-08 20:04:41,834 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\dataclasses.py:473: size=256 KiB, count=2099, average=125 B
+2024-12-08 20:04:41,835 - app - INFO - <frozen importlib._bootstrap_external>:123: size=221 KiB, count=1279, average=177 B
+2024-12-08 20:04:41,837 - app - INFO - <frozen importlib._bootstrap>:488: size=187 KiB, count=1632, average=117 B
+2024-12-08 20:04:41,838 - app - INFO - <frozen importlib._bootstrap_external>:1670: size=132 KiB, count=235, average=577 B
+2024-12-08 20:04:41,839 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\linecache.py:139: size=108 KiB, count=1187, average=93 B
+2024-12-08 20:04:41,901 - app - INFO - Processing question for user C5927098-B045-4E70-ABFB-F1FBBF266510, chat None
+2024-12-08 20:04:41,903 - app - WARNING - Invalid UUID - chat_id: None, user_id: C5927098-B045-4E70-ABFB-F1FBBF266510
+2024-12-08 20:04:41,939 - app - INFO - Processing question for user C5927098-B045-4E70-ABFB-F1FBBF266510, chat None
+2024-12-08 20:04:41,939 - app - WARNING - Invalid UUID - chat_id: None, user_id: C5927098-B045-4E70-ABFB-F1FBBF266510
+2024-12-08 20:04:42,362 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-08 20:04:42,370 - root - ERROR - Error creating new chat: cannot access local variable 'chat_id' where it is not associated with a value
+2024-12-08 20:04:42,549 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-08 20:04:42,550 - app - ERROR - Error processing question (attempt 3): cannot access local variable 'cursor' where it is not associated with a value
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\main.py", line 631, in handle_new_chat
+    if not self.is_valid_uuid(chat_id):
+                              ^^^^^^^
+UnboundLocalError: cannot access local variable 'chat_id' where it is not associated with a value
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 251, in ask_question
+    result = rag_agent.run(question, current_user_id, chat_id_str, chat_history)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\main.py", line 674, in run
+    self.handle_new_chat(user_id, question)
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\main.py", line 656, in handle_new_chat
+    cursor.close()
+    ^^^^^^
+UnboundLocalError: cannot access local variable 'cursor' where it is not associated with a value
+2024-12-08 20:04:42,570 - root - ERROR - Error creating new chat: cannot access local variable 'chat_id' where it is not associated with a value
+2024-12-08 20:04:43,171 - app - ERROR - Error processing question (attempt 1): cannot access local variable 'cursor' where it is not associated with a value
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\main.py", line 631, in handle_new_chat
+    if not self.is_valid_uuid(chat_id):
+                              ^^^^^^^
+UnboundLocalError: cannot access local variable 'chat_id' where it is not associated with a value
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 251, in ask_question
+    result = rag_agent.run(question, current_user_id, chat_id_str, chat_history)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\main.py", line 674, in run
+    self.handle_new_chat(user_id, question)
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\main.py", line 656, in handle_new_chat
+    cursor.close()
+    ^^^^^^
+UnboundLocalError: cannot access local variable 'cursor' where it is not associated with a value
+2024-12-08 20:04:44,778 - app - INFO - [ Top 10 memory usage ]
+2024-12-08 20:04:44,810 - app - INFO - <frozen importlib._bootstrap_external>:753: size=8778 KiB, count=55243, average=163 B
+2024-12-08 20:04:44,856 - app - INFO - <frozen abc>:123: size=549 KiB, count=5828, average=96 B
+2024-12-08 20:04:44,887 - app - INFO - <frozen abc>:106: size=365 KiB, count=1244, average=300 B
+2024-12-08 20:04:44,918 - app - INFO - <frozen importlib._bootstrap_external>:1673: size=311 KiB, count=2527, average=126 B
+2024-12-08 20:04:44,949 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\sentence_transformers\SentenceTransformer.py:1560: size=311 KiB, count=1, average=311 KiB
+2024-12-08 20:04:44,965 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\dataclasses.py:473: size=256 KiB, count=2099, average=125 B
+2024-12-08 20:04:44,996 - app - INFO - <frozen importlib._bootstrap_external>:123: size=221 KiB, count=1279, average=177 B
+2024-12-08 20:04:45,012 - app - INFO - <frozen importlib._bootstrap>:488: size=187 KiB, count=1632, average=117 B
+2024-12-08 20:04:45,043 - app - INFO - <frozen importlib._bootstrap_external>:1670: size=132 KiB, count=235, average=577 B
+2024-12-08 20:04:45,064 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\linecache.py:139: size=108 KiB, count=1187, average=93 B
+2024-12-08 20:04:46,269 - app - INFO - [ Top 10 memory usage ]
+2024-12-08 20:04:46,270 - app - INFO - <frozen importlib._bootstrap_external>:753: size=8778 KiB, count=55243, average=163 B
+2024-12-08 20:04:46,271 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\tracemalloc.py:505: size=878 KiB, count=10786, average=83 B
+2024-12-08 20:04:46,272 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\tracemalloc.py:67: size=674 KiB, count=10785, average=64 B
+2024-12-08 20:04:46,273 - app - INFO - <frozen abc>:123: size=548 KiB, count=5826, average=96 B
+2024-12-08 20:04:46,274 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\tracemalloc.py:498: size=506 KiB, count=10785, average=48 B
+2024-12-08 20:04:46,277 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\tracemalloc.py:193: size=506 KiB, count=10785, average=48 B
+2024-12-08 20:04:46,280 - app - INFO - <frozen abc>:106: size=365 KiB, count=1244, average=300 B
+2024-12-08 20:04:46,281 - app - INFO - <frozen importlib._bootstrap_external>:1673: size=311 KiB, count=2527, average=126 B
+2024-12-08 20:04:46,282 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\sentence_transformers\SentenceTransformer.py:1560: size=311 KiB, count=1, average=311 KiB
+2024-12-08 20:04:46,283 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\dataclasses.py:473: size=256 KiB, count=2099, average=125 B
+2024-12-08 20:04:46,342 - app - INFO - Processing question for user C5927098-B045-4E70-ABFB-F1FBBF266510, chat None
+2024-12-08 20:04:46,345 - app - WARNING - Invalid UUID - chat_id: None, user_id: C5927098-B045-4E70-ABFB-F1FBBF266510
+2024-12-08 20:04:46,780 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-08 20:04:46,794 - root - ERROR - Error creating new chat: cannot access local variable 'chat_id' where it is not associated with a value
+2024-12-08 20:04:46,976 - app - ERROR - Error processing question (attempt 2): cannot access local variable 'cursor' where it is not associated with a value
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\main.py", line 631, in handle_new_chat
+    if not self.is_valid_uuid(chat_id):
+                              ^^^^^^^
+UnboundLocalError: cannot access local variable 'chat_id' where it is not associated with a value
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 251, in ask_question
+    result = rag_agent.run(question, current_user_id, chat_id_str, chat_history)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\main.py", line 674, in run
+    self.handle_new_chat(user_id, question)
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\main.py", line 656, in handle_new_chat
+    cursor.close()
+    ^^^^^^
+UnboundLocalError: cannot access local variable 'cursor' where it is not associated with a value
+2024-12-08 20:04:49,366 - app - INFO - [ Top 10 memory usage ]
+2024-12-08 20:04:49,367 - app - INFO - <frozen importlib._bootstrap_external>:753: size=8778 KiB, count=55243, average=163 B
+2024-12-08 20:04:49,368 - app - INFO - <frozen abc>:123: size=548 KiB, count=5822, average=96 B
+2024-12-08 20:04:49,369 - app - INFO - <frozen abc>:106: size=365 KiB, count=1244, average=300 B
+2024-12-08 20:04:49,369 - app - INFO - <frozen importlib._bootstrap_external>:1673: size=311 KiB, count=2527, average=126 B
+2024-12-08 20:04:49,370 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\sentence_transformers\SentenceTransformer.py:1560: size=311 KiB, count=1, average=311 KiB
+2024-12-08 20:04:49,371 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\dataclasses.py:473: size=256 KiB, count=2099, average=125 B
+2024-12-08 20:04:49,372 - app - INFO - <frozen importlib._bootstrap_external>:123: size=221 KiB, count=1279, average=177 B
+2024-12-08 20:04:49,375 - app - INFO - <frozen importlib._bootstrap>:488: size=187 KiB, count=1631, average=117 B
+2024-12-08 20:04:49,378 - app - INFO - <frozen importlib._bootstrap_external>:1670: size=132 KiB, count=235, average=577 B
+2024-12-08 20:04:49,380 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\linecache.py:139: size=108 KiB, count=1187, average=93 B
+2024-12-08 20:04:49,438 - app - INFO - Processing question for user C5927098-B045-4E70-ABFB-F1FBBF266510, chat None
+2024-12-08 20:04:49,438 - app - WARNING - Invalid UUID - chat_id: None, user_id: C5927098-B045-4E70-ABFB-F1FBBF266510
+2024-12-08 20:04:49,971 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-08 20:04:49,984 - root - ERROR - Error creating new chat: cannot access local variable 'chat_id' where it is not associated with a value
+2024-12-08 20:04:50,187 - app - ERROR - Error processing question (attempt 3): cannot access local variable 'cursor' where it is not associated with a value
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\main.py", line 631, in handle_new_chat
+    if not self.is_valid_uuid(chat_id):
+                              ^^^^^^^
+UnboundLocalError: cannot access local variable 'chat_id' where it is not associated with a value
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 251, in ask_question
+    result = rag_agent.run(question, current_user_id, chat_id_str, chat_history)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\main.py", line 674, in run
+    self.handle_new_chat(user_id, question)
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\main.py", line 656, in handle_new_chat
+    cursor.close()
+    ^^^^^^
+UnboundLocalError: cannot access local variable 'cursor' where it is not associated with a value
+2024-12-08 20:04:51,661 - app - INFO - [ Top 10 memory usage ]
+2024-12-08 20:04:51,662 - app - INFO - <frozen importlib._bootstrap_external>:753: size=8778 KiB, count=55243, average=163 B
+2024-12-08 20:04:51,663 - app - INFO - <frozen abc>:123: size=548 KiB, count=5820, average=96 B
+2024-12-08 20:04:51,664 - app - INFO - <frozen abc>:106: size=365 KiB, count=1244, average=300 B
+2024-12-08 20:04:51,666 - app - INFO - <frozen importlib._bootstrap_external>:1673: size=311 KiB, count=2527, average=126 B
+2024-12-08 20:04:51,667 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\sentence_transformers\SentenceTransformer.py:1560: size=311 KiB, count=1, average=311 KiB
+2024-12-08 20:04:51,668 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\dataclasses.py:473: size=256 KiB, count=2099, average=125 B
+2024-12-08 20:04:51,670 - app - INFO - <frozen importlib._bootstrap_external>:123: size=221 KiB, count=1279, average=177 B
+2024-12-08 20:04:51,678 - app - INFO - <frozen importlib._bootstrap>:488: size=187 KiB, count=1631, average=117 B
+2024-12-08 20:04:51,681 - app - INFO - <frozen importlib._bootstrap_external>:1670: size=132 KiB, count=235, average=577 B
+2024-12-08 20:04:51,687 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\linecache.py:139: size=108 KiB, count=1187, average=93 B
+2024-12-08 20:04:53,556 - app - INFO - Processing question for user C5927098-B045-4E70-ABFB-F1FBBF266510, chat None
+2024-12-08 20:04:53,557 - app - WARNING - Invalid UUID - chat_id: None, user_id: C5927098-B045-4E70-ABFB-F1FBBF266510
+2024-12-08 20:04:54,011 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-08 20:04:54,017 - root - ERROR - Error creating new chat: cannot access local variable 'chat_id' where it is not associated with a value
+2024-12-08 20:04:54,397 - app - ERROR - Error processing question (attempt 1): cannot access local variable 'cursor' where it is not associated with a value
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\main.py", line 631, in handle_new_chat
+    if not self.is_valid_uuid(chat_id):
+                              ^^^^^^^
+UnboundLocalError: cannot access local variable 'chat_id' where it is not associated with a value
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 251, in ask_question
+    result = rag_agent.run(question, current_user_id, chat_id_str, chat_history)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\main.py", line 674, in run
+    self.handle_new_chat(user_id, question)
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\main.py", line 656, in handle_new_chat
+    cursor.close()
+    ^^^^^^
+UnboundLocalError: cannot access local variable 'cursor' where it is not associated with a value
+2024-12-08 20:04:56,864 - app - INFO - [ Top 10 memory usage ]
+2024-12-08 20:04:56,865 - app - INFO - <frozen importlib._bootstrap_external>:753: size=8778 KiB, count=55243, average=163 B
+2024-12-08 20:04:56,866 - app - INFO - <frozen abc>:123: size=548 KiB, count=5819, average=96 B
+2024-12-08 20:04:56,867 - app - INFO - <frozen abc>:106: size=365 KiB, count=1244, average=300 B
+2024-12-08 20:04:56,868 - app - INFO - <frozen importlib._bootstrap_external>:1673: size=311 KiB, count=2527, average=126 B
+2024-12-08 20:04:56,869 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\sentence_transformers\SentenceTransformer.py:1560: size=311 KiB, count=1, average=311 KiB
+2024-12-08 20:04:56,872 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\dataclasses.py:473: size=256 KiB, count=2099, average=125 B
+2024-12-08 20:04:56,874 - app - INFO - <frozen importlib._bootstrap_external>:123: size=221 KiB, count=1279, average=177 B
+2024-12-08 20:04:56,876 - app - INFO - <frozen importlib._bootstrap>:488: size=187 KiB, count=1631, average=117 B
+2024-12-08 20:04:56,878 - app - INFO - <frozen importlib._bootstrap_external>:1670: size=132 KiB, count=235, average=577 B
+2024-12-08 20:04:56,879 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\linecache.py:139: size=108 KiB, count=1187, average=93 B
+2024-12-08 20:04:56,952 - app - INFO - Processing question for user C5927098-B045-4E70-ABFB-F1FBBF266510, chat None
+2024-12-08 20:04:56,956 - app - WARNING - Invalid UUID - chat_id: None, user_id: C5927098-B045-4E70-ABFB-F1FBBF266510
+2024-12-08 20:04:57,405 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-08 20:04:57,431 - root - ERROR - Error creating new chat: cannot access local variable 'chat_id' where it is not associated with a value
+2024-12-08 20:04:57,624 - app - ERROR - Error processing question (attempt 2): cannot access local variable 'cursor' where it is not associated with a value
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\main.py", line 631, in handle_new_chat
+    if not self.is_valid_uuid(chat_id):
+                              ^^^^^^^
+UnboundLocalError: cannot access local variable 'chat_id' where it is not associated with a value
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 251, in ask_question
+    result = rag_agent.run(question, current_user_id, chat_id_str, chat_history)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\main.py", line 674, in run
+    self.handle_new_chat(user_id, question)
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\main.py", line 656, in handle_new_chat
+    cursor.close()
+    ^^^^^^
+UnboundLocalError: cannot access local variable 'cursor' where it is not associated with a value
+2024-12-08 20:05:00,050 - app - INFO - [ Top 10 memory usage ]
+2024-12-08 20:05:00,052 - app - INFO - <frozen importlib._bootstrap_external>:753: size=8778 KiB, count=55243, average=163 B
+2024-12-08 20:05:00,054 - app - INFO - <frozen abc>:123: size=548 KiB, count=5819, average=96 B
+2024-12-08 20:05:00,055 - app - INFO - <frozen abc>:106: size=365 KiB, count=1244, average=300 B
+2024-12-08 20:05:00,057 - app - INFO - <frozen importlib._bootstrap_external>:1673: size=311 KiB, count=2527, average=126 B
+2024-12-08 20:05:00,058 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\sentence_transformers\SentenceTransformer.py:1560: size=311 KiB, count=1, average=311 KiB
+2024-12-08 20:05:00,059 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\dataclasses.py:473: size=256 KiB, count=2099, average=125 B
+2024-12-08 20:05:00,060 - app - INFO - <frozen importlib._bootstrap_external>:123: size=221 KiB, count=1279, average=177 B
+2024-12-08 20:05:00,062 - app - INFO - <frozen importlib._bootstrap>:488: size=187 KiB, count=1631, average=117 B
+2024-12-08 20:05:00,063 - app - INFO - <frozen importlib._bootstrap_external>:1670: size=132 KiB, count=235, average=577 B
+2024-12-08 20:05:00,065 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\linecache.py:139: size=108 KiB, count=1187, average=93 B
+2024-12-08 20:05:00,125 - app - INFO - Processing question for user C5927098-B045-4E70-ABFB-F1FBBF266510, chat None
+2024-12-08 20:05:00,126 - app - WARNING - Invalid UUID - chat_id: None, user_id: C5927098-B045-4E70-ABFB-F1FBBF266510
+2024-12-08 20:05:00,562 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-08 20:05:00,583 - root - ERROR - Error creating new chat: cannot access local variable 'chat_id' where it is not associated with a value
+2024-12-08 20:05:00,765 - app - ERROR - Error processing question (attempt 3): cannot access local variable 'cursor' where it is not associated with a value
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\main.py", line 631, in handle_new_chat
+    if not self.is_valid_uuid(chat_id):
+                              ^^^^^^^
+UnboundLocalError: cannot access local variable 'chat_id' where it is not associated with a value
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 251, in ask_question
+    result = rag_agent.run(question, current_user_id, chat_id_str, chat_history)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\main.py", line 674, in run
+    self.handle_new_chat(user_id, question)
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\main.py", line 656, in handle_new_chat
+    cursor.close()
+    ^^^^^^
+UnboundLocalError: cannot access local variable 'cursor' where it is not associated with a value
+2024-12-08 20:05:02,227 - app - INFO - [ Top 10 memory usage ]
+2024-12-08 20:05:02,228 - app - INFO - <frozen importlib._bootstrap_external>:753: size=8778 KiB, count=55243, average=163 B
+2024-12-08 20:05:02,228 - app - INFO - <frozen abc>:123: size=548 KiB, count=5817, average=96 B
+2024-12-08 20:05:02,229 - app - INFO - <frozen abc>:106: size=365 KiB, count=1244, average=300 B
+2024-12-08 20:05:02,230 - app - INFO - <frozen importlib._bootstrap_external>:1673: size=311 KiB, count=2527, average=126 B
+2024-12-08 20:05:02,231 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\sentence_transformers\SentenceTransformer.py:1560: size=311 KiB, count=1, average=311 KiB
+2024-12-08 20:05:02,232 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\dataclasses.py:473: size=256 KiB, count=2099, average=125 B
+2024-12-08 20:05:02,233 - app - INFO - <frozen importlib._bootstrap_external>:123: size=221 KiB, count=1279, average=177 B
+2024-12-08 20:05:02,235 - app - INFO - <frozen importlib._bootstrap>:488: size=187 KiB, count=1631, average=117 B
+2024-12-08 20:05:02,236 - app - INFO - <frozen importlib._bootstrap_external>:1670: size=132 KiB, count=235, average=577 B
+2024-12-08 20:05:02,238 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\linecache.py:139: size=108 KiB, count=1187, average=93 B
+2024-12-08 20:08:30,223 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-08 20:09:42,183 - app - INFO - Processing question for user C5927098-B045-4E70-ABFB-F1FBBF266510, chat None
+2024-12-08 20:09:42,183 - app - INFO - Initializing RAG agent...
+2024-12-08 20:09:42,198 - pinecone_plugin_interface.logging - INFO - Discovering subpackages in _NamespacePath(['C:\\Users\\Nouma\\OneDrive\\Desktop\\GenAi x Xavour\\ApnaWaqeel\\venv\\Lib\\site-packages\\pinecone_plugins'])
+2024-12-08 20:09:42,201 - pinecone_plugin_interface.logging - INFO - Looking for plugins in pinecone_plugins.inference
+2024-12-08 20:09:42,326 - pinecone_plugin_interface.logging - INFO - Installing plugin inference into Pinecone
+2024-12-08 20:09:47,361 - datasets - INFO - PyTorch version 2.4.1 available.
+2024-12-08 20:09:49,235 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2024-12-08 20:09:49,236 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2024-12-08 20:10:02,497 - app - INFO - RAG agent initialized successfully
+2024-12-08 20:10:02,501 - app - WARNING - Invalid UUID - chat_id: None, user_id: C5927098-B045-4E70-ABFB-F1FBBF266510
+2024-12-08 20:10:03,815 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-08 20:10:04,553 - root - ERROR - Error creating new chat: ('23000', '[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The INSERT statement conflicted with the FOREIGN KEY constraint "FK_ChatSessions_Recipient". The conflict occurred in database "Apna_Waqeel", table "dbo.Users", column \'UserId\'. (547) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)')
+2024-12-08 20:10:04,744 - app - ERROR - Error processing question (attempt 1): ('23000', '[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The INSERT statement conflicted with the FOREIGN KEY constraint "FK_ChatSessions_Recipient". The conflict occurred in database "Apna_Waqeel", table "dbo.Users", column \'UserId\'. (547) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)')
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 251, in ask_question
+    result = rag_agent.run(question, current_user_id, chat_id_str, chat_history)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\main.py", line 689, in run
+    self.handle_new_chat(user_id, question)
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\main.py", line 648, in handle_new_chat
+    cursor.execute(query, (chat_id, user_id, system_id))
+pyodbc.IntegrityError: ('23000', '[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The INSERT statement conflicted with the FOREIGN KEY constraint "FK_ChatSessions_Recipient". The conflict occurred in database "Apna_Waqeel", table "dbo.Users", column \'UserId\'. (547) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)')
+2024-12-08 20:10:07,360 - app - INFO - [ Top 10 memory usage ]
+2024-12-08 20:10:07,360 - app - INFO - <frozen importlib._bootstrap_external>:753: size=8780 KiB, count=55265, average=163 B
+2024-12-08 20:10:07,364 - app - INFO - <frozen abc>:123: size=553 KiB, count=5910, average=96 B
+2024-12-08 20:10:07,365 - app - INFO - <frozen abc>:106: size=365 KiB, count=1244, average=300 B
+2024-12-08 20:10:07,368 - app - INFO - <frozen importlib._bootstrap_external>:1673: size=311 KiB, count=2527, average=126 B
+2024-12-08 20:10:07,368 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\sentence_transformers\SentenceTransformer.py:1560: size=311 KiB, count=1, average=311 KiB
+2024-12-08 20:10:07,371 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\dataclasses.py:473: size=256 KiB, count=2097, average=125 B
+2024-12-08 20:10:07,372 - app - INFO - <frozen importlib._bootstrap_external>:123: size=221 KiB, count=1281, average=177 B
+2024-12-08 20:10:07,373 - app - INFO - <frozen importlib._bootstrap>:488: size=187 KiB, count=1632, average=117 B
+2024-12-08 20:10:07,375 - app - INFO - <frozen importlib._bootstrap_external>:1670: size=132 KiB, count=235, average=577 B
+2024-12-08 20:10:07,376 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\linecache.py:139: size=108 KiB, count=1187, average=93 B
+2024-12-08 20:10:07,441 - app - INFO - Processing question for user C5927098-B045-4E70-ABFB-F1FBBF266510, chat None
+2024-12-08 20:10:07,442 - app - WARNING - Invalid UUID - chat_id: None, user_id: C5927098-B045-4E70-ABFB-F1FBBF266510
+2024-12-08 20:10:07,933 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-08 20:10:07,952 - root - ERROR - Error creating new chat: ('23000', '[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The INSERT statement conflicted with the FOREIGN KEY constraint "FK_ChatSessions_Recipient". The conflict occurred in database "Apna_Waqeel", table "dbo.Users", column \'UserId\'. (547) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)')
+2024-12-08 20:10:08,133 - app - ERROR - Error processing question (attempt 2): ('23000', '[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The INSERT statement conflicted with the FOREIGN KEY constraint "FK_ChatSessions_Recipient". The conflict occurred in database "Apna_Waqeel", table "dbo.Users", column \'UserId\'. (547) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)')
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 251, in ask_question
+    result = rag_agent.run(question, current_user_id, chat_id_str, chat_history)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\main.py", line 689, in run
+    self.handle_new_chat(user_id, question)
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\main.py", line 648, in handle_new_chat
+    cursor.execute(query, (chat_id, user_id, system_id))
+pyodbc.IntegrityError: ('23000', '[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The INSERT statement conflicted with the FOREIGN KEY constraint "FK_ChatSessions_Recipient". The conflict occurred in database "Apna_Waqeel", table "dbo.Users", column \'UserId\'. (547) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)')
+2024-12-08 20:10:10,515 - app - INFO - [ Top 10 memory usage ]
+2024-12-08 20:10:10,516 - app - INFO - <frozen importlib._bootstrap_external>:753: size=8780 KiB, count=55265, average=163 B
+2024-12-08 20:10:10,517 - app - INFO - <frozen abc>:123: size=552 KiB, count=5885, average=96 B
+2024-12-08 20:10:10,518 - app - INFO - <frozen abc>:106: size=365 KiB, count=1244, average=300 B
+2024-12-08 20:10:10,519 - app - INFO - <frozen importlib._bootstrap_external>:1673: size=311 KiB, count=2527, average=126 B
+2024-12-08 20:10:10,520 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\sentence_transformers\SentenceTransformer.py:1560: size=311 KiB, count=1, average=311 KiB
+2024-12-08 20:10:10,521 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\dataclasses.py:473: size=256 KiB, count=2097, average=125 B
+2024-12-08 20:10:10,523 - app - INFO - <frozen importlib._bootstrap_external>:123: size=221 KiB, count=1281, average=177 B
+2024-12-08 20:10:10,524 - app - INFO - <frozen importlib._bootstrap>:488: size=187 KiB, count=1632, average=117 B
+2024-12-08 20:10:10,526 - app - INFO - <frozen importlib._bootstrap_external>:1670: size=132 KiB, count=235, average=577 B
+2024-12-08 20:10:10,530 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\linecache.py:139: size=108 KiB, count=1187, average=93 B
+2024-12-08 20:10:10,591 - app - INFO - Processing question for user C5927098-B045-4E70-ABFB-F1FBBF266510, chat None
+2024-12-08 20:10:10,593 - app - WARNING - Invalid UUID - chat_id: None, user_id: C5927098-B045-4E70-ABFB-F1FBBF266510
+2024-12-08 20:10:11,030 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-08 20:10:11,058 - root - ERROR - Error creating new chat: ('23000', '[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The INSERT statement conflicted with the FOREIGN KEY constraint "FK_ChatSessions_Recipient". The conflict occurred in database "Apna_Waqeel", table "dbo.Users", column \'UserId\'. (547) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)')
+2024-12-08 20:10:11,254 - app - ERROR - Error processing question (attempt 3): ('23000', '[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The INSERT statement conflicted with the FOREIGN KEY constraint "FK_ChatSessions_Recipient". The conflict occurred in database "Apna_Waqeel", table "dbo.Users", column \'UserId\'. (547) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)')
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 251, in ask_question
+    result = rag_agent.run(question, current_user_id, chat_id_str, chat_history)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\main.py", line 689, in run
+    self.handle_new_chat(user_id, question)
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\main.py", line 648, in handle_new_chat
+    cursor.execute(query, (chat_id, user_id, system_id))
+pyodbc.IntegrityError: ('23000', '[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The INSERT statement conflicted with the FOREIGN KEY constraint "FK_ChatSessions_Recipient". The conflict occurred in database "Apna_Waqeel", table "dbo.Users", column \'UserId\'. (547) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)')
+2024-12-08 20:10:12,721 - app - INFO - [ Top 10 memory usage ]
+2024-12-08 20:10:12,723 - app - INFO - <frozen importlib._bootstrap_external>:753: size=8780 KiB, count=55265, average=163 B
+2024-12-08 20:10:12,723 - app - INFO - <frozen abc>:123: size=551 KiB, count=5882, average=96 B
+2024-12-08 20:10:12,724 - app - INFO - <frozen abc>:106: size=365 KiB, count=1244, average=300 B
+2024-12-08 20:10:12,725 - app - INFO - <frozen importlib._bootstrap_external>:1673: size=311 KiB, count=2527, average=126 B
+2024-12-08 20:10:12,726 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\sentence_transformers\SentenceTransformer.py:1560: size=311 KiB, count=1, average=311 KiB
+2024-12-08 20:10:12,728 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\dataclasses.py:473: size=256 KiB, count=2097, average=125 B
+2024-12-08 20:10:12,730 - app - INFO - <frozen importlib._bootstrap_external>:123: size=221 KiB, count=1281, average=177 B
+2024-12-08 20:10:12,730 - app - INFO - <frozen importlib._bootstrap>:488: size=187 KiB, count=1632, average=117 B
+2024-12-08 20:10:12,730 - app - INFO - <frozen importlib._bootstrap_external>:1670: size=132 KiB, count=235, average=577 B
+2024-12-08 20:10:12,730 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\linecache.py:139: size=108 KiB, count=1187, average=93 B
+2024-12-08 20:10:13,181 - app - INFO - Processing question for user C5927098-B045-4E70-ABFB-F1FBBF266510, chat None
+2024-12-08 20:10:13,182 - app - WARNING - Invalid UUID - chat_id: None, user_id: C5927098-B045-4E70-ABFB-F1FBBF266510
+2024-12-08 20:10:13,618 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-08 20:10:13,637 - root - ERROR - Error creating new chat: ('23000', '[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The INSERT statement conflicted with the FOREIGN KEY constraint "FK_ChatSessions_Recipient". The conflict occurred in database "Apna_Waqeel", table "dbo.Users", column \'UserId\'. (547) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)')
+2024-12-08 20:10:13,808 - app - ERROR - Error processing question (attempt 1): ('23000', '[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The INSERT statement conflicted with the FOREIGN KEY constraint "FK_ChatSessions_Recipient". The conflict occurred in database "Apna_Waqeel", table "dbo.Users", column \'UserId\'. (547) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)')
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 251, in ask_question
+    result = rag_agent.run(question, current_user_id, chat_id_str, chat_history)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\main.py", line 689, in run
+    self.handle_new_chat(user_id, question)
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\main.py", line 648, in handle_new_chat
+    cursor.execute(query, (chat_id, user_id, system_id))
+pyodbc.IntegrityError: ('23000', '[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The INSERT statement conflicted with the FOREIGN KEY constraint "FK_ChatSessions_Recipient". The conflict occurred in database "Apna_Waqeel", table "dbo.Users", column \'UserId\'. (547) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)')
+2024-12-08 20:10:16,305 - app - INFO - [ Top 10 memory usage ]
+2024-12-08 20:10:16,306 - app - INFO - <frozen importlib._bootstrap_external>:753: size=8780 KiB, count=55265, average=163 B
+2024-12-08 20:10:16,306 - app - INFO - <frozen abc>:123: size=550 KiB, count=5852, average=96 B
+2024-12-08 20:10:16,310 - app - INFO - <frozen abc>:106: size=365 KiB, count=1244, average=300 B
+2024-12-08 20:10:16,317 - app - INFO - <frozen importlib._bootstrap_external>:1673: size=311 KiB, count=2527, average=126 B
+2024-12-08 20:10:16,321 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\sentence_transformers\SentenceTransformer.py:1560: size=311 KiB, count=1, average=311 KiB
+2024-12-08 20:10:16,323 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\dataclasses.py:473: size=256 KiB, count=2097, average=125 B
+2024-12-08 20:10:16,323 - app - INFO - <frozen importlib._bootstrap_external>:123: size=221 KiB, count=1281, average=177 B
+2024-12-08 20:10:16,325 - app - INFO - <frozen importlib._bootstrap>:488: size=187 KiB, count=1630, average=117 B
+2024-12-08 20:10:16,333 - app - INFO - <frozen importlib._bootstrap_external>:1670: size=132 KiB, count=235, average=577 B
+2024-12-08 20:10:16,334 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\linecache.py:139: size=108 KiB, count=1187, average=93 B
+2024-12-08 20:10:16,390 - app - INFO - Processing question for user C5927098-B045-4E70-ABFB-F1FBBF266510, chat None
+2024-12-08 20:10:16,394 - app - WARNING - Invalid UUID - chat_id: None, user_id: C5927098-B045-4E70-ABFB-F1FBBF266510
+2024-12-08 20:10:16,841 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-08 20:10:16,862 - root - ERROR - Error creating new chat: ('23000', '[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The INSERT statement conflicted with the FOREIGN KEY constraint "FK_ChatSessions_Recipient". The conflict occurred in database "Apna_Waqeel", table "dbo.Users", column \'UserId\'. (547) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)')
+2024-12-08 20:10:17,054 - app - ERROR - Error processing question (attempt 2): ('23000', '[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The INSERT statement conflicted with the FOREIGN KEY constraint "FK_ChatSessions_Recipient". The conflict occurred in database "Apna_Waqeel", table "dbo.Users", column \'UserId\'. (547) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)')
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 251, in ask_question
+    result = rag_agent.run(question, current_user_id, chat_id_str, chat_history)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\main.py", line 689, in run
+    self.handle_new_chat(user_id, question)
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\main.py", line 648, in handle_new_chat
+    cursor.execute(query, (chat_id, user_id, system_id))
+pyodbc.IntegrityError: ('23000', '[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The INSERT statement conflicted with the FOREIGN KEY constraint "FK_ChatSessions_Recipient". The conflict occurred in database "Apna_Waqeel", table "dbo.Users", column \'UserId\'. (547) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)')
+2024-12-08 20:10:19,468 - app - INFO - [ Top 10 memory usage ]
+2024-12-08 20:10:19,469 - app - INFO - <frozen importlib._bootstrap_external>:753: size=8780 KiB, count=55265, average=163 B
+2024-12-08 20:10:19,470 - app - INFO - <frozen abc>:123: size=550 KiB, count=5852, average=96 B
+2024-12-08 20:10:19,470 - app - INFO - <frozen abc>:106: size=365 KiB, count=1244, average=300 B
+2024-12-08 20:10:19,471 - app - INFO - <frozen importlib._bootstrap_external>:1673: size=311 KiB, count=2527, average=126 B
+2024-12-08 20:10:19,473 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\sentence_transformers\SentenceTransformer.py:1560: size=311 KiB, count=1, average=311 KiB
+2024-12-08 20:10:19,477 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\dataclasses.py:473: size=256 KiB, count=2097, average=125 B
+2024-12-08 20:10:19,482 - app - INFO - <frozen importlib._bootstrap_external>:123: size=221 KiB, count=1281, average=177 B
+2024-12-08 20:10:19,485 - app - INFO - <frozen importlib._bootstrap>:488: size=187 KiB, count=1630, average=117 B
+2024-12-08 20:10:19,486 - app - INFO - <frozen importlib._bootstrap_external>:1670: size=132 KiB, count=235, average=577 B
+2024-12-08 20:10:19,488 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\linecache.py:139: size=108 KiB, count=1187, average=93 B
+2024-12-08 20:10:19,565 - app - INFO - Processing question for user C5927098-B045-4E70-ABFB-F1FBBF266510, chat None
+2024-12-08 20:10:19,566 - app - WARNING - Invalid UUID - chat_id: None, user_id: C5927098-B045-4E70-ABFB-F1FBBF266510
+2024-12-08 20:10:20,046 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-08 20:10:20,073 - root - ERROR - Error creating new chat: ('23000', '[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The INSERT statement conflicted with the FOREIGN KEY constraint "FK_ChatSessions_Recipient". The conflict occurred in database "Apna_Waqeel", table "dbo.Users", column \'UserId\'. (547) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)')
+2024-12-08 20:10:20,254 - app - ERROR - Error processing question (attempt 3): ('23000', '[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The INSERT statement conflicted with the FOREIGN KEY constraint "FK_ChatSessions_Recipient". The conflict occurred in database "Apna_Waqeel", table "dbo.Users", column \'UserId\'. (547) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)')
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 251, in ask_question
+    result = rag_agent.run(question, current_user_id, chat_id_str, chat_history)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\main.py", line 689, in run
+    self.handle_new_chat(user_id, question)
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\main.py", line 648, in handle_new_chat
+    cursor.execute(query, (chat_id, user_id, system_id))
+pyodbc.IntegrityError: ('23000', '[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The INSERT statement conflicted with the FOREIGN KEY constraint "FK_ChatSessions_Recipient". The conflict occurred in database "Apna_Waqeel", table "dbo.Users", column \'UserId\'. (547) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)')
+2024-12-08 20:10:21,792 - app - INFO - [ Top 10 memory usage ]
+2024-12-08 20:10:21,794 - app - INFO - <frozen importlib._bootstrap_external>:753: size=8780 KiB, count=55265, average=163 B
+2024-12-08 20:10:21,795 - app - INFO - <frozen abc>:123: size=550 KiB, count=5850, average=96 B
+2024-12-08 20:10:21,796 - app - INFO - <frozen abc>:106: size=365 KiB, count=1244, average=300 B
+2024-12-08 20:10:21,797 - app - INFO - <frozen importlib._bootstrap_external>:1673: size=311 KiB, count=2527, average=126 B
+2024-12-08 20:10:21,798 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\sentence_transformers\SentenceTransformer.py:1560: size=311 KiB, count=1, average=311 KiB
+2024-12-08 20:10:21,800 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\dataclasses.py:473: size=256 KiB, count=2097, average=125 B
+2024-12-08 20:10:21,802 - app - INFO - <frozen importlib._bootstrap_external>:123: size=221 KiB, count=1281, average=177 B
+2024-12-08 20:10:21,803 - app - INFO - <frozen importlib._bootstrap>:488: size=187 KiB, count=1630, average=117 B
+2024-12-08 20:10:21,805 - app - INFO - <frozen importlib._bootstrap_external>:1670: size=132 KiB, count=235, average=577 B
+2024-12-08 20:10:21,810 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\linecache.py:139: size=108 KiB, count=1187, average=93 B
+2024-12-08 20:10:22,909 - app - INFO - Processing question for user C5927098-B045-4E70-ABFB-F1FBBF266510, chat None
+2024-12-08 20:10:22,911 - app - WARNING - Invalid UUID - chat_id: None, user_id: C5927098-B045-4E70-ABFB-F1FBBF266510
+2024-12-08 20:10:23,374 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-08 20:10:23,416 - root - ERROR - Error creating new chat: ('23000', '[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The INSERT statement conflicted with the FOREIGN KEY constraint "FK_ChatSessions_Recipient". The conflict occurred in database "Apna_Waqeel", table "dbo.Users", column \'UserId\'. (547) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)')
+2024-12-08 20:10:23,654 - app - ERROR - Error processing question (attempt 1): ('23000', '[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The INSERT statement conflicted with the FOREIGN KEY constraint "FK_ChatSessions_Recipient". The conflict occurred in database "Apna_Waqeel", table "dbo.Users", column \'UserId\'. (547) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)')
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 251, in ask_question
+    result = rag_agent.run(question, current_user_id, chat_id_str, chat_history)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\main.py", line 689, in run
+    self.handle_new_chat(user_id, question)
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\main.py", line 648, in handle_new_chat
+    cursor.execute(query, (chat_id, user_id, system_id))
+pyodbc.IntegrityError: ('23000', '[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The INSERT statement conflicted with the FOREIGN KEY constraint "FK_ChatSessions_Recipient". The conflict occurred in database "Apna_Waqeel", table "dbo.Users", column \'UserId\'. (547) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)')
+2024-12-08 20:10:26,289 - app - INFO - [ Top 10 memory usage ]
+2024-12-08 20:10:26,290 - app - INFO - <frozen importlib._bootstrap_external>:753: size=8780 KiB, count=55265, average=163 B
+2024-12-08 20:10:26,293 - app - INFO - <frozen abc>:123: size=550 KiB, count=5849, average=96 B
+2024-12-08 20:10:26,294 - app - INFO - <frozen abc>:106: size=365 KiB, count=1244, average=300 B
+2024-12-08 20:10:26,295 - app - INFO - <frozen importlib._bootstrap_external>:1673: size=311 KiB, count=2527, average=126 B
+2024-12-08 20:10:26,296 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\sentence_transformers\SentenceTransformer.py:1560: size=311 KiB, count=1, average=311 KiB
+2024-12-08 20:10:26,297 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\dataclasses.py:473: size=256 KiB, count=2097, average=125 B
+2024-12-08 20:10:26,298 - app - INFO - <frozen importlib._bootstrap_external>:123: size=221 KiB, count=1281, average=177 B
+2024-12-08 20:10:26,299 - app - INFO - <frozen importlib._bootstrap>:488: size=187 KiB, count=1630, average=117 B
+2024-12-08 20:10:26,300 - app - INFO - <frozen importlib._bootstrap_external>:1670: size=132 KiB, count=235, average=577 B
+2024-12-08 20:10:26,302 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\linecache.py:139: size=108 KiB, count=1187, average=93 B
+2024-12-08 20:10:26,364 - app - INFO - Processing question for user C5927098-B045-4E70-ABFB-F1FBBF266510, chat None
+2024-12-08 20:10:26,365 - app - WARNING - Invalid UUID - chat_id: None, user_id: C5927098-B045-4E70-ABFB-F1FBBF266510
+2024-12-08 20:10:26,803 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-08 20:10:26,836 - root - ERROR - Error creating new chat: ('23000', '[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The INSERT statement conflicted with the FOREIGN KEY constraint "FK_ChatSessions_Recipient". The conflict occurred in database "Apna_Waqeel", table "dbo.Users", column \'UserId\'. (547) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)')
+2024-12-08 20:10:27,026 - app - ERROR - Error processing question (attempt 2): ('23000', '[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The INSERT statement conflicted with the FOREIGN KEY constraint "FK_ChatSessions_Recipient". The conflict occurred in database "Apna_Waqeel", table "dbo.Users", column \'UserId\'. (547) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)')
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 251, in ask_question
+    result = rag_agent.run(question, current_user_id, chat_id_str, chat_history)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\main.py", line 689, in run
+    self.handle_new_chat(user_id, question)
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\main.py", line 648, in handle_new_chat
+    cursor.execute(query, (chat_id, user_id, system_id))
+pyodbc.IntegrityError: ('23000', '[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The INSERT statement conflicted with the FOREIGN KEY constraint "FK_ChatSessions_Recipient". The conflict occurred in database "Apna_Waqeel", table "dbo.Users", column \'UserId\'. (547) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)')
+2024-12-08 20:10:29,652 - app - INFO - [ Top 10 memory usage ]
+2024-12-08 20:10:29,654 - app - INFO - <frozen importlib._bootstrap_external>:753: size=8780 KiB, count=55265, average=163 B
+2024-12-08 20:10:29,655 - app - INFO - <frozen abc>:123: size=549 KiB, count=5846, average=96 B
+2024-12-08 20:10:29,656 - app - INFO - <frozen abc>:106: size=365 KiB, count=1244, average=300 B
+2024-12-08 20:10:29,657 - app - INFO - <frozen importlib._bootstrap_external>:1673: size=311 KiB, count=2527, average=126 B
+2024-12-08 20:10:29,658 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\sentence_transformers\SentenceTransformer.py:1560: size=311 KiB, count=1, average=311 KiB
+2024-12-08 20:10:29,658 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\dataclasses.py:473: size=256 KiB, count=2097, average=125 B
+2024-12-08 20:10:29,661 - app - INFO - <frozen importlib._bootstrap_external>:123: size=221 KiB, count=1281, average=177 B
+2024-12-08 20:10:29,663 - app - INFO - <frozen importlib._bootstrap>:488: size=187 KiB, count=1630, average=117 B
+2024-12-08 20:10:29,665 - app - INFO - <frozen importlib._bootstrap_external>:1670: size=132 KiB, count=235, average=577 B
+2024-12-08 20:10:29,666 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\linecache.py:139: size=108 KiB, count=1187, average=93 B
+2024-12-08 20:10:29,756 - app - INFO - Processing question for user C5927098-B045-4E70-ABFB-F1FBBF266510, chat None
+2024-12-08 20:10:29,758 - app - WARNING - Invalid UUID - chat_id: None, user_id: C5927098-B045-4E70-ABFB-F1FBBF266510
+2024-12-08 20:10:30,205 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-08 20:10:30,246 - root - ERROR - Error creating new chat: ('23000', '[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The INSERT statement conflicted with the FOREIGN KEY constraint "FK_ChatSessions_Recipient". The conflict occurred in database "Apna_Waqeel", table "dbo.Users", column \'UserId\'. (547) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)')
+2024-12-08 20:10:30,452 - app - ERROR - Error processing question (attempt 3): ('23000', '[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The INSERT statement conflicted with the FOREIGN KEY constraint "FK_ChatSessions_Recipient". The conflict occurred in database "Apna_Waqeel", table "dbo.Users", column \'UserId\'. (547) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)')
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 251, in ask_question
+    result = rag_agent.run(question, current_user_id, chat_id_str, chat_history)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\main.py", line 689, in run
+    self.handle_new_chat(user_id, question)
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\main.py", line 648, in handle_new_chat
+    cursor.execute(query, (chat_id, user_id, system_id))
+pyodbc.IntegrityError: ('23000', '[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The INSERT statement conflicted with the FOREIGN KEY constraint "FK_ChatSessions_Recipient". The conflict occurred in database "Apna_Waqeel", table "dbo.Users", column \'UserId\'. (547) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)')
+2024-12-08 20:10:32,071 - app - INFO - [ Top 10 memory usage ]
+2024-12-08 20:10:32,073 - app - INFO - <frozen importlib._bootstrap_external>:753: size=8780 KiB, count=55265, average=163 B
+2024-12-08 20:10:32,074 - app - INFO - <frozen abc>:123: size=549 KiB, count=5844, average=96 B
+2024-12-08 20:10:32,075 - app - INFO - <frozen abc>:106: size=365 KiB, count=1244, average=300 B
+2024-12-08 20:10:32,075 - app - INFO - <frozen importlib._bootstrap_external>:1673: size=311 KiB, count=2527, average=126 B
+2024-12-08 20:10:32,076 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\sentence_transformers\SentenceTransformer.py:1560: size=311 KiB, count=1, average=311 KiB
+2024-12-08 20:10:32,077 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\dataclasses.py:473: size=256 KiB, count=2097, average=125 B
+2024-12-08 20:10:32,078 - app - INFO - <frozen importlib._bootstrap_external>:123: size=221 KiB, count=1281, average=177 B
+2024-12-08 20:10:32,081 - app - INFO - <frozen importlib._bootstrap>:488: size=187 KiB, count=1630, average=117 B
+2024-12-08 20:10:32,083 - app - INFO - <frozen importlib._bootstrap_external>:1670: size=132 KiB, count=235, average=577 B
+2024-12-08 20:10:32,088 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\linecache.py:139: size=108 KiB, count=1187, average=93 B
