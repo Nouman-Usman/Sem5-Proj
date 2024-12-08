@@ -328,7 +328,7 @@ class ChatSessionCRUD(Database):
             cursor = conn.cursor()
             chat_id = str(uuid.uuid4())
             
-            cursor.execute("BEGIN TRANSACTION")
+            # Verify both users exist
             
             # Verify both users exist
             cursor.execute("""

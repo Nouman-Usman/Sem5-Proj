@@ -15,7 +15,9 @@ VALID_USER_TYPES = ['client', 'lawyer']
 class SQLChatMessageHistory(BaseChatMessageHistory):
     def __init__(self, chat_id: str, user_id: str, connection_string: str):
         self.chat_id = chat_id
-        self.connection_string = os.getenv('SQL_CONN_STRING')
+        self.user_id = user_id
+        self.connection_string = connection_string
+
     def _get_db_connection(self):
         return pyodbc.connect(self.connection_string)
 
@@ -64,34 +66,24 @@ class SQLChatMessageHistory(BaseChatMessageHistory):
         except (ValueError, AttributeError, TypeError):
             return False
 
-    def add_message(self, message: BaseMessage) -> None:
+    def add_message(self, sender_id: str, message: str, message_type: str) -> bool:
         try:
-            # Ensure valid UUIDs
-            if not self.is_valid_uuid(self.chat_id):
-                self.chat_id = str(uuid.uuid4())
-            if not self.is_valid_uuid(self.user_id):
-                self.user_id = str(uuid.uuid4())
-
-            conn = self._get_db_connection()
+            conn = pyodbc.connect(self.connection_string)
             cursor = conn.cursor()
             
             query = """
-                INSERT INTO ChatMessages 
-                (MessageId, ChatId, SenderId, Message, MessageType, Timestamp)
-                VALUES (?, ?, ?, ?, ?, GETDATE())
+                INSERT INTO ChatMessages (MessageId, ChatId, SenderId, Message, MessageType, Timestamp)
+                VALUES (CAST(? AS UNIQUEIDENTIFIER), CAST(? AS UNIQUEIDENTIFIER), 
+                        CAST(? AS UNIQUEIDENTIFIER), ?, ?, GETDATE())
             """
-            cursor.execute(query, (
-                str(uuid.uuid4()),  # Generate new MessageId
-                self.chat_id,
-                self.user_id,
-                message.content,
-                message.__class__.__name__
-            ))
+            message_id = str(uuid.uuid4())
+            cursor.execute(query, (message_id, self.chat_id, sender_id, message, message_type))
             conn.commit()
+            return True
             
         except Exception as e:
-            logging.error(f"Error adding message: {e}")
-            raise
+            logging.error(f"Error adding message: {str(e)}")
+            return False
         finally:
             if cursor:
                 cursor.close()

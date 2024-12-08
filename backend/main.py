@@ -21,12 +21,12 @@ import csv
 from dotenv import load_dotenv
 import recommend_lawyer
 import gc  
-from history import SQLChatMessageHistory  
 from langchain.schema import HumanMessage, AIMessage, BaseMessage  
 from lawyer_store import LawyerStore
 from langchain.memory import ConversationBufferWindowMemory  
 import datetime  
 import pyodbc  
+from crud import ChatMessageCRUD, ChatSessionCRUD  # Add this import
 load_dotenv()
 
 
@@ -68,35 +68,32 @@ class RAGAgent:
         self.chat_id = chat_id
         self.chats_loaded = False  
         if chat_id:
-            self.chat_history = SQLChatMessageHistory(  # Changed from AzureTableChatMessageHistory
-                chat_id=chat_id,
-                user_id=user_id,
-                connection_string=self.connection_string
-            )
+            self.chat_message_crud = ChatMessageCRUD()
+            self.chat_session_crud = ChatSessionCRUD()
 
-    def get_chat_history(self, chat_id):
-        if (chat_id):
-            try:
-                chat_history = SQLChatMessageHistory(
-                    chat_id=chat_id, 
-                    user_id=self.user_id,
-                    connection_string=self.connection_string
-                )
-                messages = chat_history.messages[-5:]  
-                return "\n".join(
-                    [
-                        (
-                            f"Human: {msg.content}"
-                            if isinstance(msg, HumanMessage)
-                            else f"Assistant: {msg.content}"
-                        )
-                        for msg in messages
-                    ]
-                )
-            except Exception as e:
-                print(f"Error getting chat history: {e}")
-                return ""
-        return ""
+    # def get_chat_history(self, chat_id):
+    #     if (chat_id):
+    #         try:
+    #             chat_history = SQLChatMessageHistory(
+    #                 chat_id=chat_id, 
+    #                 user_id=self.user_id,
+    #                 connection_string=self.connection_string
+    #             )
+    #             messages = chat_history.messages[-5:]  
+    #             return "\n".join(
+    #                 [
+    #                     (
+    #                         f"Human: {msg.content}"
+    #                         if isinstance(msg, HumanMessage)
+    #                         else f"Assistant: {msg.content}"
+    #                     )
+    #                     for msg in messages
+    #                 ]
+    #             )
+    #         except Exception as e:
+    #             print(f"Error getting chat history: {e}")
+    #             return ""
+    #     return ""
 
     def _load_lawyers(self):
         with open("lawyers.csv", mode="r") as file:
@@ -692,13 +689,20 @@ Question to route: {question}
                 result = last_output["generation"]
 
                 if chat_id and result:
-                    chat_history_obj = SQLChatMessageHistory(
+                    # Save user question
+                    self.save_chat_message(
                         chat_id=chat_id,
-                        user_id=user_id,
-                        connection_string=self.connection_string,
+                        sender_id=user_id,
+                        message=question,
+                        message_type='HumanMessage'
                     )
-                    chat_history_obj.add_message(HumanMessage(content=question))
-                    chat_history_obj.add_message(AIMessage(content=result))
+                    # Save AI response
+                    self.save_chat_message(
+                        chat_id=chat_id,
+                        sender_id=user_id,
+                        message=result["chat_response"],
+                        message_type='AIMessage'
+                    )
 
                 # Extract references from documents
                 references = []
@@ -738,27 +742,27 @@ Question to route: {question}
         finally:
             gc.collect()
 
-    def get_user_chat_history(self, user_id: str, chat_id: str = None) -> List[str]:
-        """Get all chat sessions for a user"""
-        try:
-            connection = pyodbc.connect(self.connection_string)
-            cursor = connection.cursor()
-            query = """
-                SELECT DISTINCT ChatId 
-                FROM ChatMessages 
-                WHERE SenderId = ?
-            """
-            cursor.execute(query, (user_id,))
-            rows = cursor.fetchall()
-            chat_ids = [row.ChatId for row in rows]
-            logging.info(f"Found {len(chat_ids)} chats for user {user_id}")
-            return chat_ids
-        except Exception as e:
-            logging.error(f"Error retrieving chats: {e}")
-            return []
-        finally:
-            cursor.close()
-            connection.close()
+    # def get_user_chat_history(self, user_id: str, chat_id: str = None) -> List[str]:
+    #     """Get all chat sessions for a user"""
+    #     try:
+    #         connection = pyodbc.connect(self.connection_string)
+    #         cursor = connection.cursor()
+    #         query = """
+    #             SELECT DISTINCT ChatId 
+    #             FROM ChatMessages 
+    #             WHERE SenderId = ?
+    #         """
+    #         cursor.execute(query, (user_id,))
+    #         rows = cursor.fetchall()
+    #         chat_ids = [row.ChatId for row in rows]
+    #         logging.info(f"Found {len(chat_ids)} chats for user {user_id}")
+    #         return chat_ids
+    #     except Exception as e:
+    #         logging.error(f"Error retrieving chats: {e}")
+    #         return []
+    #     finally:
+    #         cursor.close()
+    #         connection.close()
 
     def get_chat_messages(self, user_id: str, chat_id: str) -> List[BaseMessage]:
         """Get all messages for a specific chat"""
@@ -889,6 +893,23 @@ Question to route: {question}
             return True
         except (ValueError, AttributeError, TypeError):
             return False
+
+    def save_chat_message(self, chat_id: str, sender_id: str, message: str, message_type: str) -> Optional[str]:
+        """Save a chat message using ChatMessageCRUD"""
+        try:
+            if not hasattr(self, 'chat_message_crud'):
+                self.chat_message_crud = ChatMessageCRUD()
+            
+            message_id = self.chat_message_crud.create(
+                chat_id=chat_id,
+                sender_id=sender_id,
+                message=message,
+                message_type=message_type
+            )
+            return message_id
+        except Exception as e:
+            logging.error(f"Error saving chat message: {e}")
+            return None
 
 if __name__ == "__main__":
     # Create valid UUIDs for testing

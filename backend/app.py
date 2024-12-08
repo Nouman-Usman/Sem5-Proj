@@ -9,15 +9,9 @@ import time  # Add this import
 from datetime import timedelta
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity, get_jwt
 from werkzeug.security import generate_password_hash, check_password_hash
-from history import SQLChatMessageHistory  # Changed from AzureTableChatMessageHistory
-import os
-from dotenv import load_dotenv
-import pyodbc
-import uuid
-from lawyer_store import LawyerStore  # Add this import
-from crud import UserCRUD, LawyerCRUD, LawyerDetailsCRUD
+from crud import UserCRUD, LawyerCRUD, LawyerDetailsCRUD, ChatMessageCRUD, ChatSessionCRUD
 from crud import VALID_USER_TYPES
-
+from dotenv import load_dotenv
 load_dotenv()
 
 logging.basicConfig(
@@ -64,15 +58,6 @@ app.config['SECRET_KEY'] = 'your_secret_key'  # Change this to a secure key
 app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(hours=1)
 
 jwt = JWTManager(app)
-
-# Initialize SQL storage instead of Azure Tables
-sql_storage = SQLChatMessageHistory(
-    chat_id="system",
-    user_id="system",
-    connection_string=os.getenv("SQL_CONN_STRING")  # Update environment variable name
-)
-
-# api routes for front end
 
 VALID_USER_TYPES = ['client', 'lawyer']
 
@@ -224,26 +209,36 @@ def ask_question():
     while retries < max_retries:
         try:
             current_user_id = get_jwt_identity()
-            print(f"Current user ID: {current_user_id}")
-
+            
             data = request.get_json()
             if not data:
                 logger.error("No JSON data received")
                 return jsonify({"error": "No data provided"}), 400
+
             question = data.get('question')
             chat_id = data.get('chat_id')
-            # If chat id is none , create a new chat id for the user
+
+            # Create new chat session if none exists
             if not chat_id:
-                chat_id = uuid.uuid4()
-                print(f"Chat ID: {chat_id}")
+                chat_session_crud = ChatSessionCRUD()
+                chat_id = chat_session_crud.create(
+                    initiator_id=current_user_id,
+                    recipient_id="00000000-0000-0000-0000-000000000000"
+                )
+                if not chat_id:
+                    raise Exception("Failed to create chat session")
+
             if not question:
                 logger.error("Missing question parameter")
                 return jsonify({"error": "Missing required parameter: question"}), 400
+
             logger.info(f"Processing question for user {current_user_id}, chat {chat_id}")
             
             rag_agent = get_agent(user_id=current_user_id, chat_id=chat_id)
-            chat_history = rag_agent.get_chat_history_messages(current_user_id, chat_id) if chat_id else []
-            result = rag_agent.run(question, current_user_id, chat_id, chat_history)
+            # Convert chat_id to string if it's UUID object
+            chat_id_str = str(chat_id) if chat_id else None
+            chat_history = rag_agent.get_chat_history_messages(current_user_id, chat_id_str)
+            result = rag_agent.run(question, current_user_id, chat_id_str, chat_history)
             
             if not result or 'chat_response' not in result:
                 logger.error("Invalid result from RAG agent")
@@ -307,65 +302,65 @@ def get_user_chats(user_id, chat_id):
         logger.error(f"Error retrieving chats: {e}")
         return jsonify({"error": str(e)}), 500
 
-@app.route('/api/lawyer/register', methods=['POST'])
-@jwt_required()
-def register_lawyer():
-    try:
-        data = request.get_json()
-        lawyer_store = LawyerStore(connection_string=os.getenv("SQL_CONN_STRING"))
+# @app.route('/api/lawyer/register', methods=['POST'])
+# @jwt_required()
+# def register_lawyer():
+#     try:
+#         data = request.get_json()
+#         lawyer_store = LawyerStore(connection_string=os.getenv("SQL_CONN_STRING"))
         
-        lawyer_data = {
-            "name": data["name"],
-            "email": data["email"],
-            "specialization": data["specialization"],
-            "experience": data["experience"],
-            "license_number": data["license_number"],
-            "rating": 0.0,  # Default rating for new lawyers
-            "location": data["location"],
-            "specializations": data.get("specializations", [])
-        }
+#         lawyer_data = {
+#             "name": data["name"],
+#             "email": data["email"],
+#             "specialization": data["specialization"],
+#             "experience": data["experience"],
+#             "license_number": data["license_number"],
+#             "rating": 0.0,  # Default rating for new lawyers
+#             "location": data["location"],
+#             "specializations": data.get("specializations", [])
+#         }
         
-        lawyer_store.add_lawyer(lawyer_data)
-        return jsonify({"message": "Lawyer registered successfully"}), 201
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
+#         lawyer_store.add_lawyer(lawyer_data)
+#         return jsonify({"message": "Lawyer registered successfully"}), 201
+#     except Exception as e:
+#         return jsonify({"error": str(e)}), 500
 
 @app.route('/api/chat/start', methods=['POST'])
 @jwt_required()
-def start_chat():
-    try:
-        data = request.get_json()
-        initiator_id = get_jwt_identity()
-        recipient_id = data.get('recipient_id', "00000000-0000-0000-0000-000000000000")  # Default to system ID
+# def start_chat():
+#     try:
+#         data = request.get_json()
+#         initiator_id = get_jwt_identity()
+#         recipient_id = data.get('recipient_id', "00000000-0000-0000-0000-000000000000")  # Default to system ID
         
-        # Get agent instance to use its methods
-        agent = get_agent(initiator_id, None)
+#         # Get agent instance to use its methods
+#         agent = get_agent(initiator_id, None)
         
-        # Ensure both users exist
-        if not (agent.ensure_user_exists(initiator_id) and agent.ensure_user_exists(recipient_id)):
-            return jsonify({"error": "Failed to ensure users exist"}), 500
+#         # Ensure both users exist
+#         if not (agent.ensure_user_exists(initiator_id) and agent.ensure_user_exists(recipient_id)):
+#             return jsonify({"error": "Failed to ensure users exist"}), 500
         
-        chat_id = str(uuid.uuid4())
-        conn = pyodbc.connect(os.getenv("SQL_CONN_STRING"))
-        cursor = conn.cursor()
+#         chat_id = str(uuid.uuid4())
+#         conn = pyodbc.connect(os.getenv("SQL_CONN_STRING"))
+#         cursor = conn.cursor()
         
-        query = """
-            INSERT INTO ChatSessions 
-            (ChatId, InitiatorId, RecipientId, Status, StartTime)
-            VALUES (?, ?, ?, 'Active', GETDATE())
-        """
-        cursor.execute(query, (chat_id, initiator_id, recipient_id))
-        conn.commit()
+#         query = """
+#             INSERT INTO ChatSessions 
+#             (ChatId, InitiatorId, RecipientId, Status, StartTime)
+#             VALUES (?, ?, ?, 'Active', GETDATE())
+#         """
+#         cursor.execute(query, (chat_id, initiator_id, recipient_id))
+#         conn.commit()
         
-        return jsonify({"chat_id": chat_id}), 201
-    except Exception as e:
-        logger.error(f"Error starting chat: {e}")
-        return jsonify({"error": str(e)}), 500
-    finally:
-        if 'cursor' in locals():
-            cursor.close()
-        if 'conn' in locals():
-            conn.close()
+#         return jsonify({"chat_id": chat_id}), 201
+#     except Exception as e:
+#         logger.error(f"Error starting chat: {e}")
+#         return jsonify({"error": str(e)}), 500
+#     finally:
+#         if 'cursor' in locals():
+#             cursor.close()
+#         if 'conn' in locals():
+#             conn.close()
 
 def keep_alive():
     while True:
