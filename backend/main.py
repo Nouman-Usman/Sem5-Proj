@@ -61,8 +61,8 @@ class RAGAgent:
             raise ValueError("SQL_CONN_STRING environment variable is not set")
         self.lawyer_store = LawyerStore(connection_string=self.connection_string)
         gc.collect()
-        self.max_context_length = 4096  # Add max context length
-        self.memory = ConversationBufferWindowMemory(k=5)  # Initialize conversation buffer window memory with window size 5
+        self.max_context_length = 4096 
+        self.memory = ConversationBufferWindowMemory(k=5)  
 
         self.user_id = user_id
         self.chat_id = chat_id
@@ -519,6 +519,18 @@ Question to route: {question}
         updated_query_result = self.llm.invoke(prompt)
         updated_query = updated_query_result.content.strip()
         return updated_query
+    def get_chat_topic(self, question: str) -> str:
+        print("---GET CHAT TOPIC---")
+        # provide me the three to four words that best describe the topic of the chat
+        prompt = f"""
+        Provide me with the three to four words that best describe the topic of the chat:
+        {question}
+        """
+        topic_result = self.llm.invoke(prompt)
+        topic = topic_result.content.strip()
+        return topic
+
+    
 
     def build_workflow(self):
         workflow = StateGraph(state_schema=GraphState)
@@ -605,22 +617,17 @@ Question to route: {question}
             cursor.close()
             connection.close()
 
-    def handle_new_chat(self, user_id: str, chat_id: str, topic: str):
+    def handle_new_chat(self, user_id: str, question: str):
         if not self.chat_exists(user_id, chat_id):
             try:
-                # Ensure valid UUIDs
+                topic = self.get_chat_topic(question)
                 if not self.is_valid_uuid(chat_id):
                     chat_id = str(uuid.uuid4())
                 if not self.is_valid_uuid(user_id):
                     user_id = str(uuid.uuid4())
                 system_id = "00000000-0000-0000-0000-000000000000"
-
-                # self.ensure_user_exists(user_id)
-                # self.ensure_user_exists(system_id)
-                # Create new chat session
                 connection = pyodbc.connect(self.connection_string)
                 cursor = connection.cursor()
-                
                 query = """
                     INSERT INTO ChatSessions 
                     (ChatId, InitiatorId, RecipientId, Status, StartTime)
@@ -633,9 +640,7 @@ Question to route: {question}
                     VALUES (?, ?, ?, ?,GETDATE())
                 """
                 cursor.execute(topic_query, (topic_id, user_id, topic,chat_id))
-                connection.commit()
-                
-                # self.load_previous_chats(user_id, chat_id)
+                connection.commit()                
                 self.chats_loaded = True
             except Exception as e:
                 logging.error(f"Error creating new chat: {e}")
@@ -654,7 +659,6 @@ Question to route: {question}
                 chat_id = str(uuid.uuid4())
             if not chat_id and not self.chats_loaded:
                 self.handle_new_chat(user_id, question)  
-                # self.chats_loaded = True  
             chat_context = self.memory.load_memory_variables({})["history"]  
             updated_question = self.update_query(question, chat_context)  
             sentiment = self.analyze_sentiment(updated_question)

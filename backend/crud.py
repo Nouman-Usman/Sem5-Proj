@@ -322,27 +322,69 @@ class LawyerCRUD(Database):
     # Add similar update and delete methods...
 
 class ChatSessionCRUD(Database):
-    def create(self, initiator_id: str, recipient_id: str) -> Optional[str]:
+    def ensure_system_user_exists(self) -> str:
+        """Ensure system user exists and return its ID"""
         try:
             conn = self.get_connection()
             cursor = conn.cursor()
-            chat_id = str(uuid.uuid4())
+            system_id = "00000000-0000-0000-0000-000000000000"
             
-            # First check if chat session already exists
+            # Check if system user exists
+            cursor.execute("""
+                SELECT UserId FROM Users 
+                WHERE UserId = CAST(? AS UNIQUEIDENTIFIER)
+            """, (system_id,))
+            
+            if not cursor.fetchone():
+                # Create system user
+                cursor.execute("""
+                    INSERT INTO Users (UserId, UserName, Email, UserType, PasswordHash, CreatedAt)
+                    VALUES (
+                        CAST(? AS UNIQUEIDENTIFIER),
+                        'System',
+                        'system@example.com',
+                        'System',
+                        'not_used',
+                        GETDATE()
+                    )
+                """, (system_id,))
+                conn.commit()
+            
+            return system_id
+        except Exception as e:
+            logging.error(f"Error ensuring system user: {e}")
+            if 'conn' in locals():
+                conn.rollback()
+            return None
+        finally:
+            if 'cursor' in locals():
+                cursor.close()
+            if 'conn' in locals():
+                conn.close()
+
+    def create(self, initiator_id: str, recipient_id: str) -> Optional[str]:
+        try:
+            if recipient_id == "00000000-0000-0000-0000-000000000000":
+                recipient_id = self.ensure_system_user_exists()
+                if not recipient_id:
+                    raise Exception("Failed to ensure system user exists")
+
+            conn = self.get_connection()
+            cursor = conn.cursor()
             cursor.execute("""
                 SELECT ChatId FROM ChatSessions 
-                WHERE InitiatorId = ? AND RecipientId = ?
-            """, (initiator_id, recipient_id))
-            
+                WHERE InitiatorId = CAST(? AS UNIQUEIDENTIFIER) 
+                AND RecipientId = CAST(? AS UNIQUEIDENTIFIER)
+            """, (initiator_id, recipient_id))            
             existing = cursor.fetchone()
             if existing:
-                return existing[0]
-            
-            # Create new chat session
+                return existing[0]            
+            chat_id = str(uuid.uuid4())
             query = """
                 INSERT INTO ChatSessions 
                 (ChatId, InitiatorId, RecipientId, Status, StartTime)
-                VALUES (?, ?, ?, 'Active', GETDATE())
+                VALUES (CAST(? AS UNIQUEIDENTIFIER), CAST(? AS UNIQUEIDENTIFIER), 
+                        CAST(? AS UNIQUEIDENTIFIER), 'Active', GETDATE())
             """
             cursor.execute(query, (chat_id, initiator_id, recipient_id))
             conn.commit()
@@ -389,6 +431,13 @@ class ChatSessionCRUD(Database):
             conn.close()
 
 class ChatMessageCRUD(Database):
+    def is_valid_uuid(self, uuid_str: str) -> bool:
+        try:
+            uuid.UUID(str(uuid_str))
+            return True
+        except (ValueError, AttributeError, TypeError):
+            return False
+
     def create(self, chat_id: str, sender_id: str, message: str, message_type: str) -> Optional[str]:
         try:
             conn = self.get_connection()
@@ -426,25 +475,27 @@ class ChatMessageCRUD(Database):
     def get_chat_messages(self, user_id: str, chat_id: str) -> Optional[List[Dict]]:
         """Get messages for a specific chat"""
         try:
-            # Handle cases where chat_id is None or invalid
-            if not chat_id:
+            if not chat_id or not user_id:
+                return []
+                
+            if not self.is_valid_uuid(chat_id) or not self.is_valid_uuid(user_id):
+                logging.error(f"Invalid UUID format - chat_id: {chat_id}, user_id: {user_id}")
                 return []
 
             conn = self.get_connection()
             cursor = conn.cursor()
             
             chat_query = """
-                SELECT Message, MessageType, Timestamp 
+                SELECT cm.Message, cm.MessageType, cm.Timestamp 
                 FROM ChatMessages cm
-                JOIN ChatSessions cs ON cs.ChatId = cm.ChatId
-                WHERE cs.ChatId = CAST(? AS UNIQUEIDENTIFIER)
-                AND (cs.InitiatorId = CAST(? AS UNIQUEIDENTIFIER) 
-                     OR cs.RecipientId = CAST(? AS UNIQUEIDENTIFIER))
-                ORDER BY Timestamp DESC
+                INNER JOIN ChatSessions cs ON cs.ChatId = cm.ChatId
+                WHERE cs.ChatId = ?
+                AND (cs.InitiatorId = ? OR cs.RecipientId = ?)
+                ORDER BY cm.Timestamp DESC
             """
             
-            cursor.execute(chat_query, (str(chat_id), str(user_id), str(user_id)))
-            
+            logging.info(f"Executing query with chat_id: {chat_id}, user_id: {user_id}")
+            cursor.execute(chat_query, (chat_id, user_id, user_id))            
             messages = []
             for row in cursor.fetchall():
                 messages.append({
@@ -453,6 +504,7 @@ class ChatMessageCRUD(Database):
                     'timestamp': row.Timestamp.isoformat() if row.Timestamp else None
                 })
             
+            logging.info(f"Retrieved {len(messages)} messages")
             return messages
             
         except Exception as e:

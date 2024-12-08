@@ -12,6 +12,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from crud import UserCRUD, LawyerCRUD, LawyerDetailsCRUD, ChatMessageCRUD, ChatSessionCRUD
 from crud import VALID_USER_TYPES
 from dotenv import load_dotenv
+import uuid
 load_dotenv()
 
 logging.basicConfig(
@@ -200,6 +201,13 @@ def health_check2():
 def health_check():
     return jsonify({"status": "healthy"})
 
+def is_valid_uuid(uuid_str: str) -> bool:
+    try:
+        uuid.UUID(str(uuid_str))
+        return True
+    except (ValueError, AttributeError, TypeError):
+        return False
+
 @app.route('/api/ask', methods=['POST'])
 @jwt_required()  # Add this decorator to require authentication
 def ask_question():
@@ -218,28 +226,28 @@ def ask_question():
 
             question = data.get('question')
             chat_id = data.get('chat_id')
-            if not chat_id:
-                chat_session_crud = ChatSessionCRUD()
-                chat_id = chat_session_crud.create(
-                    initiator_id=current_user_id,
-                    recipient_id="00000000-0000-0000-0000-000000000000"
-                )
-                if not chat_id:
-                    raise Exception("Failed to create chat session")
+            # if not chat_id:
+            #     chat_session_crud = ChatSessionCRUD()
+            #     chat_id = chat_session_crud.create(
+            #         initiator_id=current_user_id,
+            #         recipient_id="00000000-0000-0000-0000-000000000000"
+            #     )
+            #     if not chat_id:
+            #         raise Exception("Failed to create chat session")
             if not question:
                 logger.error("Missing question parameter")
                 return jsonify({"error": "Missing required parameter: question"}), 400
             logger.info(f"Processing question for user {current_user_id}, chat {chat_id}")            
             rag_agent = get_agent(user_id=current_user_id, chat_id=chat_id)
             chat_id_str = str(chat_id) if chat_id else None
-            if chat_id_str:
+            if chat_id_str and is_valid_uuid(chat_id_str) and is_valid_uuid(current_user_id):
                 chat_history = chat_message_crud.get_chat_messages(
-                    user_id=str(current_user_id),
+                    user_id=current_user_id,
                     chat_id=chat_id_str
                 )
             else:
-                chat_history = []
-            
+                logger.warning(f"Invalid UUID - chat_id: {chat_id_str}, user_id: {current_user_id}")
+                chat_history = []            
             result = rag_agent.run(question, current_user_id, chat_id_str, chat_history)
             
             if not result or 'chat_response' not in result:

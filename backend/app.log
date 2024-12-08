@@ -1,0 +1,498 @@
+2024-12-08 19:32:28,571 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-08 19:32:56,599 - app - INFO - Processing question for user C5927098-B045-4E70-ABFB-F1FBBF266510, chat test_user
+2024-12-08 19:32:56,599 - app - INFO - Initializing RAG agent...
+2024-12-08 19:32:56,831 - pinecone_plugin_interface.logging - INFO - Discovering subpackages in _NamespacePath(['C:\\Users\\Nouma\\OneDrive\\Desktop\\GenAi x Xavour\\ApnaWaqeel\\venv\\Lib\\site-packages\\pinecone_plugins'])
+2024-12-08 19:32:56,894 - pinecone_plugin_interface.logging - INFO - Looking for plugins in pinecone_plugins.inference
+2024-12-08 19:32:57,122 - pinecone_plugin_interface.logging - INFO - Installing plugin inference into Pinecone
+2024-12-08 19:33:01,897 - datasets - INFO - PyTorch version 2.4.1 available.
+2024-12-08 19:33:03,329 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2024-12-08 19:33:03,331 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2024-12-08 19:33:14,267 - app - INFO - RAG agent initialized successfully
+2024-12-08 19:33:14,267 - app - ERROR - Invalid UUID format: badly formed hexadecimal UUID string
+2024-12-08 19:33:14,848 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-08 19:33:15,364 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-08 19:33:15,399 - root - INFO - Sentiment: Constitutional
+2024-12-08 19:33:15,640 - root - INFO - Lawyer recommendations: []
+2024-12-08 19:33:27,960 - app - INFO - Processing question for user C5927098-B045-4E70-ABFB-F1FBBF266510, chat test_user
+2024-12-08 19:33:27,968 - app - ERROR - Invalid UUID format: badly formed hexadecimal UUID string
+2024-12-08 19:33:28,663 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-08 19:33:29,104 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-08 19:33:29,115 - root - INFO - Sentiment: Constitutional
+2024-12-08 19:33:29,258 - root - INFO - Lawyer recommendations: []
+2024-12-08 19:35:34,811 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-08 19:35:34,944 - app - INFO - Processing question for user C5927098-B045-4E70-ABFB-F1FBBF266510, chat test_user
+2024-12-08 19:35:34,944 - app - INFO - Initializing RAG agent...
+2024-12-08 19:35:34,971 - pinecone_plugin_interface.logging - INFO - Discovering subpackages in _NamespacePath(['C:\\Users\\Nouma\\OneDrive\\Desktop\\GenAi x Xavour\\ApnaWaqeel\\venv\\Lib\\site-packages\\pinecone_plugins'])
+2024-12-08 19:35:34,975 - pinecone_plugin_interface.logging - INFO - Looking for plugins in pinecone_plugins.inference
+2024-12-08 19:35:35,358 - pinecone_plugin_interface.logging - INFO - Installing plugin inference into Pinecone
+2024-12-08 19:35:40,622 - datasets - INFO - PyTorch version 2.4.1 available.
+2024-12-08 19:35:42,159 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2024-12-08 19:35:42,159 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2024-12-08 19:35:59,983 - app - INFO - RAG agent initialized successfully
+2024-12-08 19:35:59,985 - app - WARNING - Invalid UUID - chat_id: test_user, user_id: C5927098-B045-4E70-ABFB-F1FBBF266510
+2024-12-08 19:36:00,734 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-08 19:36:01,410 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-08 19:36:01,475 - root - INFO - Sentiment: Constitutional
+2024-12-08 19:36:01,780 - root - INFO - Lawyer recommendations: []
+2024-12-08 19:36:08,170 - app - INFO - Processing question for user C5927098-B045-4E70-ABFB-F1FBBF266510, chat test_user
+2024-12-08 19:36:08,170 - app - WARNING - Invalid UUID - chat_id: test_user, user_id: C5927098-B045-4E70-ABFB-F1FBBF266510
+2024-12-08 19:36:08,736 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-08 19:36:09,168 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-08 19:36:09,184 - root - INFO - Sentiment: Constitutional
+2024-12-08 19:36:09,528 - root - INFO - Lawyer recommendations: []
+2024-12-08 19:36:25,543 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-08 19:36:25,577 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-08 19:36:26,108 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-08 19:36:26,157 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-08 19:36:26,589 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-08 19:36:26,644 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-08 19:36:27,048 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-08 19:36:27,086 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-08 19:36:34,606 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-08 19:36:35,113 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-08 19:36:35,442 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-08 19:36:36,032 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-08 19:36:36,070 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-08 19:36:36,597 - app - INFO - Successfully generated response for user C5927098-B045-4E70-ABFB-F1FBBF266510
+2024-12-08 19:36:36,808 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-08 19:36:38,741 - app - INFO - Successfully generated response for user C5927098-B045-4E70-ABFB-F1FBBF266510
+2024-12-08 19:36:39,323 - app - INFO - [ Top 10 memory usage ]
+2024-12-08 19:36:39,356 - app - INFO - <frozen importlib._bootstrap_external>:753: size=8808 KiB, count=55535, average=162 B
+2024-12-08 19:36:39,379 - app - INFO - <frozen abc>:123: size=683 KiB, count=7369, average=95 B
+2024-12-08 19:36:39,390 - app - INFO - <frozen abc>:106: size=369 KiB, count=1257, average=301 B
+2024-12-08 19:36:39,391 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\langsmith\client.py:281: size=347 KiB, count=18, average=19.3 KiB
+2024-12-08 19:36:39,412 - app - INFO - <frozen importlib._bootstrap_external>:1673: size=312 KiB, count=2535, average=126 B
+2024-12-08 19:36:39,441 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\sentence_transformers\SentenceTransformer.py:1560: size=311 KiB, count=1, average=311 KiB
+2024-12-08 19:36:39,464 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\dataclasses.py:473: size=256 KiB, count=2099, average=125 B
+2024-12-08 19:36:39,494 - app - INFO - <frozen importlib._bootstrap_external>:123: size=222 KiB, count=1289, average=177 B
+2024-12-08 19:36:39,509 - app - INFO - <frozen importlib._bootstrap>:488: size=187 KiB, count=1627, average=118 B
+2024-12-08 19:36:39,543 - app - INFO - <frozen importlib._bootstrap_external>:1670: size=132 KiB, count=235, average=577 B
+2024-12-08 19:36:40,589 - app - INFO - [ Top 10 memory usage ]
+2024-12-08 19:36:40,589 - app - INFO - <frozen importlib._bootstrap_external>:753: size=8808 KiB, count=55535, average=162 B
+2024-12-08 19:36:40,589 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\tracemalloc.py:505: size=1192 KiB, count=11273, average=108 B
+2024-12-08 19:36:40,589 - app - INFO - <frozen abc>:123: size=683 KiB, count=7365, average=95 B
+2024-12-08 19:36:40,604 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\tracemalloc.py:498: size=528 KiB, count=11273, average=48 B
+2024-12-08 19:36:40,609 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\tracemalloc.py:193: size=528 KiB, count=11272, average=48 B
+2024-12-08 19:36:40,610 - app - INFO - <frozen abc>:106: size=369 KiB, count=1257, average=301 B
+2024-12-08 19:36:40,610 - app - INFO - <frozen importlib._bootstrap_external>:1673: size=312 KiB, count=2535, average=126 B
+2024-12-08 19:36:40,612 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\sentence_transformers\SentenceTransformer.py:1560: size=311 KiB, count=1, average=311 KiB
+2024-12-08 19:36:40,613 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\dataclasses.py:473: size=256 KiB, count=2099, average=125 B
+2024-12-08 19:36:40,614 - app - INFO - <frozen importlib._bootstrap_external>:123: size=222 KiB, count=1289, average=177 B
+2024-12-08 19:40:19,659 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-08 19:41:13,137 - root - ERROR - Error creating chat session: ('23000', '[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The INSERT statement conflicted with the FOREIGN KEY constraint "FK_ChatSessions_Recipient". The conflict occurred in database "Apna_Waqeel", table "dbo.Users", column \'UserId\'. (547) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)')
+2024-12-08 19:41:13,140 - app - ERROR - Error processing question (attempt 1): Failed to create chat session
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 236, in ask_question
+    raise Exception("Failed to create chat session")
+Exception: Failed to create chat session
+2024-12-08 19:41:14,319 - app - INFO - [ Top 10 memory usage ]
+2024-12-08 19:41:14,320 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\werkzeug\routing\rules.py:837: size=8484 B, count=92, average=92 B
+2024-12-08 19:41:14,321 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\threading.py:293: size=6080 B, count=16, average=380 B
+2024-12-08 19:41:14,322 - app - INFO - <frozen abc>:123: size=5911 B, count=76, average=78 B
+2024-12-08 19:41:14,323 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\werkzeug\routing\rules.py:657: size=3736 B, count=46, average=81 B
+2024-12-08 19:41:14,326 - app - INFO - <string>:1: size=3368 B, count=42, average=80 B
+2024-12-08 19:41:14,327 - app - INFO - <werkzeug routing>:1: size=2880 B, count=18, average=160 B
+2024-12-08 19:41:14,332 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\werkzeug\routing\matcher.py:42: size=2808 B, count=31, average=91 B
+2024-12-08 19:41:14,334 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\werkzeug\routing\rules.py:495: size=2776 B, count=27, average=103 B
+2024-12-08 19:41:14,336 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\flask\sansio\app.py:650: size=2544 B, count=18, average=141 B
+2024-12-08 19:41:14,342 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\encodings\utf_16_le.py:28: size=2400 B, count=8, average=300 B
+2024-12-08 19:41:14,389 - root - ERROR - Error creating chat session: ('23000', '[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The INSERT statement conflicted with the FOREIGN KEY constraint "FK_ChatSessions_Recipient". The conflict occurred in database "Apna_Waqeel", table "dbo.Users", column \'UserId\'. (547) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)')
+2024-12-08 19:41:14,391 - app - ERROR - Error processing question (attempt 2): Failed to create chat session
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 236, in ask_question
+    raise Exception("Failed to create chat session")
+Exception: Failed to create chat session
+2024-12-08 19:41:15,576 - app - INFO - [ Top 10 memory usage ]
+2024-12-08 19:41:15,577 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\werkzeug\routing\rules.py:837: size=8484 B, count=92, average=92 B
+2024-12-08 19:41:15,578 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\threading.py:293: size=6080 B, count=16, average=380 B
+2024-12-08 19:41:15,579 - app - INFO - <frozen abc>:123: size=5911 B, count=76, average=78 B
+2024-12-08 19:41:15,580 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\werkzeug\routing\rules.py:657: size=3736 B, count=46, average=81 B
+2024-12-08 19:41:15,582 - app - INFO - <string>:1: size=3368 B, count=42, average=80 B
+2024-12-08 19:41:15,584 - app - INFO - <werkzeug routing>:1: size=2880 B, count=18, average=160 B
+2024-12-08 19:41:15,585 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\werkzeug\routing\matcher.py:42: size=2808 B, count=31, average=91 B
+2024-12-08 19:41:15,587 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\werkzeug\routing\rules.py:495: size=2776 B, count=27, average=103 B
+2024-12-08 19:41:15,589 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\flask\sansio\app.py:650: size=2544 B, count=18, average=141 B
+2024-12-08 19:41:15,590 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\encodings\utf_16_le.py:28: size=2400 B, count=8, average=300 B
+2024-12-08 19:41:15,622 - root - ERROR - Error creating chat session: ('23000', '[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The INSERT statement conflicted with the FOREIGN KEY constraint "FK_ChatSessions_Recipient". The conflict occurred in database "Apna_Waqeel", table "dbo.Users", column \'UserId\'. (547) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)')
+2024-12-08 19:41:15,624 - app - ERROR - Error processing question (attempt 3): Failed to create chat session
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 236, in ask_question
+    raise Exception("Failed to create chat session")
+Exception: Failed to create chat session
+2024-12-08 19:41:15,793 - app - INFO - [ Top 10 memory usage ]
+2024-12-08 19:41:15,793 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\werkzeug\routing\rules.py:837: size=8484 B, count=92, average=92 B
+2024-12-08 19:41:15,793 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\threading.py:293: size=6080 B, count=16, average=380 B
+2024-12-08 19:41:15,793 - app - INFO - <frozen abc>:123: size=5911 B, count=76, average=78 B
+2024-12-08 19:41:15,793 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\werkzeug\routing\rules.py:657: size=3736 B, count=46, average=81 B
+2024-12-08 19:41:15,793 - app - INFO - <string>:1: size=3368 B, count=42, average=80 B
+2024-12-08 19:41:15,801 - app - INFO - <werkzeug routing>:1: size=2880 B, count=18, average=160 B
+2024-12-08 19:41:15,803 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\werkzeug\routing\matcher.py:42: size=2808 B, count=31, average=91 B
+2024-12-08 19:41:15,805 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\werkzeug\routing\rules.py:495: size=2776 B, count=27, average=103 B
+2024-12-08 19:41:15,806 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\flask\sansio\app.py:650: size=2544 B, count=18, average=141 B
+2024-12-08 19:41:15,806 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\encodings\utf_16_le.py:28: size=2400 B, count=8, average=300 B
+2024-12-08 19:41:17,884 - root - ERROR - Error creating chat session: ('23000', '[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The INSERT statement conflicted with the FOREIGN KEY constraint "FK_ChatSessions_Recipient". The conflict occurred in database "Apna_Waqeel", table "dbo.Users", column \'UserId\'. (547) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)')
+2024-12-08 19:41:17,901 - app - ERROR - Error processing question (attempt 1): Failed to create chat session
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 236, in ask_question
+    raise Exception("Failed to create chat session")
+Exception: Failed to create chat session
+2024-12-08 19:41:19,142 - app - INFO - [ Top 10 memory usage ]
+2024-12-08 19:41:19,142 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\werkzeug\routing\rules.py:837: size=8484 B, count=92, average=92 B
+2024-12-08 19:41:19,142 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\threading.py:293: size=6840 B, count=18, average=380 B
+2024-12-08 19:41:19,142 - app - INFO - <frozen abc>:123: size=5911 B, count=76, average=78 B
+2024-12-08 19:41:19,164 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\werkzeug\routing\rules.py:657: size=3736 B, count=46, average=81 B
+2024-12-08 19:41:19,173 - app - INFO - <string>:1: size=3368 B, count=42, average=80 B
+2024-12-08 19:41:19,176 - app - INFO - <werkzeug routing>:1: size=2880 B, count=18, average=160 B
+2024-12-08 19:41:19,188 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\werkzeug\routing\matcher.py:42: size=2808 B, count=31, average=91 B
+2024-12-08 19:41:19,192 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\werkzeug\routing\rules.py:495: size=2776 B, count=27, average=103 B
+2024-12-08 19:41:19,194 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\flask\sansio\app.py:650: size=2544 B, count=18, average=141 B
+2024-12-08 19:41:19,202 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\encodings\utf_16_le.py:28: size=2400 B, count=8, average=300 B
+2024-12-08 19:41:19,257 - root - ERROR - Error creating chat session: ('23000', '[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The INSERT statement conflicted with the FOREIGN KEY constraint "FK_ChatSessions_Recipient". The conflict occurred in database "Apna_Waqeel", table "dbo.Users", column \'UserId\'. (547) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)')
+2024-12-08 19:41:19,259 - app - ERROR - Error processing question (attempt 2): Failed to create chat session
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 236, in ask_question
+    raise Exception("Failed to create chat session")
+Exception: Failed to create chat session
+2024-12-08 19:41:20,428 - app - INFO - [ Top 10 memory usage ]
+2024-12-08 19:41:20,428 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\werkzeug\routing\rules.py:837: size=8484 B, count=92, average=92 B
+2024-12-08 19:41:20,428 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\threading.py:293: size=6840 B, count=18, average=380 B
+2024-12-08 19:41:20,428 - app - INFO - <frozen abc>:123: size=5911 B, count=76, average=78 B
+2024-12-08 19:41:20,428 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\werkzeug\routing\rules.py:657: size=3736 B, count=46, average=81 B
+2024-12-08 19:41:20,428 - app - INFO - <string>:1: size=3368 B, count=42, average=80 B
+2024-12-08 19:41:20,435 - app - INFO - <werkzeug routing>:1: size=2880 B, count=18, average=160 B
+2024-12-08 19:41:20,436 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\werkzeug\routing\matcher.py:42: size=2808 B, count=31, average=91 B
+2024-12-08 19:41:20,437 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\werkzeug\routing\rules.py:495: size=2776 B, count=27, average=103 B
+2024-12-08 19:41:20,438 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\flask\sansio\app.py:650: size=2544 B, count=18, average=141 B
+2024-12-08 19:41:20,439 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\encodings\utf_16_le.py:28: size=2400 B, count=8, average=300 B
+2024-12-08 19:41:20,460 - root - ERROR - Error creating chat session: ('23000', '[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The INSERT statement conflicted with the FOREIGN KEY constraint "FK_ChatSessions_Recipient". The conflict occurred in database "Apna_Waqeel", table "dbo.Users", column \'UserId\'. (547) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)')
+2024-12-08 19:41:20,463 - app - ERROR - Error processing question (attempt 3): Failed to create chat session
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 236, in ask_question
+    raise Exception("Failed to create chat session")
+Exception: Failed to create chat session
+2024-12-08 19:41:20,635 - app - INFO - [ Top 10 memory usage ]
+2024-12-08 19:41:20,636 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\werkzeug\routing\rules.py:837: size=8484 B, count=92, average=92 B
+2024-12-08 19:41:20,637 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\threading.py:293: size=6840 B, count=18, average=380 B
+2024-12-08 19:41:20,638 - app - INFO - <frozen abc>:123: size=5911 B, count=76, average=78 B
+2024-12-08 19:41:20,639 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\werkzeug\routing\rules.py:657: size=3736 B, count=46, average=81 B
+2024-12-08 19:41:20,640 - app - INFO - <string>:1: size=3368 B, count=42, average=80 B
+2024-12-08 19:41:20,641 - app - INFO - <werkzeug routing>:1: size=2880 B, count=18, average=160 B
+2024-12-08 19:41:20,642 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\werkzeug\routing\matcher.py:42: size=2808 B, count=31, average=91 B
+2024-12-08 19:41:20,643 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\werkzeug\routing\rules.py:495: size=2776 B, count=27, average=103 B
+2024-12-08 19:41:20,646 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\flask\sansio\app.py:650: size=2544 B, count=18, average=141 B
+2024-12-08 19:41:20,648 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\encodings\utf_16_le.py:28: size=2400 B, count=8, average=300 B
+2024-12-08 19:41:22,551 - root - ERROR - Error creating chat session: ('23000', '[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The INSERT statement conflicted with the FOREIGN KEY constraint "FK_ChatSessions_Recipient". The conflict occurred in database "Apna_Waqeel", table "dbo.Users", column \'UserId\'. (547) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)')
+2024-12-08 19:41:22,554 - app - ERROR - Error processing question (attempt 1): Failed to create chat session
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 236, in ask_question
+    raise Exception("Failed to create chat session")
+Exception: Failed to create chat session
+2024-12-08 19:41:23,725 - app - INFO - [ Top 10 memory usage ]
+2024-12-08 19:41:23,725 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\werkzeug\routing\rules.py:837: size=8484 B, count=92, average=92 B
+2024-12-08 19:41:23,725 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\threading.py:293: size=6840 B, count=18, average=380 B
+2024-12-08 19:41:23,725 - app - INFO - <frozen abc>:123: size=5856 B, count=75, average=78 B
+2024-12-08 19:41:23,725 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\werkzeug\routing\rules.py:657: size=3736 B, count=46, average=81 B
+2024-12-08 19:41:23,745 - app - INFO - <string>:1: size=3368 B, count=42, average=80 B
+2024-12-08 19:41:23,747 - app - INFO - <werkzeug routing>:1: size=2880 B, count=18, average=160 B
+2024-12-08 19:41:23,754 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\werkzeug\routing\matcher.py:42: size=2808 B, count=31, average=91 B
+2024-12-08 19:41:23,757 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\werkzeug\routing\rules.py:495: size=2776 B, count=27, average=103 B
+2024-12-08 19:41:23,759 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\flask\sansio\app.py:650: size=2544 B, count=18, average=141 B
+2024-12-08 19:41:23,765 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\encodings\utf_16_le.py:28: size=2400 B, count=8, average=300 B
+2024-12-08 19:41:23,832 - root - ERROR - Error creating chat session: ('23000', '[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The INSERT statement conflicted with the FOREIGN KEY constraint "FK_ChatSessions_Recipient". The conflict occurred in database "Apna_Waqeel", table "dbo.Users", column \'UserId\'. (547) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)')
+2024-12-08 19:41:23,835 - app - ERROR - Error processing question (attempt 2): Failed to create chat session
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 236, in ask_question
+    raise Exception("Failed to create chat session")
+Exception: Failed to create chat session
+2024-12-08 19:41:25,005 - app - INFO - [ Top 10 memory usage ]
+2024-12-08 19:41:25,005 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\werkzeug\routing\rules.py:837: size=8484 B, count=92, average=92 B
+2024-12-08 19:41:25,005 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\threading.py:293: size=6840 B, count=18, average=380 B
+2024-12-08 19:41:25,005 - app - INFO - <frozen abc>:123: size=5856 B, count=75, average=78 B
+2024-12-08 19:41:25,005 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\werkzeug\routing\rules.py:657: size=3736 B, count=46, average=81 B
+2024-12-08 19:41:25,005 - app - INFO - <string>:1: size=3368 B, count=42, average=80 B
+2024-12-08 19:41:25,005 - app - INFO - <werkzeug routing>:1: size=2880 B, count=18, average=160 B
+2024-12-08 19:41:25,020 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\werkzeug\routing\matcher.py:42: size=2808 B, count=31, average=91 B
+2024-12-08 19:41:25,022 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\werkzeug\routing\rules.py:495: size=2776 B, count=27, average=103 B
+2024-12-08 19:41:25,023 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\flask\sansio\app.py:650: size=2544 B, count=18, average=141 B
+2024-12-08 19:41:25,024 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\encodings\utf_16_le.py:28: size=2400 B, count=8, average=300 B
+2024-12-08 19:41:25,042 - root - ERROR - Error creating chat session: ('23000', '[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The INSERT statement conflicted with the FOREIGN KEY constraint "FK_ChatSessions_Recipient". The conflict occurred in database "Apna_Waqeel", table "dbo.Users", column \'UserId\'. (547) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)')
+2024-12-08 19:41:25,044 - app - ERROR - Error processing question (attempt 3): Failed to create chat session
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 236, in ask_question
+    raise Exception("Failed to create chat session")
+Exception: Failed to create chat session
+2024-12-08 19:41:25,281 - app - INFO - [ Top 10 memory usage ]
+2024-12-08 19:41:25,282 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\werkzeug\routing\rules.py:837: size=8484 B, count=92, average=92 B
+2024-12-08 19:41:25,283 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\threading.py:293: size=6840 B, count=18, average=380 B
+2024-12-08 19:41:25,284 - app - INFO - <frozen abc>:123: size=5856 B, count=75, average=78 B
+2024-12-08 19:41:25,287 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\werkzeug\routing\rules.py:657: size=3736 B, count=46, average=81 B
+2024-12-08 19:41:25,290 - app - INFO - <string>:1: size=3368 B, count=42, average=80 B
+2024-12-08 19:41:25,291 - app - INFO - <werkzeug routing>:1: size=2880 B, count=18, average=160 B
+2024-12-08 19:41:25,293 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\werkzeug\routing\matcher.py:42: size=2808 B, count=31, average=91 B
+2024-12-08 19:41:25,295 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\werkzeug\routing\rules.py:495: size=2776 B, count=27, average=103 B
+2024-12-08 19:41:25,298 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\flask\sansio\app.py:650: size=2544 B, count=18, average=141 B
+2024-12-08 19:41:25,299 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\encodings\utf_16_le.py:28: size=2400 B, count=8, average=300 B
+2024-12-08 19:51:18,570 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-08 19:51:21,378 - app - INFO - Processing question for user C5927098-B045-4E70-ABFB-F1FBBF266510, chat None
+2024-12-08 19:51:21,378 - app - INFO - Initializing RAG agent...
+2024-12-08 19:51:21,394 - pinecone_plugin_interface.logging - INFO - Discovering subpackages in _NamespacePath(['C:\\Users\\Nouma\\OneDrive\\Desktop\\GenAi x Xavour\\ApnaWaqeel\\venv\\Lib\\site-packages\\pinecone_plugins'])
+2024-12-08 19:51:21,404 - pinecone_plugin_interface.logging - INFO - Looking for plugins in pinecone_plugins.inference
+2024-12-08 19:51:21,608 - pinecone_plugin_interface.logging - INFO - Installing plugin inference into Pinecone
+2024-12-08 19:51:31,337 - datasets - INFO - PyTorch version 2.4.1 available.
+2024-12-08 19:51:32,896 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2024-12-08 19:51:32,896 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2024-12-08 19:51:57,309 - app - INFO - Processing question for user C5927098-B045-4E70-ABFB-F1FBBF266510, chat None
+2024-12-08 19:51:57,309 - app - INFO - Initializing RAG agent...
+2024-12-08 19:51:57,374 - pinecone_plugin_interface.logging - INFO - Discovering subpackages in _NamespacePath(['C:\\Users\\Nouma\\OneDrive\\Desktop\\GenAi x Xavour\\ApnaWaqeel\\venv\\Lib\\site-packages\\pinecone_plugins'])
+2024-12-08 19:51:57,378 - pinecone_plugin_interface.logging - INFO - Looking for plugins in pinecone_plugins.inference
+2024-12-08 19:51:57,379 - pinecone_plugin_interface.logging - INFO - Installing plugin inference into Pinecone
+2024-12-08 19:51:59,898 - app - INFO - RAG agent initialized successfully
+2024-12-08 19:51:59,898 - app - WARNING - Invalid UUID - chat_id: None, user_id: C5927098-B045-4E70-ABFB-F1FBBF266510
+2024-12-08 19:51:59,907 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2024-12-08 19:52:00,086 - app - ERROR - Error processing question (attempt 1): RAGAgent.handle_new_chat() missing 1 required positional argument: 'topic'
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 252, in ask_question
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\main.py", line 648, in run
+    self.handle_new_chat(user_id, question)
+TypeError: RAGAgent.handle_new_chat() missing 1 required positional argument: 'topic'
+2024-12-08 19:52:00,086 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2024-12-08 19:52:03,327 - app - INFO - [ Top 10 memory usage ]
+2024-12-08 19:52:03,327 - app - INFO - <frozen importlib._bootstrap_external>:753: size=8778 KiB, count=55243, average=163 B
+2024-12-08 19:52:03,327 - app - INFO - <frozen abc>:123: size=438 KiB, count=4732, average=95 B
+2024-12-08 19:52:03,327 - app - INFO - <frozen abc>:106: size=365 KiB, count=1244, average=300 B
+2024-12-08 19:52:04,173 - app - INFO - <frozen importlib._bootstrap_external>:1673: size=311 KiB, count=2527, average=126 B
+2024-12-08 19:52:04,173 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\sentence_transformers\SentenceTransformer.py:1560: size=311 KiB, count=1, average=311 KiB
+2024-12-08 19:52:04,173 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\dataclasses.py:473: size=256 KiB, count=2099, average=125 B
+2024-12-08 19:52:04,173 - app - INFO - <frozen importlib._bootstrap_external>:123: size=221 KiB, count=1279, average=177 B
+2024-12-08 19:52:04,173 - app - INFO - <frozen importlib._bootstrap>:488: size=187 KiB, count=1639, average=117 B
+2024-12-08 19:52:04,185 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\linecache.py:139: size=138 KiB, count=1541, average=92 B
+2024-12-08 19:52:04,186 - app - INFO - <frozen importlib._bootstrap_external>:1670: size=132 KiB, count=235, average=577 B
+2024-12-08 19:52:04,229 - app - INFO - Processing question for user C5927098-B045-4E70-ABFB-F1FBBF266510, chat None
+2024-12-08 19:52:04,241 - app - WARNING - Invalid UUID - chat_id: None, user_id: C5927098-B045-4E70-ABFB-F1FBBF266510
+2024-12-08 19:52:04,434 - app - ERROR - Error processing question (attempt 2): RAGAgent.handle_new_chat() missing 1 required positional argument: 'topic'
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 252, in ask_question
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\main.py", line 648, in run
+    self.handle_new_chat(user_id, question)
+TypeError: RAGAgent.handle_new_chat() missing 1 required positional argument: 'topic'
+2024-12-08 19:52:09,691 - app - INFO - [ Top 10 memory usage ]
+2024-12-08 19:52:09,691 - app - INFO - <frozen importlib._bootstrap_external>:753: size=8778 KiB, count=55243, average=163 B
+2024-12-08 19:52:09,706 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\sentence_transformers\SentenceTransformer.py:1560: size=622 KiB, count=2, average=311 KiB
+2024-12-08 19:52:09,706 - app - INFO - <frozen abc>:123: size=438 KiB, count=4728, average=95 B
+2024-12-08 19:52:09,706 - app - INFO - <frozen abc>:106: size=365 KiB, count=1244, average=300 B
+2024-12-08 19:52:09,706 - app - INFO - <frozen importlib._bootstrap_external>:1673: size=311 KiB, count=2527, average=126 B
+2024-12-08 19:52:09,713 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\dataclasses.py:473: size=256 KiB, count=2099, average=125 B
+2024-12-08 19:52:09,715 - app - INFO - <frozen importlib._bootstrap_external>:123: size=221 KiB, count=1279, average=177 B
+2024-12-08 19:52:09,716 - app - INFO - <frozen importlib._bootstrap>:488: size=187 KiB, count=1637, average=117 B
+2024-12-08 19:52:09,718 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\linecache.py:139: size=138 KiB, count=1541, average=92 B
+2024-12-08 19:52:09,720 - app - INFO - <frozen importlib._bootstrap_external>:1670: size=132 KiB, count=235, average=577 B
+2024-12-08 19:52:09,752 - app - INFO - Processing question for user C5927098-B045-4E70-ABFB-F1FBBF266510, chat None
+2024-12-08 19:52:09,752 - app - WARNING - Invalid UUID - chat_id: None, user_id: C5927098-B045-4E70-ABFB-F1FBBF266510
+2024-12-08 19:52:09,938 - app - ERROR - Error processing question (attempt 3): RAGAgent.handle_new_chat() missing 1 required positional argument: 'topic'
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 252, in ask_question
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\main.py", line 648, in run
+    self.handle_new_chat(user_id, question)
+TypeError: RAGAgent.handle_new_chat() missing 1 required positional argument: 'topic'
+2024-12-08 19:52:11,253 - app - INFO - [ Top 10 memory usage ]
+2024-12-08 19:52:11,254 - app - INFO - <frozen importlib._bootstrap_external>:753: size=8778 KiB, count=55243, average=163 B
+2024-12-08 19:52:11,403 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\sentence_transformers\SentenceTransformer.py:1560: size=622 KiB, count=2, average=311 KiB
+2024-12-08 19:52:11,403 - app - INFO - <frozen abc>:123: size=438 KiB, count=4722, average=95 B
+2024-12-08 19:52:11,403 - app - INFO - <frozen abc>:106: size=365 KiB, count=1244, average=300 B
+2024-12-08 19:52:11,416 - app - INFO - <frozen importlib._bootstrap_external>:1673: size=311 KiB, count=2527, average=126 B
+2024-12-08 19:52:11,420 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\dataclasses.py:473: size=256 KiB, count=2099, average=125 B
+2024-12-08 19:52:11,422 - app - INFO - <frozen importlib._bootstrap_external>:123: size=221 KiB, count=1279, average=177 B
+2024-12-08 19:52:11,431 - app - INFO - <frozen importlib._bootstrap>:488: size=187 KiB, count=1637, average=117 B
+2024-12-08 19:52:11,445 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\linecache.py:139: size=138 KiB, count=1541, average=92 B
+2024-12-08 19:52:11,450 - app - INFO - <frozen importlib._bootstrap_external>:1670: size=132 KiB, count=235, average=577 B
+2024-12-08 19:52:21,597 - app - INFO - RAG agent initialized successfully
+2024-12-08 19:52:21,598 - app - WARNING - Invalid UUID - chat_id: None, user_id: C5927098-B045-4E70-ABFB-F1FBBF266510
+2024-12-08 19:52:22,298 - app - ERROR - Error processing question (attempt 1): RAGAgent.handle_new_chat() missing 1 required positional argument: 'topic'
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 252, in ask_question
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\main.py", line 648, in run
+    self.handle_new_chat(user_id, question)
+TypeError: RAGAgent.handle_new_chat() missing 1 required positional argument: 'topic'
+2024-12-08 19:52:24,767 - app - INFO - [ Top 10 memory usage ]
+2024-12-08 19:52:24,768 - app - INFO - <frozen importlib._bootstrap_external>:753: size=8778 KiB, count=55243, average=163 B
+2024-12-08 19:52:24,769 - app - INFO - <frozen abc>:123: size=437 KiB, count=4707, average=95 B
+2024-12-08 19:52:24,770 - app - INFO - <frozen abc>:106: size=365 KiB, count=1244, average=300 B
+2024-12-08 19:52:24,772 - app - INFO - <frozen importlib._bootstrap_external>:1673: size=311 KiB, count=2527, average=126 B
+2024-12-08 19:52:24,773 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\sentence_transformers\SentenceTransformer.py:1560: size=311 KiB, count=1, average=311 KiB
+2024-12-08 19:52:24,775 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\dataclasses.py:473: size=256 KiB, count=2099, average=125 B
+2024-12-08 19:52:24,776 - app - INFO - <frozen importlib._bootstrap_external>:123: size=221 KiB, count=1279, average=177 B
+2024-12-08 19:52:25,330 - app - INFO - <frozen importlib._bootstrap>:488: size=187 KiB, count=1637, average=117 B
+2024-12-08 19:52:25,597 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\linecache.py:139: size=138 KiB, count=1541, average=92 B
+2024-12-08 19:52:25,745 - app - INFO - <frozen importlib._bootstrap_external>:1670: size=132 KiB, count=235, average=577 B
+2024-12-08 19:52:25,779 - app - INFO - Processing question for user C5927098-B045-4E70-ABFB-F1FBBF266510, chat None
+2024-12-08 19:52:25,780 - app - WARNING - Invalid UUID - chat_id: None, user_id: C5927098-B045-4E70-ABFB-F1FBBF266510
+2024-12-08 19:52:26,037 - app - ERROR - Error processing question (attempt 2): RAGAgent.handle_new_chat() missing 1 required positional argument: 'topic'
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 252, in ask_question
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\main.py", line 648, in run
+    self.handle_new_chat(user_id, question)
+TypeError: RAGAgent.handle_new_chat() missing 1 required positional argument: 'topic'
+2024-12-08 19:52:26,907 - app - INFO - Processing question for user C5927098-B045-4E70-ABFB-F1FBBF266510, chat None
+2024-12-08 19:52:26,990 - app - WARNING - Invalid UUID - chat_id: None, user_id: C5927098-B045-4E70-ABFB-F1FBBF266510
+2024-12-08 19:52:27,437 - app - ERROR - Error processing question (attempt 1): RAGAgent.handle_new_chat() missing 1 required positional argument: 'topic'
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 252, in ask_question
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\main.py", line 648, in run
+    self.handle_new_chat(user_id, question)
+TypeError: RAGAgent.handle_new_chat() missing 1 required positional argument: 'topic'
+2024-12-08 19:52:28,305 - app - INFO - [ Top 10 memory usage ]
+2024-12-08 19:52:28,894 - app - INFO - <frozen importlib._bootstrap_external>:753: size=8778 KiB, count=55243, average=163 B
+2024-12-08 19:52:28,924 - app - INFO - <frozen abc>:123: size=437 KiB, count=4707, average=95 B
+2024-12-08 19:52:28,957 - app - INFO - <frozen abc>:106: size=365 KiB, count=1244, average=300 B
+2024-12-08 19:52:28,991 - app - INFO - <frozen importlib._bootstrap_external>:1673: size=311 KiB, count=2527, average=126 B
+2024-12-08 19:52:29,022 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\sentence_transformers\SentenceTransformer.py:1560: size=311 KiB, count=1, average=311 KiB
+2024-12-08 19:52:29,375 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\dataclasses.py:473: size=256 KiB, count=2099, average=125 B
+2024-12-08 19:52:29,392 - app - INFO - <frozen importlib._bootstrap_external>:123: size=221 KiB, count=1279, average=177 B
+2024-12-08 19:52:29,425 - app - INFO - <frozen importlib._bootstrap>:488: size=187 KiB, count=1636, average=117 B
+2024-12-08 19:52:29,714 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\linecache.py:139: size=138 KiB, count=1541, average=92 B
+2024-12-08 19:52:29,734 - app - INFO - <frozen importlib._bootstrap_external>:1670: size=132 KiB, count=235, average=577 B
+2024-12-08 19:52:29,808 - app - INFO - Processing question for user C5927098-B045-4E70-ABFB-F1FBBF266510, chat None
+2024-12-08 19:52:29,840 - app - WARNING - Invalid UUID - chat_id: None, user_id: C5927098-B045-4E70-ABFB-F1FBBF266510
+2024-12-08 19:52:30,057 - app - ERROR - Error processing question (attempt 3): RAGAgent.handle_new_chat() missing 1 required positional argument: 'topic'
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 252, in ask_question
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\main.py", line 648, in run
+    self.handle_new_chat(user_id, question)
+TypeError: RAGAgent.handle_new_chat() missing 1 required positional argument: 'topic'
+2024-12-08 19:52:30,552 - app - INFO - [ Top 10 memory usage ]
+2024-12-08 19:52:30,575 - app - INFO - <frozen importlib._bootstrap_external>:753: size=8778 KiB, count=55243, average=163 B
+2024-12-08 19:52:30,584 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\tracemalloc.py:505: size=579 KiB, count=10590, average=56 B
+2024-12-08 19:52:30,596 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\tracemalloc.py:498: size=496 KiB, count=10590, average=48 B
+2024-12-08 19:52:30,623 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\tracemalloc.py:193: size=496 KiB, count=10590, average=48 B
+2024-12-08 19:52:30,632 - app - INFO - <frozen abc>:123: size=437 KiB, count=4707, average=95 B
+2024-12-08 19:52:30,643 - app - INFO - <frozen abc>:106: size=365 KiB, count=1244, average=300 B
+2024-12-08 19:52:30,658 - app - INFO - <frozen importlib._bootstrap_external>:1673: size=311 KiB, count=2527, average=126 B
+2024-12-08 19:52:30,693 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\sentence_transformers\SentenceTransformer.py:1560: size=311 KiB, count=1, average=311 KiB
+2024-12-08 19:52:30,706 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\dataclasses.py:473: size=256 KiB, count=2099, average=125 B
+2024-12-08 19:52:30,775 - app - INFO - <frozen importlib._bootstrap_external>:123: size=221 KiB, count=1279, average=177 B
+2024-12-08 19:52:30,863 - app - INFO - Processing question for user C5927098-B045-4E70-ABFB-F1FBBF266510, chat None
+2024-12-08 19:52:30,887 - app - WARNING - Invalid UUID - chat_id: None, user_id: C5927098-B045-4E70-ABFB-F1FBBF266510
+2024-12-08 19:52:31,201 - app - ERROR - Error processing question (attempt 2): RAGAgent.handle_new_chat() missing 1 required positional argument: 'topic'
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 252, in ask_question
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\main.py", line 648, in run
+    self.handle_new_chat(user_id, question)
+TypeError: RAGAgent.handle_new_chat() missing 1 required positional argument: 'topic'
+2024-12-08 19:52:32,191 - app - INFO - [ Top 10 memory usage ]
+2024-12-08 19:52:32,191 - app - INFO - <frozen importlib._bootstrap_external>:753: size=8778 KiB, count=55243, average=163 B
+2024-12-08 19:52:32,191 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\tracemalloc.py:505: size=868 KiB, count=10609, average=84 B
+2024-12-08 19:52:33,185 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\tracemalloc.py:67: size=663 KiB, count=10608, average=64 B
+2024-12-08 19:52:33,220 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\tracemalloc.py:498: size=497 KiB, count=10608, average=48 B
+2024-12-08 19:52:33,265 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\tracemalloc.py:193: size=456 KiB, count=9734, average=48 B
+2024-12-08 19:52:33,311 - app - INFO - <frozen abc>:123: size=437 KiB, count=4707, average=95 B
+2024-12-08 19:52:33,340 - app - INFO - <frozen abc>:106: size=365 KiB, count=1244, average=300 B
+2024-12-08 19:52:33,367 - app - INFO - <frozen importlib._bootstrap_external>:1673: size=311 KiB, count=2527, average=126 B
+2024-12-08 19:52:33,398 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\sentence_transformers\SentenceTransformer.py:1560: size=311 KiB, count=1, average=311 KiB
+2024-12-08 19:52:33,421 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\dataclasses.py:473: size=256 KiB, count=2099, average=125 B
+2024-12-08 19:52:33,711 - app - INFO - [ Top 10 memory usage ]
+2024-12-08 19:52:33,711 - app - INFO - <frozen importlib._bootstrap_external>:753: size=8778 KiB, count=55243, average=163 B
+2024-12-08 19:52:33,785 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\tracemalloc.py:505: size=580 KiB, count=10605, average=56 B
+2024-12-08 19:52:33,789 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\tracemalloc.py:498: size=497 KiB, count=10605, average=48 B
+2024-12-08 19:52:33,793 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\tracemalloc.py:193: size=473 KiB, count=10084, average=48 B
+2024-12-08 19:52:33,796 - app - INFO - <frozen abc>:123: size=437 KiB, count=4707, average=95 B
+2024-12-08 19:52:33,799 - app - INFO - <frozen abc>:106: size=365 KiB, count=1244, average=300 B
+2024-12-08 19:52:33,801 - app - INFO - <frozen importlib._bootstrap_external>:1673: size=311 KiB, count=2527, average=126 B
+2024-12-08 19:52:33,803 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\sentence_transformers\SentenceTransformer.py:1560: size=311 KiB, count=1, average=311 KiB
+2024-12-08 19:52:33,808 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\dataclasses.py:473: size=256 KiB, count=2099, average=125 B
+2024-12-08 19:52:33,811 - app - INFO - <frozen importlib._bootstrap_external>:123: size=221 KiB, count=1279, average=177 B
+2024-12-08 19:52:33,863 - app - INFO - Processing question for user C5927098-B045-4E70-ABFB-F1FBBF266510, chat None
+2024-12-08 19:52:33,863 - app - WARNING - Invalid UUID - chat_id: None, user_id: C5927098-B045-4E70-ABFB-F1FBBF266510
+2024-12-08 19:52:34,044 - app - ERROR - Error processing question (attempt 3): RAGAgent.handle_new_chat() missing 1 required positional argument: 'topic'
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 252, in ask_question
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\main.py", line 648, in run
+    self.handle_new_chat(user_id, question)
+TypeError: RAGAgent.handle_new_chat() missing 1 required positional argument: 'topic'
+2024-12-08 19:52:35,297 - app - INFO - [ Top 10 memory usage ]
+2024-12-08 19:52:35,297 - app - INFO - <frozen importlib._bootstrap_external>:753: size=8778 KiB, count=55243, average=163 B
+2024-12-08 19:52:35,297 - app - INFO - <frozen abc>:123: size=437 KiB, count=4707, average=95 B
+2024-12-08 19:52:35,297 - app - INFO - <frozen abc>:106: size=365 KiB, count=1244, average=300 B
+2024-12-08 19:52:35,297 - app - INFO - <frozen importlib._bootstrap_external>:1673: size=311 KiB, count=2527, average=126 B
+2024-12-08 19:52:35,297 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\sentence_transformers\SentenceTransformer.py:1560: size=311 KiB, count=1, average=311 KiB
+2024-12-08 19:52:35,297 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\dataclasses.py:473: size=256 KiB, count=2099, average=125 B
+2024-12-08 19:52:35,309 - app - INFO - <frozen importlib._bootstrap_external>:123: size=221 KiB, count=1279, average=177 B
+2024-12-08 19:52:35,310 - app - INFO - <frozen importlib._bootstrap>:488: size=187 KiB, count=1636, average=117 B
+2024-12-08 19:52:35,311 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\linecache.py:139: size=138 KiB, count=1541, average=92 B
+2024-12-08 19:52:35,311 - app - INFO - <frozen importlib._bootstrap_external>:1670: size=132 KiB, count=235, average=577 B
+2024-12-08 20:00:24,442 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-08 20:00:38,842 - app - INFO - Processing question for user C5927098-B045-4E70-ABFB-F1FBBF266510, chat None
+2024-12-08 20:00:38,842 - app - INFO - Initializing RAG agent...
+2024-12-08 20:00:38,870 - pinecone_plugin_interface.logging - INFO - Discovering subpackages in _NamespacePath(['C:\\Users\\Nouma\\OneDrive\\Desktop\\GenAi x Xavour\\ApnaWaqeel\\venv\\Lib\\site-packages\\pinecone_plugins'])
+2024-12-08 20:00:38,877 - pinecone_plugin_interface.logging - INFO - Looking for plugins in pinecone_plugins.inference
+2024-12-08 20:00:39,062 - pinecone_plugin_interface.logging - INFO - Installing plugin inference into Pinecone
+2024-12-08 20:00:44,902 - datasets - INFO - PyTorch version 2.4.1 available.
+2024-12-08 20:00:46,538 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2024-12-08 20:00:46,539 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2024-12-08 20:01:12,572 - app - INFO - Processing question for user C5927098-B045-4E70-ABFB-F1FBBF266510, chat None
+2024-12-08 20:01:12,580 - app - INFO - Initializing RAG agent...
+2024-12-08 20:01:12,695 - pinecone_plugin_interface.logging - INFO - Discovering subpackages in _NamespacePath(['C:\\Users\\Nouma\\OneDrive\\Desktop\\GenAi x Xavour\\ApnaWaqeel\\venv\\Lib\\site-packages\\pinecone_plugins'])
+2024-12-08 20:01:12,699 - pinecone_plugin_interface.logging - INFO - Looking for plugins in pinecone_plugins.inference
+2024-12-08 20:01:12,701 - pinecone_plugin_interface.logging - INFO - Installing plugin inference into Pinecone
+2024-12-08 20:01:15,980 - app - INFO - RAG agent initialized successfully
+2024-12-08 20:01:15,980 - app - WARNING - Invalid UUID - chat_id: None, user_id: C5927098-B045-4E70-ABFB-F1FBBF266510
+2024-12-08 20:01:16,304 - app - ERROR - Error processing question (attempt 1): cannot access local variable 'chat_id' where it is not associated with a value
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 251, in ask_question
+    result = rag_agent.run(question, current_user_id, chat_id_str, chat_history)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\main.py", line 661, in run
+    self.handle_new_chat(user_id, question)
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\main.py", line 621, in handle_new_chat
+    if not self.chat_exists(user_id, chat_id):
+                                     ^^^^^^^
+UnboundLocalError: cannot access local variable 'chat_id' where it is not associated with a value
+2024-12-08 20:01:16,417 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2024-12-08 20:01:16,418 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2024-12-08 20:01:20,855 - app - INFO - [ Top 10 memory usage ]
+2024-12-08 20:01:20,855 - app - INFO - <frozen importlib._bootstrap_external>:753: size=8777 KiB, count=55240, average=163 B
+2024-12-08 20:01:20,894 - app - INFO - <frozen abc>:123: size=439 KiB, count=4749, average=95 B
+2024-12-08 20:01:20,896 - app - INFO - <frozen abc>:106: size=365 KiB, count=1244, average=300 B
+2024-12-08 20:01:20,927 - app - INFO - <frozen importlib._bootstrap_external>:1673: size=311 KiB, count=2527, average=126 B
+2024-12-08 20:01:20,977 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\sentence_transformers\SentenceTransformer.py:1560: size=311 KiB, count=1, average=311 KiB
+2024-12-08 20:01:20,977 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\dataclasses.py:473: size=256 KiB, count=2099, average=125 B
+2024-12-08 20:01:20,980 - app - INFO - <frozen importlib._bootstrap_external>:123: size=221 KiB, count=1279, average=177 B
+2024-12-08 20:01:20,980 - app - INFO - <frozen importlib._bootstrap>:488: size=187 KiB, count=1639, average=117 B
+2024-12-08 20:01:20,980 - app - INFO - <frozen importlib._bootstrap_external>:1670: size=132 KiB, count=235, average=577 B
+2024-12-08 20:01:21,012 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\linecache.py:139: size=108 KiB, count=1187, average=93 B
+2024-12-08 20:01:21,140 - app - INFO - Processing question for user C5927098-B045-4E70-ABFB-F1FBBF266510, chat None
+2024-12-08 20:01:21,142 - app - WARNING - Invalid UUID - chat_id: None, user_id: C5927098-B045-4E70-ABFB-F1FBBF266510
+2024-12-08 20:01:21,417 - app - ERROR - Error processing question (attempt 2): cannot access local variable 'chat_id' where it is not associated with a value
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 251, in ask_question
+    result = rag_agent.run(question, current_user_id, chat_id_str, chat_history)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\main.py", line 661, in run
+    self.handle_new_chat(user_id, question)
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\main.py", line 621, in handle_new_chat
+    if not self.chat_exists(user_id, chat_id):
+                                     ^^^^^^^
+UnboundLocalError: cannot access local variable 'chat_id' where it is not associated with a value
+2024-12-08 20:01:24,824 - app - INFO - [ Top 10 memory usage ]
+2024-12-08 20:01:24,824 - app - INFO - <frozen importlib._bootstrap_external>:753: size=8777 KiB, count=55240, average=163 B
+2024-12-08 20:01:24,829 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\sentence_transformers\SentenceTransformer.py:1560: size=622 KiB, count=2, average=311 KiB
+2024-12-08 20:01:24,834 - app - INFO - <frozen abc>:123: size=439 KiB, count=4741, average=95 B
+2024-12-08 20:01:24,841 - app - INFO - <frozen abc>:106: size=365 KiB, count=1244, average=300 B
+2024-12-08 20:01:24,846 - app - INFO - <frozen importlib._bootstrap_external>:1673: size=311 KiB, count=2527, average=126 B
+2024-12-08 20:01:24,853 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\dataclasses.py:473: size=256 KiB, count=2099, average=125 B
+2024-12-08 20:01:24,858 - app - INFO - <frozen importlib._bootstrap_external>:123: size=221 KiB, count=1279, average=177 B
+2024-12-08 20:01:24,889 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\torch\nn\modules\module.py:451: size=189 KiB, count=898, average=216 B
+2024-12-08 20:01:24,894 - app - INFO - <frozen importlib._bootstrap>:488: size=187 KiB, count=1639, average=117 B
+2024-12-08 20:01:24,947 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\safetensors\torch.py:315: size=140 KiB, count=2620, average=55 B
+2024-12-08 20:01:25,051 - app - INFO - Processing question for user C5927098-B045-4E70-ABFB-F1FBBF266510, chat None
+2024-12-08 20:01:25,056 - app - WARNING - Invalid UUID - chat_id: None, user_id: C5927098-B045-4E70-ABFB-F1FBBF266510
+2024-12-08 20:01:25,275 - app - ERROR - Error processing question (attempt 3): cannot access local variable 'chat_id' where it is not associated with a value
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 251, in ask_question
+    result = rag_agent.run(question, current_user_id, chat_id_str, chat_history)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\main.py", line 661, in run
+    self.handle_new_chat(user_id, question)
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\main.py", line 621, in handle_new_chat
+    if not self.chat_exists(user_id, chat_id):
+                                     ^^^^^^^
+UnboundLocalError: cannot access local variable 'chat_id' where it is not associated with a value

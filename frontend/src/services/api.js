@@ -53,7 +53,7 @@ export const apiService = {
       try {
         const response = await api.post('/ask', { 
           question, 
-          chat_id: chatId 
+          chat_id: null 
         });
         
         if (!response.data) {
