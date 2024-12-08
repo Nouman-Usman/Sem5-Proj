@@ -157,3 +157,325 @@ bdb.BdbQuit
 2024-12-07 21:18:22,459 - root - INFO - Verifying user creation
 2024-12-07 21:18:22,464 - root - INFO - Verification successful, committing transaction
 2024-12-07 21:18:22,465 - root - INFO - Successfully created user with ID: fe032527-1a13-4dd3-aed5-5ba56a840cee
+2024-12-07 21:57:39,915 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-07 21:58:19,784 - root - INFO - Starting transaction for user creation: noumanmughal0123@gmail.com
+2024-12-07 21:58:19,787 - root - INFO - Checking email existence: noumanmughal0123@gmail.com
+2024-12-07 21:58:19,799 - root - INFO - Creating user record with ID: 9689897f-2a7b-4648-a09d-05b2d61e2e86
+2024-12-07 21:58:19,809 - root - INFO - Creating user profile for ID: 9689897f-2a7b-4648-a09d-05b2d61e2e86
+2024-12-07 21:58:19,816 - root - INFO - Creating customer record
+2024-12-07 21:58:19,827 - root - INFO - Verifying user creation
+2024-12-07 21:58:19,836 - root - INFO - Verification successful, committing transaction
+2024-12-07 21:58:19,844 - root - INFO - Successfully created user with ID: 9689897f-2a7b-4648-a09d-05b2d61e2e86
+2024-12-08 10:51:24,137 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-08 10:51:58,983 - root - INFO - Starting transaction for user creation: noumanmughal0123@gmail.com
+2024-12-08 10:51:58,984 - root - INFO - Checking email existence: noumanmughal0123@gmail.com
+2024-12-08 10:51:59,007 - root - INFO - Creating user record with ID: bba3419f-938a-4ae8-b3ae-cae2e059a96b
+2024-12-08 10:51:59,017 - root - INFO - Creating user profile for ID: bba3419f-938a-4ae8-b3ae-cae2e059a96b
+2024-12-08 10:51:59,019 - root - INFO - Creating lawyer details
+2024-12-08 10:51:59,029 - root - INFO - Verifying user creation
+2024-12-08 10:51:59,033 - root - INFO - Verification successful, committing transaction
+2024-12-08 10:51:59,034 - root - INFO - Successfully created user with ID: bba3419f-938a-4ae8-b3ae-cae2e059a96b
+2024-12-08 10:54:47,722 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-08 10:55:47,852 - root - INFO - Creating user: noumanmughal0123@gmail.com
+2024-12-08 10:55:47,871 - root - INFO - Successfully created user with ID: d3b48f91-89f1-4c4e-9258-bef42f6b750f
+2024-12-08 10:56:06,324 - app - ERROR - Login error: 'bool' object is not subscriptable
+2024-12-08 10:59:53,153 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-08 11:01:04,604 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-08 11:01:37,699 - root - ERROR - Error checking credentials: ('42S22', "[42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name 'PasswordHash'. (207) (SQLExecDirectW); [42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Statement(s) could not be prepared. (8180)")
+2024-12-08 11:05:30,547 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-08 11:06:15,333 - root - ERROR - Error checking credentials: ('42S22', "[42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name 'PasswordHash'. (207) (SQLExecDirectW); [42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Statement(s) could not be prepared. (8180)")
+2024-12-08 11:07:03,804 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-08 11:07:15,339 - root - ERROR - Error checking credentials: ('42S22', "[42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name 'PasswordHash'. (207) (SQLExecDirectW); [42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Statement(s) could not be prepared. (8180)")
+2024-12-08 11:12:13,806 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-08 11:12:36,522 - root - INFO - Creating user: noumanmughal123@gmail.com
+2024-12-08 11:12:37,633 - root - INFO - Successfully created user with ID: 3b66421e-75f3-483e-a504-9cb0025108ae
+2024-12-08 11:15:24,610 - app - INFO - Processing question for user test_user, chat None
+2024-12-08 11:15:24,619 - app - INFO - Initializing RAG agent...
+2024-12-08 11:15:24,804 - pinecone_plugin_interface.logging - INFO - Discovering subpackages in _NamespacePath(['C:\\Users\\Nouma\\OneDrive\\Desktop\\GenAi x Xavour\\ApnaWaqeel\\venv\\Lib\\site-packages\\pinecone_plugins'])
+2024-12-08 11:15:24,815 - pinecone_plugin_interface.logging - INFO - Looking for plugins in pinecone_plugins.inference
+2024-12-08 11:15:25,115 - pinecone_plugin_interface.logging - INFO - Installing plugin inference into Pinecone
+2024-12-08 11:15:36,482 - datasets - INFO - PyTorch version 2.4.1 available.
+2024-12-08 11:15:40,601 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2024-12-08 11:15:40,601 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2024-12-08 11:15:56,247 - app - INFO - Processing question for user test_user, chat None
+2024-12-08 11:15:56,250 - app - INFO - Initializing RAG agent...
+2024-12-08 11:15:56,288 - pinecone_plugin_interface.logging - INFO - Discovering subpackages in _NamespacePath(['C:\\Users\\Nouma\\OneDrive\\Desktop\\GenAi x Xavour\\ApnaWaqeel\\venv\\Lib\\site-packages\\pinecone_plugins'])
+2024-12-08 11:15:56,295 - pinecone_plugin_interface.logging - INFO - Looking for plugins in pinecone_plugins.inference
+2024-12-08 11:15:56,297 - pinecone_plugin_interface.logging - INFO - Installing plugin inference into Pinecone
+2024-12-08 11:15:59,005 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2024-12-08 11:15:59,006 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2024-12-08 11:16:16,696 - root - INFO - Successfully loaded lawyers from CSV
+2024-12-08 11:16:16,906 - app - INFO - RAG agent initialized successfully
+2024-12-08 11:16:17,122 - app - ERROR - Error processing question (attempt 1): RAGAgent.handle_new_chat() missing 1 required positional argument: 'topic'
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 242, in ask_question
+    result = rag_agent.run(question, user_id, chat_id, chat_history)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\main.py", line 664, in run
+    self.handle_new_chat(user_id, question)
+TypeError: RAGAgent.handle_new_chat() missing 1 required positional argument: 'topic'
+2024-12-08 11:16:19,552 - app - INFO - [ Top 10 memory usage ]
+2024-12-08 11:16:19,555 - app - INFO - <frozen importlib._bootstrap_external>:753: size=8771 KiB, count=55161, average=163 B
+2024-12-08 11:16:19,555 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\sentence_transformers\SentenceTransformer.py:1560: size=622 KiB, count=2, average=311 KiB
+2024-12-08 11:16:19,555 - app - INFO - <frozen abc>:123: size=440 KiB, count=4773, average=94 B
+2024-12-08 11:16:19,555 - app - INFO - <frozen abc>:106: size=365 KiB, count=1243, average=301 B
+2024-12-08 11:16:19,555 - app - INFO - <frozen importlib._bootstrap_external>:1673: size=311 KiB, count=2527, average=126 B
+2024-12-08 11:16:19,561 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\dataclasses.py:473: size=256 KiB, count=2098, average=125 B
+2024-12-08 11:16:20,362 - app - INFO - <frozen importlib._bootstrap_external>:123: size=221 KiB, count=1281, average=177 B
+2024-12-08 11:16:20,381 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\torch\nn\modules\module.py:451: size=190 KiB, count=901, average=216 B
+2024-12-08 11:16:20,386 - app - INFO - <frozen importlib._bootstrap>:488: size=187 KiB, count=1642, average=117 B
+2024-12-08 11:16:20,397 - app - INFO - <frozen importlib._bootstrap_external>:1670: size=132 KiB, count=235, average=577 B
+2024-12-08 11:16:20,462 - app - INFO - Processing question for user test_user, chat None
+2024-12-08 11:16:20,641 - app - ERROR - Error processing question (attempt 2): RAGAgent.handle_new_chat() missing 1 required positional argument: 'topic'
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 242, in ask_question
+    result = rag_agent.run(question, user_id, chat_id, chat_history)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\main.py", line 664, in run
+    self.handle_new_chat(user_id, question)
+TypeError: RAGAgent.handle_new_chat() missing 1 required positional argument: 'topic'
+2024-12-08 11:16:23,091 - app - INFO - [ Top 10 memory usage ]
+2024-12-08 11:16:23,091 - app - INFO - <frozen importlib._bootstrap_external>:753: size=8771 KiB, count=55161, average=163 B
+2024-12-08 11:16:23,091 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\sentence_transformers\SentenceTransformer.py:1560: size=622 KiB, count=2, average=311 KiB
+2024-12-08 11:16:23,091 - app - INFO - <frozen abc>:123: size=440 KiB, count=4768, average=95 B
+2024-12-08 11:16:23,091 - app - INFO - <frozen abc>:106: size=365 KiB, count=1243, average=301 B
+2024-12-08 11:16:23,102 - app - INFO - <frozen importlib._bootstrap_external>:1673: size=311 KiB, count=2527, average=126 B
+2024-12-08 11:16:23,105 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\dataclasses.py:473: size=256 KiB, count=2098, average=125 B
+2024-12-08 11:16:23,105 - app - INFO - <frozen importlib._bootstrap_external>:123: size=221 KiB, count=1281, average=177 B
+2024-12-08 11:16:23,105 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\torch\nn\modules\module.py:451: size=190 KiB, count=901, average=216 B
+2024-12-08 11:16:23,112 - app - INFO - <frozen importlib._bootstrap>:488: size=187 KiB, count=1642, average=117 B
+2024-12-08 11:16:23,112 - app - INFO - <frozen importlib._bootstrap_external>:1670: size=132 KiB, count=235, average=577 B
+2024-12-08 11:16:23,168 - app - INFO - Processing question for user test_user, chat None
+2024-12-08 11:16:23,342 - app - ERROR - Error processing question (attempt 3): RAGAgent.handle_new_chat() missing 1 required positional argument: 'topic'
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 242, in ask_question
+    result = rag_agent.run(question, user_id, chat_id, chat_history)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\main.py", line 664, in run
+    self.handle_new_chat(user_id, question)
+TypeError: RAGAgent.handle_new_chat() missing 1 required positional argument: 'topic'
+2024-12-08 11:16:24,926 - app - INFO - [ Top 10 memory usage ]
+2024-12-08 11:16:24,926 - app - INFO - <frozen importlib._bootstrap_external>:753: size=8771 KiB, count=55161, average=163 B
+2024-12-08 11:16:24,931 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\sentence_transformers\SentenceTransformer.py:1560: size=622 KiB, count=2, average=311 KiB
+2024-12-08 11:16:24,931 - app - INFO - <frozen abc>:123: size=440 KiB, count=4768, average=95 B
+2024-12-08 11:16:24,931 - app - INFO - <frozen abc>:106: size=365 KiB, count=1243, average=301 B
+2024-12-08 11:16:24,931 - app - INFO - <frozen importlib._bootstrap_external>:1673: size=311 KiB, count=2527, average=126 B
+2024-12-08 11:16:24,931 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\dataclasses.py:473: size=256 KiB, count=2098, average=125 B
+2024-12-08 11:16:24,942 - app - INFO - <frozen importlib._bootstrap_external>:123: size=221 KiB, count=1281, average=177 B
+2024-12-08 11:16:24,946 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\torch\nn\modules\module.py:451: size=190 KiB, count=901, average=216 B
+2024-12-08 11:16:24,946 - app - INFO - <frozen importlib._bootstrap>:488: size=187 KiB, count=1642, average=117 B
+2024-12-08 11:16:24,951 - app - INFO - <frozen importlib._bootstrap_external>:1670: size=132 KiB, count=235, average=577 B
+2024-12-08 11:16:25,541 - root - INFO - Successfully loaded lawyers from CSV
+2024-12-08 11:16:26,773 - app - INFO - RAG agent initialized successfully
+2024-12-08 11:16:28,202 - app - ERROR - Error processing question (attempt 1): RAGAgent.handle_new_chat() missing 1 required positional argument: 'topic'
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 242, in ask_question
+    result = rag_agent.run(question, user_id, chat_id, chat_history)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\main.py", line 664, in run
+    self.handle_new_chat(user_id, question)
+TypeError: RAGAgent.handle_new_chat() missing 1 required positional argument: 'topic'
+2024-12-08 11:16:28,375 - app - INFO - Processing question for user test_user, chat None
+2024-12-08 11:16:28,722 - app - ERROR - Error processing question (attempt 1): RAGAgent.handle_new_chat() missing 1 required positional argument: 'topic'
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 242, in ask_question
+    result = rag_agent.run(question, user_id, chat_id, chat_history)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\main.py", line 664, in run
+    self.handle_new_chat(user_id, question)
+TypeError: RAGAgent.handle_new_chat() missing 1 required positional argument: 'topic'
+2024-12-08 11:16:33,132 - app - INFO - [ Top 10 memory usage ]
+2024-12-08 11:16:33,147 - app - INFO - [ Top 10 memory usage ]
+2024-12-08 11:16:33,147 - app - INFO - <frozen importlib._bootstrap_external>:753: size=8771 KiB, count=55161, average=163 B
+2024-12-08 11:16:33,147 - app - INFO - <frozen importlib._bootstrap_external>:753: size=8771 KiB, count=55161, average=163 B
+2024-12-08 11:16:33,151 - app - INFO - <frozen abc>:123: size=440 KiB, count=4764, average=95 B
+2024-12-08 11:16:33,151 - app - INFO - <frozen abc>:123: size=440 KiB, count=4764, average=95 B
+2024-12-08 11:16:33,151 - app - INFO - <frozen abc>:106: size=365 KiB, count=1243, average=301 B
+2024-12-08 11:16:33,151 - app - INFO - <frozen abc>:106: size=365 KiB, count=1243, average=301 B
+2024-12-08 11:16:33,151 - app - INFO - <frozen importlib._bootstrap_external>:1673: size=311 KiB, count=2527, average=126 B
+2024-12-08 11:16:33,151 - app - INFO - <frozen importlib._bootstrap_external>:1673: size=311 KiB, count=2527, average=126 B
+2024-12-08 11:16:33,151 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\sentence_transformers\SentenceTransformer.py:1560: size=311 KiB, count=1, average=311 KiB
+2024-12-08 11:16:33,151 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\sentence_transformers\SentenceTransformer.py:1560: size=311 KiB, count=1, average=311 KiB
+2024-12-08 11:16:33,162 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\dataclasses.py:473: size=256 KiB, count=2098, average=125 B
+2024-12-08 11:16:33,163 - app - INFO - <frozen importlib._bootstrap_external>:123: size=221 KiB, count=1281, average=177 B
+2024-12-08 11:16:33,165 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\dataclasses.py:473: size=256 KiB, count=2098, average=125 B
+2024-12-08 11:16:33,165 - app - INFO - <frozen importlib._bootstrap>:488: size=187 KiB, count=1641, average=117 B
+2024-12-08 11:16:33,165 - app - INFO - <frozen importlib._bootstrap_external>:123: size=221 KiB, count=1281, average=177 B
+2024-12-08 11:16:33,171 - app - INFO - <frozen importlib._bootstrap_external>:1670: size=132 KiB, count=235, average=577 B
+2024-12-08 11:16:33,176 - app - INFO - <frozen importlib._bootstrap>:488: size=187 KiB, count=1641, average=117 B
+2024-12-08 11:16:33,176 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\linecache.py:139: size=108 KiB, count=1187, average=93 B
+2024-12-08 11:16:33,179 - app - INFO - <frozen importlib._bootstrap_external>:1670: size=132 KiB, count=235, average=577 B
+2024-12-08 11:16:33,256 - app - INFO - Processing question for user test_user, chat None
+2024-12-08 11:16:33,256 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\linecache.py:139: size=108 KiB, count=1187, average=93 B
+2024-12-08 11:16:33,482 - app - ERROR - Error processing question (attempt 2): RAGAgent.handle_new_chat() missing 1 required positional argument: 'topic'
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 242, in ask_question
+    result = rag_agent.run(question, user_id, chat_id, chat_history)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\main.py", line 664, in run
+    self.handle_new_chat(user_id, question)
+TypeError: RAGAgent.handle_new_chat() missing 1 required positional argument: 'topic'
+2024-12-08 11:16:33,544 - app - INFO - Processing question for user test_user, chat None
+2024-12-08 11:16:33,742 - app - ERROR - Error processing question (attempt 2): RAGAgent.handle_new_chat() missing 1 required positional argument: 'topic'
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 242, in ask_question
+    result = rag_agent.run(question, user_id, chat_id, chat_history)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\main.py", line 664, in run
+    self.handle_new_chat(user_id, question)
+TypeError: RAGAgent.handle_new_chat() missing 1 required positional argument: 'topic'
+2024-12-08 11:16:37,533 - app - INFO - [ Top 10 memory usage ]
+2024-12-08 11:16:37,566 - app - INFO - <frozen importlib._bootstrap_external>:753: size=8771 KiB, count=55161, average=163 B
+2024-12-08 11:16:37,609 - app - INFO - <frozen abc>:123: size=440 KiB, count=4763, average=95 B
+2024-12-08 11:16:37,633 - app - INFO - <frozen abc>:106: size=365 KiB, count=1243, average=301 B
+2024-12-08 11:16:37,637 - app - INFO - <frozen importlib._bootstrap_external>:1673: size=311 KiB, count=2527, average=126 B
+2024-12-08 11:16:37,641 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\sentence_transformers\SentenceTransformer.py:1560: size=311 KiB, count=1, average=311 KiB
+2024-12-08 11:16:37,651 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\dataclasses.py:473: size=256 KiB, count=2098, average=125 B
+2024-12-08 11:16:37,664 - app - INFO - [ Top 10 memory usage ]
+2024-12-08 11:16:37,664 - app - INFO - <frozen importlib._bootstrap_external>:123: size=221 KiB, count=1281, average=177 B
+2024-12-08 11:16:37,665 - app - INFO - <frozen importlib._bootstrap_external>:753: size=8771 KiB, count=55161, average=163 B
+2024-12-08 11:16:37,672 - app - INFO - <frozen importlib._bootstrap>:488: size=187 KiB, count=1641, average=117 B
+2024-12-08 11:16:37,675 - app - INFO - <frozen abc>:123: size=440 KiB, count=4763, average=95 B
+2024-12-08 11:16:37,677 - app - INFO - <frozen importlib._bootstrap_external>:1670: size=132 KiB, count=235, average=577 B
+2024-12-08 11:16:37,678 - app - INFO - <frozen abc>:106: size=365 KiB, count=1243, average=301 B
+2024-12-08 11:16:37,679 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\linecache.py:139: size=108 KiB, count=1187, average=93 B
+2024-12-08 11:16:37,680 - app - INFO - <frozen importlib._bootstrap_external>:1673: size=311 KiB, count=2527, average=126 B
+2024-12-08 11:16:37,738 - app - INFO - Processing question for user test_user, chat None
+2024-12-08 11:16:37,740 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\sentence_transformers\SentenceTransformer.py:1560: size=311 KiB, count=1, average=311 KiB
+2024-12-08 11:16:37,998 - app - ERROR - Error processing question (attempt 3): RAGAgent.handle_new_chat() missing 1 required positional argument: 'topic'
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 242, in ask_question
+    result = rag_agent.run(question, user_id, chat_id, chat_history)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\main.py", line 664, in run
+    self.handle_new_chat(user_id, question)
+TypeError: RAGAgent.handle_new_chat() missing 1 required positional argument: 'topic'
+2024-12-08 11:16:38,003 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\dataclasses.py:473: size=256 KiB, count=2098, average=125 B
+2024-12-08 11:16:38,435 - app - INFO - <frozen importlib._bootstrap_external>:123: size=221 KiB, count=1281, average=177 B
+2024-12-08 11:16:38,466 - app - INFO - <frozen importlib._bootstrap>:488: size=187 KiB, count=1641, average=117 B
+2024-12-08 11:16:38,481 - app - INFO - <frozen importlib._bootstrap_external>:1670: size=132 KiB, count=235, average=577 B
+2024-12-08 11:16:38,513 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\linecache.py:139: size=108 KiB, count=1187, average=93 B
+2024-12-08 11:16:38,608 - app - INFO - Processing question for user test_user, chat None
+2024-12-08 11:16:38,864 - app - ERROR - Error processing question (attempt 3): RAGAgent.handle_new_chat() missing 1 required positional argument: 'topic'
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 242, in ask_question
+    result = rag_agent.run(question, user_id, chat_id, chat_history)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\main.py", line 664, in run
+    self.handle_new_chat(user_id, question)
+TypeError: RAGAgent.handle_new_chat() missing 1 required positional argument: 'topic'
+2024-12-08 11:16:41,474 - app - INFO - [ Top 10 memory usage ]
+2024-12-08 11:16:41,498 - app - INFO - <frozen importlib._bootstrap_external>:753: size=8771 KiB, count=55161, average=163 B
+2024-12-08 11:16:41,509 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\tracemalloc.py:505: size=579 KiB, count=10584, average=56 B
+2024-12-08 11:16:41,539 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\tracemalloc.py:498: size=496 KiB, count=10584, average=48 B
+2024-12-08 11:16:41,571 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\tracemalloc.py:193: size=496 KiB, count=10584, average=48 B
+2024-12-08 11:16:41,605 - app - INFO - <frozen abc>:123: size=440 KiB, count=4762, average=95 B
+2024-12-08 11:16:41,630 - app - INFO - <frozen abc>:106: size=365 KiB, count=1243, average=301 B
+2024-12-08 11:16:41,662 - app - INFO - <frozen importlib._bootstrap_external>:1673: size=311 KiB, count=2527, average=126 B
+2024-12-08 11:16:41,695 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\sentence_transformers\SentenceTransformer.py:1560: size=311 KiB, count=1, average=311 KiB
+2024-12-08 11:16:41,712 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\dataclasses.py:473: size=256 KiB, count=2098, average=125 B
+2024-12-08 11:16:41,723 - app - INFO - [ Top 10 memory usage ]
+2024-12-08 11:16:41,724 - app - INFO - <frozen importlib._bootstrap_external>:123: size=221 KiB, count=1281, average=177 B
+2024-12-08 11:16:41,725 - app - INFO - <frozen importlib._bootstrap_external>:753: size=8771 KiB, count=55161, average=163 B
+2024-12-08 11:16:41,811 - app - INFO - <frozen abc>:123: size=440 KiB, count=4762, average=95 B
+2024-12-08 11:16:41,813 - app - INFO - <frozen abc>:106: size=365 KiB, count=1243, average=301 B
+2024-12-08 11:16:41,817 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\tracemalloc.py:505: size=321 KiB, count=3244, average=101 B
+2024-12-08 11:16:41,819 - app - INFO - <frozen importlib._bootstrap_external>:1673: size=311 KiB, count=2527, average=126 B
+2024-12-08 11:16:41,821 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\sentence_transformers\SentenceTransformer.py:1560: size=311 KiB, count=1, average=311 KiB
+2024-12-08 11:16:41,826 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\dataclasses.py:473: size=256 KiB, count=2098, average=125 B
+2024-12-08 11:16:41,826 - app - INFO - <frozen importlib._bootstrap_external>:123: size=221 KiB, count=1281, average=177 B
+2024-12-08 11:16:41,826 - app - INFO - <frozen importlib._bootstrap>:488: size=187 KiB, count=1641, average=117 B
+2024-12-08 11:16:41,836 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\tracemalloc.py:498: size=152 KiB, count=3243, average=48 B
+2024-12-08 13:44:52,163 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-08 13:45:19,876 - root - INFO - Creating user: noumanmughal0123@gmail.com
+2024-12-08 13:45:21,244 - root - ERROR - Error in create user: ('42S22', "[42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name 'PasswordHash'. (207) (SQLExecDirectW); [42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Statement(s) could not be prepared. (8180)")
+2024-12-08 13:45:21,246 - app - ERROR - Signup error: ('42S22', "[42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name 'PasswordHash'. (207) (SQLExecDirectW); [42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Statement(s) could not be prepared. (8180)")
+2024-12-08 13:48:01,700 - root - INFO - Creating user: noumanmughal0123@gmail.com
+2024-12-08 13:48:02,808 - root - INFO - Successfully created user with ID: c5927098-b045-4e70-abfb-f1fbbf266510
+2024-12-08 14:01:05,555 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-08 14:01:48,844 - app - INFO - Processing question for user C5927098-B045-4E70-ABFB-F1FBBF266510, chat test_user
+2024-12-08 14:01:48,845 - app - INFO - Initializing RAG agent...
+2024-12-08 14:01:48,900 - pinecone_plugin_interface.logging - INFO - Discovering subpackages in _NamespacePath(['C:\\Users\\Nouma\\OneDrive\\Desktop\\GenAi x Xavour\\ApnaWaqeel\\venv\\Lib\\site-packages\\pinecone_plugins'])
+2024-12-08 14:01:48,904 - pinecone_plugin_interface.logging - INFO - Looking for plugins in pinecone_plugins.inference
+2024-12-08 14:01:49,245 - pinecone_plugin_interface.logging - INFO - Installing plugin inference into Pinecone
+2024-12-08 14:01:56,686 - datasets - INFO - PyTorch version 2.4.1 available.
+2024-12-08 14:01:58,786 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2024-12-08 14:01:58,786 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2024-12-08 14:02:18,296 - app - INFO - RAG agent initialized successfully
+2024-12-08 14:02:19,056 - root - ERROR - Error retrieving chat history: ('42000', '[42000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Conversion failed when converting from a character string to uniqueidentifier. (8169) (SQLExecDirectW)')
+2024-12-08 14:02:19,871 - app - INFO - Processing question for user C5927098-B045-4E70-ABFB-F1FBBF266510, chat test_user
+2024-12-08 14:02:19,881 - root - ERROR - Error retrieving chat history: ('42000', '[42000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Conversion failed when converting from a character string to uniqueidentifier. (8169) (SQLExecDirectW)')
+2024-12-08 14:02:19,996 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-08 14:02:20,376 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-08 14:02:20,684 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-08 14:02:20,686 - root - INFO - Sentiment: Constitutional
+2024-12-08 14:02:20,760 - root - INFO - Lawyer recommendations: []
+2024-12-08 14:02:20,791 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-08 14:02:20,841 - root - INFO - Sentiment: Constitutional
+2024-12-08 14:02:20,880 - root - INFO - Lawyer recommendations: []
+2024-12-08 14:02:42,709 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-08 14:02:42,898 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-08 14:02:43,261 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-08 14:02:43,386 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-08 14:02:43,712 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-08 14:02:43,826 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-08 14:02:44,130 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-08 14:02:44,386 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-08 14:02:50,349 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-08 14:02:51,296 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-08 14:02:51,398 - app - INFO - Processing question for user C5927098-B045-4E70-ABFB-F1FBBF266510, chat test_user
+2024-12-08 14:02:52,286 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-08 14:02:52,294 - root - ERROR - Error retrieving chat history: ('42000', '[42000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Conversion failed when converting from a character string to uniqueidentifier. (8169) (SQLExecDirectW)')
+2024-12-08 14:02:52,880 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-08 14:02:53,066 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-08 14:02:53,117 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-08 14:02:53,491 - root - ERROR - Error adding message: 'SQLChatMessageHistory' object has no attribute 'user_id'
+2024-12-08 14:02:53,500 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-08 14:02:53,521 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-08 14:02:53,887 - app - INFO - Successfully generated response for user C5927098-B045-4E70-ABFB-F1FBBF266510
+2024-12-08 14:02:53,887 - root - INFO - Sentiment: Constitutional
+2024-12-08 14:02:54,886 - root - INFO - Lawyer recommendations: []
+2024-12-08 14:02:56,090 - root - ERROR - Error adding message: 'SQLChatMessageHistory' object has no attribute 'user_id'
+2024-12-08 14:02:56,394 - app - INFO - Successfully generated response for user C5927098-B045-4E70-ABFB-F1FBBF266510
+2024-12-08 14:02:58,176 - app - INFO - [ Top 10 memory usage ]
+2024-12-08 14:02:58,204 - app - INFO - <frozen importlib._bootstrap_external>:753: size=8800 KiB, count=55436, average=163 B
+2024-12-08 14:02:58,218 - app - INFO - <frozen abc>:123: size=682 KiB, count=7338, average=95 B
+2024-12-08 14:02:58,259 - app - INFO - <frozen abc>:106: size=369 KiB, count=1256, average=301 B
+2024-12-08 14:02:58,272 - app - INFO - <frozen importlib._bootstrap_external>:1673: size=312 KiB, count=2535, average=126 B
+2024-12-08 14:02:58,302 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\sentence_transformers\SentenceTransformer.py:1560: size=311 KiB, count=1, average=311 KiB
+2024-12-08 14:02:58,363 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\langsmith\client.py:281: size=308 KiB, count=13, average=23.7 KiB
+2024-12-08 14:02:58,466 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\dataclasses.py:473: size=256 KiB, count=2099, average=125 B
+2024-12-08 14:02:58,513 - app - INFO - <frozen importlib._bootstrap_external>:123: size=222 KiB, count=1289, average=177 B
+2024-12-08 14:02:58,562 - app - INFO - <frozen importlib._bootstrap>:488: size=187 KiB, count=1623, average=118 B
+2024-12-08 14:02:58,593 - app - INFO - <frozen importlib._bootstrap_external>:1670: size=132 KiB, count=235, average=577 B
+2024-12-08 14:02:59,205 - app - INFO - [ Top 10 memory usage ]
+2024-12-08 14:02:59,206 - app - INFO - <frozen importlib._bootstrap_external>:753: size=8800 KiB, count=55436, average=163 B
+2024-12-08 14:02:59,208 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\tracemalloc.py:505: size=694 KiB, count=7417, average=96 B
+2024-12-08 14:02:59,210 - app - INFO - <frozen abc>:123: size=681 KiB, count=7327, average=95 B
+2024-12-08 14:02:59,211 - app - INFO - <frozen abc>:106: size=369 KiB, count=1256, average=301 B
+2024-12-08 14:02:59,212 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\tracemalloc.py:498: size=348 KiB, count=7416, average=48 B
+2024-12-08 14:02:59,214 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\tracemalloc.py:193: size=348 KiB, count=7415, average=48 B
+2024-12-08 14:02:59,215 - app - INFO - <frozen importlib._bootstrap_external>:1673: size=312 KiB, count=2535, average=126 B
+2024-12-08 14:02:59,218 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\sentence_transformers\SentenceTransformer.py:1560: size=311 KiB, count=1, average=311 KiB
+2024-12-08 14:02:59,220 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\tracemalloc.py:499: size=288 KiB, count=1, average=288 KiB
+2024-12-08 14:02:59,225 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\dataclasses.py:473: size=256 KiB, count=2099, average=125 B
+2024-12-08 14:03:07,436 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-08 14:03:07,880 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-08 14:03:08,315 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-08 14:03:08,810 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-08 14:03:14,897 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-08 14:03:15,673 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-08 14:03:16,131 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-08 14:03:16,856 - root - ERROR - Error adding message: 'SQLChatMessageHistory' object has no attribute 'user_id'
+2024-12-08 14:03:17,081 - app - INFO - Successfully generated response for user C5927098-B045-4E70-ABFB-F1FBBF266510
+2024-12-08 14:03:19,111 - app - INFO - [ Top 10 memory usage ]
+2024-12-08 14:03:19,112 - app - INFO - <frozen importlib._bootstrap_external>:753: size=8800 KiB, count=55436, average=163 B
+2024-12-08 14:03:19,114 - app - INFO - <frozen abc>:123: size=678 KiB, count=7277, average=95 B
+2024-12-08 14:03:19,116 - app - INFO - <frozen abc>:106: size=369 KiB, count=1256, average=301 B
+2024-12-08 14:03:19,117 - app - INFO - <frozen importlib._bootstrap_external>:1673: size=312 KiB, count=2535, average=126 B
+2024-12-08 14:03:19,119 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\sentence_transformers\SentenceTransformer.py:1560: size=311 KiB, count=1, average=311 KiB
+2024-12-08 14:03:19,122 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\dataclasses.py:473: size=256 KiB, count=2099, average=125 B
+2024-12-08 14:03:19,123 - app - INFO - <frozen importlib._bootstrap_external>:123: size=222 KiB, count=1289, average=177 B
+2024-12-08 14:03:19,125 - app - INFO - <frozen importlib._bootstrap>:488: size=187 KiB, count=1622, average=118 B
+2024-12-08 14:03:19,127 - app - INFO - <frozen importlib._bootstrap_external>:1670: size=132 KiB, count=235, average=577 B
+2024-12-08 14:03:19,128 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\linecache.py:139: size=108 KiB, count=1187, average=93 B

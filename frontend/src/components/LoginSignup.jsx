@@ -42,7 +42,7 @@ export function LoginSignup() {
       await authService.signup(name, email, password, role);
       // Auto login after successful signup
       // await authService.login(email, password);
-      window.location.href = '/dashboard';
+      window.location.href = '/user_home';
     } catch (err) {
       setError(err.message);
     } finally {

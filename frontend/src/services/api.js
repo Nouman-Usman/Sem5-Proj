@@ -7,33 +7,45 @@ const api = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
-  timeout: 30000, // 30 second timeout
+  timeout: 30000, 
 });
+
+api.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
 
 // Add response interceptor for error handling
 api.interceptors.response.use(
-  response => {
-    // Handle 204 responses
-    if (response.status === 204) {
-      console.warn('Received 204 No Content response, retrying request...');
-      return Promise.reject(new Error('No content received, retrying...'));
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401) {
+      // Handle unauthorized access
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      window.location.href = '/login';
+      return Promise.reject(new Error('Session expired. Please login again.'));
     }
-    return response;
-  },
-  error => {
-    console.error('API Error:', error);
+    if (error.response?.status === 403) {
+      return Promise.reject(new Error('You do not have permission to perform this action.'));
+    }
     if (error.code === 'ECONNABORTED') {
-      throw new Error('Request timed out. Please try again.');
+      return Promise.reject(new Error('Request timed out. Please try again.'));
     }
-    if (error.response?.status === 503) {
-      throw new Error('Service is currently unavailable. Please try again later.');
-    }
-    throw new Error(error.response?.data?.error || error.message || 'An unexpected error occurred');
+    return Promise.reject(error.response?.data?.error || error.message || 'An unexpected error occurred');
   }
 );
 
 export const apiService = {
-  async askQuestion(question, userId, chatId = null) {
+  async askQuestion(question, chatId = null) {
     const maxRetries = 3;
     let retries = 0;
 
@@ -41,7 +53,6 @@ export const apiService = {
       try {
         const response = await api.post('/ask', { 
           question, 
-          user_id: userId, 
           chat_id: chatId 
         });
         
@@ -60,18 +71,59 @@ export const apiService = {
         if (retries === maxRetries) {
           throw error;
         }
-        // Wait before retrying
         await new Promise(resolve => setTimeout(resolve, 1000));
       }
     }
   },
-  getUserChats: (userId, chatId) => 
-    api.get(`/user/${userId}/chats/${chatId}`),
-  getChatMessages: (userId, chatId) => 
-    api.get(`/user/${userId}/chat/${chatId}/messages`),
-  clearChat: (userId, chatId) => 
-    api.delete(`/user/${userId}/chat/${chatId}`),
-  checkHealth: () => api.get('/health'),
+
+  // Chat related endpoints
+  async startChat(recipientId) {
+    const response = await api.post('/chat/start', { recipient_id: recipientId });
+    return response.data;
+  },
+
+  async getChatHistory(chatId) {
+    const response = await api.get(`/chat/${chatId}/messages`);
+    return response.data;
+  },
+
+  async getUserChats() {
+    const response = await api.get('/user/chats');
+    return response.data;
+  },
+
+  // Lawyer related endpoints
+  async searchLawyers(query) {
+    const response = await api.get(`/lawyers/search?q=${encodeURIComponent(query)}`);
+    return response.data;
+  },
+
+  async getLawyerDetails(lawyerId) {
+    const response = await api.get(`/lawyers/${lawyerId}`);
+    return response.data;
+  },
+
+  async getLawyersBySpecialization(specialization) {
+    const response = await api.get(`/lawyers/specialization/${specialization}`);
+    return response.data;
+  },
+
+  // Profile related endpoints
+  async getUserProfile() {
+    const response = await api.get('/user-profile');
+    return response.data;
+  },
+
+  async updateProfile(profileData) {
+    const response = await api.put('/user-profile', profileData);
+    return response.data;
+  },
+
+  // System health check
+  async checkHealth() {
+    const response = await api.get('/health');
+    return response.data;
+  }
 };
 
 export default apiService;

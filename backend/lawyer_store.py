@@ -13,13 +13,13 @@ load_dotenv()
 class LawyerStore:
     def __init__(self, connection_string: str):
         self.connection_string = connection_string
-        self._load_lawyers_from_csv()
+        # self._load_lawyers_from_csv()
 
     def _get_db_connection(self):
         return pyodbc.connect(self.connection_string)
 
     def _load_lawyers_from_csv(self):
-        """Load lawyers from CSV and store in MS SQL"""
+        """Load lawyers from CSV and create proper user accounts with lawyer details"""
         try:
             conn = self._get_db_connection()
             cursor = conn.cursor()
@@ -27,94 +27,127 @@ class LawyerStore:
             with open("lawyers.csv", mode="r", encoding='utf-8') as file:
                 lawyers = csv.DictReader(file)
                 for lawyer in lawyers:
-                    # First insert into Lawyers table
-                    lawyer_query = """
-                        INSERT INTO Lawyers (LawyerName, ContactInfo, CreatedAt)
-                        OUTPUT INSERTED.LawyerId
-                        VALUES (?, ?, ?)
-                    """
-                    contact_info = json.dumps({
-                        'specialization': lawyer['Specialization'],
-                        'experience': lawyer['Experience'],
-                        'rating': lawyer['Rating'],
-                        'location': lawyer['Location'],
-                        'contact': lawyer['Contact']
-                    })
+                    user_id = str(uuid.uuid4())
+                    profile_id = str(uuid.uuid4())
                     
-                    cursor.execute(lawyer_query, (
+                    # Create user record
+                    user_query = """
+                        INSERT INTO Users (UserId, UserName, Email, UserType, CreatedAt)
+                        VALUES (CAST(? AS UNIQUEIDENTIFIER), ?, ?, 'Lawyer', GETDATE())
+                    """
+                    cursor.execute(user_query, (
+                        user_id,
                         lawyer['Name'],
-                        contact_info,
-                        datetime.datetime.utcnow()
+                        lawyer.get('Email', f"{lawyer['Name'].replace(' ', '').lower()}@example.com")
                     ))
-                    
-                    # Get the auto-generated LawyerId
-                    lawyer_id = cursor.fetchval()
-                    
-                    # Then insert into LawyerStore with the new LawyerId
-                    store_query = """
-                        INSERT INTO LawyerStore (LawyerId, LawyerName, Email, CreatedAt, 
-                                               Specialization, Experience, Rating, Location, Contact)
-                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+
+                    profile_query = """
+                        INSERT INTO UserProfiles (ProfileId, UserId, ContactNumber, Address)
+                        VALUES (CAST(? AS UNIQUEIDENTIFIER), CAST(? AS UNIQUEIDENTIFIER), ?, ?)
                     """
-                    cursor.execute(store_query, (
-                        lawyer_id,
-                        lawyer['Name'],
-                        lawyer.get('Email', ''),
-                        datetime.datetime.utcnow(),
+                    cursor.execute(profile_query, (
+                        profile_id,
+                        user_id,
+                        lawyer.get('Contact', 'Not provided'),
+                        lawyer.get('Location', 'Not provided')
+                    ))
+                    lawyer_details_query = """
+                        INSERT INTO LawyerDetails 
+                        (LawyerId, Specialization, Experience, LicenseNumber, Rating, Location)
+                        VALUES (CAST(? AS UNIQUEIDENTIFIER), ?, ?, ?, ?, ?)
+                    """
+                    license_number = f"TBD-{str(uuid.uuid4())[:8]}"
+                    cursor.execute(lawyer_details_query, (
+                        user_id,
                         lawyer['Specialization'],
-                        lawyer['Experience'],
-                        lawyer['Rating'],
-                        lawyer['Location'],
-                        lawyer['Contact']
+                        int(lawyer.get('Experience', '0').split()[0]),  # Extract years
+                        license_number,
+                        float(lawyer.get('Rating', '0')),
+                        lawyer['Location']
                     ))
-            conn.commit()
-            logging.info("Successfully loaded lawyers from CSV")
-            
+                    if 'Specializations' in lawyer:
+                        specializations = [s.strip() for s in lawyer['Specializations'].split(',')]
+                        for spec in specializations:
+                            spec_id = str(uuid.uuid4())
+                            # Create or get specialization
+                            cursor.execute("""
+                                MERGE INTO LawyerSpecializations AS target
+                                USING (SELECT ? as Name) AS source
+                                ON target.Name = source.Name
+                                WHEN NOT MATCHED THEN
+                                    INSERT (SpecializationId, Name)
+                                    VALUES (CAST(? AS UNIQUEIDENTIFIER), ?);
+                                
+                                SELECT SpecializationId FROM LawyerSpecializations WHERE Name = ?;
+                            """, (spec, spec_id, spec, spec))
+                            
+                            spec_id = cursor.fetchone()[0]
+                            
+                            # Create mapping
+                            cursor.execute("""
+                                INSERT INTO LawyerSpecializationMapping (LawyerId, SpecializationId)
+                                VALUES (CAST(? AS UNIQUEIDENTIFIER), ?)
+                            """, (user_id, spec_id))
+
+                    conn.commit()
+                    logging.info(f"Successfully created lawyer account for {lawyer['Name']}")
+                
+                logging.info("Successfully loaded all lawyers from CSV")
+                
         except Exception as e:
+            if 'conn' in locals():
+                conn.rollback()
             logging.error(f"Error loading lawyers from CSV: {e}")
+            raise
         finally:
-            cursor.close()
-            conn.close()
+            if 'cursor' in locals():
+                cursor.close()
+            if 'conn' in locals():
+                conn.close()
 
     def calculate_weight(self, rating: str, experience: str) -> float:
-        """Calculate weight for lawyer ranking using 60-40 weighted formula"""
         try:
-            # Normalize rating to 0-1 scale
             normalized_rating = float(rating) / 5.0
-            # Extract years from experience and normalize to 0-1 scale (assuming max 35 years)
             years = int(experience.split()[0])
             normalized_exp = min(float(years) / 35.0, 1.0)
-            # Apply weights: 60% rating, 40% experience
             return (0.6 * normalized_rating) + (0.4 * normalized_exp)
         except (ValueError, IndexError) as e:
             logging.error(f"Error calculating weight: {e}")
             return 0.0
 
     def get_top_lawyers(self, category: str) -> List[Dict]:
-        """Get lawyers by category sorted by weighted score"""
         try:
             conn = self._get_db_connection()
             cursor = conn.cursor()
             
             query = """
                 SELECT u.UserName, u.Email, ld.Specialization, ld.Experience, 
-                       ld.Rating, ld.Location
+                       ld.Rating, ld.Location, ld.LicenseNumber,
+                       up.ContactNumber, up.Address
                 FROM Users u
                 JOIN LawyerDetails ld ON u.UserId = ld.LawyerId
-                WHERE ld.Specialization = ?
+                LEFT JOIN UserProfiles up ON u.UserId = up.UserId
+                WHERE ld.Specialization = ? AND u.UserType = 'Lawyer'
                 ORDER BY ld.Rating DESC, ld.Experience DESC
             """
-            cursor.execute(query, (category,))
-            
+            cursor.execute(query, (category,))            
             lawyers = []
             for row in cursor.fetchall():
+                contact_info = {
+                    'phone': row.ContactNumber or 'Not provided',
+                    'address': row.Address or 'Not provided'
+                }
                 lawyers.append({
                     'name': row.UserName,
                     'email': row.Email,
                     'specialization': row.Specialization,
-                    'experience': row.Experience,
+                    'experience': str(row.Experience) + ' years',
                     'rating': float(row.Rating),
                     'location': row.Location,
+                    'license_number': row.LicenseNumber,
+                    'contact_info': contact_info,
+                    'avatar': None,  
+                    'reviewCount': 0  
                 })
             return lawyers
             
@@ -124,6 +157,99 @@ class LawyerStore:
         finally:
             cursor.close()
             conn.close()
+
+    def get_lawyer_details(self, lawyer_id: str) -> Optional[Dict]:
+        """Get detailed information for a specific lawyer"""
+        try:
+            conn = self._get_db_connection()
+            cursor = conn.cursor()
+            
+            query = """
+                SELECT u.UserName, u.Email, ld.*, up.ContactNumber, up.Address,
+                       (SELECT STRING_AGG(ls.Name, ',')
+                        FROM LawyerSpecializationMapping lsm
+                        JOIN LawyerSpecializations ls ON lsm.SpecializationId = ls.SpecializationId
+                        WHERE lsm.LawyerId = ld.LawyerId) as Specializations
+                FROM Users u
+                JOIN LawyerDetails ld ON u.UserId = ld.LawyerId
+                LEFT JOIN UserProfiles up ON u.UserId = up.UserId
+                WHERE u.UserId = ? AND u.UserType = 'Lawyer'
+            """
+            cursor.execute(query, (lawyer_id,))
+            row = cursor.fetchone()
+            
+            if row:
+                specializations = row.Specializations.split(',') if row.Specializations else []
+                return {
+                    'id': lawyer_id,
+                    'name': row.UserName,
+                    'email': row.Email,
+                    'specialization': row.Specialization,
+                    'specializations': specializations,
+                    'experience': row.Experience,
+                    'rating': float(row.Rating),
+                    'location': row.Location,
+                    'license_number': row.LicenseNumber,
+                    'contact': {
+                        'phone': row.ContactNumber or 'Not provided',
+                        'address': row.Address or 'Not provided'
+                    }
+                }
+            return None
+            
+        except Exception as e:
+            logging.error(f"Error getting lawyer details: {e}")
+            return None
+        finally:
+            cursor.close()
+            conn.close()
+
+    def search_lawyers(self, query: str) -> List[Dict]:
+        """Search lawyers by name, specialization, or location"""
+        try:
+            conn = self._get_db_connection()
+            cursor = conn.cursor()
+            
+            search_query = """
+                SELECT DISTINCT u.UserName, u.Email, ld.Specialization, 
+                       ld.Experience, ld.Rating, ld.Location
+                FROM Users u
+                JOIN LawyerDetails ld ON u.UserId = ld.LawyerId
+                LEFT JOIN LawyerSpecializationMapping lsm ON ld.LawyerId = lsm.LawyerId
+                LEFT JOIN LawyerSpecializations ls ON lsm.SpecializationId = ls.SpecializationId
+                WHERE u.UserType = 'Lawyer'
+                AND (
+                    u.UserName LIKE ? OR
+                    ld.Specialization LIKE ? OR
+                    ld.Location LIKE ? OR
+                    ls.Name LIKE ?
+                )
+                ORDER BY ld.Rating DESC
+            """
+            search_pattern = f"%{query}%"
+            cursor.execute(search_query, (search_pattern, search_pattern, search_pattern, search_pattern))
+            
+            return [self._format_lawyer_result(row) for row in cursor.fetchall()]
+            
+        except Exception as e:
+            logging.error(f"Error searching lawyers: {e}")
+            return []
+        finally:
+            cursor.close()
+            conn.close()
+
+    def _format_lawyer_result(self, row) -> Dict:
+        """Helper method to format lawyer data consistently"""
+        return {
+            'name': row.UserName,
+            'email': row.Email,
+            'specialization': row.Specialization,
+            'experience': str(row.Experience) + ' years',
+            'rating': float(row.Rating),
+            'location': row.Location,
+            'reviewCount': 0,  # Add actual review count when implemented
+            'description': f"Specializes in {row.Specialization} with {row.Experience} years of experience"
+        }
 
     def format_recommendation(self, lawyers: List[Dict]) -> Dict:
         """Format lawyer recommendations with detailed info"""
@@ -278,6 +404,6 @@ class LawyerStore:
 
 if __name__ == "__main__":
     user = LawyerStore(connection_string=os.getenv("SQL_CONN_STRING"))
-    userData = user.get_top_lawyers("Intellectual Property")
+    userData = user.get_top_lawyers("Consitutional")
     print(userData)
     # print(user.get_top_lawyers("Banking and Finance", limit=3))

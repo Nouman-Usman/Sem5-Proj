@@ -6,6 +6,7 @@ import uuid
 from typing import Optional, List, Dict
 import os
 from dotenv import load_dotenv
+from werkzeug.security import generate_password_hash, check_password_hash
 
 load_dotenv()
 
@@ -22,12 +23,11 @@ class Database:
         return pyodbc.connect(self.connection_string)
 
 class UserCRUD(Database):
-    def create(self, username: str, email: str, user_type: str) -> Optional[str]:
+    def create(self, username: str, email: str, user_type: str, password: str) -> Optional[str]:
         conn = None
         cursor = None
         try:
             conn = self.get_connection()
-            conn.autocommit = False  # Explicitly disable autocommit
             cursor = conn.cursor()
             user_id = str(uuid.uuid4())
             profile_id = str(uuid.uuid4())
@@ -37,104 +37,54 @@ class UserCRUD(Database):
             if not db_user_type:
                 raise ValueError(f"Invalid user type: {user_type}")
             
-            logging.info(f"Starting transaction for user creation: {email}")
-            cursor.execute("BEGIN TRANSACTION")
-
+            logging.info(f"Creating user: {email}")
+            
             # Check email existence
-            logging.info(f"Checking email existence: {email}")
             cursor.execute("SELECT 1 FROM Users WHERE Email = ?", (email,))
             if cursor.fetchone():
                 raise ValueError("Email already exists")
-
-            # Create user
-            logging.info(f"Creating user record with ID: {user_id}")
             user_query = """
-                INSERT INTO Users (UserId, UserName, Email, UserType, CreatedAt)
-                VALUES (?, ?, ?, ?, GETDATE());
+                INSERT INTO Users (UserId, UserName, Email, UserType, PasswordHash, CreatedAt)
+                VALUES (CAST(? AS UNIQUEIDENTIFIER), ?, ?, ?, ?, GETDATE())
             """
-            cursor.execute(user_query, (user_id, username, email, db_user_type))
-            
-            # Verify user creation immediately
-            cursor.execute("SELECT 1 FROM Users WHERE UserId = ?", (user_id,))
-            if not cursor.fetchone():
-                raise Exception("User creation failed - no record found")
+            password_hash = generate_password_hash(password, method='pbkdf2:sha256')
+            cursor.execute(user_query, (user_id, username, email, db_user_type, password_hash))
+            conn.commit()
 
             # Create profile
-            logging.info(f"Creating user profile for ID: {user_id}")
             profile_query = """
                 INSERT INTO UserProfiles (ProfileId, UserId)
-                VALUES (?, ?);
+                VALUES (CAST(? AS UNIQUEIDENTIFIER), CAST(? AS UNIQUEIDENTIFIER))
             """
             cursor.execute(profile_query, (profile_id, user_id))
+            conn.commit()
 
-            # Create role-specific records
             if user_type.lower() == 'lawyer':
-                logging.info("Creating lawyer details")
                 license_id = f"TBD-{str(uuid.uuid4())[:8]}"
                 lawyer_query = """
                     INSERT INTO LawyerDetails 
                     (LawyerId, Specialization, Experience, LicenseNumber, Rating, Location)
-                    VALUES (?, ?, ?, ?, ?, ?);
+                    VALUES (CAST(? AS UNIQUEIDENTIFIER), ?, ?, ?, ?, ?)
                 """
-                cursor.execute(lawyer_query, (
-                    user_id,
-                    'General',
-                    3,
-                    license_id,
-                    2.0,
-                    'TBD'
-                ))
+                cursor.execute(lawyer_query, (user_id, 'General', 3, license_id, 2.0, 'TBD'))
+                conn.commit()                
             elif user_type.lower() == 'client':
-                logging.info("Creating customer record")
                 customer_query = """
                     INSERT INTO Customers (CustomerId, CustomerName, ContactInfo, CreatedAt)
                     VALUES (CAST(? AS UNIQUEIDENTIFIER), ?, ?, GETDATE())
                 """
-                cursor.execute(customer_query, (
-                    user_id,
-                    username,
-                    '{}',
-                ))
-
-            # Verify the user was created
-            logging.info("Verifying user creation")
-            cursor.execute("""
-                SELECT COUNT(1) FROM Users 
-                WHERE UserId = ?
-            """, (user_id,))
-            
-            result = cursor.fetchone()
-            if not result or result[0] == 0:
-                logging.error("User verification failed before commit")
-                raise Exception("User creation failed - verification error")
-
-            logging.info("Verification successful, committing transaction")
-            conn.commit()
+                cursor.execute(customer_query, (user_id, username, '{}'))
+                conn.commit()
             logging.info(f"Successfully created user with ID: {user_id}")
-            
             return user_id
-
         except Exception as e:
             logging.error(f"Error in create user: {str(e)}")
-            if conn:
-                try:
-                    logging.info("Rolling back transaction")
-                    conn.rollback()
-                except Exception as rollback_error:
-                    logging.error(f"Rollback failed: {str(rollback_error)}")
             raise
         finally:
             if cursor:
-                try:
-                    cursor.close()
-                except Exception as e:
-                    logging.error(f"Error closing cursor: {str(e)}")
+                cursor.close()
             if conn:
-                try:
-                    conn.close()
-                except Exception as e:
-                    logging.error(f"Error closing connection: {str(e)}")
-
+                conn.close()
     def read(self, user_id: str) -> Optional[Dict]:
         try:
             conn = self.get_connection()
@@ -226,6 +176,52 @@ class UserCRUD(Database):
         except Exception as e:
             conn.rollback()
             logging.error(f"Error deleting user: {e}")
+            return False
+        finally:
+            cursor.close()
+            conn.close()
+
+    def check_credentials(self, email: str, password: str) -> Optional[Dict]:
+        try:
+            conn = self.get_connection()
+            cursor = conn.cursor()
+            
+            query = """
+                SELECT UserId, UserName, Email, UserType, PasswordHash 
+                FROM Users 
+                WHERE Email = ?
+            """
+            cursor.execute(query, (email,))
+            row = cursor.fetchone()
+            
+            if row and check_password_hash(row.PasswordHash, password):
+                return {
+                    'user_id': row.UserId,
+                    'username': row.UserName,
+                    'email': row.Email,
+                    'user_type': row.UserType
+                }
+            return None
+            
+        except Exception as e:
+            logging.error(f"Error checking credentials: {e}")
+            return None
+        finally:
+            cursor.close()
+            conn.close()
+
+    def update_password(self, user_id: str, new_password: str) -> bool:
+        try:
+            conn = self.get_connection()
+            cursor = conn.cursor()
+            
+            password_hash = generate_password_hash(new_password, method='pbkdf2:sha256')
+            query = "UPDATE Users SET PasswordHash = ? WHERE UserId = ?"
+            cursor.execute(query, (password_hash, user_id))
+            conn.commit()
+            return True
+        except Exception as e:
+            logging.error(f"Error updating password: {e}")
             return False
         finally:
             cursor.close()

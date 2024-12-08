@@ -96,10 +96,11 @@ def signup():
         return jsonify({"error": f"Invalid role. Must be one of: {', '.join(VALID_USER_TYPES.keys())}"}), 400
 
     try:
-        # Create user with proper role mapping
+        # Create user with password
         user_id = user_crud.create(
             username=name,
             email=email,
+            password=password,  # Add password parameter
             user_type=role
         )
 
@@ -130,23 +131,22 @@ def signup():
         return jsonify({"error": "Failed to create user. Please try again."}), 500
 
 # Route for Login
-@app.route('/api/login', methods=['POST'])
+@app.route('/api/auth/login', methods=['POST'])
 def login():
     data = request.get_json()
     email = data.get('email')
     password = data.get('password')
-
+    
     if not email or not password:
         return jsonify({"error": "Missing email or password"}), 400
-
+    
     try:
-        user = sql_storage.check_email_exist(email)
+        user_crud = UserCRUD()
+        user = user_crud.check_credentials(email, password)
+        
         if not user:
+            print("Invalid credentials")
             return jsonify({"error": "Invalid credentials"}), 401
-
-        # TODO: Add password verification here
-        # if not check_password_hash(user['password_hash'], password):
-        #     return jsonify({"error": "Invalid credentials"}), 401
 
         # Create JWT token
         access_token = create_access_token(
@@ -215,6 +215,7 @@ def health_check():
     return jsonify({"status": "healthy"})
 
 @app.route('/api/ask', methods=['POST'])
+@jwt_required()  # Add this decorator to require authentication
 def ask_question():
     result = None
     retries = 0
@@ -222,24 +223,27 @@ def ask_question():
     
     while retries < max_retries:
         try:
+            current_user_id = get_jwt_identity()
+            print(f"Current user ID: {current_user_id}")
+
             data = request.get_json()
             if not data:
                 logger.error("No JSON data received")
                 return jsonify({"error": "No data provided"}), 400
-
             question = data.get('question')
-            user_id = data.get('user_id')
             chat_id = data.get('chat_id')
-
-            if not question or not user_id:
-                logger.error(f"Missing parameters: question={bool(question)}, user_id={bool(user_id)}")
-                return jsonify({"error": "Missing required parameters"}), 400
-
-            logger.info(f"Processing question for user {user_id}, chat {chat_id}")
+            # If chat id is none , create a new chat id for the user
+            if not chat_id:
+                chat_id = uuid.uuid4()
+                print(f"Chat ID: {chat_id}")
+            if not question:
+                logger.error("Missing question parameter")
+                return jsonify({"error": "Missing required parameter: question"}), 400
+            logger.info(f"Processing question for user {current_user_id}, chat {chat_id}")
             
-            rag_agent = get_agent(user_id=user_id, chat_id=chat_id)
-            chat_history = rag_agent.get_chat_history_messages(user_id, chat_id) if chat_id else []
-            result = rag_agent.run(question, user_id, chat_id, chat_history)
+            rag_agent = get_agent(user_id=current_user_id, chat_id=chat_id)
+            chat_history = rag_agent.get_chat_history_messages(current_user_id, chat_id) if chat_id else []
+            result = rag_agent.run(question, current_user_id, chat_id, chat_history)
             
             if not result or 'chat_response' not in result:
                 logger.error("Invalid result from RAG agent")
@@ -265,7 +269,7 @@ def ask_question():
                 time.sleep(1)
                 continue
 
-            logger.info(f"Successfully generated response for user {user_id}")
+            logger.info(f"Successfully generated response for user {current_user_id}")
             return jsonify(response), 200
 
         except Exception as e:

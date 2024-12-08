@@ -6,7 +6,7 @@ const API_URL = 'http://localhost:5000/api';
 export const authService = {
   async login(email, password) {
     try {
-      const response = await axios.post(`${API_URL}/login`, { email, password });
+      const response = await axios.post(`${API_URL}/auth/login`, { email, password });
       if (response.data.access_token) {
         localStorage.setItem('token', response.data.access_token);
         localStorage.setItem('user', JSON.stringify(response.data.user));
