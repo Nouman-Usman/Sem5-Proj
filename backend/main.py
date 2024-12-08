@@ -10,7 +10,7 @@ import uuid
 from langchain.schema import Document
 from langchain_community.tools.tavily_search import TavilySearchResults
 from langgraph.graph import END, StateGraph
-from typing import List, Dict, TypedDict, Any
+from typing import List, Dict, TypedDict, Any, Optional
 from pprint import pprint
 import blob
 from pinecone import Pinecone
