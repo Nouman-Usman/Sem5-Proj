@@ -631,23 +631,16 @@ Question to route: {question}
         try:
             chat_id = str(uuid.uuid4())
             topic = self.get_chat_topic(question)
-            system_id = "00000000-0000-0000-0000-000000000000"
-
             conn = pyodbc.connect(self.connection_string)
             cursor = conn.cursor()
-            
-            # Start transaction
             cursor.execute("BEGIN TRANSACTION")
 
-            # Create chat session
             query = """
                 INSERT INTO ChatSessions 
                 (ChatId, InitiatorId, RecipientId, Status, StartTime)
                 VALUES (?, ?, ?, 'Active', GETDATE())
             """
-            cursor.execute(query, (chat_id, user_id, system_id))
-
-            # Create chat topic
+            cursor.execute(query, (chat_id, user_id, user_id))
             topic_id = str(uuid.uuid4())
             topic_query = """
                 INSERT INTO ChatTopics (TopicId, UserId, Topic, ChatId, Timestamp)
@@ -713,8 +706,8 @@ Question to route: {question}
                 result = last_output["generation"]
                 if chat_id := self.ensure_chat_session_exists(chat_id, user_id):
                     response_text = result if isinstance(result, str) else str(result)
-                    # self.save_chat_message(chat_id, user_id, question, 'HumanMessage')
-                    # self.save_chat_message(chat_id, user_id, response_text, 'AIMessage')
+                    self.save_chat_message(chat_id, user_id, question, 'HumanMessage')
+                    self.save_chat_message(chat_id, user_id, response_text, 'AIMessage')
                 response = {
                     "chat_response": response_text,
                     "references": [
@@ -942,9 +935,10 @@ Question to route: {question}
 
             # Try to create new session if one doesn't exist
             if not chat_id:
+                # Use the same user_id as both initiator and recipient
                 chat_id = self.chat_session_crud.create(
                     initiator_id=user_id,
-                    recipient_id="00000000-0000-0000-0000-000000000000",
+                    recipient_id=user_id  
                 )
                 if not chat_id:
                     raise Exception("Failed to create chat session")

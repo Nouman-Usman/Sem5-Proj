@@ -225,7 +225,8 @@ def ask_question():
                 return jsonify({"error": "No data provided"}), 400
 
             question = data.get('question')
-            chat_id = data.get('chat_id')
+            # chat_id = data.get('chat_id')
+            chat_id = "9AB8CE33-46AD-4EAE-B77A-2182B97DD4BA"
             # if not chat_id:
             #     chat_session_crud = ChatSessionCRUD()
             #     chat_id = chat_session_crud.create(
