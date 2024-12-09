@@ -1200,3 +1200,119 @@ pyodbc.IntegrityError: ('23000', '[23000] [Microsoft][ODBC Driver 17 for SQL Ser
 2024-12-08 20:10:32,081 - app - INFO - <frozen importlib._bootstrap>:488: size=187 KiB, count=1630, average=117 B
 2024-12-08 20:10:32,083 - app - INFO - <frozen importlib._bootstrap_external>:1670: size=132 KiB, count=235, average=577 B
 2024-12-08 20:10:32,088 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\linecache.py:139: size=108 KiB, count=1187, average=93 B
+2024-12-09 09:59:36,289 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-09 10:06:00,228 - root - INFO - Creating user: noumanmughal0123@gmail.com
+2024-12-09 10:06:01,152 - root - ERROR - Error in create user: ('The SQL contains 4 parameter markers, but 2 parameters were supplied', 'HY000')
+2024-12-09 10:06:01,155 - app - ERROR - Signup error: ('The SQL contains 4 parameter markers, but 2 parameters were supplied', 'HY000')
+2024-12-09 13:32:42,687 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-09 13:33:33,113 - root - INFO - Creating user: noumanmughal01223@gmail.com
+2024-12-09 13:33:34,866 - root - ERROR - Error in create user: ('23000', "[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Cannot insert the value NULL into column 'CNIC', table 'Apna_Waqeel.dbo.Customers'; column does not allow nulls. INSERT fails. (515) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)")
+2024-12-09 13:33:34,866 - app - ERROR - Signup error: ('23000', "[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Cannot insert the value NULL into column 'CNIC', table 'Apna_Waqeel.dbo.Customers'; column does not allow nulls. INSERT fails. (515) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)")
+2024-12-09 13:38:42,797 - app - INFO - Processing question for user 2F785E96-BBA4-4105-B381-A495D8003B89, chat 9AB8CE33-46AD-4EAE-B77A-2182B97DD4BA
+2024-12-09 13:38:42,797 - app - INFO - Initializing RAG agent...
+2024-12-09 13:38:42,934 - pinecone_plugin_interface.logging - INFO - Discovering subpackages in _NamespacePath(['C:\\Users\\Nouma\\OneDrive\\Desktop\\GenAi x Xavour\\ApnaWaqeel\\venv\\Lib\\site-packages\\pinecone_plugins'])
+2024-12-09 13:38:42,939 - pinecone_plugin_interface.logging - INFO - Looking for plugins in pinecone_plugins.inference
+2024-12-09 13:38:43,135 - pinecone_plugin_interface.logging - INFO - Installing plugin inference into Pinecone
+2024-12-09 13:38:52,765 - datasets - INFO - PyTorch version 2.4.1 available.
+2024-12-09 13:38:55,909 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2024-12-09 13:38:55,913 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2024-12-09 13:39:14,374 - app - INFO - Processing question for user 2F785E96-BBA4-4105-B381-A495D8003B89, chat 9AB8CE33-46AD-4EAE-B77A-2182B97DD4BA
+2024-12-09 13:39:14,374 - app - INFO - Initializing RAG agent...
+2024-12-09 13:39:14,405 - pinecone_plugin_interface.logging - INFO - Discovering subpackages in _NamespacePath(['C:\\Users\\Nouma\\OneDrive\\Desktop\\GenAi x Xavour\\ApnaWaqeel\\venv\\Lib\\site-packages\\pinecone_plugins'])
+2024-12-09 13:39:14,411 - pinecone_plugin_interface.logging - INFO - Looking for plugins in pinecone_plugins.inference
+2024-12-09 13:39:14,414 - pinecone_plugin_interface.logging - INFO - Installing plugin inference into Pinecone
+2024-12-09 13:39:17,250 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2024-12-09 13:39:17,265 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2024-12-09 13:39:17,951 - app - INFO - RAG agent initialized successfully
+2024-12-09 13:39:18,077 - root - INFO - Executing query with chat_id: 9AB8CE33-46AD-4EAE-B77A-2182B97DD4BA, user_id: 2F785E96-BBA4-4105-B381-A495D8003B89
+2024-12-09 13:39:18,146 - root - INFO - Retrieved 0 messages
+2024-12-09 13:39:19,228 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-09 13:39:19,836 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-09 13:39:19,940 - root - INFO - Sentiment: 1. Civil
+2024-12-09 13:39:20,059 - root - INFO - Lawyer recommendations: []
+2024-12-09 13:39:35,109 - app - INFO - RAG agent initialized successfully
+2024-12-09 13:39:35,115 - root - INFO - Executing query with chat_id: 9AB8CE33-46AD-4EAE-B77A-2182B97DD4BA, user_id: 2F785E96-BBA4-4105-B381-A495D8003B89
+2024-12-09 13:39:35,203 - root - INFO - Retrieved 0 messages
+2024-12-09 13:39:35,809 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-09 13:39:36,312 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-09 13:39:36,327 - root - INFO - Sentiment: 1. Civil
+2024-12-09 13:39:36,392 - root - INFO - Lawyer recommendations: []
+2024-12-09 13:39:44,821 - app - INFO - Processing question for user 2F785E96-BBA4-4105-B381-A495D8003B89, chat 9AB8CE33-46AD-4EAE-B77A-2182B97DD4BA
+2024-12-09 13:39:44,837 - root - INFO - Executing query with chat_id: 9AB8CE33-46AD-4EAE-B77A-2182B97DD4BA, user_id: 2F785E96-BBA4-4105-B381-A495D8003B89
+2024-12-09 13:39:44,899 - root - INFO - Retrieved 0 messages
+2024-12-09 13:39:45,462 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-09 13:39:45,932 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-09 13:39:45,965 - root - INFO - Sentiment: 1. Civil
+2024-12-09 13:39:46,565 - root - INFO - Lawyer recommendations: []
+2024-12-09 13:40:00,479 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-09 13:40:00,500 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-09 13:40:00,539 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-09 13:40:01,195 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-09 13:40:01,231 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-09 13:40:01,236 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-09 13:40:01,961 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-09 13:40:01,999 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-09 13:40:02,030 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-09 13:40:02,701 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-09 13:40:02,773 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-09 13:40:02,808 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-09 13:40:10,712 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-09 13:40:11,858 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-09 13:40:11,851 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-09 13:40:12,449 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-09 13:40:12,878 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-09 13:40:12,919 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-09 13:40:13,795 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-09 13:40:13,824 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-09 13:40:14,633 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-09 13:40:16,217 - root - ERROR - Error creating message: Chat session 9AB8CE33-46AD-4EAE-B77A-2182B97DD4BA does not exist
+2024-12-09 13:40:16,226 - root - ERROR - Error creating message: Chat session 9AB8CE33-46AD-4EAE-B77A-2182B97DD4BA does not exist
+2024-12-09 13:40:16,653 - app - INFO - Successfully generated response for user 2F785E96-BBA4-4105-B381-A495D8003B89
+2024-12-09 13:40:22,252 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-09 13:40:23,204 - app - INFO - [ Top 10 memory usage ]
+2024-12-09 13:40:23,204 - app - INFO - <frozen importlib._bootstrap_external>:753: size=8808 KiB, count=55534, average=162 B
+2024-12-09 13:40:23,215 - app - INFO - <frozen abc>:123: size=678 KiB, count=7266, average=96 B
+2024-12-09 13:40:23,215 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\sentence_transformers\SentenceTransformer.py:1560: size=622 KiB, count=2, average=311 KiB
+2024-12-09 13:40:23,227 - app - INFO - <frozen abc>:106: size=369 KiB, count=1257, average=301 B
+2024-12-09 13:40:23,234 - app - INFO - <frozen importlib._bootstrap_external>:1673: size=312 KiB, count=2535, average=126 B
+2024-12-09 13:40:23,238 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\dataclasses.py:473: size=256 KiB, count=2098, average=125 B
+2024-12-09 13:40:23,238 - app - INFO - <frozen importlib._bootstrap_external>:123: size=222 KiB, count=1289, average=177 B
+2024-12-09 13:40:23,242 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\torch\nn\modules\module.py:451: size=190 KiB, count=901, average=216 B
+2024-12-09 13:40:23,242 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\json\decoder.py:353: size=189 KiB, count=1761, average=110 B
+2024-12-09 13:40:23,242 - app - INFO - <frozen importlib._bootstrap>:488: size=187 KiB, count=1623, average=118 B
+2024-12-09 13:40:23,490 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-09 13:40:23,595 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-09 13:40:23,975 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-09 13:40:24,508 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-09 13:40:25,026 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-09 13:40:25,448 - root - ERROR - Error creating message: Chat session 9AB8CE33-46AD-4EAE-B77A-2182B97DD4BA does not exist
+2024-12-09 13:40:25,457 - root - ERROR - Error creating message: Chat session 9AB8CE33-46AD-4EAE-B77A-2182B97DD4BA does not exist
+2024-12-09 13:40:25,720 - app - INFO - Successfully generated response for user 2F785E96-BBA4-4105-B381-A495D8003B89
+2024-12-09 13:40:35,839 - app - INFO - [ Top 10 memory usage ]
+2024-12-09 13:40:35,839 - app - INFO - <frozen importlib._bootstrap_external>:753: size=8808 KiB, count=55534, average=162 B
+2024-12-09 13:40:35,843 - app - INFO - <frozen abc>:123: size=676 KiB, count=7239, average=96 B
+2024-12-09 13:40:35,843 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\langsmith\client.py:281: size=548 KiB, count=31, average=17.7 KiB
+2024-12-09 13:40:35,848 - app - INFO - <frozen abc>:106: size=369 KiB, count=1257, average=301 B
+2024-12-09 13:40:35,848 - app - INFO - <frozen importlib._bootstrap_external>:1673: size=312 KiB, count=2535, average=126 B
+2024-12-09 13:40:35,852 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\sentence_transformers\SentenceTransformer.py:1560: size=311 KiB, count=1, average=311 KiB
+2024-12-09 13:40:35,855 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\dataclasses.py:473: size=256 KiB, count=2098, average=125 B
+2024-12-09 13:40:35,858 - app - INFO - <frozen importlib._bootstrap_external>:123: size=222 KiB, count=1289, average=177 B
+2024-12-09 13:40:35,872 - app - INFO - <frozen importlib._bootstrap>:488: size=187 KiB, count=1623, average=118 B
+2024-12-09 13:40:35,876 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\json\decoder.py:353: size=146 KiB, count=1253, average=120 B
+2024-12-09 13:40:37,100 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-09 13:40:38,120 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-09 13:40:38,705 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-09 13:40:39,213 - root - ERROR - Error creating message: Chat session 9AB8CE33-46AD-4EAE-B77A-2182B97DD4BA does not exist
+2024-12-09 13:40:39,217 - root - ERROR - Error creating message: Chat session 9AB8CE33-46AD-4EAE-B77A-2182B97DD4BA does not exist
+2024-12-09 13:40:39,478 - app - INFO - Successfully generated response for user 2F785E96-BBA4-4105-B381-A495D8003B89
+2024-12-09 13:40:41,170 - app - INFO - [ Top 10 memory usage ]
+2024-12-09 13:40:41,170 - app - INFO - <frozen importlib._bootstrap_external>:753: size=8808 KiB, count=55534, average=162 B
+2024-12-09 13:40:41,173 - app - INFO - <frozen abc>:123: size=676 KiB, count=7233, average=96 B
+2024-12-09 13:40:41,175 - app - INFO - <frozen abc>:106: size=369 KiB, count=1257, average=301 B
+2024-12-09 13:40:41,175 - app - INFO - <frozen importlib._bootstrap_external>:1673: size=312 KiB, count=2535, average=126 B
+2024-12-09 13:40:41,176 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\sentence_transformers\SentenceTransformer.py:1560: size=311 KiB, count=1, average=311 KiB
+2024-12-09 13:40:41,178 - app - INFO - C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\dataclasses.py:473: size=256 KiB, count=2098, average=125 B
+2024-12-09 13:40:41,180 - app - INFO - <frozen importlib._bootstrap_external>:123: size=222 KiB, count=1289, average=177 B
+2024-12-09 13:40:41,182 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\langsmith\client.py:281: size=206 KiB, count=11, average=18.7 KiB
+2024-12-09 13:40:41,184 - app - INFO - <frozen importlib._bootstrap>:488: size=187 KiB, count=1623, average=118 B
+2024-12-09 13:40:41,187 - app - INFO - <frozen importlib._bootstrap_external>:1670: size=132 KiB, count=235, average=577 B

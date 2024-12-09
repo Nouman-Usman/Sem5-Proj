@@ -43,9 +43,11 @@ class UserCRUD(Database):
             cursor.execute("SELECT 1 FROM Users WHERE Email = ?", (email,))
             if cursor.fetchone():
                 raise ValueError("Email already exists")
+
+            # Create user with correct number of parameters
             user_query = """
-                INSERT INTO Users (UserId, UserName, Email, UserType, PasswordHash, CreatedAt)
-                VALUES (CAST(? AS UNIQUEIDENTIFIER), ?, ?, ?, ?, GETDATE())
+                INSERT INTO Users (UserId, UserName, Email, UserType, PasswordHash)
+                VALUES (?, ?, ?, ?, ?)
             """
             password_hash = generate_password_hash(password, method='pbkdf2:sha256')
             cursor.execute(user_query, (user_id, username, email, db_user_type, password_hash))
@@ -54,7 +56,7 @@ class UserCRUD(Database):
             # Create profile
             profile_query = """
                 INSERT INTO UserProfiles (ProfileId, UserId)
-                VALUES (CAST(? AS UNIQUEIDENTIFIER), CAST(? AS UNIQUEIDENTIFIER))
+                VALUES (?, ?)
             """
             cursor.execute(profile_query, (profile_id, user_id))
             conn.commit()
@@ -63,21 +65,23 @@ class UserCRUD(Database):
                 license_id = f"TBD-{str(uuid.uuid4())[:8]}"
                 lawyer_query = """
                     INSERT INTO LawyerDetails 
-                    (LawyerId, Specialization, Experience, LicenseNumber, Rating, Location)
-                    VALUES (CAST(? AS UNIQUEIDENTIFIER), ?, ?, ?, ?, ?)
+                    (LawyerId, Specialization, Experience, LicenseNumber, Rating, Location, CNIC)
+                    VALUES (CAST(? AS UNIQUEIDENTIFIER), ?, ?, ?, ?, ?, ?)
                 """
-                cursor.execute(lawyer_query, (user_id, 'General', 3, license_id, 2.0, 'TBD'))
+                cursor.execute(lawyer_query, (user_id, 'General', 3, license_id, 2.0, 'TBD', 'TBD'))
                 conn.commit()                
             elif user_type.lower() == 'client':
                 customer_query = """
                     INSERT INTO Customers (CustomerId, CustomerName, ContactInfo, CreatedAt)
-                    VALUES (CAST(? AS UNIQUEIDENTIFIER), ?, ?, GETDATE())
+                    VALUES (?, ?, ?, GETDATE())
                 """
                 cursor.execute(customer_query, (user_id, username, '{}'))
                 conn.commit()
             logging.info(f"Successfully created user with ID: {user_id}")
             return user_id
         except Exception as e:
+            if conn:
+                conn.rollback()
             logging.error(f"Error in create user: {str(e)}")
             raise
         finally:
@@ -85,6 +89,7 @@ class UserCRUD(Database):
                 cursor.close()
             if conn:
                 conn.close()
+
     def read(self, user_id: str) -> Optional[Dict]:
         try:
             conn = self.get_connection()
