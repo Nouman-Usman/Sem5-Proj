@@ -12,7 +12,32 @@ class Database:
     def get_connection(self):
         return pyodbc.connect(self.conn_string)
 
+    def get_user_by_email(self, email):
+        with self.get_connection() as conn:
+            cursor = conn.cursor()
+            query = "SELECT * FROM [User] WHERE Email = ?"
+            cursor.execute(query, (email,))
+            row = cursor.fetchone()
+            return row
+
+    def validate_user_input(self, name, email, password, role):
+        if not isinstance(name, str) or len(name) > 100:
+            raise ValueError("Invalid name format")
+        if not isinstance(email, str) or len(email) > 255 or '@' not in email:
+            raise ValueError("Invalid email format")
+        if not isinstance(password, str) or len(password) < 6:
+            raise ValueError("Password must be at least 6 characters")
+        if role not in ['client', 'lawyer', 'system']:
+            raise ValueError("Invalid role")
+
     def create_user(self, name, email, password, role):
+        # Validate inputs
+        self.validate_user_input(name, email, password, role)
+        
+        # Check if email exists
+        if self.get_user_by_email(email):
+            raise ValueError("Email already exists")
+
         with self.get_connection() as conn:
             cursor = conn.cursor()
             query = """INSERT INTO [User] (Name, Email, Password, Role) 
@@ -78,23 +103,32 @@ class Database:
             return cursor.rowcount
 
     # Lawyer CRUD operations
-    def create_lawyer(self, user_id, cnic, license_number, location, experience, ratings=None, 
-                     paid=False, expiry_date=None, recommended=0, click_ratio=0.0):
-        # Validate inputs
+    def create_lawyer(self, user_id, cnic, license_number, location, experience,
+                     specialization, contact, email, ratings=None, paid=False, 
+                     expiry_date=None, recommended=0, click_ratio=0.0):
+        # Input validations
         if not isinstance(experience, int) or experience < 0:
             raise ValueError("Experience must be a positive integer")
-        if ratings is not None and (ratings < 0 or ratings > 5):
-            raise ValueError("Ratings must be between 0 and 5")
-        if not isinstance(cnic, str) or len(cnic) > 20:
+        if not isinstance(cnic, str) or len(cnic) > 13:
             raise ValueError("Invalid CNIC format")
-            
+        if not isinstance(contact, str) or len(contact) > 11:
+            raise ValueError("Invalid contact format")
+        if not isinstance(email, str) or len(email) > 100 or '@' not in email:
+            raise ValueError("Invalid email format")
+        if not isinstance(specialization, str) or len(specialization) > 100:
+            raise ValueError("Invalid specialization format")
+        if ratings is not None and (not isinstance(ratings, (int, float)) or ratings < 0 or ratings > 5):
+            raise ValueError("Ratings must be between 0 and 5")
+
         with self.get_connection() as conn:
             cursor = conn.cursor()
-            query = """INSERT INTO Lawyer (UserId, CNIC, LicenseNumber, Location, Experience, 
-                      Ratings, Paid, ExpiryDate, Recommended, ClickRatio)
-                      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"""
+            query = """INSERT INTO Lawyer (UserId, CNIC, LicenseNumber, Location, 
+                      Experience, Specialization, Contact, Email, Ratings, Paid, 
+                      ExpiryDate, Recommended, ClickRatio)
+                      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"""
             cursor.execute(query, (user_id, cnic, license_number, location, experience,
-                                 ratings, paid, expiry_date, recommended, click_ratio))
+                                 specialization, contact, email, ratings, paid, 
+                                 expiry_date, recommended, click_ratio))
             conn.commit()
             return cursor.rowcount
 
@@ -104,25 +138,33 @@ class Database:
             cursor.execute("SELECT * FROM Lawyer WHERE LawyerId = ?", lawyer_id)
             return cursor.fetchone()
 
-    def update_lawyer(self, lawyer_id, cnic, license_number, location, experience, 
-                     ratings=None, paid=False, expiry_date=None, recommended=0, click_ratio=0.0):
-        # Validate inputs
+    def update_lawyer(self, lawyer_id, cnic, license_number, location, experience,
+                     specialization, contact, email, ratings=None, paid=False, 
+                     expiry_date=None, recommended=0, click_ratio=0.0):
+        # Input validations
         if not isinstance(experience, int) or experience < 0:
             raise ValueError("Experience must be a positive integer")
-        if ratings is not None and (ratings < 0 or ratings > 5):
-            raise ValueError("Ratings must be between 0 and 5")
         if not isinstance(cnic, str) or len(cnic) > 20:
             raise ValueError("Invalid CNIC format")
+        if not isinstance(contact, str) or len(contact) > 20:
+            raise ValueError("Invalid contact format")
+        if not isinstance(email, str) or len(email) > 100 or '@' not in email:
+            raise ValueError("Invalid email format")
+        if not isinstance(specialization, str) or len(specialization) > 100:
+            raise ValueError("Invalid specialization format")
+        if ratings is not None and (not isinstance(ratings, (int, float)) or ratings < 0 or ratings > 5):
+            raise ValueError("Ratings must be between 0 and 5")
 
         with self.get_connection() as conn:
             cursor = conn.cursor()
             query = """UPDATE Lawyer 
                       SET CNIC = ?, LicenseNumber = ?, Location = ?, Experience = ?,
-                          Ratings = ?, Paid = ?, ExpiryDate = ?, Recommended = ?, 
-                          ClickRatio = ?
+                          Specialization = ?, Contact = ?, Email = ?, Ratings = ?, 
+                          Paid = ?, ExpiryDate = ?, Recommended = ?, ClickRatio = ?
                       WHERE LawyerId = ?"""
-            cursor.execute(query, (cnic, license_number, location, experience, ratings,
-                                 paid, expiry_date, recommended, click_ratio, lawyer_id))
+            cursor.execute(query, (cnic, license_number, location, experience,
+                                 specialization, contact, email, ratings, paid,
+                                 expiry_date, recommended, click_ratio, lawyer_id))
             conn.commit()
             return cursor.rowcount
 
@@ -156,6 +198,32 @@ class Database:
                 ORDER BY l.Experience DESC, l.Ratings DESC
             """
             cursor.execute(query, min_experience)
+            return cursor.fetchall()
+
+    def get_lawyers_by_specialization(self, specialization):
+        with self.get_connection() as conn:
+            cursor = conn.cursor()
+            query = """
+                SELECT l.*, u.Name
+                FROM Lawyer l
+                JOIN [User] u ON l.UserId = u.UserId
+                WHERE l.Specialization = ?
+                ORDER BY l.Ratings DESC, l.Experience DESC
+            """
+            cursor.execute(query, specialization)
+            return cursor.fetchall()
+
+    def get_top_rated_lawyers(self, limit=10):
+        with self.get_connection() as conn:
+            cursor = conn.cursor()
+            query = """
+                SELECT TOP (?) l.*, u.Name
+                FROM Lawyer l
+                JOIN [User] u ON l.UserId = u.UserId
+                WHERE l.Ratings IS NOT NULL
+                ORDER BY l.Ratings DESC, l.Experience DESC
+            """
+            cursor.execute(query, limit)
             return cursor.fetchall()
 
     # Session CRUD operations

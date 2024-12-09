@@ -4,8 +4,8 @@ import logging
 from main import RAGAgent
 import gc
 import tracemalloc
-import httpx  # Add this import
-import time  # Add this import
+import httpx  
+import time  
 from datetime import timedelta
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity, get_jwt
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -13,6 +13,8 @@ from crud import UserCRUD, LawyerCRUD, LawyerDetailsCRUD, ChatMessageCRUD, ChatS
 from crud import VALID_USER_TYPES
 from dotenv import load_dotenv
 import uuid
+from database import Database
+from werkzeug.security import generate_password_hash, check_password_hash
 load_dotenv()
 
 logging.basicConfig(
@@ -67,6 +69,8 @@ lawyer_crud = LawyerCRUD()
 lawyer_details_crud = LawyerDetailsCRUD()
 chat_message_crud = ChatMessageCRUD()
 
+db = Database()
+
 # Route for Signup
 @app.route('/api/signup', methods=['POST'])
 def signup():
@@ -75,28 +79,28 @@ def signup():
     email = data.get('email')
     password = data.get('password')
     role = data.get('role', 'client').lower()
-    
+    user_id = str(uuid.uuid4())
     if not all([name, email, password]):
         return jsonify({"error": "Missing required fields"}), 400
     
-    if role not in VALID_USER_TYPES:
-        return jsonify({"error": f"Invalid role. Must be one of: {', '.join(VALID_USER_TYPES.keys())}"}), 400
+    if role not in ['client', 'lawyer']:
+        return jsonify({"error": "Invalid role. Must be either 'client' or 'lawyer'"}), 400
 
     try:
-        # Create user with password
-        user_id = user_crud.create(
-            username=name,
-            email=email,
-            password=password,  # Add password parameter
-            user_type=role
-        )
-
+        hashed_password = generate_password_hash(password)
+        user_created = db.create_user(name, email, hashed_password, role)
+        if not user_created:
+            return jsonify({"error": "Failed to create user"}), 500
+        user = db.get_user_by_email(email)
+        if not user:
+            return jsonify({"error": "User created but failed to retrieve"}), 500
         access_token = create_access_token(
-            identity=user_id,
+            identity=user.UserId,
             additional_claims={
                 "role": role,
                 "email": email,
-                "name": name
+                "name": name,
+                "user_id": user_id
             }
         )
 
@@ -104,7 +108,7 @@ def signup():
             "message": "User created successfully",
             "access_token": access_token,
             "user": {
-                "id": user_id,
+                "id": user.UserId,
                 "email": email,
                 "name": name,
                 "role": role
@@ -115,7 +119,7 @@ def signup():
         return jsonify({"error": str(e)}), 400
     except Exception as e:
         logger.error(f"Signup error: {str(e)}")
-        return jsonify({"error": "Failed to create user. Please try again."}), 500
+        return jsonify({"error": "Failed to create user"}), 500
 
 # Route for Login
 @app.route('/api/auth/login', methods=['POST'])
@@ -128,19 +132,16 @@ def login():
         return jsonify({"error": "Missing email or password"}), 400
     
     try:
-        user_crud = UserCRUD()
-        user = user_crud.check_credentials(email, password)
-        
-        if not user:
-            print("Invalid credentials")
+        user = db.get_user_by_email(email)
+        if not user or not check_password_hash(user.Password, password):
             return jsonify({"error": "Invalid credentials"}), 401
-
-        # Create JWT token
         access_token = create_access_token(
-            identity=user['user_id'],
+            identity=user.UserId,
             additional_claims={
-                "role": user['user_type'],
-                "email": user['email']
+                "role": user.Role,
+                "email": user.Email,
+                "name": user.Name,
+                "user_id": user.UserId
             }
         )
 
@@ -148,10 +149,10 @@ def login():
             "message": "Login successful",
             "access_token": access_token,
             "user": {
-                "id": user['user_id'],
-                "email": user['email'],
-                "name": user['username'],
-                "role": user['user_type']
+                "id": user.UserId,
+                "email": user.Email,
+                "name": user.Name,
+                "role": user.Role,                 
             }
         }), 200
 
@@ -159,39 +160,286 @@ def login():
         logger.error(f"Login error: {str(e)}")
         return jsonify({"error": "Login failed"}), 500
 
-@app.route('/api/user-profile', methods=['GET'])
+# Route for adding client profile
+@app.route('/api/cl/profile', methods=['POST'])
 @jwt_required()
-def user_profile():
+def add_client_profile():
+    data = request.get_json()
+    current_user_id = get_jwt_identity()
+    client_data = {
+        'user_id': current_user_id,
+        'cnic': data.get('cnic'),
+        'contact': data.get('contact'),
+        'location': data.get('location')
+    }
     try:
-        current_user_id = get_jwt_identity()
-        user = user_crud.read(current_user_id)
-        
-        if not user:
-            return jsonify({"error": "User not found"}), 404
-
-        profile_data = {
-            "id": user['user_id'],
-            "name": user['username'],
-            "email": user['email'],
-            "role": user['user_type']
-        }
-
-        # Add lawyer-specific data if user is a lawyer
-        if user['user_type'] == 'lawyer':
-            lawyer_details = lawyer_details_crud.read(current_user_id)
-            if lawyer_details:
-                profile_data.update({
-                    "specialization": lawyer_details['specialization'],
-                    "experience": lawyer_details['experience'],
-                    "rating": lawyer_details['rating'],
-                    "location": lawyer_details['location']
-                })
-
-        return jsonify(profile_data)
-
+        db.create_client(**client_data)
+        return jsonify({"message": "Client profile created successfully"}), 201
     except Exception as e:
-        logger.error(f"Profile fetch error: {str(e)}")
-        return jsonify({"error": "Failed to fetch profile"}), 500
+        logger.error(f"Client profile creation error: {str(e)}")
+        return jsonify({"error": "Failed to create client profile"}), 500
+
+# Route for adding lawyer profile
+@app.route('/api/lw/profile', methods=['POST'])
+@jwt_required()
+def add_lawyer_profile():
+    data = request.get_json()
+    current_user_id = get_jwt_identity()
+    lawyer_data = {
+        'user_id': current_user_id,
+        'cnic': data.get('cnic'),
+        'license_number': data.get('license_number'),
+        'location': data.get('location'),
+        'experience': data.get('experience'),
+        'specialization': data.get('specialization'),
+        'contact': data.get('contact'),
+        'email': data.get('email')
+    }
+    try:
+        db.create_lawyer(**lawyer_data)
+        return jsonify({"message": "Lawyer profile created successfully"}), 201
+    except Exception as e:
+        logger.error(f"Lawyer profile creation error: {str(e)}")
+        return jsonify({"error": "Failed to create lawyer profile"}), 500
+    
+# Route for fetching user profile
+@app.route('/api/profile', methods=['GET'])
+@jwt_required()
+def get_profile():
+    current_user_id = get_jwt_identity()
+    user = db.get_user_by_id(current_user_id)
+    if not user:
+        return jsonify({"error": "User not found"}), 404
+    if user.Role == 'client':
+        client = db.get_client_by_user_id(current_user_id)
+        if not client:
+            return jsonify({"error": "Client profile not found"}), 404
+        return jsonify({
+            "user": {
+                "id": user.UserId,
+                "email": user.Email,
+                "name": user.Name,
+                "role": user.Role
+            },
+            "client": {
+                "cnic": client.CNIC,
+                "contact": client.Contact,
+                "location": client.Location
+            }
+        }), 200
+    else:
+        lawyer = db.get_lawyer_by_user_id(current_user_id)
+        if not lawyer:
+            return jsonify({"error": "Lawyer profile not found"}), 404
+        return jsonify({
+            "user": {
+                "id": user.UserId,
+                "email": user.Email,
+                "name": user.Name,
+                "role": user.Role
+            },
+            "lawyer": {
+                "cnic": lawyer.CNIC,
+                "license_number": lawyer.LicenseNumber,
+                "location": lawyer.Location,
+                "experience": lawyer.Experience,
+                "specialization": lawyer.Specialization,
+                "contact": lawyer.Contact,
+                "email": lawyer.Email
+            }
+        }), 200
+
+# Route for updating user profile
+@app.route('/api/profile', methods=['PUT'])
+@jwt_required()
+def update_profile():
+    data = request.get_json()
+    current_user_id = get_jwt_identity()
+    user = db.get_user_by_id(current_user_id)
+    if not user:
+        return jsonify({"error": "User not found"}), 404
+    if user.Role == 'client':
+        client = db.get_client_by_user_id(current_user_id)
+        if not client:
+            return jsonify({"error": "Client profile not found"}), 404
+        client_data = {
+            'user_id': current_user_id,
+            'cnic': data.get('cnic', client.CNIC),
+            'contact': data.get('contact', client.Contact),
+            'location': data.get('location', client.Location)
+        }
+        try:
+            db.update_client(**client_data)
+            return jsonify({"message": "Client profile updated successfully"}), 200
+        except Exception as e:
+            logger.error(f"Client profile update error: {str(e)}")
+            return jsonify({"error": "Failed to update client profile"}), 500
+    else:
+        lawyer = db.get_lawyer_by_user_id(current_user_id)
+        if not lawyer:
+            return jsonify({"error": "Lawyer profile not found"}), 404
+        lawyer_data = {
+            'user_id': current_user_id,
+            'cnic': data.get('cnic', lawyer.CNIC),
+            'license_number': data.get('license_number', lawyer.LicenseNumber),
+            'location': data.get('location', lawyer.Location),
+            'experience': data.get('experience', lawyer.Experience),
+            'specialization': data.get('specialization', lawyer.Specialization),
+            'contact': data.get('contact', lawyer.Contact),
+            'email': data.get('email', lawyer.Email)
+        }
+        try:
+            db.update_lawyer(**lawyer_data)
+            return jsonify({"message": "Lawyer profile updated successfully"}), 200
+        except Exception as e:
+            logger.error(f"Lawyer profile update error: {str(e)}")
+            return jsonify({"error": "Failed to update lawyer profile"}), 500
+    
+# Route for fetching all lawyers
+@app.route('/api/lawyers', methods=['GET'])
+def get_lawyers():
+    try:
+        lawyers = db.get_all_lawyers()
+        return jsonify({
+            "lawyers": lawyers,
+            "count": len(lawyers)
+        }), 200
+    except Exception as e:
+        logger.error(f"Error fetching lawyers: {str(e)}")
+        return jsonify({"error": "Failed to fetch lawyers"}), 500
+
+# Route for fetching a single lawyer
+@app.route('/api/lawyers/<lawyer_id>', methods=['GET'])
+def get_lawyer(lawyer_id):
+    try:
+        lawyer = db.get_lawyer_by_id(lawyer_id)
+        if not lawyer:
+            return jsonify({"error": "Lawyer not found"}), 404
+        return jsonify({
+            "lawyer": lawyer
+        }), 200
+    except Exception as e:
+        logger.error(f"Error fetching lawyer: {str(e)}")
+        return jsonify({"error": "Failed to fetch lawyer"}), 500
+    
+# Route for fetching all clients
+@app.route('/api/clients', methods=['GET'])
+def get_clients():
+    try:
+        clients = db.get_all_clients()
+        return jsonify({
+            "clients": clients,
+            "count": len(clients)
+        }), 200
+    except Exception as e:
+        logger.error(f"Error fetching clients: {str(e)}")
+        return jsonify({"error": "Failed to fetch clients"}), 500
+    
+# Route for fetching a single client
+@app.route('/api/clients/<client_id>', methods=['GET'])
+def get_client(client_id):
+    try:
+        client = db.get_client_by_id(client_id)
+        if not client:
+            return jsonify({"error": "Client not found"}), 404
+        return jsonify({
+            "client": client
+        }), 200
+    except Exception as e:
+        logger.error(f"Error fetching client: {str(e)}")
+        return jsonify({"error": "Failed to fetch client"}), 500
+
+# Route for fetching all chat sessions
+@app.route('/api/chats', methods=['GET'])
+def get_chats():
+    try:
+        chat_sessions = db.get_all_chat_sessions()
+        return jsonify({
+            "chat_sessions": chat_sessions,
+            "count": len(chat_sessions)
+        }), 200
+    except Exception as e:
+        logger.error(f"Error fetching chat sessions: {str(e)}")
+        return jsonify({"error": "Failed to fetch chat sessions"}), 500
+
+# Route for fetching a single chat session
+@app.route('/api/chats/<chat_id>', methods=['GET'])
+def get_chat(chat_id):
+    try:
+        chat_session = db.get_chat_session_by_id(chat_id)
+        if not chat_session:
+            return jsonify({"error": "Chat session not found"}), 404
+        return jsonify({
+            "chat_session": chat_session
+        }), 200
+    except Exception as e:
+        logger.error(f"Error fetching chat session: {str(e)}")
+        return jsonify({"error": "Failed to fetch chat session"}), 500
+
+# Route for fetching all chat messages
+@app.route('/api/chat/<chat_id>/messages', methods=['GET'])
+def get_chat_messages(chat_id):
+    try:
+        chat_messages = db.get_chat_messages_by_chat_id(chat_id)
+        return jsonify({
+            "chat_messages": chat_messages,
+            "count": len(chat_messages)
+        }), 200
+    except Exception as e:
+        logger.error(f"Error fetching chat messages: {str(e)}")
+        return jsonify({"error": "Failed to fetch chat messages"}), 500
+
+# Route for fetching a single chat message
+@app.route('/api/chat/<chat_id>/messages/<message_id>', methods=['GET'])
+def get_chat_message(chat_id, message_id):
+    try:
+        chat_message = db.get_chat_message_by_id(message_id)
+        if not chat_message:
+            return jsonify({"error": "Chat message not found"}), 404
+        return jsonify({
+            "chat_message": chat_message
+        }), 200
+    except Exception as e:
+        logger.error(f"Error fetching chat message: {str(e)}")
+        return jsonify({"error": "Failed to fetch chat message"}), 500
+
+# Route for adding a chat message
+@app.route('/api/chat/<chat_id>/messages', methods=['POST'])
+@jwt_required()
+def add_chat_message(chat_id):
+    data = request.get_json()
+    current_user_id = get_jwt_identity()
+    chat_message_data = {
+        'chat_id': chat_id,
+        'user_id': current_user_id,
+        'message': data.get('message')
+    }
+    try:
+        db.create_chat_message(**chat_message_data)
+        return jsonify({"message": "Chat message created successfully"}), 201
+    except Exception as e:
+        logger.error(f"Chat message creation error: {str(e)}")
+        return jsonify({"error": "Failed to create chat message"}), 500
+
+# Route for updating a chat message
+@app.route('/api/chat/<chat_id>/messages/<message_id>', methods=['PUT'])
+@jwt_required()
+def update_chat_message(chat_id, message_id):
+    data = request.get_json()
+    current_user_id = get_jwt_identity()
+    chat_message_data = {
+        'chat_id': chat_id,
+        'user_id': current_user_id,
+        'message': data.get('message')
+    }
+    try:
+        db.update_chat_message(message_id, **chat_message_data)
+        return jsonify({"message": "Chat message updated successfully"}), 200
+    except Exception as e:
+        logger.error(f"Chat message update error: {str(e)}")
+        return jsonify({"error": "Failed to update chat message"}), 500
+
+
 
 @app.route('/api/', methods=['GET'])
 def health_check2():

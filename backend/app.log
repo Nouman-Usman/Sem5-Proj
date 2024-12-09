@@ -1316,3 +1316,6 @@ pyodbc.IntegrityError: ('23000', '[23000] [Microsoft][ODBC Driver 17 for SQL Ser
 2024-12-09 13:40:41,182 - app - INFO - C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\langsmith\client.py:281: size=206 KiB, count=11, average=18.7 KiB
 2024-12-09 13:40:41,184 - app - INFO - <frozen importlib._bootstrap>:488: size=187 KiB, count=1623, average=118 B
 2024-12-09 13:40:41,187 - app - INFO - <frozen importlib._bootstrap_external>:1670: size=132 KiB, count=235, average=577 B
+2024-12-09 15:27:54,829 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-09 15:28:41,057 - app - ERROR - Signup error: ('42S02', "[42S02] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid object name 'User'. (208) (SQLExecDirectW); [42S02] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Statement(s) could not be prepared. (8180)")
+2024-12-09 15:30:14,375 - waitress - INFO - Serving on http://127.0.0.1:5000
