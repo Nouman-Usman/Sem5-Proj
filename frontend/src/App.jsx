@@ -8,10 +8,12 @@ import { Navbar } from './components/navbar.jsx';
 import { LawyerRecommendationPage } from './components/LawyerRecommendationPage.jsx';
 import { UserHome } from './components/UserHome.jsx';
 import { ChatbotPage } from './components/ChatbotPage.jsx';
+import ClientProfile from './components/client_profile';
+import LawyerProfile from './components/lawyer_profile.jsx';
 
 function App() {
   return (    
-<Router>
+    <Router>
       <NavbarWithConditionalRender />
       <Routes>
         <Route path="/chatbot" element={<ChatbotPage />} />
@@ -20,6 +22,8 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/Signup" element={<LoginSignup />} />
         <Route path="/login" element={<LoginSignup />} />
+        <Route path="/client-profile" element={<ClientProfile />} />
+        <Route path="/lawyer-profile" element={<LawyerProfile />} />
         <Route path="/" element={<Home />} />
       </Routes>
     </Router>

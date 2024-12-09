@@ -1319,3 +1319,910 @@ pyodbc.IntegrityError: ('23000', '[23000] [Microsoft][ODBC Driver 17 for SQL Ser
 2024-12-09 15:27:54,829 - waitress - INFO - Serving on http://127.0.0.1:5000
 2024-12-09 15:28:41,057 - app - ERROR - Signup error: ('42S02', "[42S02] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid object name 'User'. (208) (SQLExecDirectW); [42S02] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Statement(s) could not be prepared. (8180)")
 2024-12-09 15:30:14,375 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-09 15:55:24,298 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-09 15:55:52,560 - app - ERROR - Client profile creation error: Database.create_client() got an unexpected keyword argument 'profile_image'
+2024-12-09 15:58:00,925 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-09 15:58:55,007 - app - ERROR - Client profile creation error: Database.create_client() got an unexpected keyword argument 'profile_image'
+2024-12-09 16:13:33,329 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-09 16:13:47,593 - app - ERROR - Client profile creation error: Database.create_client() got an unexpected keyword argument 'profile_image'
+2024-12-09 16:13:48,446 - app - ERROR - Client profile creation error: Database.create_client() got an unexpected keyword argument 'profile_image'
+2024-12-09 16:15:00,298 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-09 16:15:06,639 - app - ERROR - Client profile creation error: Database.create_client() got an unexpected keyword argument 'profile_image'
+2024-12-09 16:16:55,396 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-09 16:17:15,501 - app - ERROR - Client profile creation error: 
+2024-12-09 16:17:47,124 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-09 16:18:00,886 - app - ERROR - Client profile creation error: 
+2024-12-09 16:18:47,626 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-09 16:18:54,283 - app - ERROR - Client profile creation error: Database.create_client() got an unexpected keyword argument 'profile_image'
+2024-12-09 16:24:49,686 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-09 16:24:53,412 - app - ERROR - Client profile creation error: Failed to create client profile in database
+2024-12-09 16:25:24,247 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-09 16:25:26,315 - app - ERROR - Client profile creation error: Failed to create client profile in database
+2024-12-09 16:26:12,160 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-09 16:26:16,105 - app - ERROR - Client profile creation error: Failed to create client profile in database
+2024-12-09 16:35:28,383 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-09 16:39:42,947 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-09 16:42:11,853 - app - INFO - Creating lawyer profile for user ID: 2
+2024-12-09 16:42:11,853 - app - ERROR - Missing required fields: ['license_number']
+2024-12-09 16:43:39,937 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-09 16:43:42,729 - app - INFO - Creating lawyer profile for user ID: 2
+2024-12-09 16:43:42,729 - app - ERROR - Missing required fields: ['license_number']
+2024-12-09 16:44:27,758 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-09 16:44:27,843 - app - INFO - Creating lawyer profile for user ID: 2
+2024-12-09 16:44:27,994 - app - INFO - Successfully created lawyer profile for user ID: 2
+2024-12-09 17:46:11,572 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-09 17:50:57,247 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-09 17:51:55,152 - app - ERROR - Error processing question (attempt 1): 'chat_id'
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 591, in ask_question
+    chat_id = get_jwt()['chat_id']
+              ~~~~~~~~~^^^^^^^^^^^
+KeyError: 'chat_id'
+2024-12-09 17:51:56,182 - app - ERROR - Error processing question (attempt 2): 'chat_id'
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 591, in ask_question
+    chat_id = get_jwt()['chat_id']
+              ~~~~~~~~~^^^^^^^^^^^
+KeyError: 'chat_id'
+2024-12-09 17:51:57,246 - app - ERROR - Error processing question (attempt 3): 'chat_id'
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 591, in ask_question
+    chat_id = get_jwt()['chat_id']
+              ~~~~~~~~~^^^^^^^^^^^
+KeyError: 'chat_id'
+2024-12-09 17:51:58,540 - app - ERROR - Error processing question (attempt 1): 'chat_id'
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 591, in ask_question
+    chat_id = get_jwt()['chat_id']
+              ~~~~~~~~~^^^^^^^^^^^
+KeyError: 'chat_id'
+2024-12-09 17:51:59,545 - app - ERROR - Error processing question (attempt 2): 'chat_id'
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 591, in ask_question
+    chat_id = get_jwt()['chat_id']
+              ~~~~~~~~~^^^^^^^^^^^
+KeyError: 'chat_id'
+2024-12-09 17:52:00,553 - app - ERROR - Error processing question (attempt 3): 'chat_id'
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 591, in ask_question
+    chat_id = get_jwt()['chat_id']
+              ~~~~~~~~~^^^^^^^^^^^
+KeyError: 'chat_id'
+2024-12-09 17:52:02,535 - app - ERROR - Error processing question (attempt 1): 'chat_id'
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 591, in ask_question
+    chat_id = get_jwt()['chat_id']
+              ~~~~~~~~~^^^^^^^^^^^
+KeyError: 'chat_id'
+2024-12-09 17:52:03,552 - app - ERROR - Error processing question (attempt 2): 'chat_id'
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 591, in ask_question
+    chat_id = get_jwt()['chat_id']
+              ~~~~~~~~~^^^^^^^^^^^
+KeyError: 'chat_id'
+2024-12-09 17:52:04,561 - app - ERROR - Error processing question (attempt 3): 'chat_id'
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 591, in ask_question
+    chat_id = get_jwt()['chat_id']
+              ~~~~~~~~~^^^^^^^^^^^
+KeyError: 'chat_id'
+2024-12-09 17:52:35,559 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-09 17:54:45,967 - app - ERROR - Error processing question (attempt 1): ('23000', "[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Cannot insert the value NULL into column 'Topic', table 'AW_Database.dbo.Sessions'; column does not allow nulls. INSERT fails. (515) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)")
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 605, in ask_question
+    session = db.create_session(user_id, None)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\database.py", line 253, in create_session
+    cursor.execute(query, (user_id, topic))
+pyodbc.IntegrityError: ('23000', "[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Cannot insert the value NULL into column 'Topic', table 'AW_Database.dbo.Sessions'; column does not allow nulls. INSERT fails. (515) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)")
+2024-12-09 17:54:47,091 - app - ERROR - Error processing question (attempt 2): ('23000', "[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Cannot insert the value NULL into column 'Topic', table 'AW_Database.dbo.Sessions'; column does not allow nulls. INSERT fails. (515) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)")
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 605, in ask_question
+    session = db.create_session(user_id, None)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\database.py", line 253, in create_session
+    cursor.execute(query, (user_id, topic))
+pyodbc.IntegrityError: ('23000', "[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Cannot insert the value NULL into column 'Topic', table 'AW_Database.dbo.Sessions'; column does not allow nulls. INSERT fails. (515) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)")
+2024-12-09 17:54:48,120 - app - ERROR - Error processing question (attempt 3): ('23000', "[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Cannot insert the value NULL into column 'Topic', table 'AW_Database.dbo.Sessions'; column does not allow nulls. INSERT fails. (515) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)")
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 605, in ask_question
+    session = db.create_session(user_id, None)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\database.py", line 253, in create_session
+    cursor.execute(query, (user_id, topic))
+pyodbc.IntegrityError: ('23000', "[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Cannot insert the value NULL into column 'Topic', table 'AW_Database.dbo.Sessions'; column does not allow nulls. INSERT fails. (515) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)")
+2024-12-09 17:54:49,542 - app - ERROR - Error processing question (attempt 1): ('23000', "[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Cannot insert the value NULL into column 'Topic', table 'AW_Database.dbo.Sessions'; column does not allow nulls. INSERT fails. (515) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)")
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 605, in ask_question
+    session = db.create_session(user_id, None)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\database.py", line 253, in create_session
+    cursor.execute(query, (user_id, topic))
+pyodbc.IntegrityError: ('23000', "[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Cannot insert the value NULL into column 'Topic', table 'AW_Database.dbo.Sessions'; column does not allow nulls. INSERT fails. (515) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)")
+2024-12-09 17:54:50,571 - app - ERROR - Error processing question (attempt 2): ('23000', "[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Cannot insert the value NULL into column 'Topic', table 'AW_Database.dbo.Sessions'; column does not allow nulls. INSERT fails. (515) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)")
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 605, in ask_question
+    session = db.create_session(user_id, None)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\database.py", line 253, in create_session
+    cursor.execute(query, (user_id, topic))
+pyodbc.IntegrityError: ('23000', "[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Cannot insert the value NULL into column 'Topic', table 'AW_Database.dbo.Sessions'; column does not allow nulls. INSERT fails. (515) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)")
+2024-12-09 17:54:51,593 - app - ERROR - Error processing question (attempt 3): ('23000', "[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Cannot insert the value NULL into column 'Topic', table 'AW_Database.dbo.Sessions'; column does not allow nulls. INSERT fails. (515) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)")
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 605, in ask_question
+    session = db.create_session(user_id, None)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\database.py", line 253, in create_session
+    cursor.execute(query, (user_id, topic))
+pyodbc.IntegrityError: ('23000', "[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Cannot insert the value NULL into column 'Topic', table 'AW_Database.dbo.Sessions'; column does not allow nulls. INSERT fails. (515) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)")
+2024-12-09 17:54:53,547 - app - ERROR - Error processing question (attempt 1): ('23000', "[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Cannot insert the value NULL into column 'Topic', table 'AW_Database.dbo.Sessions'; column does not allow nulls. INSERT fails. (515) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)")
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 605, in ask_question
+    session = db.create_session(user_id, None)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\database.py", line 253, in create_session
+    cursor.execute(query, (user_id, topic))
+pyodbc.IntegrityError: ('23000', "[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Cannot insert the value NULL into column 'Topic', table 'AW_Database.dbo.Sessions'; column does not allow nulls. INSERT fails. (515) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)")
+2024-12-09 17:54:54,558 - app - ERROR - Error processing question (attempt 2): ('23000', "[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Cannot insert the value NULL into column 'Topic', table 'AW_Database.dbo.Sessions'; column does not allow nulls. INSERT fails. (515) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)")
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 605, in ask_question
+    session = db.create_session(user_id, None)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\database.py", line 253, in create_session
+    cursor.execute(query, (user_id, topic))
+pyodbc.IntegrityError: ('23000', "[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Cannot insert the value NULL into column 'Topic', table 'AW_Database.dbo.Sessions'; column does not allow nulls. INSERT fails. (515) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)")
+2024-12-09 17:54:55,569 - app - ERROR - Error processing question (attempt 3): ('23000', "[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Cannot insert the value NULL into column 'Topic', table 'AW_Database.dbo.Sessions'; column does not allow nulls. INSERT fails. (515) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)")
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 605, in ask_question
+    session = db.create_session(user_id, None)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\database.py", line 253, in create_session
+    cursor.execute(query, (user_id, topic))
+pyodbc.IntegrityError: ('23000', "[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Cannot insert the value NULL into column 'Topic', table 'AW_Database.dbo.Sessions'; column does not allow nulls. INSERT fails. (515) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)")
+2024-12-09 17:55:41,477 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-09 17:55:49,526 - app - ERROR - Error processing question (attempt 1): 'int' object is not subscriptable
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 606, in ask_question
+    session_id = session['SessionId']
+                 ~~~~~~~^^^^^^^^^^^^^
+TypeError: 'int' object is not subscriptable
+2024-12-09 17:55:50,661 - app - ERROR - Error processing question (attempt 2): 'int' object is not subscriptable
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 606, in ask_question
+    session_id = session['SessionId']
+                 ~~~~~~~^^^^^^^^^^^^^
+TypeError: 'int' object is not subscriptable
+2024-12-09 17:55:51,667 - app - ERROR - Error processing question (attempt 3): 'int' object is not subscriptable
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 606, in ask_question
+    session_id = session['SessionId']
+                 ~~~~~~~^^^^^^^^^^^^^
+TypeError: 'int' object is not subscriptable
+2024-12-09 17:55:53,552 - app - ERROR - Error processing question (attempt 1): 'int' object is not subscriptable
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 606, in ask_question
+    session_id = session['SessionId']
+                 ~~~~~~~^^^^^^^^^^^^^
+TypeError: 'int' object is not subscriptable
+2024-12-09 17:55:54,566 - app - ERROR - Error processing question (attempt 2): 'int' object is not subscriptable
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 606, in ask_question
+    session_id = session['SessionId']
+                 ~~~~~~~^^^^^^^^^^^^^
+TypeError: 'int' object is not subscriptable
+2024-12-09 17:55:55,578 - app - ERROR - Error processing question (attempt 3): 'int' object is not subscriptable
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 606, in ask_question
+    session_id = session['SessionId']
+                 ~~~~~~~^^^^^^^^^^^^^
+TypeError: 'int' object is not subscriptable
+2024-12-09 17:55:57,547 - app - ERROR - Error processing question (attempt 1): 'int' object is not subscriptable
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 606, in ask_question
+    session_id = session['SessionId']
+                 ~~~~~~~^^^^^^^^^^^^^
+TypeError: 'int' object is not subscriptable
+2024-12-09 17:55:58,560 - app - ERROR - Error processing question (attempt 2): 'int' object is not subscriptable
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 606, in ask_question
+    session_id = session['SessionId']
+                 ~~~~~~~^^^^^^^^^^^^^
+TypeError: 'int' object is not subscriptable
+2024-12-09 17:55:59,574 - app - ERROR - Error processing question (attempt 3): 'int' object is not subscriptable
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 606, in ask_question
+    session_id = session['SessionId']
+                 ~~~~~~~^^^^^^^^^^^^^
+TypeError: 'int' object is not subscriptable
+2024-12-09 17:57:01,898 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-09 17:57:44,991 - app - ERROR - Error processing question (attempt 1): 
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 608, in ask_question
+    chat_id = db.create_chat_message(session_id, user_id, question, msg_type="HumanMessage")
+                 ^^^^^^^
+  File "C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\bdb.py", line 90, in trace_dispatch
+    return self.dispatch_line(frame)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\bdb.py", line 115, in dispatch_line
+    if self.quitting: raise BdbQuit
+                      ^^^^^^^^^^^^^
+bdb.BdbQuit
+2024-12-09 17:57:47,654 - app - ERROR - Error processing question (attempt 1): 
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 608, in ask_question
+    chat_id = db.create_chat_message(session_id, user_id, question, msg_type="HumanMessage")
+                 ^^^^^^^
+  File "C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\bdb.py", line 90, in trace_dispatch
+    return self.dispatch_line(frame)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\bdb.py", line 115, in dispatch_line
+    if self.quitting: raise BdbQuit
+                      ^^^^^^^^^^^^^
+bdb.BdbQuit
+2024-12-09 17:57:47,832 - app - ERROR - Error processing question (attempt 2): 
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 608, in ask_question
+    chat_id = db.create_chat_message(session_id, user_id, question, msg_type="HumanMessage")
+                 ^^^^^^^
+  File "C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\bdb.py", line 90, in trace_dispatch
+    return self.dispatch_line(frame)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\bdb.py", line 115, in dispatch_line
+    if self.quitting: raise BdbQuit
+                      ^^^^^^^^^^^^^
+bdb.BdbQuit
+2024-12-09 17:59:17,989 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-09 17:59:18,908 - app - ERROR - Error processing question (attempt 1): ('22018', "[22018] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Conversion failed when converting the nvarchar value '1770d5ba-07c8-4fb1-9919-865433be358d' to data type int. (245) (SQLExecDirectW)")
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 606, in ask_question
+    session = db.create_session(session_id, "Temporary Chat")
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\database.py", line 253, in create_session
+    cursor.execute(query, (user_id, topic))
+pyodbc.DataError: ('22018', "[22018] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Conversion failed when converting the nvarchar value '1770d5ba-07c8-4fb1-9919-865433be358d' to data type int. (245) (SQLExecDirectW)")
+2024-12-09 17:59:19,938 - app - ERROR - Error processing question (attempt 2): ('22018', "[22018] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Conversion failed when converting the nvarchar value '1770d5ba-07c8-4fb1-9919-865433be358d' to data type int. (245) (SQLExecDirectW)")
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 606, in ask_question
+    session = db.create_session(session_id, "Temporary Chat")
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\database.py", line 253, in create_session
+    cursor.execute(query, (user_id, topic))
+pyodbc.DataError: ('22018', "[22018] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Conversion failed when converting the nvarchar value '1770d5ba-07c8-4fb1-9919-865433be358d' to data type int. (245) (SQLExecDirectW)")
+2024-12-09 17:59:20,951 - app - ERROR - Error processing question (attempt 3): ('22018', "[22018] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Conversion failed when converting the nvarchar value '1770d5ba-07c8-4fb1-9919-865433be358d' to data type int. (245) (SQLExecDirectW)")
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 606, in ask_question
+    session = db.create_session(session_id, "Temporary Chat")
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\database.py", line 253, in create_session
+    cursor.execute(query, (user_id, topic))
+pyodbc.DataError: ('22018', "[22018] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Conversion failed when converting the nvarchar value '1770d5ba-07c8-4fb1-9919-865433be358d' to data type int. (245) (SQLExecDirectW)")
+2024-12-09 17:59:22,866 - app - ERROR - Error processing question (attempt 1): ('22018', "[22018] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Conversion failed when converting the nvarchar value 'e1d21d79-95b4-4f26-bbb6-db58929a8fa8' to data type int. (245) (SQLExecDirectW)")
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 606, in ask_question
+    session = db.create_session(session_id, "Temporary Chat")
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\database.py", line 253, in create_session
+    cursor.execute(query, (user_id, topic))
+pyodbc.DataError: ('22018', "[22018] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Conversion failed when converting the nvarchar value 'e1d21d79-95b4-4f26-bbb6-db58929a8fa8' to data type int. (245) (SQLExecDirectW)")
+2024-12-09 17:59:23,883 - app - ERROR - Error processing question (attempt 2): ('22018', "[22018] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Conversion failed when converting the nvarchar value 'e1d21d79-95b4-4f26-bbb6-db58929a8fa8' to data type int. (245) (SQLExecDirectW)")
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 606, in ask_question
+    session = db.create_session(session_id, "Temporary Chat")
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\database.py", line 253, in create_session
+    cursor.execute(query, (user_id, topic))
+pyodbc.DataError: ('22018', "[22018] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Conversion failed when converting the nvarchar value 'e1d21d79-95b4-4f26-bbb6-db58929a8fa8' to data type int. (245) (SQLExecDirectW)")
+2024-12-09 17:59:24,898 - app - ERROR - Error processing question (attempt 3): ('22018', "[22018] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Conversion failed when converting the nvarchar value 'e1d21d79-95b4-4f26-bbb6-db58929a8fa8' to data type int. (245) (SQLExecDirectW)")
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 606, in ask_question
+    session = db.create_session(session_id, "Temporary Chat")
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\database.py", line 253, in create_session
+    cursor.execute(query, (user_id, topic))
+pyodbc.DataError: ('22018', "[22018] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Conversion failed when converting the nvarchar value 'e1d21d79-95b4-4f26-bbb6-db58929a8fa8' to data type int. (245) (SQLExecDirectW)")
+2024-12-09 17:59:26,555 - app - ERROR - Error processing question (attempt 1): ('22018', "[22018] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Conversion failed when converting the nvarchar value '4d49d03f-8ca4-475d-a286-d1f0c55a02bd' to data type int. (245) (SQLExecDirectW)")
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 606, in ask_question
+    session = db.create_session(session_id, "Temporary Chat")
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\database.py", line 253, in create_session
+    cursor.execute(query, (user_id, topic))
+pyodbc.DataError: ('22018', "[22018] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Conversion failed when converting the nvarchar value '4d49d03f-8ca4-475d-a286-d1f0c55a02bd' to data type int. (245) (SQLExecDirectW)")
+2024-12-09 17:59:27,572 - app - ERROR - Error processing question (attempt 2): ('22018', "[22018] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Conversion failed when converting the nvarchar value '4d49d03f-8ca4-475d-a286-d1f0c55a02bd' to data type int. (245) (SQLExecDirectW)")
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 606, in ask_question
+    session = db.create_session(session_id, "Temporary Chat")
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\database.py", line 253, in create_session
+    cursor.execute(query, (user_id, topic))
+pyodbc.DataError: ('22018', "[22018] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Conversion failed when converting the nvarchar value '4d49d03f-8ca4-475d-a286-d1f0c55a02bd' to data type int. (245) (SQLExecDirectW)")
+2024-12-09 17:59:28,577 - app - ERROR - Error processing question (attempt 3): ('22018', "[22018] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Conversion failed when converting the nvarchar value '4d49d03f-8ca4-475d-a286-d1f0c55a02bd' to data type int. (245) (SQLExecDirectW)")
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 606, in ask_question
+    session = db.create_session(session_id, "Temporary Chat")
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\database.py", line 253, in create_session
+    cursor.execute(query, (user_id, topic))
+pyodbc.DataError: ('22018', "[22018] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Conversion failed when converting the nvarchar value '4d49d03f-8ca4-475d-a286-d1f0c55a02bd' to data type int. (245) (SQLExecDirectW)")
+2024-12-09 18:01:25,035 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-09 18:01:31,400 - app - ERROR - Error processing question (attempt 1): name 'logger' is not defined
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\database.py", line 254, in create_session
+    cursor.execute(query, (str(session_id), topic))
+pyodbc.IntegrityError: ('23000', "[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Cannot insert explicit value for identity column in table 'Sessions' when IDENTITY_INSERT is set to OFF. (544) (SQLExecDirectW)")
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 608, in ask_question
+    session = db.create_session(session_id, "Temporary Chat")
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\database.py", line 258, in create_session
+    logger.error(f"Error creating session: {str(e)}")
+    ^^^^^^
+NameError: name 'logger' is not defined
+2024-12-09 18:01:32,449 - app - ERROR - Error processing question (attempt 2): name 'logger' is not defined
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\database.py", line 254, in create_session
+    cursor.execute(query, (str(session_id), topic))
+pyodbc.IntegrityError: ('23000', "[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Cannot insert explicit value for identity column in table 'Sessions' when IDENTITY_INSERT is set to OFF. (544) (SQLExecDirectW)")
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 608, in ask_question
+    session = db.create_session(session_id, "Temporary Chat")
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\database.py", line 258, in create_session
+    logger.error(f"Error creating session: {str(e)}")
+    ^^^^^^
+NameError: name 'logger' is not defined
+2024-12-09 18:01:33,499 - app - ERROR - Error processing question (attempt 3): name 'logger' is not defined
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\database.py", line 254, in create_session
+    cursor.execute(query, (str(session_id), topic))
+pyodbc.IntegrityError: ('23000', "[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Cannot insert explicit value for identity column in table 'Sessions' when IDENTITY_INSERT is set to OFF. (544) (SQLExecDirectW)")
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 608, in ask_question
+    session = db.create_session(session_id, "Temporary Chat")
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\database.py", line 258, in create_session
+    logger.error(f"Error creating session: {str(e)}")
+    ^^^^^^
+NameError: name 'logger' is not defined
+2024-12-09 18:01:35,542 - app - ERROR - Error processing question (attempt 1): name 'logger' is not defined
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\database.py", line 254, in create_session
+    cursor.execute(query, (str(session_id), topic))
+pyodbc.IntegrityError: ('23000', "[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Cannot insert explicit value for identity column in table 'Sessions' when IDENTITY_INSERT is set to OFF. (544) (SQLExecDirectW)")
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 608, in ask_question
+    session = db.create_session(session_id, "Temporary Chat")
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\database.py", line 258, in create_session
+    logger.error(f"Error creating session: {str(e)}")
+    ^^^^^^
+NameError: name 'logger' is not defined
+2024-12-09 18:01:36,742 - app - ERROR - Error processing question (attempt 2): name 'logger' is not defined
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\database.py", line 254, in create_session
+    cursor.execute(query, (str(session_id), topic))
+pyodbc.IntegrityError: ('23000', "[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Cannot insert explicit value for identity column in table 'Sessions' when IDENTITY_INSERT is set to OFF. (544) (SQLExecDirectW)")
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 608, in ask_question
+    session = db.create_session(session_id, "Temporary Chat")
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\database.py", line 258, in create_session
+    logger.error(f"Error creating session: {str(e)}")
+    ^^^^^^
+NameError: name 'logger' is not defined
+2024-12-09 18:01:37,787 - app - ERROR - Error processing question (attempt 3): name 'logger' is not defined
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\database.py", line 254, in create_session
+    cursor.execute(query, (str(session_id), topic))
+pyodbc.IntegrityError: ('23000', "[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Cannot insert explicit value for identity column in table 'Sessions' when IDENTITY_INSERT is set to OFF. (544) (SQLExecDirectW)")
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 608, in ask_question
+    session = db.create_session(session_id, "Temporary Chat")
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\database.py", line 258, in create_session
+    logger.error(f"Error creating session: {str(e)}")
+    ^^^^^^
+NameError: name 'logger' is not defined
+2024-12-09 18:01:39,566 - app - ERROR - Error processing question (attempt 1): name 'logger' is not defined
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\database.py", line 254, in create_session
+    cursor.execute(query, (str(session_id), topic))
+pyodbc.IntegrityError: ('23000', "[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Cannot insert explicit value for identity column in table 'Sessions' when IDENTITY_INSERT is set to OFF. (544) (SQLExecDirectW)")
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 608, in ask_question
+    session = db.create_session(session_id, "Temporary Chat")
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\database.py", line 258, in create_session
+    logger.error(f"Error creating session: {str(e)}")
+    ^^^^^^
+NameError: name 'logger' is not defined
+2024-12-09 18:01:40,614 - app - ERROR - Error processing question (attempt 2): name 'logger' is not defined
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\database.py", line 254, in create_session
+    cursor.execute(query, (str(session_id), topic))
+pyodbc.IntegrityError: ('23000', "[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Cannot insert explicit value for identity column in table 'Sessions' when IDENTITY_INSERT is set to OFF. (544) (SQLExecDirectW)")
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 608, in ask_question
+    session = db.create_session(session_id, "Temporary Chat")
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\database.py", line 258, in create_session
+    logger.error(f"Error creating session: {str(e)}")
+    ^^^^^^
+NameError: name 'logger' is not defined
+2024-12-09 18:01:41,656 - app - ERROR - Error processing question (attempt 3): name 'logger' is not defined
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\database.py", line 254, in create_session
+    cursor.execute(query, (str(session_id), topic))
+pyodbc.IntegrityError: ('23000', "[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Cannot insert explicit value for identity column in table 'Sessions' when IDENTITY_INSERT is set to OFF. (544) (SQLExecDirectW)")
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 608, in ask_question
+    session = db.create_session(session_id, "Temporary Chat")
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\database.py", line 258, in create_session
+    logger.error(f"Error creating session: {str(e)}")
+    ^^^^^^
+NameError: name 'logger' is not defined
+2024-12-09 18:36:29,325 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-09 18:36:31,425 - app - ERROR - Error processing question (attempt 1): Error creating session: ('23000', '[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The INSERT statement conflicted with the FOREIGN KEY constraint "FK_Sessions_User". The conflict occurred in database "AW_Database", table "dbo.User", column \'UserId\'. (547) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)')
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\database.py", line 257, in create_session
+    cursor.execute(query, (user_id, topic))
+pyodbc.IntegrityError: ('23000', '[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The INSERT statement conflicted with the FOREIGN KEY constraint "FK_Sessions_User". The conflict occurred in database "AW_Database", table "dbo.User", column \'UserId\'. (547) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)')
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 608, in ask_question
+    session = db.create_session(user_id=user_id, topic="Legal")
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\database.py", line 263, in create_session
+    raise ValueError(f"Error creating session: {str(e)}")
+ValueError: Error creating session: ('23000', '[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The INSERT statement conflicted with the FOREIGN KEY constraint "FK_Sessions_User". The conflict occurred in database "AW_Database", table "dbo.User", column \'UserId\'. (547) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)')
+2024-12-09 18:36:32,465 - app - ERROR - Error processing question (attempt 2): Error creating session: ('23000', '[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The INSERT statement conflicted with the FOREIGN KEY constraint "FK_Sessions_User". The conflict occurred in database "AW_Database", table "dbo.User", column \'UserId\'. (547) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)')
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\database.py", line 257, in create_session
+    cursor.execute(query, (user_id, topic))
+pyodbc.IntegrityError: ('23000', '[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The INSERT statement conflicted with the FOREIGN KEY constraint "FK_Sessions_User". The conflict occurred in database "AW_Database", table "dbo.User", column \'UserId\'. (547) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)')
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 608, in ask_question
+    session = db.create_session(user_id=user_id, topic="Legal")
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\database.py", line 263, in create_session
+    raise ValueError(f"Error creating session: {str(e)}")
+ValueError: Error creating session: ('23000', '[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The INSERT statement conflicted with the FOREIGN KEY constraint "FK_Sessions_User". The conflict occurred in database "AW_Database", table "dbo.User", column \'UserId\'. (547) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)')
+2024-12-09 18:36:33,722 - app - ERROR - Error processing question (attempt 3): Error creating session: ('23000', '[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The INSERT statement conflicted with the FOREIGN KEY constraint "FK_Sessions_User". The conflict occurred in database "AW_Database", table "dbo.User", column \'UserId\'. (547) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)')
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\database.py", line 257, in create_session
+    cursor.execute(query, (user_id, topic))
+pyodbc.IntegrityError: ('23000', '[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The INSERT statement conflicted with the FOREIGN KEY constraint "FK_Sessions_User". The conflict occurred in database "AW_Database", table "dbo.User", column \'UserId\'. (547) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)')
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 608, in ask_question
+    session = db.create_session(user_id=user_id, topic="Legal")
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\database.py", line 263, in create_session
+    raise ValueError(f"Error creating session: {str(e)}")
+ValueError: Error creating session: ('23000', '[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The INSERT statement conflicted with the FOREIGN KEY constraint "FK_Sessions_User". The conflict occurred in database "AW_Database", table "dbo.User", column \'UserId\'. (547) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)')
+2024-12-09 18:36:35,857 - app - ERROR - Error processing question (attempt 1): Error creating session: ('23000', '[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The INSERT statement conflicted with the FOREIGN KEY constraint "FK_Sessions_User". The conflict occurred in database "AW_Database", table "dbo.User", column \'UserId\'. (547) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)')
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\database.py", line 257, in create_session
+    cursor.execute(query, (user_id, topic))
+pyodbc.IntegrityError: ('23000', '[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The INSERT statement conflicted with the FOREIGN KEY constraint "FK_Sessions_User". The conflict occurred in database "AW_Database", table "dbo.User", column \'UserId\'. (547) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)')
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 608, in ask_question
+    session = db.create_session(user_id=user_id, topic="Legal")
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\database.py", line 263, in create_session
+    raise ValueError(f"Error creating session: {str(e)}")
+ValueError: Error creating session: ('23000', '[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The INSERT statement conflicted with the FOREIGN KEY constraint "FK_Sessions_User". The conflict occurred in database "AW_Database", table "dbo.User", column \'UserId\'. (547) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)')
+2024-12-09 18:36:36,874 - app - ERROR - Error processing question (attempt 2): Error creating session: ('23000', '[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The INSERT statement conflicted with the FOREIGN KEY constraint "FK_Sessions_User". The conflict occurred in database "AW_Database", table "dbo.User", column \'UserId\'. (547) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)')
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\database.py", line 257, in create_session
+    cursor.execute(query, (user_id, topic))
+pyodbc.IntegrityError: ('23000', '[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The INSERT statement conflicted with the FOREIGN KEY constraint "FK_Sessions_User". The conflict occurred in database "AW_Database", table "dbo.User", column \'UserId\'. (547) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)')
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 608, in ask_question
+    session = db.create_session(user_id=user_id, topic="Legal")
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\database.py", line 263, in create_session
+    raise ValueError(f"Error creating session: {str(e)}")
+ValueError: Error creating session: ('23000', '[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The INSERT statement conflicted with the FOREIGN KEY constraint "FK_Sessions_User". The conflict occurred in database "AW_Database", table "dbo.User", column \'UserId\'. (547) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)')
+2024-12-09 18:36:37,901 - app - ERROR - Error processing question (attempt 3): Error creating session: ('23000', '[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The INSERT statement conflicted with the FOREIGN KEY constraint "FK_Sessions_User". The conflict occurred in database "AW_Database", table "dbo.User", column \'UserId\'. (547) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)')
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\database.py", line 257, in create_session
+    cursor.execute(query, (user_id, topic))
+pyodbc.IntegrityError: ('23000', '[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The INSERT statement conflicted with the FOREIGN KEY constraint "FK_Sessions_User". The conflict occurred in database "AW_Database", table "dbo.User", column \'UserId\'. (547) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)')
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 608, in ask_question
+    session = db.create_session(user_id=user_id, topic="Legal")
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\database.py", line 263, in create_session
+    raise ValueError(f"Error creating session: {str(e)}")
+ValueError: Error creating session: ('23000', '[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The INSERT statement conflicted with the FOREIGN KEY constraint "FK_Sessions_User". The conflict occurred in database "AW_Database", table "dbo.User", column \'UserId\'. (547) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)')
+2024-12-09 18:37:34,831 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-09 18:37:48,543 - app - ERROR - Error processing question (attempt 1): Error creating session: ('23000', '[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The INSERT statement conflicted with the FOREIGN KEY constraint "FK_Sessions_User". The conflict occurred in database "AW_Database", table "dbo.User", column \'UserId\'. (547) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)')
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\database.py", line 257, in create_session
+    cursor.execute(query, (user_id, topic))
+pyodbc.IntegrityError: ('23000', '[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The INSERT statement conflicted with the FOREIGN KEY constraint "FK_Sessions_User". The conflict occurred in database "AW_Database", table "dbo.User", column \'UserId\'. (547) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)')
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 608, in ask_question
+    session = db.create_session(user_id=user_id, topic="Legal")
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\database.py", line 263, in create_session
+    raise ValueError(f"Error creating session: {str(e)}")
+ValueError: Error creating session: ('23000', '[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The INSERT statement conflicted with the FOREIGN KEY constraint "FK_Sessions_User". The conflict occurred in database "AW_Database", table "dbo.User", column \'UserId\'. (547) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)')
+2024-12-09 18:37:49,626 - app - ERROR - Error processing question (attempt 2): Error creating session: ('23000', '[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The INSERT statement conflicted with the FOREIGN KEY constraint "FK_Sessions_User". The conflict occurred in database "AW_Database", table "dbo.User", column \'UserId\'. (547) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)')
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\database.py", line 257, in create_session
+    cursor.execute(query, (user_id, topic))
+pyodbc.IntegrityError: ('23000', '[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The INSERT statement conflicted with the FOREIGN KEY constraint "FK_Sessions_User". The conflict occurred in database "AW_Database", table "dbo.User", column \'UserId\'. (547) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)')
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 608, in ask_question
+    session = db.create_session(user_id=user_id, topic="Legal")
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\database.py", line 263, in create_session
+    raise ValueError(f"Error creating session: {str(e)}")
+ValueError: Error creating session: ('23000', '[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The INSERT statement conflicted with the FOREIGN KEY constraint "FK_Sessions_User". The conflict occurred in database "AW_Database", table "dbo.User", column \'UserId\'. (547) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)')
+2024-12-09 18:37:50,642 - app - ERROR - Error processing question (attempt 3): Error creating session: ('23000', '[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The INSERT statement conflicted with the FOREIGN KEY constraint "FK_Sessions_User". The conflict occurred in database "AW_Database", table "dbo.User", column \'UserId\'. (547) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)')
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\database.py", line 257, in create_session
+    cursor.execute(query, (user_id, topic))
+pyodbc.IntegrityError: ('23000', '[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The INSERT statement conflicted with the FOREIGN KEY constraint "FK_Sessions_User". The conflict occurred in database "AW_Database", table "dbo.User", column \'UserId\'. (547) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)')
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 608, in ask_question
+    session = db.create_session(user_id=user_id, topic="Legal")
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\database.py", line 263, in create_session
+    raise ValueError(f"Error creating session: {str(e)}")
+ValueError: Error creating session: ('23000', '[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The INSERT statement conflicted with the FOREIGN KEY constraint "FK_Sessions_User". The conflict occurred in database "AW_Database", table "dbo.User", column \'UserId\'. (547) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)')
+2024-12-09 18:37:52,872 - app - ERROR - Error processing question (attempt 1): Error creating session: ('23000', '[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The INSERT statement conflicted with the FOREIGN KEY constraint "FK_Sessions_User". The conflict occurred in database "AW_Database", table "dbo.User", column \'UserId\'. (547) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)')
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\database.py", line 257, in create_session
+    cursor.execute(query, (user_id, topic))
+pyodbc.IntegrityError: ('23000', '[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The INSERT statement conflicted with the FOREIGN KEY constraint "FK_Sessions_User". The conflict occurred in database "AW_Database", table "dbo.User", column \'UserId\'. (547) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)')
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 608, in ask_question
+    session = db.create_session(user_id=user_id, topic="Legal")
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\database.py", line 263, in create_session
+    raise ValueError(f"Error creating session: {str(e)}")
+ValueError: Error creating session: ('23000', '[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The INSERT statement conflicted with the FOREIGN KEY constraint "FK_Sessions_User". The conflict occurred in database "AW_Database", table "dbo.User", column \'UserId\'. (547) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)')
+2024-12-09 18:37:53,886 - app - ERROR - Error processing question (attempt 2): Error creating session: ('23000', '[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The INSERT statement conflicted with the FOREIGN KEY constraint "FK_Sessions_User". The conflict occurred in database "AW_Database", table "dbo.User", column \'UserId\'. (547) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)')
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\database.py", line 257, in create_session
+    cursor.execute(query, (user_id, topic))
+pyodbc.IntegrityError: ('23000', '[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The INSERT statement conflicted with the FOREIGN KEY constraint "FK_Sessions_User". The conflict occurred in database "AW_Database", table "dbo.User", column \'UserId\'. (547) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)')
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 608, in ask_question
+    session = db.create_session(user_id=user_id, topic="Legal")
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\database.py", line 263, in create_session
+    raise ValueError(f"Error creating session: {str(e)}")
+ValueError: Error creating session: ('23000', '[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The INSERT statement conflicted with the FOREIGN KEY constraint "FK_Sessions_User". The conflict occurred in database "AW_Database", table "dbo.User", column \'UserId\'. (547) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)')
+2024-12-09 18:37:54,902 - app - ERROR - Error processing question (attempt 3): Error creating session: ('23000', '[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The INSERT statement conflicted with the FOREIGN KEY constraint "FK_Sessions_User". The conflict occurred in database "AW_Database", table "dbo.User", column \'UserId\'. (547) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)')
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\database.py", line 257, in create_session
+    cursor.execute(query, (user_id, topic))
+pyodbc.IntegrityError: ('23000', '[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The INSERT statement conflicted with the FOREIGN KEY constraint "FK_Sessions_User". The conflict occurred in database "AW_Database", table "dbo.User", column \'UserId\'. (547) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)')
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 608, in ask_question
+    session = db.create_session(user_id=user_id, topic="Legal")
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\database.py", line 263, in create_session
+    raise ValueError(f"Error creating session: {str(e)}")
+ValueError: Error creating session: ('23000', '[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The INSERT statement conflicted with the FOREIGN KEY constraint "FK_Sessions_User". The conflict occurred in database "AW_Database", table "dbo.User", column \'UserId\'. (547) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)')
+2024-12-09 18:37:56,927 - app - ERROR - Error processing question (attempt 1): Error creating session: ('23000', '[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The INSERT statement conflicted with the FOREIGN KEY constraint "FK_Sessions_User". The conflict occurred in database "AW_Database", table "dbo.User", column \'UserId\'. (547) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)')
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\database.py", line 257, in create_session
+    cursor.execute(query, (user_id, topic))
+pyodbc.IntegrityError: ('23000', '[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The INSERT statement conflicted with the FOREIGN KEY constraint "FK_Sessions_User". The conflict occurred in database "AW_Database", table "dbo.User", column \'UserId\'. (547) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)')
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 608, in ask_question
+    session = db.create_session(user_id=user_id, topic="Legal")
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\database.py", line 263, in create_session
+    raise ValueError(f"Error creating session: {str(e)}")
+ValueError: Error creating session: ('23000', '[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The INSERT statement conflicted with the FOREIGN KEY constraint "FK_Sessions_User". The conflict occurred in database "AW_Database", table "dbo.User", column \'UserId\'. (547) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)')
+2024-12-09 18:37:57,956 - app - ERROR - Error processing question (attempt 2): Error creating session: ('23000', '[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The INSERT statement conflicted with the FOREIGN KEY constraint "FK_Sessions_User". The conflict occurred in database "AW_Database", table "dbo.User", column \'UserId\'. (547) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)')
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\database.py", line 257, in create_session
+    cursor.execute(query, (user_id, topic))
+pyodbc.IntegrityError: ('23000', '[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The INSERT statement conflicted with the FOREIGN KEY constraint "FK_Sessions_User". The conflict occurred in database "AW_Database", table "dbo.User", column \'UserId\'. (547) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)')
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 608, in ask_question
+    session = db.create_session(user_id=user_id, topic="Legal")
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\database.py", line 263, in create_session
+    raise ValueError(f"Error creating session: {str(e)}")
+ValueError: Error creating session: ('23000', '[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The INSERT statement conflicted with the FOREIGN KEY constraint "FK_Sessions_User". The conflict occurred in database "AW_Database", table "dbo.User", column \'UserId\'. (547) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)')
+2024-12-09 18:37:58,975 - app - ERROR - Error processing question (attempt 3): Error creating session: ('23000', '[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The INSERT statement conflicted with the FOREIGN KEY constraint "FK_Sessions_User". The conflict occurred in database "AW_Database", table "dbo.User", column \'UserId\'. (547) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)')
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\database.py", line 257, in create_session
+    cursor.execute(query, (user_id, topic))
+pyodbc.IntegrityError: ('23000', '[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The INSERT statement conflicted with the FOREIGN KEY constraint "FK_Sessions_User". The conflict occurred in database "AW_Database", table "dbo.User", column \'UserId\'. (547) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)')
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 608, in ask_question
+    session = db.create_session(user_id=user_id, topic="Legal")
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\database.py", line 263, in create_session
+    raise ValueError(f"Error creating session: {str(e)}")
+ValueError: Error creating session: ('23000', '[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The INSERT statement conflicted with the FOREIGN KEY constraint "FK_Sessions_User". The conflict occurred in database "AW_Database", table "dbo.User", column \'UserId\'. (547) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)')
+2024-12-09 18:40:49,673 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-09 18:41:35,565 - app - ERROR - Error processing question (attempt 1): Error creating session: User with ID 2 does not exist
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\database.py", line 257, in create_session
+    raise ValueError(f"User with ID {user_id} does not exist")
+ValueError: User with ID 2 does not exist
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 609, in ask_question
+    session_id = db.create_session(user_id=user_id, topic="Legal")
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\database.py", line 270, in create_session
+    raise ValueError(f"Error creating session: {str(e)}")
+ValueError: Error creating session: User with ID 2 does not exist
+2024-12-09 18:41:36,641 - app - ERROR - Error processing question (attempt 2): Error creating session: User with ID 2 does not exist
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\database.py", line 257, in create_session
+    raise ValueError(f"User with ID {user_id} does not exist")
+ValueError: User with ID 2 does not exist
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 609, in ask_question
+    session_id = db.create_session(user_id=user_id, topic="Legal")
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\database.py", line 270, in create_session
+    raise ValueError(f"Error creating session: {str(e)}")
+ValueError: Error creating session: User with ID 2 does not exist
+2024-12-09 18:41:37,707 - app - ERROR - Error processing question (attempt 3): Error creating session: User with ID 2 does not exist
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\database.py", line 257, in create_session
+    raise ValueError(f"User with ID {user_id} does not exist")
+ValueError: User with ID 2 does not exist
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 609, in ask_question
+    session_id = db.create_session(user_id=user_id, topic="Legal")
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\database.py", line 270, in create_session
+    raise ValueError(f"Error creating session: {str(e)}")
+ValueError: Error creating session: User with ID 2 does not exist
+2024-12-09 18:41:39,595 - app - ERROR - Error processing question (attempt 1): Error creating session: User with ID 2 does not exist
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\database.py", line 257, in create_session
+    raise ValueError(f"User with ID {user_id} does not exist")
+ValueError: User with ID 2 does not exist
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 609, in ask_question
+    session_id = db.create_session(user_id=user_id, topic="Legal")
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\database.py", line 270, in create_session
+    raise ValueError(f"Error creating session: {str(e)}")
+ValueError: Error creating session: User with ID 2 does not exist
+2024-12-09 18:41:40,612 - app - ERROR - Error processing question (attempt 2): Error creating session: User with ID 2 does not exist
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\database.py", line 257, in create_session
+    raise ValueError(f"User with ID {user_id} does not exist")
+ValueError: User with ID 2 does not exist
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 609, in ask_question
+    session_id = db.create_session(user_id=user_id, topic="Legal")
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\database.py", line 270, in create_session
+    raise ValueError(f"Error creating session: {str(e)}")
+ValueError: Error creating session: User with ID 2 does not exist
+2024-12-09 18:41:41,621 - app - ERROR - Error processing question (attempt 3): Error creating session: User with ID 2 does not exist
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\database.py", line 257, in create_session
+    raise ValueError(f"User with ID {user_id} does not exist")
+ValueError: User with ID 2 does not exist
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 609, in ask_question
+    session_id = db.create_session(user_id=user_id, topic="Legal")
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\database.py", line 270, in create_session
+    raise ValueError(f"Error creating session: {str(e)}")
+ValueError: Error creating session: User with ID 2 does not exist
+2024-12-09 18:41:43,549 - app - ERROR - Error processing question (attempt 1): Error creating session: User with ID 2 does not exist
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\database.py", line 257, in create_session
+    raise ValueError(f"User with ID {user_id} does not exist")
+ValueError: User with ID 2 does not exist
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 609, in ask_question
+    session_id = db.create_session(user_id=user_id, topic="Legal")
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\database.py", line 270, in create_session
+    raise ValueError(f"Error creating session: {str(e)}")
+ValueError: Error creating session: User with ID 2 does not exist
+2024-12-09 18:41:44,587 - app - ERROR - Error processing question (attempt 2): Error creating session: User with ID 2 does not exist
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\database.py", line 257, in create_session
+    raise ValueError(f"User with ID {user_id} does not exist")
+ValueError: User with ID 2 does not exist
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 609, in ask_question
+    session_id = db.create_session(user_id=user_id, topic="Legal")
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\database.py", line 270, in create_session
+    raise ValueError(f"Error creating session: {str(e)}")
+ValueError: Error creating session: User with ID 2 does not exist
+2024-12-09 18:41:45,603 - app - ERROR - Error processing question (attempt 3): Error creating session: User with ID 2 does not exist
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\database.py", line 257, in create_session
+    raise ValueError(f"User with ID {user_id} does not exist")
+ValueError: User with ID 2 does not exist
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 609, in ask_question
+    session_id = db.create_session(user_id=user_id, topic="Legal")
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\database.py", line 270, in create_session
+    raise ValueError(f"Error creating session: {str(e)}")
+ValueError: Error creating session: User with ID 2 does not exist
+2024-12-09 18:44:32,299 - app - ERROR - Error processing question (attempt 1): 
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 611, in ask_question
+    chat_id = db.create_chat_message(session_id, user_id, question, msg_type="Human Message")
+              ^^
+  File "C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\bdb.py", line 90, in trace_dispatch
+    return self.dispatch_line(frame)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\bdb.py", line 115, in dispatch_line
+    if self.quitting: raise BdbQuit
+                      ^^^^^^^^^^^^^
+bdb.BdbQuit
+2024-12-09 18:44:33,479 - app - ERROR - Error processing question (attempt 2): 
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 611, in ask_question
+    chat_id = db.create_chat_message(session_id, user_id, question, msg_type="Human Message")
+              ^^
+  File "C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\bdb.py", line 90, in trace_dispatch
+    return self.dispatch_line(frame)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\bdb.py", line 115, in dispatch_line
+    if self.quitting: raise BdbQuit
+                      ^^^^^^^^^^^^^
+bdb.BdbQuit
+2024-12-09 18:45:11,014 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-09 18:46:09,884 - app - ERROR - Error processing question (attempt 1): 
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 611, in ask_question
+    chat_id = db.create_chat_message(session_id, user_id, question, msg_type="Human Message")
+              ^^
+  File "C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\bdb.py", line 90, in trace_dispatch
+    return self.dispatch_line(frame)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\bdb.py", line 115, in dispatch_line
+    if self.quitting: raise BdbQuit
+                      ^^^^^^^^^^^^^
+bdb.BdbQuit
+2024-12-09 18:46:10,831 - app - ERROR - Error processing question (attempt 1): 
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 611, in ask_question
+    chat_id = db.create_chat_message(session_id, user_id, question, msg_type="Human Message")
+              ^^
+  File "C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\bdb.py", line 90, in trace_dispatch
+    return self.dispatch_line(frame)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\bdb.py", line 115, in dispatch_line
+    if self.quitting: raise BdbQuit
+                      ^^^^^^^^^^^^^
+bdb.BdbQuit
+2024-12-09 18:46:11,181 - app - ERROR - Error processing question (attempt 2): 
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 611, in ask_question
+    chat_id = db.create_chat_message(session_id, user_id, question, msg_type="Human Message")
+              ^^
+  File "C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\bdb.py", line 90, in trace_dispatch
+    return self.dispatch_line(frame)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\bdb.py", line 115, in dispatch_line
+    if self.quitting: raise BdbQuit
+                      ^^^^^^^^^^^^^
+bdb.BdbQuit
+2024-12-09 18:46:12,038 - app - ERROR - Error processing question (attempt 2): 
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 611, in ask_question
+    chat_id = db.create_chat_message(session_id, user_id, question, msg_type="Human Message")
+              ^^
+  File "C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\bdb.py", line 90, in trace_dispatch
+    return self.dispatch_line(frame)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\bdb.py", line 115, in dispatch_line
+    if self.quitting: raise BdbQuit
+                      ^^^^^^^^^^^^^
+bdb.BdbQuit
+2024-12-09 18:58:31,141 - waitress - INFO - Serving on http://127.0.0.1:5000

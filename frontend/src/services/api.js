@@ -52,8 +52,7 @@ export const apiService = {
     while (retries < maxRetries) {
       try {
         const response = await api.post('/ask', { 
-          question, 
-          chat_id: null 
+          question,  
         });
         
         if (!response.data) {
@@ -116,6 +115,21 @@ export const apiService = {
 
   async updateProfile(profileData) {
     const response = await api.put('/user-profile', profileData);
+    return response.data;
+  },
+
+  async createClientProfile(formData) {
+    const config = {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    };
+    const response = await api.post('/cl/profile', formData, config);
+    return response.data;
+  },
+
+  async createLawyerProfile(profileData) {
+    const response = await api.post('/lw/profile', profileData);
     return response.data;
   },
 

@@ -4,6 +4,7 @@ import logging
 from main import RAGAgent
 import gc
 import tracemalloc
+import random
 import httpx  
 import time  
 from datetime import timedelta
@@ -15,7 +16,16 @@ from dotenv import load_dotenv
 import uuid
 from database import Database
 from werkzeug.security import generate_password_hash, check_password_hash
+import os
+from werkzeug.utils import secure_filename
+from datetime import datetime
 load_dotenv()
+
+UPLOAD_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'uploads', 'profile_images')
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+
+# Create upload directory if it doesn't exist
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 logging.basicConfig(
     level=logging.INFO,
@@ -70,6 +80,25 @@ lawyer_details_crud = LawyerDetailsCRUD()
 chat_message_crud = ChatMessageCRUD()
 
 db = Database()
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+def save_profile_image(file):
+    if not file:
+        return None
+    
+    if file and allowed_file(file.filename):
+        # Create a unique filename using timestamp
+        timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+        filename = secure_filename(file.filename)
+        name, ext = os.path.splitext(filename)
+        unique_filename = f"{name}_{timestamp}{ext}"
+        
+        filepath = os.path.join(UPLOAD_FOLDER, unique_filename)
+        file.save(filepath)
+        return unique_filename
+    return None
 
 # Route for Signup
 @app.route('/api/signup', methods=['POST'])
@@ -164,46 +193,140 @@ def login():
 @app.route('/api/cl/profile', methods=['POST'])
 @jwt_required()
 def add_client_profile():
-    data = request.get_json()
-    current_user_id = get_jwt_identity()
-    client_data = {
-        'user_id': current_user_id,
-        'cnic': data.get('cnic'),
-        'contact': data.get('contact'),
-        'location': data.get('location')
-    }
     try:
-        db.create_client(**client_data)
-        return jsonify({"message": "Client profile created successfully"}), 201
+        current_user_id = get_jwt_identity()
+        print(current_user_id)
+        cnic = request.form.get('cnic')
+        contact = request.form.get('contact')
+        location = request.form.get('location')
+        profile_image = request.files.get('profilePicture')
+
+        # Validate inputs
+        if not all([cnic, contact, location]):
+            return jsonify({"error": "Missing required fields"}), 400
+        if not cnic.isdigit() or len(cnic) != 13:
+            return jsonify({"error": "Invalid CNIC format"}), 400
+        if not contact.startswith('+92') or len(contact) != 13:
+            return jsonify({"error": "Invalid contact number format"}), 400
+
+        # Handle image upload separately
+        image_filename = 'default.jpg'  # Default value
+        if profile_image:
+            if not allowed_file(profile_image.filename):
+                return jsonify({"error": "Invalid file format. Allowed formats: png, jpg, jpeg, gif"}), 400
+            
+            image_filename = save_profile_image(profile_image)
+            if not image_filename:
+                return jsonify({"error": "Failed to save profile image"}), 500
+
+        # Create client profile
+        client_data = {
+            'user_id': current_user_id,
+            'cnic': cnic,
+            'contact': contact,
+            'location': location,
+            'credits': 0,
+            'profile_image': image_filename
+        }
+
+        if not db.create_client(**client_data):
+            raise Exception("Failed to create client profile in database")
+
+        return jsonify({
+            "message": "Client profile created successfully",
+            "profile": {
+                "cnic": cnic,
+                "contact": contact,
+                "location": location,
+                "profile_image": image_filename
+            }
+        }), 201
+
     except Exception as e:
         logger.error(f"Client profile creation error: {str(e)}")
-        return jsonify({"error": "Failed to create client profile"}), 500
+        # Clean up uploaded file if profile creation fails
+        if 'image_filename' in locals() and image_filename != 'default.jpg':
+            try:
+                os.remove(os.path.join(UPLOAD_FOLDER, image_filename))
+            except:
+                pass
+        return jsonify({"error": str(e)}), 500
 
 # Route for adding lawyer profile
 @app.route('/api/lw/profile', methods=['POST'])
 @jwt_required()
 def add_lawyer_profile():
-    data = request.get_json()
-    current_user_id = get_jwt_identity()
-    lawyer_data = {
-        'user_id': current_user_id,
-        'cnic': data.get('cnic'),
-        'license_number': data.get('license_number'),
-        'location': data.get('location'),
-        'experience': data.get('experience'),
-        'specialization': data.get('specialization'),
-        'contact': data.get('contact'),
-        'email': data.get('email')
-    }
     try:
-        db.create_lawyer(**lawyer_data)
-        return jsonify({"message": "Lawyer profile created successfully"}), 201
+        data = request.get_json()
+        if not data:
+            logger.error("No JSON data received in lawyer profile creation")
+            return jsonify({"error": "No data provided"}), 400
+        current_user_id = get_jwt_identity()
+        logger.info(f"Creating lawyer profile for user ID: {current_user_id}")
+        required_fields = ['cnic', 'licenseNumber', 'location', 'experience', 'specialization', 'contact', 'email']
+        missing_fields = [field for field in required_fields if not data.get(field)]
+        if missing_fields:
+            logger.error(f"Missing required fields: {missing_fields}")
+            return jsonify({"error": f"Missing required fields: {', '.join(missing_fields)}"}), 400
+
+        # Validate data types and formats
+        try:
+            experience = int(data.get('experience'))
+            if experience < 0:
+                raise ValueError("Experience must be a positive number")
+        except (ValueError, TypeError) as e:
+            logger.error(f"Invalid experience value: {data.get('experience')}")
+            return jsonify({"error": "Experience must be a valid positive number"}), 400
+
+        # Basic format validations
+        if not data['cnic'].isdigit() or len(data['cnic']) != 13:
+            logger.error(f"Invalid CNIC format: {data['cnic']}")
+            return jsonify({"error": "Invalid CNIC format. Must be 13 digits"}), 400
+
+        if not '@' in data['email']:
+            logger.error(f"Invalid email format: {data['email']}")
+            return jsonify({"error": "Invalid email format"}), 400
+
+        lawyer_data = {
+            'user_id': current_user_id,
+            'cnic': data.get('cnic'),
+            'license_number': data.get('licenseNumber'),
+            'location': data.get('location'),
+            'experience': experience,
+            'specialization': data.get('specialization'),
+            'contact': data.get('contact'),
+            'email': data.get('email')
+        }
+
+        logger.debug(f"Attempting to create lawyer profile with data: {lawyer_data}")
+
+        try:
+            db.create_lawyer(**lawyer_data)
+            logger.info(f"Successfully created lawyer profile for user ID: {current_user_id}")
+            return jsonify({
+                "message": "Lawyer profile created successfully",
+                "status": "success",
+                "user_id": current_user_id
+            }), 201
+
+        except ValueError as ve:
+            logger.error(f"Validation error while creating lawyer profile: {str(ve)}")
+            return jsonify({"error": str(ve)}), 400
+            
+        except Exception as e:
+            logger.error(f"Database error while creating lawyer profile: {str(e)}", exc_info=True)
+            return jsonify({"error": "Database error occurred while creating profile"}), 500
+
     except Exception as e:
-        logger.error(f"Lawyer profile creation error: {str(e)}")
-        return jsonify({"error": "Failed to create lawyer profile"}), 500
-    
-# Route for fetching user profile
-@app.route('/api/profile', methods=['GET'])
+        logger.error(f"Unexpected error in add_lawyer_profile: {str(e)}", exc_info=True)
+        return jsonify({"error": "An unexpected error occurred"}), 500
+
+    finally:
+        # Log memory usage or cleanup if needed
+        logger.debug("Finished processing lawyer profile creation request")
+
+# Route for fetching lawyer profile by
+@app.route('/api/lw/profile', methods=['GET'])
 @jwt_required()
 def get_profile():
     current_user_id = get_jwt_identity()
@@ -281,7 +404,7 @@ def update_profile():
         lawyer_data = {
             'user_id': current_user_id,
             'cnic': data.get('cnic', lawyer.CNIC),
-            'license_number': data.get('license_number', lawyer.LicenseNumber),
+            'license_number': data.get('licenseNumber', lawyer.LicenseNumber),
             'location': data.get('location', lawyer.Location),
             'experience': data.get('experience', lawyer.Experience),
             'specialization': data.get('specialization', lawyer.Specialization),
@@ -393,7 +516,7 @@ def get_chat_messages(chat_id):
 @app.route('/api/chat/<chat_id>/messages/<message_id>', methods=['GET'])
 def get_chat_message(chat_id, message_id):
     try:
-        chat_message = db.get_chat_message_by_id(message_id)
+        chat_message = db.get_chat_message_by_message_id(message_id)
         if not chat_message:
             return jsonify({"error": "Chat message not found"}), 404
         return jsonify({
@@ -455,50 +578,49 @@ def is_valid_uuid(uuid_str: str) -> bool:
         return True
     except (ValueError, AttributeError, TypeError):
         return False
-
+# Ask endpoint
 @app.route('/api/ask', methods=['POST'])
 @jwt_required()  # Add this decorator to require authentication
 def ask_question():
     result = None
     retries = 0
     max_retries = 3
-    
+    data_loaded = False
+    # session_id = random.randint(100000, 999999)
+    # print(session_id)
     while retries < max_retries:
         try:
             current_user_id = get_jwt_identity()
-            
+            print(current_user_id)
+            chat_id = get_jwt()['chat_id'] if 'chat_id' in get_jwt() else None
+            print(chat_id)
             data = request.get_json()
             if not data:
                 logger.error("No JSON data received")
                 return jsonify({"error": "No data provided"}), 400
-
             question = data.get('question')
-            # chat_id = data.get('chat_id')
-            chat_id = "9AB8CE33-46AD-4EAE-B77A-2182B97DD4BA"
-            # if not chat_id:
-            #     chat_session_crud = ChatSessionCRUD()
-            #     chat_id = chat_session_crud.create(
-            #         initiator_id=current_user_id,
-            #         recipient_id="00000000-0000-0000-0000-000000000000"
-            #     )
-            #     if not chat_id:
-            #         raise Exception("Failed to create chat session")
+            user_id = current_user_id
+            chat_id = data.get('chat_id')
             if not question:
                 logger.error("Missing question parameter")
                 return jsonify({"error": "Missing required parameter: question"}), 400
-            logger.info(f"Processing question for user {current_user_id}, chat {chat_id}")            
+            if not chat_id or chat_id == None:
+                data_loaded = True
+                session_id = db.create_session(user_id=user_id, topic="Legal")
+                breakpoint()               
+                chat_id = db.create_chat_message(session_id, user_id, question, msg_type="Human Message")
+                chat_id = chat_id['ChatId']
+            logger.info(f"Processing question for user {current_user_id}, chat {chat_id}")
             rag_agent = get_agent(user_id=current_user_id, chat_id=chat_id)
             chat_id_str = str(chat_id) if chat_id else None
             if chat_id_str and is_valid_uuid(chat_id_str) and is_valid_uuid(current_user_id):
-                chat_history = chat_message_crud.get_chat_messages(
-                    user_id=current_user_id,
-                    chat_id=chat_id_str
-                )
+                if not data_loaded:
+                    history = db.get_chat_messages_by_chat_id(chat_id_str)
+                    data_loaded = True
             else:
                 logger.warning(f"Invalid UUID - chat_id: {chat_id_str}, user_id: {current_user_id}")
-                chat_history = []            
-            result = rag_agent.run(question, current_user_id, chat_id_str, chat_history)
-            
+                history = []
+            result = rag_agent.run(question, current_user_id, chat_id_str, history)
             if not result or 'chat_response' not in result:
                 logger.error("Invalid result from RAG agent")
                 retries += 1
@@ -506,15 +628,12 @@ def ask_question():
                     return jsonify({"error": "Failed to generate response"}), 500
                 time.sleep(1)
                 continue
-
             response = {
                 "answer": result["chat_response"],
                 "chat_id": chat_id or "new_chat",
                 "references": result.get("references", []),
                 "recommended_lawyers": result.get("recommended_lawyers", [])
             }
-
-            # Validate response
             if not response["answer"]:
                 logger.error("Empty response generated")
                 retries += 1
@@ -522,10 +641,15 @@ def ask_question():
                     return jsonify({"error": "Empty response generated"}), 500
                 time.sleep(1)
                 continue
-
+            access_token = create_access_token(
+            identity=current_user_id,
+            additional_claims={
+                "chat_id": chat_id,
+                "user_id": current_user_id
+            }
+            )
             logger.info(f"Successfully generated response for user {current_user_id}")
             return jsonify(response), 200
-
         except Exception as e:
             logger.error(f"Error processing question (attempt {retries + 1}): {str(e)}", exc_info=True)
             retries += 1
@@ -533,17 +657,77 @@ def ask_question():
                 return jsonify({"error": str(e)}), 500
             time.sleep(1)
             continue
-        finally:
-            if 'data' in locals(): del data
-            if 'question' in locals(): del question
-            if 'user_id' in locals(): del user_id
-            if 'chat_id' in locals(): del chat_id
-            if 'rag_agent' in locals(): del rag_agent
-            if 'chat_history' in locals(): del chat_history
-            if result:
-                del result
-            gc.collect()
-            log_memory_usage()
+        #     # chat_id = data.get('chat_id')
+        #     chat_id = "9AB8CE33-46AD-4EAE-B77A-2182B97DD4BA"
+        #     # if not chat_id:
+        #     #     chat_session_crud = ChatSessionCRUD()
+        #     #     chat_id = chat_session_crud.create(
+        #     #         initiator_id=current_user_id,
+        #     #         recipient_id="00000000-0000-0000-0000-000000000000"
+        #     #     )
+        #     #     if not chat_id:
+        #     #         raise Exception("Failed to create chat session")
+        #     if not question:
+        #         logger.error("Missing question parameter")
+        #         return jsonify({"error": "Missing required parameter: question"}), 400
+        #     logger.info(f"Processing question for user {current_user_id}, chat {chat_id}")            
+        #     rag_agent = get_agent(user_id=current_user_id, chat_id=chat_id)
+        #     chat_id_str = str(chat_id) if chat_id else None
+        #     if chat_id_str and is_valid_uuid(chat_id_str) and is_valid_uuid(current_user_id):
+        #         chat_history = chat_message_crud.get_chat_messages(
+        #             user_id=current_user_id,
+        #             chat_id=chat_id_str
+        #         )
+        #     else:
+        #         logger.warning(f"Invalid UUID - chat_id: {chat_id_str}, user_id: {current_user_id}")
+        #         chat_history = []            
+        #     result = rag_agent.run(question, current_user_id, chat_id_str, chat_history)
+            
+        #     if not result or 'chat_response' not in result:
+        #         logger.error("Invalid result from RAG agent")
+        #         retries += 1
+        #         if retries == max_retries:
+        #             return jsonify({"error": "Failed to generate response"}), 500
+        #         time.sleep(1)
+        #         continue
+
+        #     response = {
+        #         "answer": result["chat_response"],
+        #         "chat_id": chat_id or "new_chat",
+        #         "references": result.get("references", []),
+        #         "recommended_lawyers": result.get("recommended_lawyers", [])
+        #     }
+
+        #     # Validate response
+        #     if not response["answer"]:
+        #         logger.error("Empty response generated")
+        #         retries += 1
+        #         if retries == max_retries:
+        #             return jsonify({"error": "Empty response generated"}), 500
+        #         time.sleep(1)
+        #         continue
+
+        #     logger.info(f"Successfully generated response for user {current_user_id}")
+        #     return jsonify(response), 200
+
+        # except Exception as e:
+        #     logger.error(f"Error processing question (attempt {retries + 1}): {str(e)}", exc_info=True)
+        #     retries += 1
+        #     if retries == max_retries:
+        #         return jsonify({"error": str(e)}), 500
+        #     time.sleep(1)
+        #     continue
+        # finally:
+        #     if 'data' in locals(): del data
+        #     if 'question' in locals(): del question
+        #     if 'user_id' in locals(): del user_id
+        #     if 'chat_id' in locals(): del chat_id
+        #     if 'rag_agent' in locals(): del rag_agent
+        #     if 'chat_history' in locals(): del chat_history
+        #     if result:
+        #         del result
+        #     gc.collect()
+        #     log_memory_usage()
 
 @app.route('/api/user/<user_id>/chats/<chat_id>', methods=['GET'])
 def get_user_chats(user_id, chat_id):

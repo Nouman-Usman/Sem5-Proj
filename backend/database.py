@@ -29,6 +29,12 @@ class Database:
             raise ValueError("Password must be at least 6 characters")
         if role not in ['client', 'lawyer', 'system']:
             raise ValueError("Invalid role")
+    def get_user_by_id(self, user_id):
+        with self.get_connection() as conn:
+            cursor = conn.cursor()
+            query = "SELECT * FROM [User] WHERE UserId = ?"
+            cursor.execute(query, (user_id,))
+            row = cursor.fetchone()    
 
     def create_user(self, name, email, password, role):
         # Validate inputs
@@ -70,14 +76,19 @@ class Database:
             return cursor.rowcount
 
     # Client CRUD operations
-    def create_client(self, user_id, cnic, contact, location, credits=0, profile_picture=None):
-        with self.get_connection() as conn:
-            cursor = conn.cursor()
-            query = """INSERT INTO Client (UserId, CNIC, Contact, Location, Credits, ProfilePicture)
-                      VALUES (?, ?, ?, ?, ?, ?)"""
-            cursor.execute(query, (user_id, cnic, contact, location, credits, profile_picture))
-            conn.commit()
-            return cursor.rowcount
+    def create_client(self, user_id, cnic, contact, location, credits=0, profile_image='default.jpg'):
+        try:
+            with self.get_connection() as conn:
+                cursor = conn.cursor()
+                cursor.execute("""
+                    INSERT INTO Client (UserId, CNIC, Contact, Location, Credits, profile_image)
+                    VALUES (?, ?, ?, ?, ?, ?)
+                """, (user_id, cnic, contact, location, credits, profile_image))
+                conn.commit()
+                return True
+        except Exception as e:
+            print(f"Error creating client: {e}")
+            return False
 
     def get_client(self, client_id):
         with self.get_connection() as conn:
@@ -94,14 +105,23 @@ class Database:
             cursor.execute(query, (cnic, contact, location, credits, profile_picture, client_id))
             conn.commit()
             return cursor.rowcount
-
+    def get_client_by_id(self, client_id):
+        with self.get_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute("SELECT * FROM Client WHERE ClientId = ?", client_id)
+            return cursor.fetchone()
+        
     def delete_client(self, client_id):
         with self.get_connection() as conn:
             cursor = conn.cursor()
             cursor.execute("DELETE FROM Client WHERE ClientId = ?", client_id)
             conn.commit()
             return cursor.rowcount
-
+    def get_client_by_user_id(self, user_id):
+        with self.get_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute("SELECT * FROM Client WHERE UserId = ?", user_id)
+            return cursor.fetchone()
     # Lawyer CRUD operations
     def create_lawyer(self, user_id, cnic, license_number, location, experience,
                      specialization, contact, email, ratings=None, paid=False, 
@@ -131,6 +151,11 @@ class Database:
                                  expiry_date, recommended, click_ratio))
             conn.commit()
             return cursor.rowcount
+    def get_lawyer_by_user_id(self, user_id):
+        with self.get_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute("SELECT * FROM Lawyer WHERE UserId = ?", user_id)
+            return cursor.fetchone()
 
     def get_lawyer(self, lawyer_id):
         with self.get_connection() as conn:
@@ -174,19 +199,12 @@ class Database:
             cursor.execute("DELETE FROM Lawyer WHERE LawyerId = ?", lawyer_id)
             conn.commit()
             return cursor.rowcount
-
-    def get_lawyer_with_details(self, lawyer_id):
+    def get_lawyer_by_id(self, lawyer_id):
         with self.get_connection() as conn:
             cursor = conn.cursor()
-            query = """
-                SELECT l.*, u.Name, u.Email 
-                FROM Lawyer l
-                JOIN [User] u ON l.UserId = u.UserId
-                WHERE l.LawyerId = ?
-            """
-            cursor.execute(query, lawyer_id)
+            cursor.execute("SELECT * FROM Lawyer WHERE LawyerId = ?", lawyer_id)
             return cursor.fetchone()
-
+        
     def get_lawyers_by_experience(self, min_experience):
         with self.get_connection() as conn:
             cursor = conn.cursor()
@@ -228,20 +246,37 @@ class Database:
 
     # Session CRUD operations
     def create_session(self, user_id, topic):
-        with self.get_connection() as conn:
-            cursor = conn.cursor()
-            query = """INSERT INTO Sessions (UserId, Topic, Time, Active)
-                      VALUES (?, ?, GETDATE(), 1)"""
-            cursor.execute(query, (user_id, topic))
-            conn.commit()
-            return cursor.rowcount
+        try:
+            with self.get_connection() as conn:
+                cursor = conn.cursor()
+                
+                # First verify user exists
+                check_user_query = "SELECT 1 FROM [User] WHERE UserId = ?"
+                cursor.execute(check_user_query, (user_id,))
+                if not cursor.fetchone():
+                    raise ValueError(f"User with ID {user_id} does not exist")
+                query = """
+                    INSERT INTO Sessions (UserId, Topic, Time, Active)
+                    OUTPUT INSERTED.SessionId
+                    VALUES (?, ?, GETDATE(), 1)
+                """
+
+                cursor.execute(query, (user_id, topic))
+                query = "SELECT SCOPE_IDENTITY()"
+                cursor.execute(query)
+                result = cursor.fetchone()
+                conn.commit()
+                return result[0] if result else None
+        except pyodbc.IntegrityError as e:
+            raise ValueError(f"Database integrity error: {str(e)}")
+        except Exception as e:
+            raise ValueError(f"Error creating session: {str(e)}")
 
     def get_session(self, session_id):
         with self.get_connection() as conn:
             cursor = conn.cursor()
             cursor.execute("SELECT * FROM Sessions WHERE SessionId = ?", session_id)
             return cursor.fetchone()
-
     def update_session(self, session_id, topic, active=True):
         with self.get_connection() as conn:
             cursor = conn.cursor()
@@ -251,7 +286,16 @@ class Database:
             cursor.execute(query, (topic, active, session_id))
             conn.commit()
             return cursor.rowcount
-
+    def get_all_chat_sessions(self):
+        with self.get_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute("SELECT * FROM Sessions WHERE Active = 1")
+            return cursor.fetchall()
+    def get_chat_session_by_id(self, session_id):
+        with self.get_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute("SELECT * FROM Sessions WHERE SessionId = ?", session_id)
+            return cursor.fetchone()
     def delete_session(self, session_id):
         with self.get_connection() as conn:
             cursor = conn.cursor()
@@ -291,7 +335,16 @@ class Database:
             cursor.execute("DELETE FROM ChatMessages WHERE ChatId = ?", chat_id)
             conn.commit()
             return cursor.rowcount
-
+    def get_chat_messages_by_chat_id(self, chat_id):
+        with self.get_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute("SELECT * FROM ChatMessages WHERE ChatId = ?", chat_id)
+            return cursor.fetchone()
+    def get_chat_message_by_message_id(self, message_id):
+        with self.get_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute("SELECT * FROM ChatMessages WHERE MessageId = ?", message_id)
+            return cursor.fetchone()
     def get_all_chat_messages(self):
         with self.get_connection() as conn:
             cursor = conn.cursor()

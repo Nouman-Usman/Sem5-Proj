@@ -4,3 +4,7 @@ __pycache__
 .chainlit
 venv
 .files
+
+# Ignore uploaded files but keep the directory
+uploads/profile_images/*
+!uploads/profile_images/.gitkeep
