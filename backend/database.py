@@ -270,7 +270,7 @@ class Database:
         except pyodbc.IntegrityError as e:
             raise ValueError(f"Database integrity error: {str(e)}")
         except Exception as e:
-            raise ValueError(f"Error creating session: {str(e)}")
+            raise ValueError(f"Error creating a new session: {str(e)}")
 
     def get_session(self, session_id):
         with self.get_connection() as conn:
