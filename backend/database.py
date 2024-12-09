@@ -78,12 +78,23 @@ class Database:
             return cursor.rowcount
 
     # Lawyer CRUD operations
-    def create_lawyer(self, user_id, cnic, license_number, location):
+    def create_lawyer(self, user_id, cnic, license_number, location, experience, ratings=None, 
+                     paid=False, expiry_date=None, recommended=0, click_ratio=0.0):
+        # Validate inputs
+        if not isinstance(experience, int) or experience < 0:
+            raise ValueError("Experience must be a positive integer")
+        if ratings is not None and (ratings < 0 or ratings > 5):
+            raise ValueError("Ratings must be between 0 and 5")
+        if not isinstance(cnic, str) or len(cnic) > 20:
+            raise ValueError("Invalid CNIC format")
+            
         with self.get_connection() as conn:
             cursor = conn.cursor()
-            query = """INSERT INTO Lawyer (UserId, CNIC, LicenseNumber, Location)
-                      VALUES (?, ?, ?, ?)"""
-            cursor.execute(query, (user_id, cnic, license_number, location))
+            query = """INSERT INTO Lawyer (UserId, CNIC, LicenseNumber, Location, Experience, 
+                      Ratings, Paid, ExpiryDate, Recommended, ClickRatio)
+                      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"""
+            cursor.execute(query, (user_id, cnic, license_number, location, experience,
+                                 ratings, paid, expiry_date, recommended, click_ratio))
             conn.commit()
             return cursor.rowcount
 
@@ -93,15 +104,25 @@ class Database:
             cursor.execute("SELECT * FROM Lawyer WHERE LawyerId = ?", lawyer_id)
             return cursor.fetchone()
 
-    def update_lawyer(self, lawyer_id, cnic, license_number, location, paid=False, expiry_date=None, recommended=0, click_ratio=0.0):
+    def update_lawyer(self, lawyer_id, cnic, license_number, location, experience, 
+                     ratings=None, paid=False, expiry_date=None, recommended=0, click_ratio=0.0):
+        # Validate inputs
+        if not isinstance(experience, int) or experience < 0:
+            raise ValueError("Experience must be a positive integer")
+        if ratings is not None and (ratings < 0 or ratings > 5):
+            raise ValueError("Ratings must be between 0 and 5")
+        if not isinstance(cnic, str) or len(cnic) > 20:
+            raise ValueError("Invalid CNIC format")
+
         with self.get_connection() as conn:
             cursor = conn.cursor()
             query = """UPDATE Lawyer 
-                      SET CNIC = ?, LicenseNumber = ?, Location = ?, Paid = ?, 
-                          ExpiryDate = ?, Recommended = ?, ClickRatio = ?
+                      SET CNIC = ?, LicenseNumber = ?, Location = ?, Experience = ?,
+                          Ratings = ?, Paid = ?, ExpiryDate = ?, Recommended = ?, 
+                          ClickRatio = ?
                       WHERE LawyerId = ?"""
-            cursor.execute(query, (cnic, license_number, location, paid, expiry_date, 
-                                 recommended, click_ratio, lawyer_id))
+            cursor.execute(query, (cnic, license_number, location, experience, ratings,
+                                 paid, expiry_date, recommended, click_ratio, lawyer_id))
             conn.commit()
             return cursor.rowcount
 
@@ -111,6 +132,31 @@ class Database:
             cursor.execute("DELETE FROM Lawyer WHERE LawyerId = ?", lawyer_id)
             conn.commit()
             return cursor.rowcount
+
+    def get_lawyer_with_details(self, lawyer_id):
+        with self.get_connection() as conn:
+            cursor = conn.cursor()
+            query = """
+                SELECT l.*, u.Name, u.Email 
+                FROM Lawyer l
+                JOIN [User] u ON l.UserId = u.UserId
+                WHERE l.LawyerId = ?
+            """
+            cursor.execute(query, lawyer_id)
+            return cursor.fetchone()
+
+    def get_lawyers_by_experience(self, min_experience):
+        with self.get_connection() as conn:
+            cursor = conn.cursor()
+            query = """
+                SELECT l.*, u.Name, u.Email 
+                FROM Lawyer l
+                JOIN [User] u ON l.UserId = u.UserId
+                WHERE l.Experience >= ?
+                ORDER BY l.Experience DESC, l.Ratings DESC
+            """
+            cursor.execute(query, min_experience)
+            return cursor.fetchall()
 
     # Session CRUD operations
     def create_session(self, user_id, topic):
