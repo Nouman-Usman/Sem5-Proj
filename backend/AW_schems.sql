@@ -1,6 +1,6 @@
 USE [master]
 GO
-/****** Object:  Database [AW_Database]    Script Date: 12/9/2024 6:32:45 PM ******/
+/****** Object:  Database [AW_Database]    Script Date: 12/10/2024 6:29:08 PM ******/
 CREATE DATABASE [AW_Database]
  CONTAINMENT = NONE
  ON  PRIMARY 
@@ -84,7 +84,7 @@ ALTER DATABASE [AW_Database] SET QUERY_STORE (OPERATION_MODE = READ_WRITE, CLEAN
 GO
 USE [AW_Database]
 GO
-/****** Object:  Table [dbo].[ChatMessages]    Script Date: 12/9/2024 6:32:45 PM ******/
+/****** Object:  Table [dbo].[ChatMessages]    Script Date: 12/10/2024 6:29:08 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -103,7 +103,7 @@ CREATE TABLE [dbo].[ChatMessages](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Client]    Script Date: 12/9/2024 6:32:45 PM ******/
+/****** Object:  Table [dbo].[Client]    Script Date: 12/10/2024 6:29:08 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -126,7 +126,7 @@ UNIQUE NONCLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Lawyer]    Script Date: 12/9/2024 6:32:45 PM ******/
+/****** Object:  Table [dbo].[Lawyer]    Script Date: 12/10/2024 6:29:08 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -157,7 +157,7 @@ UNIQUE NONCLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Sessions]    Script Date: 12/9/2024 6:32:45 PM ******/
+/****** Object:  Table [dbo].[Sessions]    Script Date: 12/10/2024 6:29:08 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -174,24 +174,24 @@ CREATE TABLE [dbo].[Sessions](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Subscription]    Script Date: 12/9/2024 6:32:45 PM ******/
+/****** Object:  Table [dbo].[Subscription]    Script Date: 12/10/2024 6:29:08 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Subscription](
 	[SubsId] [int] IDENTITY(1,1) NOT NULL,
-	[ClientId] [int] NOT NULL,
 	[CurrentSubscription] [nvarchar](100) NOT NULL,
 	[ExpiryDate] [date] NOT NULL,
 	[RemainingCredits] [int] NULL,
+	[UserId] [int] NULL,
 PRIMARY KEY CLUSTERED 
 (
 	[SubsId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[User]    Script Date: 12/9/2024 6:32:45 PM ******/
+/****** Object:  Table [dbo].[User]    Script Date: 12/10/2024 6:29:08 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -252,11 +252,10 @@ ON DELETE CASCADE
 GO
 ALTER TABLE [dbo].[Sessions] CHECK CONSTRAINT [FK_Sessions_User]
 GO
-ALTER TABLE [dbo].[Subscription]  WITH CHECK ADD  CONSTRAINT [FK_Subscription_Client] FOREIGN KEY([ClientId])
-REFERENCES [dbo].[Client] ([ClientId])
-ON DELETE CASCADE
+ALTER TABLE [dbo].[Subscription]  WITH CHECK ADD  CONSTRAINT [FK_Subscription_User] FOREIGN KEY([UserId])
+REFERENCES [dbo].[User] ([UserId])
 GO
-ALTER TABLE [dbo].[Subscription] CHECK CONSTRAINT [FK_Subscription_Client]
+ALTER TABLE [dbo].[Subscription] CHECK CONSTRAINT [FK_Subscription_User]
 GO
 ALTER TABLE [dbo].[ChatMessages]  WITH CHECK ADD  CONSTRAINT [CHK_ChatMessages_Type] CHECK  (([Type]=N'Human Message' OR [Type]=N'AI Message'))
 GO

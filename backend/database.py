@@ -19,7 +19,13 @@ class Database:
             cursor.execute(query, (email,))
             row = cursor.fetchone()
             return row
-
+    def get_user_by_id(self, user_id):
+        with self.get_connection() as conn:
+            cursor = conn.cursor()
+            query = "SELECT * FROM [User] WHERE UserId = ?"
+            cursor.execute(query, (user_id,))
+            row = cursor.fetchone()
+            return row
     def validate_user_input(self, name, email, password, role):
         if not isinstance(name, str) or len(name) > 100:
             raise ValueError("Invalid name format")
@@ -382,7 +388,11 @@ class Database:
             cursor.execute("DELETE FROM Subscription WHERE SubsId = ?", subs_id)
             conn.commit()
             return cursor.rowcount
-
+    def get_current_subscription(self, client_id):
+        with self.get_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute("SELECT * FROM Subscription WHERE ClientId = ? ORDER BY ExpiryDate DESC", client_id)
+            return cursor.fetchone()
     def get_all_subscriptions(self):
         with self.get_connection() as conn:
             cursor = conn.cursor()
