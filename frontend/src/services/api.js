@@ -133,6 +133,29 @@ export const apiService = {
     return response.data;
   },
 
+  // Subscription related endpoints
+  async createSubscription(subscriptionData) {
+    const token = localStorage.getItem('token');
+    try {
+      const response = await api.post('/subscribe', {
+        access_token: token,
+        ...subscriptionData
+      });
+      return response.data;
+    } catch (error) {
+      throw new Error(error.response?.data?.error || 'Failed to create subscription');
+    }
+  },
+
+  async getCurrentSubscription() {
+    try {
+      const response = await api.get('/subscription/current');
+      return response.data;
+    } catch (error) {
+      throw new Error(error.response?.data?.error || 'Failed to fetch subscription');
+    }
+  },
+
   // System health check
   async checkHealth() {
     const response = await api.get('/health');

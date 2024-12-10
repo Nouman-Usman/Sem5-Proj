@@ -10,7 +10,9 @@ import { UserHome } from './components/UserHome.jsx';
 import { ChatbotPage } from './components/ChatbotPage.jsx';
 import ClientProfile from './components/client_profile';
 import LawyerProfile from './components/lawyer_profile.jsx';
-
+import LawyerSubscription from './components/lawyer_sub.jsx';
+import SubscriptionPlans from './components/cleint_sub.jsx';
+import LawyerDashboard from './components/lawyer_dashboard';
 function App() {
   return (    
     <Router>
@@ -24,6 +26,9 @@ function App() {
         <Route path="/login" element={<LoginSignup />} />
         <Route path="/client-profile" element={<ClientProfile />} />
         <Route path="/lawyer-profile" element={<LawyerProfile />} />
+        <Route path="/lawyer-subscription" element={<LawyerSubscription />} />
+        <Route path="/subscription-plans" element={<SubscriptionPlans />} />
+        <Route path="/lawyer-dashboard" element={<LawyerDashboard />} />
         <Route path="/" element={<Home />} />
       </Routes>
     </Router>
@@ -31,9 +36,7 @@ function App() {
 }
 
 function NavbarWithConditionalRender() {
-  const location = useLocation(); // This is now safe because it's inside the Router
-
-  // Hide navbar on Login/Signup pages
+  const location = useLocation(); 
   const shouldHideNavbar = location.pathname === '/Login' || location.pathname === '/Signup' || location.pathname === '/';
 
   return !shouldHideNavbar ? <Navbar /> : null; // Render Navbar conditionally

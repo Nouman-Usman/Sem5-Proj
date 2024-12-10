@@ -2226,3 +2226,10 @@ Traceback (most recent call last):
                       ^^^^^^^^^^^^^
 bdb.BdbQuit
 2024-12-09 18:58:31,141 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-10 09:21:37,820 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-10 10:43:44,710 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-12-10 10:43:44,713 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2024-12-10 11:06:35,157 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-12-10 11:06:35,159 - werkzeug - INFO - [33mPress CTRL+C to quit[0m

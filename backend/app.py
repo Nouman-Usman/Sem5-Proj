@@ -499,6 +499,23 @@ def get_chat(chat_id):
         logger.error(f"Error fetching chat session: {str(e)}")
         return jsonify({"error": "Failed to fetch chat session"}), 500
 
+# Route for fetching current subscription
+@app.route('subscription/current', methods=['GET'])
+@jwt_required()
+def get_current_subscription():
+    try:
+        current_user_id = get_jwt_identity()
+        subscription = db.get_current_subscription(current_user_id)
+        if not subscription:
+            return jsonify({"error": "No active subscription found"}), 404
+        return jsonify({
+            "subscription": subscription
+        }), 200
+    except Exception as e:
+        logger.error(f"Error fetching current subscription: {str(e)}")
+        return jsonify({"error": "Failed to fetch current subscription"}), 500
+
+
 # Route for fetching all chat messages
 @app.route('/api/chat/<chat_id>/messages', methods=['GET'])
 def get_chat_messages(chat_id):
@@ -525,6 +542,31 @@ def get_chat_message(chat_id, message_id):
     except Exception as e:
         logger.error(f"Error fetching chat message: {str(e)}")
         return jsonify({"error": "Failed to fetch chat message"}), 500
+# Route for adding client subscription
+@app.route('/api/subscribe', methods=['POST'])
+@jwt_required()
+def subscribe():
+    try:
+        data = request.get_json()
+        jst = jwt.decode(data['access_token'], verify=False)
+        print(jst)
+        current_user_id = get_jwt_identity()
+        subscription_data = {
+            'user_id': current_user_id,
+            'plan': data.get('plan'),
+            'start_date': data.get('start_date'),
+            'end_date': data.get('end_date'),
+            'amount': data.get('amount')
+        }
+        try:
+            db.create_subscription(**subscription_data)
+            return jsonify({"message": "Subscription created successfully"}), 201
+        except Exception as e:
+            logger.error(f"Subscription creation error: {str(e)}")
+            return jsonify({"error": "Failed to create subscription"}), 500
+    except Exception as e:
+        logger.error(f"Error in subscribe endpoint: {str(e)}")
+        return jsonify({"error": "An unexpected error occurred"}), 500
 
 # Route for adding a chat message
 @app.route('/api/chat/<chat_id>/messages', methods=['POST'])
