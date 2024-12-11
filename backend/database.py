@@ -82,14 +82,14 @@ class Database:
             return cursor.rowcount
 
     # Client CRUD operations
-    def create_client(self, user_id, cnic, contact, location, credits=0, profile_image='default.jpg'):
+    def create_client(self, user_id, cnic, contact, location, credits=0, profile_picture=None):
         try:
             with self.get_connection() as conn:
                 cursor = conn.cursor()
                 cursor.execute("""
-                    INSERT INTO Client (UserId, CNIC, Contact, Location, Credits, profile_image)
+                    INSERT INTO Client (UserId, CNIC, Contact, Location, Credits, ProfilePicture)
                     VALUES (?, ?, ?, ?, ?, ?)
-                """, (user_id, cnic, contact, location, credits, profile_image))
+                """, (user_id, cnic, contact, location, credits, profile_picture))
                 conn.commit()
                 return True
         except Exception as e:
@@ -130,8 +130,8 @@ class Database:
             return cursor.fetchone()
     # Lawyer CRUD operations
     def create_lawyer(self, user_id, cnic, license_number, location, experience,
-                     specialization, contact, email, ratings=None, paid=False, 
-                     expiry_date=None, recommended=0, click_ratio=0.0):
+                     specialization, contact, email, paid=False, 
+                     expiry_date=None, recommended=0, times_clicked=0, times_shown=0):
         # Input validations
         if not isinstance(experience, int) or experience < 0:
             raise ValueError("Experience must be a positive integer")
@@ -149,12 +149,12 @@ class Database:
         with self.get_connection() as conn:
             cursor = conn.cursor()
             query = """INSERT INTO Lawyer (UserId, CNIC, LicenseNumber, Location, 
-                      Experience, Specialization, Contact, Email, Ratings, Paid, 
-                      ExpiryDate, Recommended, ClickRatio)
+                      Experience, Specialization, Contact, Email, Paid, 
+                      ExpiryDate, Recommended, TimesClicked, TimesShown)
                       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"""
             cursor.execute(query, (user_id, cnic, license_number, location, experience,
-                                 specialization, contact, email, ratings, paid, 
-                                 expiry_date, recommended, click_ratio))
+                                 specialization, contact, email, paid, 
+                                 expiry_date, recommended, times_clicked, times_shown))
             conn.commit()
             return cursor.rowcount
     def get_lawyer_by_user_id(self, user_id):
@@ -170,8 +170,8 @@ class Database:
             return cursor.fetchone()
 
     def update_lawyer(self, lawyer_id, cnic, license_number, location, experience,
-                     specialization, contact, email, ratings=None, paid=False, 
-                     expiry_date=None, recommended=0, click_ratio=0.0):
+                     specialization, contact, email, paid=False, 
+                     expiry_date=None, recommended=0, times_clicked=0, times_shown=0):
         # Input validations
         if not isinstance(experience, int) or experience < 0:
             raise ValueError("Experience must be a positive integer")
@@ -190,12 +190,14 @@ class Database:
             cursor = conn.cursor()
             query = """UPDATE Lawyer 
                       SET CNIC = ?, LicenseNumber = ?, Location = ?, Experience = ?,
-                          Specialization = ?, Contact = ?, Email = ?, Ratings = ?, 
-                          Paid = ?, ExpiryDate = ?, Recommended = ?, ClickRatio = ?
+                          Specialization = ?, Contact = ?, Email = ?, 
+                          Paid = ?, ExpiryDate = ?, Recommended = ?,
+                          TimesClicked = ?, TimesShown = ?
                       WHERE LawyerId = ?"""
             cursor.execute(query, (cnic, license_number, location, experience,
-                                 specialization, contact, email, ratings, paid,
-                                 expiry_date, recommended, click_ratio, lawyer_id))
+                                 specialization, contact, email, paid,
+                                 expiry_date, recommended, times_clicked, 
+                                 times_shown, lawyer_id))
             conn.commit()
             return cursor.rowcount
 
@@ -319,12 +321,14 @@ class Database:
             conn.commit()
             return cursor.rowcount
 
-    def get_chat_messages(self, session_id):
+    def get_chat_Topics(self, user_id):
         with self.get_connection() as conn:
             cursor = conn.cursor()
-            cursor.execute("SELECT * FROM ChatMessages WHERE SessionId = ? ORDER BY Time", session_id)
-            return cursor.fetchall()
+            # get chat topics and chat ids
+            cursor.execute("SELECT Topic, ChatId FROM Sessions WHERE UserId = ?", user_id)
 
+            return cursor.fetchone()
+    
     def update_chat_message(self, chat_id, message, msg_type, references=None, recommended_lawyers=None):
         with self.get_connection() as conn:
             cursor = conn.cursor()
@@ -357,12 +361,13 @@ class Database:
             cursor.execute("SELECT * FROM ChatMessages ORDER BY Time")
             return cursor.fetchall()
 
-    def create_subscription(self, client_id, subscription_type, expiry_date, remaining_credits):
+    def create_subscription(self, user_id, subscription_type, expiry_date, remaining_credits=0):
         with self.get_connection() as conn:
             cursor = conn.cursor()
-            query = """INSERT INTO Subscription (ClientId, CurrentSubscription, ExpiryDate, RemainingCredits)
+            query = """INSERT INTO Subscription 
+                      (UserId, CurrentSubscription, ExpiryDate, RemainingCredits)
                       VALUES (?, ?, ?, ?)"""
-            cursor.execute(query, (client_id, subscription_type, expiry_date, remaining_credits))
+            cursor.execute(query, (user_id, subscription_type, expiry_date, remaining_credits))
             conn.commit()
             return cursor.rowcount
 
@@ -422,3 +427,48 @@ class Database:
             cursor = conn.cursor()
             cursor.execute("SELECT * FROM Sessions ORDER BY Time DESC")
             return cursor.fetchall()
+
+    # New LawyerReview methods
+    def create_lawyer_review(self, lawyer_id, client_id, stars, review_message=None):
+        if not 1 <= stars <= 5:
+            raise ValueError("Stars must be between 1 and 5")
+        
+        with self.get_connection() as conn:
+            cursor = conn.cursor()
+            query = """INSERT INTO LawyerReview 
+                      (LawyerId, ClientId, Stars, ReviewMessage, ReviewTime)
+                      VALUES (?, ?, ?, ?, GETDATE())"""
+            cursor.execute(query, (lawyer_id, client_id, stars, review_message))
+            conn.commit()
+            return cursor.rowcount
+
+    def get_lawyer_reviews(self, lawyer_id):
+        with self.get_connection() as conn:
+            cursor = conn.cursor()
+            query = """SELECT lr.*, u.Name as ClientName 
+                      FROM LawyerReview lr
+                      JOIN [User] u ON lr.ClientId = u.UserId
+                      WHERE lr.LawyerId = ?
+                      ORDER BY lr.ReviewTime DESC"""
+            cursor.execute(query, (lawyer_id,))
+            return cursor.fetchall()
+
+    def update_lawyer_review(self, review_id, stars, review_message):
+        if not 1 <= stars <= 5:
+            raise ValueError("Stars must be between 1 and 5")
+            
+        with self.get_connection() as conn:
+            cursor = conn.cursor()
+            query = """UPDATE LawyerReview 
+                      SET Stars = ?, ReviewMessage = ?
+                      WHERE ReviewId = ?"""
+            cursor.execute(query, (stars, review_message, review_id))
+            conn.commit()
+            return cursor.rowcount
+
+    def delete_lawyer_review(self, review_id):
+        with self.get_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute("DELETE FROM LawyerReview WHERE ReviewId = ?", review_id)
+            conn.commit()
+            return cursor.rowcount

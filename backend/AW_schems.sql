@@ -1,6 +1,6 @@
 USE [master]
 GO
-/****** Object:  Database [AW_Database]    Script Date: 12/10/2024 6:29:08 PM ******/
+/****** Object:  Database [AW_Database]    Script Date: 12/10/2024 6:55:21 PM ******/
 CREATE DATABASE [AW_Database]
  CONTAINMENT = NONE
  ON  PRIMARY 
@@ -84,7 +84,7 @@ ALTER DATABASE [AW_Database] SET QUERY_STORE (OPERATION_MODE = READ_WRITE, CLEAN
 GO
 USE [AW_Database]
 GO
-/****** Object:  Table [dbo].[ChatMessages]    Script Date: 12/10/2024 6:29:08 PM ******/
+/****** Object:  Table [dbo].[ChatMessages]    Script Date: 12/10/2024 6:55:21 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -103,7 +103,7 @@ CREATE TABLE [dbo].[ChatMessages](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Client]    Script Date: 12/10/2024 6:29:08 PM ******/
+/****** Object:  Table [dbo].[Client]    Script Date: 12/10/2024 6:55:21 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -126,7 +126,7 @@ UNIQUE NONCLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Lawyer]    Script Date: 12/10/2024 6:29:08 PM ******/
+/****** Object:  Table [dbo].[Lawyer]    Script Date: 12/10/2024 6:55:21 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -140,13 +140,12 @@ CREATE TABLE [dbo].[Lawyer](
 	[Paid] [bit] NULL,
 	[ExpiryDate] [date] NULL,
 	[Experience] [int] NOT NULL,
-	[Ratings] [float] NULL,
 	[Recommended] [int] NULL,
-	[ClickRatio] [float] NULL,
 	[Specialization] [nvarchar](100) NULL,
-	[Rating] [decimal](3, 2) NULL,
 	[Contact] [nvarchar](20) NULL,
 	[Email] [nvarchar](100) NULL,
+	[TimesClicked] [int] NOT NULL,
+	[TimesShown] [int] NOT NULL,
 PRIMARY KEY CLUSTERED 
 (
 	[LawyerId] ASC
@@ -157,7 +156,25 @@ UNIQUE NONCLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Sessions]    Script Date: 12/10/2024 6:29:08 PM ******/
+/****** Object:  Table [dbo].[LawyerReview]    Script Date: 12/10/2024 6:55:21 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[LawyerReview](
+	[ReviewId] [int] IDENTITY(1,1) NOT NULL,
+	[LawyerId] [int] NOT NULL,
+	[ClientId] [int] NOT NULL,
+	[Stars] [int] NOT NULL,
+	[ReviewMessage] [nvarchar](1000) NULL,
+	[ReviewTime] [datetime] NOT NULL,
+ CONSTRAINT [PK_LawyerReview] PRIMARY KEY CLUSTERED 
+(
+	[ReviewId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Sessions]    Script Date: 12/10/2024 6:55:21 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -174,7 +191,7 @@ CREATE TABLE [dbo].[Sessions](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Subscription]    Script Date: 12/10/2024 6:29:08 PM ******/
+/****** Object:  Table [dbo].[Subscription]    Script Date: 12/10/2024 6:55:21 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -191,7 +208,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[User]    Script Date: 12/10/2024 6:29:08 PM ******/
+/****** Object:  Table [dbo].[User]    Script Date: 12/10/2024 6:55:21 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -212,6 +229,12 @@ UNIQUE NONCLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
+/****** Object:  Index [IX_LawyerReview_LawyerId]    Script Date: 12/10/2024 6:55:21 PM ******/
+CREATE NONCLUSTERED INDEX [IX_LawyerReview_LawyerId] ON [dbo].[LawyerReview]
+(
+	[LawyerId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
 ALTER TABLE [dbo].[ChatMessages] ADD  DEFAULT (getdate()) FOR [Time]
 GO
 ALTER TABLE [dbo].[Client] ADD  DEFAULT ((0)) FOR [Credits]
@@ -220,7 +243,11 @@ ALTER TABLE [dbo].[Lawyer] ADD  DEFAULT ((0)) FOR [Paid]
 GO
 ALTER TABLE [dbo].[Lawyer] ADD  DEFAULT ((0)) FOR [Recommended]
 GO
-ALTER TABLE [dbo].[Lawyer] ADD  DEFAULT ((0.0)) FOR [ClickRatio]
+ALTER TABLE [dbo].[Lawyer] ADD  DEFAULT ((0)) FOR [TimesClicked]
+GO
+ALTER TABLE [dbo].[Lawyer] ADD  DEFAULT ((0)) FOR [TimesShown]
+GO
+ALTER TABLE [dbo].[LawyerReview] ADD  DEFAULT (getdate()) FOR [ReviewTime]
 GO
 ALTER TABLE [dbo].[Sessions] ADD  DEFAULT (getdate()) FOR [Time]
 GO
@@ -246,6 +273,16 @@ ON DELETE CASCADE
 GO
 ALTER TABLE [dbo].[Lawyer] CHECK CONSTRAINT [FK_Lawyer_User]
 GO
+ALTER TABLE [dbo].[LawyerReview]  WITH CHECK ADD  CONSTRAINT [FK_LawyerReview_Client] FOREIGN KEY([ClientId])
+REFERENCES [dbo].[User] ([UserId])
+GO
+ALTER TABLE [dbo].[LawyerReview] CHECK CONSTRAINT [FK_LawyerReview_Client]
+GO
+ALTER TABLE [dbo].[LawyerReview]  WITH CHECK ADD  CONSTRAINT [FK_LawyerReview_Lawyer] FOREIGN KEY([LawyerId])
+REFERENCES [dbo].[User] ([UserId])
+GO
+ALTER TABLE [dbo].[LawyerReview] CHECK CONSTRAINT [FK_LawyerReview_Lawyer]
+GO
 ALTER TABLE [dbo].[Sessions]  WITH CHECK ADD  CONSTRAINT [FK_Sessions_User] FOREIGN KEY([UserId])
 REFERENCES [dbo].[User] ([UserId])
 ON DELETE CASCADE
@@ -260,6 +297,10 @@ GO
 ALTER TABLE [dbo].[ChatMessages]  WITH CHECK ADD  CONSTRAINT [CHK_ChatMessages_Type] CHECK  (([Type]=N'Human Message' OR [Type]=N'AI Message'))
 GO
 ALTER TABLE [dbo].[ChatMessages] CHECK CONSTRAINT [CHK_ChatMessages_Type]
+GO
+ALTER TABLE [dbo].[LawyerReview]  WITH CHECK ADD  CONSTRAINT [CHK_LawyerReview_Stars] CHECK  (([Stars]>=(1) AND [Stars]<=(5)))
+GO
+ALTER TABLE [dbo].[LawyerReview] CHECK CONSTRAINT [CHK_LawyerReview_Stars]
 GO
 ALTER TABLE [dbo].[User]  WITH CHECK ADD CHECK  (([Role]='system' OR [Role]='lawyer' OR [Role]='client'))
 GO
