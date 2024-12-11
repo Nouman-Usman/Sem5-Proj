@@ -135,16 +135,14 @@ class Database:
         # Input validations
         if not isinstance(experience, int) or experience < 0:
             raise ValueError("Experience must be a positive integer")
-        if not isinstance(cnic, str) or len(cnic) > 13:
+        if not isinstance(cnic, str) or len(cnic) > 20:
             raise ValueError("Invalid CNIC format")
-        if not isinstance(contact, str) or len(contact) > 11:
+        if not isinstance(contact, str) or len(contact) > 20:
             raise ValueError("Invalid contact format")
         if not isinstance(email, str) or len(email) > 100 or '@' not in email:
             raise ValueError("Invalid email format")
         if not isinstance(specialization, str) or len(specialization) > 100:
             raise ValueError("Invalid specialization format")
-        if ratings is not None and (not isinstance(ratings, (int, float)) or ratings < 0 or ratings > 5):
-            raise ValueError("Ratings must be between 0 and 5")
 
         with self.get_connection() as conn:
             cursor = conn.cursor()
@@ -183,8 +181,6 @@ class Database:
             raise ValueError("Invalid email format")
         if not isinstance(specialization, str) or len(specialization) > 100:
             raise ValueError("Invalid specialization format")
-        if ratings is not None and (not isinstance(ratings, (int, float)) or ratings < 0 or ratings > 5):
-            raise ValueError("Ratings must be between 0 and 5")
 
         with self.get_connection() as conn:
             cursor = conn.cursor()
@@ -313,6 +309,9 @@ class Database:
 
     # ChatMessages CRUD operations
     def create_chat_message(self, session_id, message, msg_type, references=None, recommended_lawyers=None):
+        if msg_type not in ['Human Message', 'AI Message']:
+            raise ValueError("Invalid message type")
+
         with self.get_connection() as conn:
             cursor = conn.cursor()
             query = """INSERT INTO ChatMessages (SessionId, Message, Type, Time, References, RecommendedLawyers)
@@ -321,13 +320,16 @@ class Database:
             conn.commit()
             return cursor.rowcount
 
-    def get_chat_Topics(self, user_id):
+    def get_chat_topics(self, user_id):
         with self.get_connection() as conn:
             cursor = conn.cursor()
-            # get chat topics and chat ids
-            cursor.execute("SELECT Topic, ChatId FROM Sessions WHERE UserId = ?", user_id)
-
-            return cursor.fetchone()
+            cursor.execute("""
+                SELECT SessionId, Topic, Time 
+                FROM Sessions 
+                WHERE UserId = ? AND Active = 1 
+                ORDER BY Time DESC
+            """)
+            return cursor.fetchall()
     
     def update_chat_message(self, chat_id, message, msg_type, references=None, recommended_lawyers=None):
         with self.get_connection() as conn:
@@ -430,8 +432,10 @@ class Database:
 
     # New LawyerReview methods
     def create_lawyer_review(self, lawyer_id, client_id, stars, review_message=None):
-        if not 1 <= stars <= 5:
+        if not isinstance(stars, int) or not 1 <= stars <= 5:
             raise ValueError("Stars must be between 1 and 5")
+        if review_message and len(review_message) > 1000:
+            raise ValueError("Review message too long")
         
         with self.get_connection() as conn:
             cursor = conn.cursor()
