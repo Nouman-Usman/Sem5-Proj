@@ -310,34 +310,30 @@ class Database:
 
     # ChatMessages CRUD operations
     def create_chat_message(self, session_id, message, msg_type="Human Message", references=None, recommended_lawyers=None, UnChatId=None):
-        try:
-            cursor = self.conn.cursor()
-            
+        
+        with self.get_connection() as conn:
+            cursor = conn.cursor()            
             # Convert lists to JSON strings
             references_str = json.dumps(references) if references else None
             recommended_lawyers_str = json.dumps(recommended_lawyers) if recommended_lawyers else None
             
             query = """
             INSERT INTO ChatMessages 
-            (SessionId, Message, MessageType, References, RecommendedLawyers, UnChatId)
+            (SessionId, Message, Type, [References], RecommendedLawyers, UnChatId)
             VALUES (?, ?, ?, ?, ?, ?)
             """
-            session_id_str = str(session_id) if session_id else None
             un_chat_id_str = str(UnChatId) if UnChatId else None
             
             cursor.execute(query, (
-                session_id_str,
+                session_id,
                 message,
                 msg_type,
                 references_str,
                 recommended_lawyers_str,
                 un_chat_id_str
             ))
-            self.conn.commit()
+            conn.commit()
             return True
-        except Exception as e:
-            logger.error(f"Error creating chat message: {e}")
-            raise
 
     def get_chat_topics(self, user_id):
         with self.get_connection() as conn:

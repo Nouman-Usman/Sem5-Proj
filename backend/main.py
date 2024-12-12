@@ -484,21 +484,7 @@ Question to route: {question}
                         for doc in last_output["documents"]
                         if "source" in doc.metadata
                     ],
-                    "recommended_lawyers": (
-                        [
-                            # {
-                            #     "name": lawyer["name"],
-                            #     "specialization": lawyer["specialization"],
-                            #     "experience": lawyer["experience"],
-                            #     "rating": lawyer["rating"],
-                            #     "location": lawyer["location"],
-                            #     "contact": lawyer["contact"],
-                            # }
-                            # for lawyer in recommendations
-                        ]
-                        # if recommendations
-                        # else []
-                    ),
+                    "Sentiment": sentiment,                   
                 }
                 return response
 

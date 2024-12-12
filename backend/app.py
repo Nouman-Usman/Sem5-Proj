@@ -637,7 +637,7 @@ def ask_question():
         if not UnChatId:
             UnChatId = uuid.uuid4()  # Create as UUID object
             # session_id = uuid.uuid4()  # Create as UUID object
-            session_id = db.create_session(user_id=current_user_id, topic="Legal", session_id=session_id)
+            session_id = db.create_session(user_id=current_user_id, topic="Legal")
             logger.info(f"Created new session {session_id} for user {current_user_id}")
             
             # Store initial user message with UUID objects
@@ -676,7 +676,7 @@ def ask_question():
                 references=result.get('references', []),
                 UnChatId=UnChatId
             )
-            
+            sentiment = result.get('sentiment', 'neutral')
             # Create response object with string UUIDs for JSON
             response = {
                 "answer": result['chat_response'],
