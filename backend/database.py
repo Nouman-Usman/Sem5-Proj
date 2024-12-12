@@ -251,8 +251,6 @@ class Database:
         try:
             with self.get_connection() as conn:
                 cursor = conn.cursor()
-                
-                # First verify user exists
                 check_user_query = "SELECT 1 FROM [User] WHERE UserId = ?"
                 cursor.execute(check_user_query, (user_id,))
                 if not cursor.fetchone():
@@ -262,7 +260,6 @@ class Database:
                     OUTPUT INSERTED.SessionId
                     VALUES (?, ?, GETDATE(), 1)
                 """
-
                 cursor.execute(query, (user_id, topic))
                 query = "SELECT SCOPE_IDENTITY()"
                 cursor.execute(query)
@@ -312,7 +309,7 @@ class Database:
 
         with self.get_connection() as conn:
             cursor = conn.cursor()
-            query = """INSERT INTO ChatMessages (SessionId, Message, Type, Time, References, RecommendedLawyers)
+            query = """INSERT INTO ChatMessages (SessionId, Message, Type, Time, [References], RecommendedLawyers)
                       VALUES (?, ?, ?, GETDATE(), ?, ?)"""
             cursor.execute(query, (session_id, message, msg_type, references, recommended_lawyers))
             conn.commit()
@@ -361,13 +358,13 @@ class Database:
             cursor.execute("SELECT * FROM ChatMessages ORDER BY Time")
             return cursor.fetchall()
 
-    def create_subscription(self, user_id, subscription_type, expiry_date, remaining_credits=0):
+    def create_subscription(self, user_id, subscription_type, start_date, expiry_date, remaining_credits=0):
         with self.get_connection() as conn:
             cursor = conn.cursor()
             query = """INSERT INTO Subscription 
-                      (UserId, CurrentSubscription, ExpiryDate, RemainingCredits)
-                      VALUES (?, ?, ?, ?)"""
-            cursor.execute(query, (user_id, subscription_type, expiry_date, remaining_credits))
+                      (UserId, CurrentSubscription, StartDate, ExpiryDate, RemainingCredits)
+                      VALUES (?, ?, ?, ?, ?)"""
+            cursor.execute(query, (user_id, subscription_type, start_date, expiry_date, remaining_credits))
             conn.commit()
             return cursor.rowcount
 
@@ -394,10 +391,10 @@ class Database:
             cursor.execute("DELETE FROM Subscription WHERE SubsId = ?", subs_id)
             conn.commit()
             return cursor.rowcount
-    def get_current_subscription(self, client_id):
+    def get_current_subscription(self, user_id):
         with self.get_connection() as conn:
             cursor = conn.cursor()
-            cursor.execute("SELECT * FROM Subscription WHERE ClientId = ? ORDER BY ExpiryDate DESC", client_id)
+            cursor.execute("SELECT * FROM Subscription WHERE UserId = ? ORDER BY ExpiryDate DESC", user_id)
             return cursor.fetchone()
     def get_all_subscriptions(self):
         with self.get_connection() as conn:

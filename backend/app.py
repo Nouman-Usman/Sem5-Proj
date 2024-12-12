@@ -45,9 +45,9 @@ def log_memory_usage():
     for stat in top_stats[:10]:
         logger.info(stat)
 
-# Create Flask app
 app = Flask(__name__)
-CORS(app)
+# CORS(app)
+CORS(app, supports_credentials=True, origins=["http://localhost:5173"], methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"])
 
 agent = None
 
@@ -64,9 +64,8 @@ def get_agent(user_id, chat_id):
     return agent
 
 
-# Configure the database and other settings
-app.config['SECRET_KEY'] = 'your_secret_key'  # Change this to a secure key
-app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(hours=1)
+app.config['SECRET_KEY'] = 'your_secret_key' 
+app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(hours=5)
 
 jwt = JWTManager(app)
 
@@ -171,7 +170,6 @@ def login():
                 "user_id": user.UserId
             }
         )
-
         return jsonify({
             "message": "Login successful",
             "access_token": access_token,
@@ -526,17 +524,12 @@ def get_chat_message(chat_id, message_id):
 def subscribe():
     try:
         data = request.get_json()
-        role = get_jwt()['role']
-        credits = data.get('amount')
-        print(role)
-        print(credits)
-        breakpoint()
         current_user_id = get_jwt_identity()
         subscription_data = {
             'user_id': current_user_id,
             'subscription_type': data.get('plan'),
             'start_date': data.get('start_date'),
-            'end_date': data.get('end_date'),
+            'expiry_date': data.get('end_date'),
             'remaining_credits': data.get('amount')
         }
         try:
@@ -551,11 +544,12 @@ def subscribe():
 # Route for fetching current subscription
 @app.route('/subscription/current', methods=['GET'])
 @jwt_required()
-def get_current_subscription():
+def get_current_subs():
     try:
         current_user_id = get_jwt_identity()
-        role = get_jwt()['role']
-        print(role)
+        print(current_user_id)
+        # role = get_jwt()['role']
+        # print(role)
         subscription = db.get_current_subscription(current_user_id)
         if not subscription:
             return jsonify({"error": "No active subscription found"}), 404
@@ -620,7 +614,7 @@ def is_valid_uuid(uuid_str: str) -> bool:
         return False
 # Ask endpoint
 @app.route('/api/ask', methods=['POST'])
-@jwt_required()  # Add this decorator to require authentication
+@jwt_required()  
 def ask_question():
     result = None
     retries = 0
@@ -632,6 +626,7 @@ def ask_question():
         try:
             current_user_id = get_jwt_identity()
             print(current_user_id)
+            role = get_jwt()['role']
             chat_id = get_jwt()['chat_id'] if 'chat_id' in get_jwt() else None
             print(chat_id)
             data = request.get_json()
@@ -647,9 +642,9 @@ def ask_question():
             if not chat_id or chat_id == None:
                 data_loaded = True
                 session_id = db.create_session(user_id=user_id, topic="Legal")
-                breakpoint()               
-                chat_id = db.create_chat_message(session_id, user_id, question, msg_type="Human Message")
-                chat_id = chat_id['ChatId']
+                # breakpoint()               
+                db.create_chat_message(session_id=session_id, message= question, msg_type="Human Message", references=None, recommended_lawyers=None)
+                # chat_id = chat_id['ChatId']
             logger.info(f"Processing question for user {current_user_id}, chat {chat_id}")
             rag_agent = get_agent(user_id=current_user_id, chat_id=chat_id)
             chat_id_str = str(chat_id) if chat_id else None
@@ -661,6 +656,10 @@ def ask_question():
                 logger.warning(f"Invalid UUID - chat_id: {chat_id_str}, user_id: {current_user_id}")
                 history = []
             result = rag_agent.run(question, current_user_id, chat_id_str, history)
+            Refrences = result.get("references", [])
+            RecommendedLawyers = result.get("recommended_lawyers", [])
+            Answer = result.get("chat_response", "")
+            db.create_chat_message(session_id=session_id, message= Answer, msg_type="AI Message", recommended_lawyers=RecommendedLawyers, references=Refrences)
             if not result or 'chat_response' not in result:
                 logger.error("Invalid result from RAG agent")
                 retries += 1

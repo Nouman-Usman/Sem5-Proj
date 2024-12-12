@@ -35,7 +35,13 @@ api.interceptors.response.use(
       return Promise.reject(new Error('Session expired. Please login again.'));
     }
     if (error.response?.status === 403) {
-      return Promise.reject(new Error('You do not have permission to perform this action.'));
+      const currentRole = apiService.getUserRole();
+      if (currentRole) {
+        window.location.href = '/user-home';
+      } else {
+        window.location.href = '/login';
+      }
+      return Promise.reject(new Error('Access denied: Insufficient permissions'));
     }
     if (error.code === 'ECONNABORTED') {
       return Promise.reject(new Error('Request timed out. Please try again.'));
@@ -45,6 +51,12 @@ api.interceptors.response.use(
 );
 
 export const apiService = {
+  // Add this new utility function
+  getUserRole() {
+    const user = JSON.parse(localStorage.getItem('user'));
+    return user?.role || null;
+  },
+
   async askQuestion(question, chatId = null) {
     const maxRetries = 3;
     let retries = 0;
@@ -133,7 +145,6 @@ export const apiService = {
     return response.data;
   },
 
-  // Subscription related endpoints
   async createSubscription(subscriptionData) {
     const token = localStorage.getItem('token');
     try {
@@ -156,7 +167,6 @@ export const apiService = {
     }
   },
 
-  // System health check
   async checkHealth() {
     const response = await api.get('/health');
     return response.data;

@@ -13,22 +13,56 @@ import LawyerProfile from './components/lawyer_profile.jsx';
 import LawyerSubscription from './components/lawyer_sub.jsx';
 import SubscriptionPlans from './components/cleint_sub.jsx';
 import LawyerDashboard from './components/lawyer_dashboard';
+import { ProtectedRoute } from './components/ProtectedRoute';
+
 function App() {
   return (    
     <Router>
       <NavbarWithConditionalRender />
       <Routes>
-        <Route path="/chatbot" element={<ChatbotPage />} />
-        <Route path="/lawyers" element={<LawyerRecommendationPage />} />
-        <Route path="/user-home" element={<UserHome />} />
+        <Route path="/chatbot" element={
+          <ProtectedRoute allowedRoles={['client', 'lawyer']}>
+            <ChatbotPage />
+          </ProtectedRoute>
+        } />
+        <Route path="/lawyers" element={
+          <ProtectedRoute allowedRoles={['lawyer']}>
+            <LawyerRecommendationPage />
+          </ProtectedRoute>
+        } />
+        <Route path="/user-home" element={
+          <ProtectedRoute allowedRoles={['client']}>
+            <UserHome />
+          </ProtectedRoute>
+        } />
+        <Route path="/client-profile" element={
+          <ProtectedRoute allowedRoles={['client']}>
+            <ClientProfile />
+          </ProtectedRoute>
+        } />
+        <Route path="/lawyer-profile" element={
+          <ProtectedRoute allowedRoles={['lawyer']}>
+            <LawyerProfile />
+          </ProtectedRoute>
+        } />
+        <Route path="/lawyer-subscription" element={
+          <ProtectedRoute allowedRoles={['lawyer']}>
+            <LawyerSubscription />
+          </ProtectedRoute>
+        } />
+        <Route path="/lawyer-dashboard" element={
+          <ProtectedRoute allowedRoles={['lawyer']}>
+            <LawyerDashboard />
+          </ProtectedRoute>
+        } />
+        <Route path="/subscription-plans" element={
+          <ProtectedRoute allowedRoles={['client']}>
+            <SubscriptionPlans />
+          </ProtectedRoute>
+        } />
         <Route path="/about" element={<About />} />
         <Route path="/Signup" element={<LoginSignup />} />
         <Route path="/login" element={<LoginSignup />} />
-        <Route path="/client-profile" element={<ClientProfile />} />
-        <Route path="/lawyer-profile" element={<LawyerProfile />} />
-        <Route path="/lawyer-subscription" element={<LawyerSubscription />} />
-        <Route path="/subscription-plans" element={<SubscriptionPlans />} />
-        <Route path="/lawyer-dashboard" element={<LawyerDashboard />} />
         <Route path="/" element={<Home />} />
       </Routes>
     </Router>

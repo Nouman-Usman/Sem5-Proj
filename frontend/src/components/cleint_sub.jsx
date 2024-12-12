@@ -17,7 +17,10 @@ const SubscriptionPlans = () => {
       const startDate = new Date();      
       const endDate = new Date();
       endDate.setMonth(endDate.getMonth() + (plan === 'basic' ? 1 : 0)); // 1 month for basic plan
-
+      //  I want free plan to renew after every day and the credits to be reset to 5
+      if (plan === 'free') {
+        endDate.setDate(endDate.getDate() + 3);
+      }      
       const subscriptionData = {
         plan: plan,
         start_date: startDate.toISOString(),
@@ -56,9 +59,9 @@ const SubscriptionPlans = () => {
         <div className={`w-[320px] p-6 rounded-xl shadow-lg bg-white transform transition-transform hover:-translate-y-2 
             ${selectedPlan === 'free' ? 'ring-2 ring-blue-500' : ''}`}>
           <h3 className="text-2xl font-semibold text-gray-800 mb-4">Free Plan</h3>
-          <div className="text-4xl font-bold text-blue-600 mb-6">Rs. 0/month</div>
+          <div className="text-4xl font-bold text-blue-600 mb-6">Rs. 0</div>
           <ul className="space-y-3 mb-8">
-            {['5 AI Chat Credits', 'Basic Legal Assistance', 'Limited Access to Resources'].map((feature, index) => (
+            {['3 days free', 'Basic Legal Assistance', 'Limited Access to Resources', 'Free Refrences'].map((feature, index) => (
               <li key={index} className="flex items-center text-gray-600">
                 <svg className="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
@@ -90,7 +93,7 @@ const SubscriptionPlans = () => {
           <div className="text-4xl font-bold text-green-600 mb-6">Rs. 500/month</div>
           <ul className="space-y-3 mb-8">
             {[
-              '50 AI Chat Credits',
+              '500 AI Chat Credits',
               'Priority Legal Assistance',
               'Full Access to Resources',
               'Direct Lawyer Recommendations'
