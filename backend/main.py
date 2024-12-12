@@ -614,49 +614,6 @@ Question to route: {question}
         except (ValueError, AttributeError, TypeError):
             return False
 
-    def save_chat_message(
-        self, chat_id: str, sender_id: str, message: str, message_type: str
-    ) -> Optional[str]:
-        """Save a chat message using ChatMessageCRUD"""
-        try:
-            # Ensure chat session exists first
-            chat_id = self.ensure_chat_session_exists(chat_id, sender_id)
-
-            if not hasattr(self, "chat_message_crud"):
-                self.chat_message_crud = ChatMessageCRUD()
-
-            message_id = self.chat_message_crud.create(
-                chat_id=chat_id,
-                sender_id=sender_id,
-                message=message,
-                message_type=message_type,
-            )
-            return message_id
-        except Exception as e:
-            logging.error(f"Error saving chat message: {e}")
-            return None
-
-    def ensure_chat_session_exists(self, chat_id: str, user_id: str) -> str:
-        """Ensure chat session exists and return chat_id"""
-        try:
-            if not hasattr(self, "chat_session_crud"):
-                self.chat_session_crud = ChatSessionCRUD()
-
-            # Try to create new session if one doesn't exist
-            if not chat_id:
-                # Use the same user_id as both initiator and recipient
-                chat_id = self.chat_session_crud.create(
-                    initiator_id=user_id,
-                    recipient_id=user_id  
-                )
-                if not chat_id:
-                    raise Exception("Failed to create chat session")
-            return chat_id
-
-        except Exception as e:
-            logging.error(f"Error ensuring chat session: {e}")
-            raise
-
 
 # if __name__ == "__main__":
 #     # Create valid UUIDs for testing
