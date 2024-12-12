@@ -309,27 +309,34 @@ class Database:
             return cursor.rowcount
 
     # ChatMessages CRUD operations
-    def create_chat_message(self, session_id, message, msg_type, references=None, recommended_lawyers=None):
-        if msg_type not in ['Human Message', 'AI Message']:
-            raise ValueError("Invalid message type")
-
+    def create_chat_message(self, session_id, message, msg_type="Human Message", references=None, recommended_lawyers=None, UnChatId=None):
         try:
-            # Convert references to JSON string if it's a list, otherwise store as None
-            references_str = json.dumps(references) if references else None
-            print(references_str)
+            cursor = self.conn.cursor()
             
-            # Convert recommended_lawyers to JSON string if it's a list, otherwise store as None
+            # Convert lists to JSON strings
+            references_str = json.dumps(references) if references else None
             recommended_lawyers_str = json.dumps(recommended_lawyers) if recommended_lawyers else None
-
-            with self.get_connection() as conn:
-                cursor = conn.cursor()
-                query = """INSERT INTO ChatMessages (SessionId, Message, Type, Time, [References], RecommendedLawyers)
-                          VALUES (?, ?, ?, GETDATE(), ?, ?)"""
-                cursor.execute(query, (session_id, message, msg_type, references_str, recommended_lawyers_str))
-                conn.commit()
-                return cursor.rowcount
+            
+            query = """
+            INSERT INTO ChatMessages 
+            (SessionId, Message, MessageType, References, RecommendedLawyers, UnChatId)
+            VALUES (?, ?, ?, ?, ?, ?)
+            """
+            session_id_str = str(session_id) if session_id else None
+            un_chat_id_str = str(UnChatId) if UnChatId else None
+            
+            cursor.execute(query, (
+                session_id_str,
+                message,
+                msg_type,
+                references_str,
+                recommended_lawyers_str,
+                un_chat_id_str
+            ))
+            self.conn.commit()
+            return True
         except Exception as e:
-            print(f"Error creating chat message: {e}")
+            logger.error(f"Error creating chat message: {e}")
             raise
 
     def get_chat_topics(self, user_id):
@@ -359,10 +366,10 @@ class Database:
             cursor.execute("DELETE FROM ChatMessages WHERE ChatId = ?", chat_id)
             conn.commit()
             return cursor.rowcount
-    def get_chat_messages_by_chat_id(self, chat_id):
+    def get_chat_messages_by_chat_id(self, UnChatId):
         with self.get_connection() as conn:
             cursor = conn.cursor()
-            cursor.execute("SELECT * FROM ChatMessages WHERE ChatId = ?", chat_id)
+            cursor.execute("SELECT * FROM ChatMessages WHERE UnChatId = ?", UnChatId)
             return cursor.fetchone()
     def get_chat_message_by_message_id(self, message_id):
         with self.get_connection() as conn:

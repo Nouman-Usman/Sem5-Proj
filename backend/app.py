@@ -51,12 +51,12 @@ CORS(app, supports_credentials=True, origins=["http://localhost:5173"], methods=
 
 agent = None
 
-def get_agent(user_id, chat_id):
+def get_agent():
     global agent
     if agent is None:
         try:
             logger.info("Initializing RAG agent...")
-            agent = RAGAgent(user_id=user_id, chat_id=chat_id)
+            agent = RAGAgent()
             logger.info("RAG agent initialized successfully")
         except Exception as e:
             logger.error(f"Failed to initialize RAG agent: {e}")
@@ -614,85 +614,93 @@ def is_valid_uuid(uuid_str: str) -> bool:
         return False
 # Ask endpoint
 @app.route('/api/ask', methods=['POST'])
-@jwt_required()  
+@jwt_required()
 def ask_question():
-    result = None
     retries = 0
     max_retries = 3
     data_loaded = False
-    # session_id = random.randint(100000, 999999)
-    # print(session_id)
-    
+    # UnChatId = str(uuid.uuid4())
     try:
         current_user_id = get_jwt_identity()
-        print(current_user_id)
         role = get_jwt()['role']
-        chat_id = get_jwt()['chat_id'] if 'chat_id' in get_jwt() else None
-        print(chat_id)
+        UnChatId = get_jwt()['UnChatId'] if 'UnChatId' in get_jwt() else None
         data = request.get_json()
         if not data:
             logger.error("No JSON data received")
-            return jsonify({"error": "No data provided"}), 400
+            return jsonify({"error": "No data provided"}), 400            
         question = data.get('question')
-        user_id = current_user_id
-        chat_id = data.get('chat_id')
         if not question:
             logger.error("Missing question parameter")
             return jsonify({"error": "Missing required parameter: question"}), 400
-        if not chat_id or chat_id == None:
-            data_loaded = True
-            session_id = db.create_session(user_id=user_id, topic="Legal")
-            print(session_id)
-                # breakpoint()               
-            db.create_chat_message(session_id=session_id, message= question, msg_type="Human Message", references=None, recommended_lawyers=None)
-                # chat_id = chat_id['ChatId']
-        logger.info(f"Processing question for user {current_user_id}, chat {chat_id}")
-        rag_agent = get_agent(user_id=current_user_id, chat_id=chat_id)
-        chat_id_str = str(chat_id) if chat_id else None
-        if chat_id_str and is_valid_uuid(chat_id_str) and is_valid_uuid(current_user_id):
-            if not data_loaded:
-                    history = db.get_chat_messages_by_chat_id(chat_id_str)
-                    data_loaded = True
-        else:
-                logger.warning(f"Invalid UUID - chat_id: {chat_id_str}, user_id: {current_user_id}")
-                history = []
-        result = rag_agent.run(question, current_user_id, chat_id_str, history)
-        print(result)
-        Refrences = result.get("references", [])
-        RecommendedLawyers = result.get("recommended_lawyers", [])
-        Answer = result.get("chat_response", "")
-        db.create_chat_message(session_id=session_id, message= Answer, msg_type="AI Message", recommended_lawyers=RecommendedLawyers, references=Refrences)
-        if not result or 'chat_response' not in result:
-                logger.error("Invalid result from RAG agent")
-                retries += 1
-                if retries == max_retries:
-                    return jsonify({"error": "Failed to generate response"}), 500
-                time.sleep(1)
-                
-        response = {
-                "answer": result["chat_response"],
-                "chat_id": chat_id or "new_chat",
-                "references": result.get("references", []),
-                "recommended_lawyers": result.get("recommended_lawyers", [])
-            }
-        if not response["answer"]:
-                logger.error("Empty response generated")
-                retries += 1
-                if retries == max_retries:
-                    return jsonify({"error": "Empty response generated"}), 500
-                time.sleep(1)
-        access_token = create_access_token(
-        identity=current_user_id,
-        additional_claims={
-                "chat_id": chat_id,
-                "user_id": current_user_id
-            }
+            
+        session_id = None
+        if not UnChatId:
+            UnChatId = uuid.uuid4()  # Create as UUID object
+            # session_id = uuid.uuid4()  # Create as UUID object
+            session_id = db.create_session(user_id=current_user_id, topic="Legal", session_id=session_id)
+            logger.info(f"Created new session {session_id} for user {current_user_id}")
+            
+            # Store initial user message with UUID objects
+            db.create_chat_message(
+                session_id=session_id,
+                message=question,
+                msg_type="Human Message",
+                references=None,
+                recommended_lawyers=None,
+                UnChatId=UnChatId
             )
-        logger.info(f"Successfully generated response for user {current_user_id}")
-        return jsonify(response), 200
-    except Exception as e:
-        logger.error(f"Error processing question (attempt {retries + 1}): {str(e)}", exc_info=True)
+            data_loaded = True
+        rag_agent = get_agent()
+        history = []
         
+        if UnChatId and is_valid_uuid(UnChatId) and is_valid_uuid(current_user_id):
+            if not data_loaded:
+                history = db.get_chat_messages_by_chat_id(UnChatId=UnChatId)
+                data_loaded = True
+        else:
+            logger.warning(f"Invalid UUID - chat_id: {UnChatId}, user_id: {current_user_id}")
+
+        try:
+            result = rag_agent.run(question,history)
+            
+            if not result or 'chat_response' not in result or not result['chat_response']:
+                logger.error("Invalid or empty response from RAG agent")
+                return jsonify({"error": "Failed to generate response"}), 500
+
+            # Store AI response with UUID objects
+            db.create_chat_message(
+                session_id=session_id,
+                message=result['chat_response'],
+                msg_type="AI Message",
+                recommended_lawyers=result.get('recommended_lawyers', []),
+                references=result.get('references', []),
+                UnChatId=UnChatId
+            )
+            
+            # Create response object with string UUIDs for JSON
+            response = {
+                "answer": result['chat_response'],
+                "UnChatId": str(UnChatId),
+                "references": result.get('references', []),
+                "recommended_lawyers": result.get('recommended_lawyers', [])
+            }
+            access_token = create_access_token(
+                identity=current_user_id,
+                additional_claims={
+                    "UnChatId": UnChatId,
+                    "user_id": current_user_id
+                }
+            )
+            logger.info(f"Successfully generated response for user {current_user_id}")
+            return jsonify(response), 200
+
+        except Exception as e:
+            logger.error(f"Error generating response: {str(e)}")
+            return jsonify({"error": "Failed to generate response"}), 500
+        
+    except Exception as e:
+        logger.error(f"Error processing question: {str(e)}", exc_info=True)
+        return jsonify({"error": "An unexpected error occurred"}), 500
 
 @app.route('/api/user/<user_id>/chats/<chat_id>', methods=['GET'])
 def get_user_chats(user_id, chat_id):

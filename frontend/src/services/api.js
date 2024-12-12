@@ -57,7 +57,7 @@ export const apiService = {
     return user?.role || null;
   },
 
-  async askQuestion(question, chatId = null) {
+  async askQuestion(question ) {
     const maxRetries = 3;
     let retries = 0;
 
@@ -73,7 +73,6 @@ export const apiService = {
 
         return {
           answer: response.data.answer,
-          chatId: response.data.chat_id,
           references: response.data.references || [],
           recommendedLawyers: response.data.recommended_lawyers || []
         };
@@ -86,8 +85,6 @@ export const apiService = {
       }
     }
   },
-
-  // Chat related endpoints
   async startChat(recipientId) {
     const response = await api.post('/chat/start', { recipient_id: recipientId });
     return response.data;

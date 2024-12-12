@@ -36,12 +36,10 @@ class GraphState(TypedDict):
     generation: str
     web_search: str
     documents: List[Document]
-    chat_id: str
-    user_id: str
 
 
 class RAGAgent:
-    def __init__(self, user_id: str, chat_id: str = None):
+    def __init__(self):
         load_dotenv()
         self.api_key = os.getenv("PINECONE_API")
         self.legal_index_name = "apna-waqeel3"
@@ -64,9 +62,6 @@ class RAGAgent:
         gc.collect()
         self.max_context_length = 4096
         self.memory = ConversationBufferWindowMemory(k=5)
-
-        self.user_id = user_id
-        self.chat_id = chat_id
         self.chats_loaded = False
 
 
@@ -184,8 +179,6 @@ Question to route: {question}
         print("---GENERATE---")
         question = state["question"]
         documents = state["documents"]
-        chat_id = state.get("chat_id")
-        user_id = state.get("user_id")
         chat_context = self.memory.load_memory_variables({})[
             "history"
         ]  # Use conversation buffer memory
@@ -231,31 +224,24 @@ Question to route: {question}
         return {
             "documents": documents,
             "question": question,
-            "generation": final_answer,
-            "chat_id": chat_id,
-            "user_id": user_id,
+            "generation": final_answer,            
         }
 
     def retrieve(self, state: Dict) -> Dict:
         print("---RETRIEVE---")
         question = state["question"]
-        chat_id = state.get("chat_id")
-        user_id = state.get("user_id")
         documents = self.retriever.invoke(question)
         documents = documents[:5] if len(documents) > 5 else documents
         gc.collect()
         return {
             "documents": documents,
             "question": question,
-            "chat_id": chat_id,
-            "user_id": user_id,  # Include user_id in return
         }
 
     def grade_documents(self, state: Dict) -> Dict:
         print("---CHECK DOCUMENT RELEVANCE TO QUESTION---")
         question = state["question"]
         documents = state["documents"]
-        chat_id = state.get("chat_id")
         filtered_docs = []
         web_search = "No"
         for d in documents:
@@ -275,13 +261,11 @@ Question to route: {question}
             "documents": filtered_docs,
             "question": question,
             "web_search": web_search,
-            "chat_id": chat_id,
         }
 
     def web_search(self, state: Dict) -> Dict:
         print("---WEB SEARCH---")
         question = state["question"]
-        chat_id = state.get("chat_id")
         documents = state.get("documents", [])
 
         try:
@@ -313,7 +297,6 @@ Question to route: {question}
         return {
             "documents": web_documents,
             "question": question,
-            "chat_id": chat_id,
         }
 
     def route_question(self, state: Dict) -> str:
@@ -465,19 +448,11 @@ Question to route: {question}
     def run(
         self,
         question: str,
-        user_id: str,
-        chat_id: str = None,
         chat_history: List[Dict] = None,
     ) -> Dict[str, Any]:
         try:
             if chat_history is None:
                 chat_history = []
-            # if not self.is_valid_uuid(user_id):
-            #     user_id = str(uuid.uuid4())
-            # if chat_id and not self.is_valid_uuid(chat_id):
-            #     chat_id = str(uuid.uuid4())
-            # if not chat_id and not self.chats_loaded:
-            #     self.handle_new_chat(user_id, question)
             chat_context = self.memory.load_memory_variables({})["history"]
             updated_question = self.update_query(question, chat_context)
             sentiment = self.analyze_sentiment(updated_question)
@@ -488,8 +463,6 @@ Question to route: {question}
             app = self.build_workflow()
             inputs = {
                 "question": updated_question,
-                "chat_id": chat_id,
-                "user_id": user_id,
                 "chat_history": chat_context,
             }
             last_output = None
@@ -503,9 +476,7 @@ Question to route: {question}
                     gc.collect()
                 result = last_output["generation"]
                 logging.info(f"Result: {result}")
-                response_text = result if isinstance(result, str) else str(result)
-                    # self.save_chat_message(chat_id, user_id, question, 'HumanMessage')
-                    # self.save_chat_message(chat_id, user_id, response_text, 'AIMessage')
+                response_text = result if isinstance(result, str) else str(result)                   
                 response = {
                     "chat_response": response_text,
                     "references": [
@@ -586,26 +557,6 @@ Question to route: {question}
     def save_context(self, user_input: str, assistant_output: str):
         self.memory.save_context({"input": user_input}, {"output": assistant_output})
 
-    # def chat_exists(self, user_id: str, chat_id: str) -> bool:
-    #     """Check if a chat exists for the given user"""
-    #     try:
-    #         connection = pyodbc.connect(self.connection_string)
-    #         cursor = connection.cursor()
-    #         query = """
-    #             SELECT TOP 1 1 
-    #             FROM ChatMessages 
-    #             WHERE [SenderId] = CAST(? AS UNIQUEIDENTIFIER) 
-    #             AND [ChatId] = CAST(? AS UNIQUEIDENTIFIER)
-    #         """
-    #         cursor.execute(query, (user_id, chat_id))
-    #         exists = cursor.fetchone() is not None
-    #         return exists
-    #     except Exception as e:
-    #         logging.error(f"Error checking chat existence: {e}")
-    #         return False
-    #     finally:
-    #         cursor.close()
-    #         connection.close()
 
     def is_valid_uuid(self, uuid_str: str) -> bool:
         try:
@@ -615,13 +566,3 @@ Question to route: {question}
             return False
 
 
-# if __name__ == "__main__":
-#     # Create valid UUIDs for testing
-#     user_id = str(uuid.uuid4())
-#     chat_id = str(uuid.uuid4())
-#     agent = RAGAgent(user_id=user_id, chat_id=chat_id)
-#     while True:
-#         user_input = input("User: ")
-#         result = agent.run(user_input, user_id)
-#         print(f"Assistant: {result}")
-#         agent.save_context(user_input, result["chat_response"])
