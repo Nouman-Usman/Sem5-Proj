@@ -13,9 +13,8 @@ const SubscriptionPlans = () => {
     try {
       setIsLoading(true);
       setError(null);
-      
-      // Calculate dates
-      const startDate = new Date();
+  
+      const startDate = new Date();      
       const endDate = new Date();
       endDate.setMonth(endDate.getMonth() + (plan === 'basic' ? 1 : 0)); // 1 month for basic plan
 
@@ -23,7 +22,7 @@ const SubscriptionPlans = () => {
         plan: plan,
         start_date: startDate.toISOString(),
         end_date: endDate.toISOString(),
-        amount: plan === 'basic' ? 500 : 0 // 500 for basic, 0 for free plan
+        amount: plan === 'basic' ? 50 : 5 // 500 for basic, 0 for free plan
       };
 
       await apiService.createSubscription(subscriptionData);

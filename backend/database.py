@@ -33,14 +33,9 @@ class Database:
             raise ValueError("Invalid email format")
         if not isinstance(password, str) or len(password) < 6:
             raise ValueError("Password must be at least 6 characters")
-        if role not in ['client', 'lawyer', 'system']:
-            raise ValueError("Invalid role")
-    def get_user_by_id(self, user_id):
-        with self.get_connection() as conn:
-            cursor = conn.cursor()
-            query = "SELECT * FROM [User] WHERE UserId = ?"
-            cursor.execute(query, (user_id,))
-            row = cursor.fetchone()    
+        if role not in ['client', 'lawyer', 'system']:  # Updated to match SQL constraint
+            raise ValueError("Invalid role. Must be 'client', 'lawyer', or 'system'")
+    
 
     def create_user(self, name, email, password, role):
         # Validate inputs
@@ -132,11 +127,13 @@ class Database:
     def create_lawyer(self, user_id, cnic, license_number, location, experience,
                      specialization, contact, email, paid=False, 
                      expiry_date=None, recommended=0, times_clicked=0, times_shown=0):
-        # Input validations
-        if not isinstance(experience, int) or experience < 0:
-            raise ValueError("Experience must be a positive integer")
+        # Updated validation to match SQL constraints
         if not isinstance(cnic, str) or len(cnic) > 20:
             raise ValueError("Invalid CNIC format")
+        if not isinstance(license_number, str) or len(license_number) > 50:  # Added validation
+            raise ValueError("Invalid license number format")
+        if not isinstance(location, str) or len(location) > 255:  # Added validation
+            raise ValueError("Invalid location format")
         if not isinstance(contact, str) or len(contact) > 20:
             raise ValueError("Invalid contact format")
         if not isinstance(email, str) or len(email) > 100 or '@' not in email:
@@ -146,13 +143,14 @@ class Database:
 
         with self.get_connection() as conn:
             cursor = conn.cursor()
-            query = """INSERT INTO Lawyer (UserId, CNIC, LicenseNumber, Location, 
-                      Experience, Specialization, Contact, Email, Paid, 
-                      ExpiryDate, Recommended, TimesClicked, TimesShown)
+            query = """INSERT INTO Lawyer 
+                      (UserId, CNIC, LicenseNumber, Location, Experience, 
+                       Specialization, Contact, Email, Paid, ExpiryDate, 
+                       Recommended, TimesClicked, TimesShown)
                       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"""
             cursor.execute(query, (user_id, cnic, license_number, location, experience,
-                                 specialization, contact, email, paid, 
-                                 expiry_date, recommended, times_clicked, times_shown))
+                                 specialization, contact, email, paid, expiry_date,
+                                 recommended, times_clicked, times_shown))
             conn.commit()
             return cursor.rowcount
     def get_lawyer_by_user_id(self, user_id):
@@ -373,10 +371,11 @@ class Database:
             conn.commit()
             return cursor.rowcount
 
-    def get_subscription(self, subs_id):
+    def get_subscription(self, user_id):
+        # Updated to use UserId instead of SubsId for lookup
         with self.get_connection() as conn:
             cursor = conn.cursor()
-            cursor.execute("SELECT * FROM Subscription WHERE SubsId = ?", subs_id)
+            cursor.execute("SELECT * FROM Subscription WHERE UserId = ?", user_id)
             return cursor.fetchone()
 
     def update_subscription(self, subs_id, subscription_type, expiry_date, remaining_credits):
@@ -432,10 +431,13 @@ class Database:
 
     # New LawyerReview methods
     def create_lawyer_review(self, lawyer_id, client_id, stars, review_message=None):
+        # Updated validation to match SQL constraints
         if not isinstance(stars, int) or not 1 <= stars <= 5:
             raise ValueError("Stars must be between 1 and 5")
         if review_message and len(review_message) > 1000:
             raise ValueError("Review message too long")
+        if not self.get_user_by_id(lawyer_id) or not self.get_user_by_id(client_id):
+            raise ValueError("Invalid lawyer_id or client_id")
         
         with self.get_connection() as conn:
             cursor = conn.cursor()

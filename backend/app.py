@@ -23,8 +23,6 @@ load_dotenv()
 
 UPLOAD_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'uploads', 'profile_images')
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
-
-# Create upload directory if it doesn't exist
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 logging.basicConfig(
@@ -184,12 +182,10 @@ def login():
                 "role": user.Role,                 
             }
         }), 200
-
     except Exception as e:
         logger.error(f"Login error: {str(e)}")
         return jsonify({"error": "Login failed"}), 500
 
-# Route for adding client profile
 @app.route('/api/cl/profile', methods=['POST'])
 @jwt_required()
 def add_client_profile():
@@ -252,7 +248,6 @@ def add_client_profile():
                 pass
         return jsonify({"error": str(e)}), 500
 
-# Route for adding lawyer profile
 @app.route('/api/lw/profile', methods=['POST'])
 @jwt_required()
 def add_lawyer_profile():
@@ -371,11 +366,10 @@ def get_profile():
                 "email": lawyer.Email
             }
         }), 200
-
-# Route for updating user profile
+# Route for updating client profile
 @app.route('/api/profile', methods=['PUT'])
 @jwt_required()
-def update_profile():
+def update_client_profile():
     data = request.get_json()
     current_user_id = get_jwt_identity()
     user = db.get_user_by_id(current_user_id)
@@ -532,15 +526,18 @@ def get_chat_message(chat_id, message_id):
 def subscribe():
     try:
         data = request.get_json()
-        jst = jwt.decode(data['access_token'], verify=False)
-        print(jst)
+        role = get_jwt()['role']
+        credits = data.get('amount')
+        print(role)
+        print(credits)
+        breakpoint()
         current_user_id = get_jwt_identity()
         subscription_data = {
             'user_id': current_user_id,
-            'plan': data.get('plan'),
+            'subscription_type': data.get('plan'),
             'start_date': data.get('start_date'),
             'end_date': data.get('end_date'),
-            'amount': data.get('amount')
+            'remaining_credits': data.get('amount')
         }
         try:
             db.create_subscription(**subscription_data)
@@ -557,6 +554,8 @@ def subscribe():
 def get_current_subscription():
     try:
         current_user_id = get_jwt_identity()
+        role = get_jwt()['role']
+        print(role)
         subscription = db.get_current_subscription(current_user_id)
         if not subscription:
             return jsonify({"error": "No active subscription found"}), 404

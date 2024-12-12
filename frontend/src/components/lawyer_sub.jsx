@@ -9,12 +9,9 @@ const LawyerSubscription = () => {
 
   const handleSubscribe = async () => {
     setIsLoading(true);
-    // Simulate API call
     await new Promise(resolve => setTimeout(resolve, 2000));
     setIsLoading(false);
     setShowPopup(true);
-    
-    // Redirect after 3 seconds
     setTimeout(() => {
       setShowPopup(false);
       navigate('/lawyer-profile');
