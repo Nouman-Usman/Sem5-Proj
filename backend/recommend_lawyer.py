@@ -2,98 +2,78 @@ import csv
 import datetime
 import numpy as np
 from sklearn.decomposition import NMF
-from azure.data.tables import TableServiceClient  # Add this import
+from database import Database 
+from datetime import datetime, timedelta
 
+db = Database()
 def calculate_weight(rating, experience):
     try:
         normalized_rating = float(rating) / 5
-        years = int(experience.split()[0]) 
+        # Handle experience as integer directly
+        years = int(experience) if isinstance(experience, str) else experience
         normalized_exp = float(years) / 35 
         return (0.6 * normalized_rating + 0.4 * normalized_exp)
-    except (ValueError, IndexError) as e:
+    except (ValueError, TypeError) as e:
         print(f"Error calculating weight: {e}")
         return 0
 
-def load_lawyer_data():
+def get_recommendation_score(lawyer):
     try:
-        with open("lawyers.csv", mode="r", encoding='utf-8') as file:
-            lawyers = list(csv.DictReader(file))
-        return lawyers
+        lawyer_id = int(lawyer['LawyerId'])
+        recommendation_history = db.get_lawyer_recommendations(lawyer_id)
+        
+        if not recommendation_history:
+            return 0
+            
+        base_weight = calculate_weight(lawyer["Rating"], lawyer["Experience"])
+        
+        if not recommendation_history.get('LastRecommended'):
+            return base_weight * 1.5
+        
+        last_recommended = recommendation_history['LastRecommended']
+        # Ensure last_recommended is a datetime object
+        if isinstance(last_recommended, str):
+            last_recommended = datetime.strptime(last_recommended, '%Y-%m-%d %H:%M:%S')
+            
+        days_since_recommendation = (datetime.now() - last_recommended).days
+        recommendation_count = int(recommendation_history.get('RecommendationCount', 0))
+        
+        time_factor = min(days_since_recommendation / 30.0, 1.5)
+        frequency_penalty = 1.0 / (1 + (recommendation_count * 0.1))
+        
+        return base_weight * time_factor * frequency_penalty
     except Exception as e:
-        print(f"Error loading lawyer data: {e}")
-        return []
+        print(f"Error calculating recommendation score: {e}")
+        return 0
 
-def create_rating_matrix(lawyers):
-    categories = list(set(lawyer["Specialization"].strip() for lawyer in lawyers))
-    lawyer_names = [lawyer["Name"] for lawyer in lawyers]
-    rating_matrix = np.zeros((len(lawyer_names), len(categories)))
-
-    for i, lawyer in enumerate(lawyers):
-        category_index = categories.index(lawyer["Specialization"].strip())
-        rating_matrix[i, category_index] = float(lawyer["Rating"])
-
-    return rating_matrix, lawyer_names, categories
-
-def recommend(category):
+def update_recommendation_history(lawyer):
     try:
-        lawyers = load_lawyer_data()
+        # Convert LawyerId to integer
+        lawyer_id = int(lawyer['LawyerId'])
+        db.update_lawyer_recommendation(lawyer_id)
+    except Exception as e:
+        print(f"Error updating recommendation history: {e}")
+
+def recommend_top_lawyers(sentiment):
+    try:
+        lawyers = db.get_lawyers_by_specialization(specialization = sentiment)
         if not lawyers:
             print("No lawyers found in database")
             return []
-
-        rating_matrix, lawyer_names, categories = create_rating_matrix(lawyers)
-        category_index = categories.index(category)
-
-        model = NMF(n_components=2, init='random', random_state=0)
-        W = model.fit_transform(rating_matrix)
-        H = model.components_
-
-        category_scores = H[:, category_index]
-        top_indices = np.argsort(category_scores)[-2:][::-1]
-        top_lawyers = [lawyers[i] for i in top_indices]
-
+        
+        # Pass entire lawyer object instead of just LawyerId
+        scores = [(lawyer, get_recommendation_score(lawyer)) for lawyer in lawyers]
+        scores.sort(key=lambda x: x[1], reverse=True)
+        
+        top_lawyers = [lawyer for lawyer, _ in scores[:2]]
+        for lawyer in top_lawyers:
+            update_recommendation_history(lawyer)
         return top_lawyers
 
     except Exception as e:
         print(f"Error in recommend function: {e}")
         return []
 
-def store_chat_topic(user_id, chat_id, topic, connection_string):
-    try:
-        table_service = TableServiceClient.from_connection_string(conn_str=connection_string)
-        table_name = "ChatTopics"
-        table_service.create_table_if_not_exists(table_name)
-        table_client = table_service.get_table_client(table_name)
-        
-        entity = {
-            'PartitionKey': f"chat_topic:{user_id}",
-            'RowKey': chat_id,
-            'user_id': user_id,
-            'chat_id': chat_id,
-            'topic': topic,
-            'timestamp': datetime.datetime.utcnow()
-        }
-        
-        table_client.create_entity(entity=entity)
-        print(f"Stored chat topic for chat {chat_id}")
-    except Exception as e:
-        print(f"Error storing chat topic: {e}")
 
-def recommend_lawyer(category):
-    """Legacy function that returns formatted string instead of lawyer objects"""
-    lawyers = recommend(category)
-    if not lawyers:
-        return "No lawyers found for this specialty."
-    
-    recommendation = "Top recommended lawyers:\n\n"
-    for lawyer in lawyers:
-        recommendation += (
-            f"- {lawyer['Name']}\n"
-            f"  Specialty: {lawyer['Specialization']}\n"
-            f"  Experience: {lawyer['Experience']}\n"
-            f"  Rating: {lawyer['Rating']}/5\n"
-            f"  Location: {lawyer['Location']}\n"
-            f"  Contact: {lawyer['Contact']}\n\n"
-        )
-    
-    return recommendation
+
+

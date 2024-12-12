@@ -1,6 +1,6 @@
 USE [master]
 GO
-/****** Object:  Database [AW_Database]    Script Date: 12/12/2024 6:50:55 PM ******/
+/****** Object:  Database [AW_Database]    Script Date: 12/12/2024 11:38:10 PM ******/
 CREATE DATABASE [AW_Database]
  CONTAINMENT = NONE
  ON  PRIMARY 
@@ -84,7 +84,7 @@ ALTER DATABASE [AW_Database] SET QUERY_STORE (OPERATION_MODE = READ_WRITE, CLEAN
 GO
 USE [AW_Database]
 GO
-/****** Object:  Table [dbo].[ChatMessages]    Script Date: 12/12/2024 6:50:56 PM ******/
+/****** Object:  Table [dbo].[ChatMessages]    Script Date: 12/12/2024 11:38:11 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -97,13 +97,14 @@ CREATE TABLE [dbo].[ChatMessages](
 	[Time] [datetime] NULL,
 	[References] [nvarchar](max) NULL,
 	[RecommendedLawyers] [nvarchar](max) NULL,
+	[UnChatId] [nvarchar](max) NULL,
  CONSTRAINT [PK_ChatMessages] PRIMARY KEY CLUSTERED 
 (
 	[ChatId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Client]    Script Date: 12/12/2024 6:50:56 PM ******/
+/****** Object:  Table [dbo].[Client]    Script Date: 12/12/2024 11:38:11 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -126,7 +127,7 @@ UNIQUE NONCLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Lawyer]    Script Date: 12/12/2024 6:50:56 PM ******/
+/****** Object:  Table [dbo].[Lawyer]    Script Date: 12/12/2024 11:38:11 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -146,6 +147,8 @@ CREATE TABLE [dbo].[Lawyer](
 	[Email] [nvarchar](100) NULL,
 	[TimesClicked] [int] NOT NULL,
 	[TimesShown] [int] NOT NULL,
+	[LastRecommended] [nvarchar](max) NULL,
+	[RecommendationCount] [int] NULL,
 PRIMARY KEY CLUSTERED 
 (
 	[LawyerId] ASC
@@ -154,9 +157,9 @@ UNIQUE NONCLUSTERED
 (
 	[CNIC] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[LawyerReview]    Script Date: 12/12/2024 6:50:56 PM ******/
+/****** Object:  Table [dbo].[LawyerReview]    Script Date: 12/12/2024 11:38:11 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -174,7 +177,7 @@ CREATE TABLE [dbo].[LawyerReview](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Sessions]    Script Date: 12/12/2024 6:50:56 PM ******/
+/****** Object:  Table [dbo].[Sessions]    Script Date: 12/12/2024 11:38:11 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -191,7 +194,7 @@ CREATE TABLE [dbo].[Sessions](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Subscription]    Script Date: 12/12/2024 6:50:56 PM ******/
+/****** Object:  Table [dbo].[Subscription]    Script Date: 12/12/2024 11:38:11 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -209,7 +212,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[User]    Script Date: 12/12/2024 6:50:56 PM ******/
+/****** Object:  Table [dbo].[User]    Script Date: 12/12/2024 11:38:11 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -230,7 +233,7 @@ UNIQUE NONCLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Index [IX_LawyerReview_LawyerId]    Script Date: 12/12/2024 6:50:56 PM ******/
+/****** Object:  Index [IX_LawyerReview_LawyerId]    Script Date: 12/12/2024 11:38:11 PM ******/
 CREATE NONCLUSTERED INDEX [IX_LawyerReview_LawyerId] ON [dbo].[LawyerReview]
 (
 	[LawyerId] ASC
@@ -247,6 +250,8 @@ GO
 ALTER TABLE [dbo].[Lawyer] ADD  DEFAULT ((0)) FOR [TimesClicked]
 GO
 ALTER TABLE [dbo].[Lawyer] ADD  DEFAULT ((0)) FOR [TimesShown]
+GO
+ALTER TABLE [dbo].[Lawyer] ADD  DEFAULT ((0)) FOR [RecommendationCount]
 GO
 ALTER TABLE [dbo].[LawyerReview] ADD  DEFAULT (getdate()) FOR [ReviewTime]
 GO

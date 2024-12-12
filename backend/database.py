@@ -225,15 +225,50 @@ class Database:
         with self.get_connection() as conn:
             cursor = conn.cursor()
             query = """
-                SELECT l.*, u.Name
+                SELECT 
+                    u.Name,
+                    u.Email,
+                    l.Contact,
+                    l.Experience,
+                    l.Specialization as Category,
+                    l.LawyerId,
+                    l.CNIC,
+                    l.LicenseNumber,
+                    l.Location,
+                    CAST(COALESCE(AVG(CAST(lr.Stars AS FLOAT)), 0) AS DECIMAL(3,2)) as Rating
                 FROM Lawyer l
                 JOIN [User] u ON l.UserId = u.UserId
-                WHERE l.Specialization = ?
-                ORDER BY l.Ratings DESC, l.Experience DESC
+                LEFT JOIN LawyerReview lr ON l.UserId = lr.LawyerId
+                WHERE l.Specialization = ? AND l.Paid = 1
+                GROUP BY 
+                    u.Name,
+                    u.Email,
+                    l.Contact,
+                    l.Experience,
+                    l.Specialization,
+                    l.LawyerId,
+                    l.CNIC,
+                    l.LicenseNumber,
+                    l.Location
+                ORDER BY 
+                    Rating DESC,
+                    l.Experience DESC
             """
             cursor.execute(query, specialization)
-            return cursor.fetchall()
-
+            rows = cursor.fetchall()
+            return [self._row_to_dict(row, cursor) for row in rows]
+    def update_lawyer_paid_status(self, lawyer_id):
+        with self.get_connection() as conn:
+            cursor = conn.cursor()
+            query = """
+            UPDATE Lawyer
+            SET Paid = 1, ExpiryDate = DATEADD(MONTH, 1, GETDATE())
+            WHERE UserId = ?
+            """
+            cursor.execute(query, lawyer_id)
+            conn.commit()
+            return cursor.rowcount
+        
     def get_top_rated_lawyers(self, limit=10):
         with self.get_connection() as conn:
             cursor = conn.cursor()
@@ -367,11 +402,6 @@ class Database:
             cursor = conn.cursor()
             cursor.execute("SELECT * FROM ChatMessages WHERE UnChatId = ?", UnChatId)
             return cursor.fetchone()
-    def get_chat_message_by_message_id(self, message_id):
-        with self.get_connection() as conn:
-            cursor = conn.cursor()
-            cursor.execute("SELECT * FROM ChatMessages WHERE MessageId = ?", message_id)
-            return cursor.fetchone()
     def get_all_chat_messages(self):
         with self.get_connection() as conn:
             cursor = conn.cursor()
@@ -445,8 +475,13 @@ class Database:
             cursor = conn.cursor()
             cursor.execute("SELECT * FROM Sessions ORDER BY Time DESC")
             return cursor.fetchall()
-
-    # New LawyerReview methods
+    def update_lawyer_recommendation(self, lawyer_id):
+        with self.get_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute("UPDATE Lawyer SET Recommended = 1, LastRecommended = CURRENT_TIMESTAMP, RecommendationCount = RecommendationCount + 1 WHERE LawyerId = ?", lawyer_id)
+            conn.commit()
+            return cursor.rowcount
+    # LawyerReview methods
     def create_lawyer_review(self, lawyer_id, client_id, stars, review_message=None):
         # Updated validation to match SQL constraints
         if not isinstance(stars, int) or not 1 <= stars <= 5:
@@ -464,7 +499,13 @@ class Database:
             cursor.execute(query, (lawyer_id, client_id, stars, review_message))
             conn.commit()
             return cursor.rowcount
-
+    def get_lawyer_recommendations(self, lawyer_id):
+        with self.get_connection() as conn:
+            lawyer_id = int(lawyer_id)
+            cursor = conn.cursor()
+            cursor.execute("SELECT * FROM Lawyer WHERE LawyerId = ?", lawyer_id)
+            return self._row_to_dict(cursor.fetchone(), cursor)
+    
     def get_lawyer_reviews(self, lawyer_id):
         with self.get_connection() as conn:
             cursor = conn.cursor()
@@ -495,3 +536,31 @@ class Database:
             cursor.execute("DELETE FROM LawyerReview WHERE ReviewId = ?", review_id)
             conn.commit()
             return cursor.rowcount
+    def _row_to_dict(self, row, cursor):
+        if not row:
+            return None
+        columns = [column[0] for column in cursor.description]
+        result = dict(zip(columns, row))
+        datetime_fields = ['LastRecommended', 'Time', 'ExpiryDate', 'ReviewTime']
+        for field in datetime_fields:
+            if field in result and result[field]:
+                # Handle SQL Server datetime format
+                if isinstance(result[field], str):
+                    try:
+                        # Try multiple datetime formats
+                        formats = [
+                            '%b %d %Y %I:%M%p',  # Dec 12 2024 11:06PM
+                            '%Y-%m-%d %H:%M:%S',  # 2024-12-12 23:06:00
+                            '%Y-%m-%d %H:%M:%S.%f'  # 2024-12-12 23:06:00.000
+                        ]
+                        for fmt in formats:
+                            try:
+                                result[field] = datetime.strptime(result[field], fmt)
+                                break
+                            except ValueError:
+                                continue
+                    except Exception as e:
+                        print(f"Error parsing datetime {result[field]}: {e}")
+                elif isinstance(result[field], datetime):
+                    pass
+        return result

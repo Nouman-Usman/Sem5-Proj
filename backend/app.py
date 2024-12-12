@@ -19,6 +19,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 import os
 from werkzeug.utils import secure_filename
 from datetime import datetime
+import recommend_lawyer
 load_dotenv()
 
 UPLOAD_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'uploads', 'profile_images')
@@ -525,6 +526,8 @@ def subscribe():
     try:
         data = request.get_json()
         current_user_id = get_jwt_identity()
+        role = get_jwt()['role']
+        print(role)
         subscription_data = {
             'user_id': current_user_id,
             'subscription_type': data.get('plan'),
@@ -534,6 +537,8 @@ def subscribe():
         }
         try:
             db.create_subscription(**subscription_data)
+            if (role == 'lawyer'):
+                db.update_lawyer_paid_status(current_user_id)
             return jsonify({"message": "Subscription created successfully"}), 201
         except Exception as e:
             logger.error(f"Subscription creation error: {str(e)}")
@@ -677,12 +682,13 @@ def ask_question():
                 UnChatId=UnChatId
             )
             sentiment = result.get('sentiment', 'neutral')
+            lawyer = recommend_lawyer.recommend_top_lawyers(sentiment)
             # Create response object with string UUIDs for JSON
             response = {
                 "answer": result['chat_response'],
                 "UnChatId": str(UnChatId),
                 "references": result.get('references', []),
-                "recommended_lawyers": result.get('recommended_lawyers', [])
+                "recommended_lawyers": lawyer
             }
             access_token = create_access_token(
                 identity=current_user_id,
@@ -741,8 +747,8 @@ def get_user_chats(user_id, chat_id):
 #     except Exception as e:
 #         return jsonify({"error": str(e)}), 500
 
-@app.route('/api/chat/start', methods=['POST'])
-@jwt_required()
+# @app.route('/api/chat/start', methods=['POST'])
+# @jwt_required()
 # def start_chat():
 #     try:
 #         data = request.get_json()
@@ -777,6 +783,28 @@ def get_user_chats(user_id, chat_id):
 #             cursor.close()
 #         if 'conn' in locals():
 #             conn.close()
+
+@app.route('/api/lawyers/category/<specialization>', methods=['GET'])
+def get_lawyers_by_category(specialization):
+    try:
+        lawyers = db.get_lawyers_by_specialization(specialization)
+        return jsonify({
+            "lawyers": [
+                {
+                    "name": lawyer[0],
+                    "email": lawyer[1],
+                    "contact": lawyer[2],
+                    "experience": lawyer[3],
+                    "category": lawyer[4],
+                    "ratings": float(lawyer[5])
+                }
+                for lawyer in lawyers
+            ],
+            "count": len(lawyers)
+        }), 200
+    except Exception as e:
+        logger.error(f"Error fetching lawyers by category: {str(e)}")
+        return jsonify({"error": "Failed to fetch lawyers"}), 500
 
 def keep_alive():
     while True:
