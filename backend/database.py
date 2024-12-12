@@ -2,6 +2,7 @@ import pyodbc
 from datetime import datetime
 import os
 from dotenv import load_dotenv
+import json
 
 load_dotenv()
 
@@ -251,21 +252,26 @@ class Database:
         try:
             with self.get_connection() as conn:
                 cursor = conn.cursor()
+                # Check if user exists
                 check_user_query = "SELECT 1 FROM [User] WHERE UserId = ?"
                 cursor.execute(check_user_query, (user_id,))
                 if not cursor.fetchone():
                     raise ValueError(f"User with ID {user_id} does not exist")
+                
+                # Insert session and get the ID using OUTPUT clause
                 query = """
                     INSERT INTO Sessions (UserId, Topic, Time, Active)
                     OUTPUT INSERTED.SessionId
                     VALUES (?, ?, GETDATE(), 1)
                 """
                 cursor.execute(query, (user_id, topic))
-                query = "SELECT SCOPE_IDENTITY()"
-                cursor.execute(query)
                 result = cursor.fetchone()
                 conn.commit()
-                return result[0] if result else None
+                
+                if result:
+                    return result[0]  
+                return None
+
         except pyodbc.IntegrityError as e:
             raise ValueError(f"Database integrity error: {str(e)}")
         except Exception as e:
@@ -307,13 +313,24 @@ class Database:
         if msg_type not in ['Human Message', 'AI Message']:
             raise ValueError("Invalid message type")
 
-        with self.get_connection() as conn:
-            cursor = conn.cursor()
-            query = """INSERT INTO ChatMessages (SessionId, Message, Type, Time, [References], RecommendedLawyers)
-                      VALUES (?, ?, ?, GETDATE(), ?, ?)"""
-            cursor.execute(query, (session_id, message, msg_type, references, recommended_lawyers))
-            conn.commit()
-            return cursor.rowcount
+        try:
+            # Convert references to JSON string if it's a list, otherwise store as None
+            references_str = json.dumps(references) if references else None
+            print(references_str)
+            
+            # Convert recommended_lawyers to JSON string if it's a list, otherwise store as None
+            recommended_lawyers_str = json.dumps(recommended_lawyers) if recommended_lawyers else None
+
+            with self.get_connection() as conn:
+                cursor = conn.cursor()
+                query = """INSERT INTO ChatMessages (SessionId, Message, Type, Time, [References], RecommendedLawyers)
+                          VALUES (?, ?, ?, GETDATE(), ?, ?)"""
+                cursor.execute(query, (session_id, message, msg_type, references_str, recommended_lawyers_str))
+                conn.commit()
+                return cursor.rowcount
+        except Exception as e:
+            print(f"Error creating chat message: {e}")
+            raise
 
     def get_chat_topics(self, user_id):
         with self.get_connection() as conn:

@@ -68,56 +68,7 @@ class RAGAgent:
         self.user_id = user_id
         self.chat_id = chat_id
         self.chats_loaded = False
-        if chat_id:
-            self.chat_message_crud = ChatMessageCRUD()
-            self.chat_session_crud = ChatSessionCRUD()
 
-    # def get_chat_history(self, chat_id):
-    #     if (chat_id):
-    #         try:
-    #             chat_history = SQLChatMessageHistory(
-    #                 chat_id=chat_id,
-    #                 user_id=self.user_id,
-    #                 connection_string=self.connection_string
-    #             )
-    #             messages = chat_history.messages[-5:]
-    #             return "\n".join(
-    #                 [
-    #                     (
-    #                         f"Human: {msg.content}"
-    #                         if isinstance(msg, HumanMessage)
-    #                         else f"Assistant: {msg.content}"
-    #                     )
-    #                     for msg in messages
-    #                 ]
-    #             )
-    #         except Exception as e:
-    #             print(f"Error getting chat history: {e}")
-    #             return ""
-    #     return ""
-
-    def _load_lawyers(self):
-        with open("lawyers.csv", mode="r") as file:
-            csv_reader = csv.DictReader(file)
-            for row in csv_reader:
-                self.lawyers.append(row)
-        print("Lawyers data loaded successfully.")
-
-    def _recommend_lawyer(self, specialty):
-        relevant_lawyers = [
-            lawyer
-            for lawyer in self.lawyers
-            if lawyer["Type (Specialty)"].lower() == specialty.lower()
-        ]
-        if not relevant_lawyers:
-            return "No lawyer found for this specialty."
-
-        best_lawyer = max(relevant_lawyers, key=lambda l: float(l["Ratings"]))
-        return (
-            f"Recommended lawyer: {best_lawyer['Lawyer Name']}, Specialty: {best_lawyer['Type (Specialty)']}, "
-            f"Experience: {best_lawyer['Experience (Years)']} years, Ratings: {best_lawyer['Ratings']}/5, "
-            f"Location: {best_lawyer['Location']}."
-        )
 
     def analyze_sentiment(self, question: str) -> str:
         print("---SENTIMENT ANALYSIS---")
@@ -228,13 +179,6 @@ Question to route: {question}
             self.question_router_prompt | self.llm | StrOutputParser()
         )
 
-    def get_chat_history(self, chat_id):
-        if chat_id:
-            return self.summary_storage.get_summary(chat_id)
-        return ""
-
-    def clear_session_memory(self, chat_id: str):
-        self.summary_storage.delete_summary(chat_id)
 
     def generate(self, state: Dict) -> Dict:
         print("---GENERATE---")
@@ -288,75 +232,6 @@ Question to route: {question}
             "documents": documents,
             "question": question,
             "generation": final_answer,
-            "chat_id": chat_id,
-            "user_id": user_id,
-        }
-
-    def store_session(self, chat_id: str, session_data: dict):
-        """Store session data in MS SQL"""
-        try:
-            connection = pyodbc.connect(self.connection_string)
-            cursor = connection.cursor()
-            query = """
-                INSERT INTO Sessions (SessionId, UserId, ChatId, StartTime, EndTime, SessionData)
-                VALUES (?, ?, ?, ?, ?, ?)
-            """
-            cursor.execute(
-                query,
-                (
-                    str(uuid.uuid4()),
-                    session_data["user_id"],
-                    chat_id,
-                    datetime.datetime.utcnow(),
-                    None,
-                    json.dumps(session_data),
-                ),
-            )
-            connection.commit()
-            logging.info(f"Stored session data for chat {chat_id}")
-        except Exception as e:
-            logging.error(f"Error storing session: {e}")
-            raise
-        finally:
-            cursor.close()
-            connection.close()
-
-    def web_search(self, state: Dict) -> Dict:
-        print("---WEB SEARCH---")
-        question = state["question"]
-        chat_id = state.get("chat_id")
-        user_id = state.get("user_id")  # Add user_id
-        documents = state.get("documents", [])
-
-        try:
-            docs = self.web_search_tool.invoke({"query": question})
-
-            # Limit results to prevent memory issues
-            if isinstance(docs, list):
-                docs = docs[:3]
-
-            # Convert search results to Document objects
-            web_documents = []
-            for doc in docs:
-                web_documents.append(
-                    Document(
-                        page_content=f"Title: {doc.get('title', '')}\nContent: {doc.get('content', '')}",
-                        metadata={
-                            "source": doc.get("url", ""),
-                            "score": doc.get("score", 0),
-                        },
-                    )
-                )
-            if documents:
-                web_documents.extend(documents)
-
-        except Exception as e:
-            print(f"Web search error: {e}")
-            web_documents = documents
-        gc.collect()
-        return {
-            "documents": web_documents,
-            "question": question,
             "chat_id": chat_id,
             "user_id": user_id,
         }
@@ -528,7 +403,6 @@ Question to route: {question}
 
     def get_chat_topic(self, question: str) -> str:
         print("---GET CHAT TOPIC---")
-        # provide me the three to four words that best describe the topic of the chat
         prompt = f"""
         Provide me with the three to four words that best describe the topic of the chat:
         {question}
@@ -585,84 +459,8 @@ Question to route: {question}
 
         return workflow.compile()
 
-    # def load_previous_chats(self, user_id: str, chat_id: str):
-    #     self.memory.clear()
-    #     chat_history = self.get_chat_messages(user_id, chat_id)
-    #     for msg in chat_history[-5:]:
-    #         if isinstance(msg, HumanMessage):
-    #             self.memory.save_context({"input": msg.content}, {"output": ""})
-    #         elif isinstance(msg, AIMessage):
-    #             self.memory.save_context({"input": "", "output": msg.content})
+    
 
-    def ensure_user_exists(self, user_id: str) -> bool:
-        try:
-            connection = pyodbc.connect(self.connection_string)
-            cursor = connection.cursor()
-
-            # Check if user exists
-            check_query = """
-                SELECT TOP 1 FROM Users WHERE UserId = CAST(? AS UNIQUEIDENTIFIER)
-            """
-            cursor.execute(check_query, (user_id,))
-            exists = cursor.fetchone() is not None
-
-            if not exists:
-                return False
-                # create_query = """
-                #     INSERT INTO Users (UserId, UserName, Email, UserType, CreatedAt)
-                #     VALUES (?, 'System User', 'system@example.com', 'System', GETDATE())
-                # """
-                # cursor.execute(create_query, (user_id,))
-                # connection.commit()
-                # return True
-            return True
-
-        except Exception as e:
-            logging.error(f"Error ensuring user exists: {e}")
-            return False
-        finally:
-            cursor.close()
-            connection.close()
-
-    def handle_new_chat(self, user_id: str, question: str):
-        """Create a new chat session and save initial chat topic"""
-        conn = None
-        cursor = None
-        try:
-            chat_id = str(uuid.uuid4())
-            topic = self.get_chat_topic(question)
-            conn = pyodbc.connect(self.connection_string)
-            cursor = conn.cursor()
-            cursor.execute("BEGIN TRANSACTION")
-
-            query = """
-                INSERT INTO ChatSessions 
-                (ChatId, InitiatorId, RecipientId, Status, StartTime)
-                VALUES (?, ?, ?, 'Active', GETDATE())
-            """
-            cursor.execute(query, (chat_id, user_id, user_id))
-            topic_id = str(uuid.uuid4())
-            topic_query = """
-                INSERT INTO ChatTopics (TopicId, UserId, Topic, ChatId, Timestamp)
-                VALUES (?, ?, ?, ?, GETDATE())
-            """
-            cursor.execute(topic_query, (topic_id, user_id, topic, chat_id))
-            
-            conn.commit()
-            self.chat_id = chat_id
-            self.chats_loaded = True
-            return chat_id
-
-        except Exception as e:
-            if conn:
-                conn.rollback()
-            logging.error(f"Error creating new chat: {e}")
-            raise
-        finally:
-            if cursor:
-                cursor.close()
-            if conn:
-                conn.close()
 
     def run(
         self,
@@ -674,18 +472,18 @@ Question to route: {question}
         try:
             if chat_history is None:
                 chat_history = []
-            if not self.is_valid_uuid(user_id):
-                user_id = str(uuid.uuid4())
-            if chat_id and not self.is_valid_uuid(chat_id):
-                chat_id = str(uuid.uuid4())
-            if not chat_id and not self.chats_loaded:
-                self.handle_new_chat(user_id, question)
+            # if not self.is_valid_uuid(user_id):
+            #     user_id = str(uuid.uuid4())
+            # if chat_id and not self.is_valid_uuid(chat_id):
+            #     chat_id = str(uuid.uuid4())
+            # if not chat_id and not self.chats_loaded:
+            #     self.handle_new_chat(user_id, question)
             chat_context = self.memory.load_memory_variables({})["history"]
             updated_question = self.update_query(question, chat_context)
             sentiment = self.analyze_sentiment(updated_question)
             logging.info(f"Sentiment: {sentiment}")
-            recommendations = self.lawyer_store.get_top_lawyers(sentiment)
-            logging.info(f"Lawyer recommendations: {recommendations}")
+            # recommendations = self.lawyer_store.get_top_lawyers(sentiment)
+            # logging.info(f"Lawyer recommendations: {recommendations}")
 
             app = self.build_workflow()
             inputs = {
@@ -704,10 +502,10 @@ Question to route: {question}
                         last_output = value
                     gc.collect()
                 result = last_output["generation"]
-                if chat_id := self.ensure_chat_session_exists(chat_id, user_id):
-                    response_text = result if isinstance(result, str) else str(result)
-                    self.save_chat_message(chat_id, user_id, question, 'HumanMessage')
-                    self.save_chat_message(chat_id, user_id, response_text, 'AIMessage')
+                logging.info(f"Result: {result}")
+                response_text = result if isinstance(result, str) else str(result)
+                    # self.save_chat_message(chat_id, user_id, question, 'HumanMessage')
+                    # self.save_chat_message(chat_id, user_id, response_text, 'AIMessage')
                 response = {
                     "chat_response": response_text,
                     "references": [
@@ -717,18 +515,18 @@ Question to route: {question}
                     ],
                     "recommended_lawyers": (
                         [
-                            {
-                                "name": lawyer["name"],
-                                "specialization": lawyer["specialization"],
-                                "experience": lawyer["experience"],
-                                "rating": lawyer["rating"],
-                                "location": lawyer["location"],
-                                "contact": lawyer["contact"],
-                            }
-                            for lawyer in recommendations
+                            # {
+                            #     "name": lawyer["name"],
+                            #     "specialization": lawyer["specialization"],
+                            #     "experience": lawyer["experience"],
+                            #     "rating": lawyer["rating"],
+                            #     "location": lawyer["location"],
+                            #     "contact": lawyer["contact"],
+                            # }
+                            # for lawyer in recommendations
                         ]
-                        if recommendations
-                        else []
+                        # if recommendations
+                        # else []
                     ),
                 }
                 return response
@@ -743,63 +541,6 @@ Question to route: {question}
 
         finally:
             gc.collect()
-
-    # def get_user_chat_history(self, user_id: str, chat_id: str = None) -> List[str]:
-    #     """Get all chat sessions for a user"""
-    #     try:
-    #         connection = pyodbc.connect(self.connection_string)
-    #         cursor = connection.cursor()
-    #         query = """
-    #             SELECT DISTINCT ChatId
-    #             FROM ChatMessages
-    #             WHERE SenderId = ?
-    #         """
-    #         cursor.execute(query, (user_id,))
-    #         rows = cursor.fetchall()
-    #         chat_ids = [row.ChatId for row in rows]
-    #         logging.info(f"Found {len(chat_ids)} chats for user {user_id}")
-    #         return chat_ids
-    #     except Exception as e:
-    #         logging.error(f"Error retrieving chats: {e}")
-    #         return []
-    #     finally:
-    #         cursor.close()
-    #         connection.close()
-
-    # def get_chat_messages(self, user_id: str, chat_id: str) -> List[BaseMessage]:
-    #     """Get all messages for a specific chat"""
-    #     try:
-    #         if not self.is_valid_uuid(user_id) or not self.is_valid_uuid(chat_id):
-    #             return []
-
-    #         connection = pyodbc.connect(self.connection_string)
-    #         cursor = connection.cursor()
-    #         query = """
-    #             SELECT [Message], [MessageType], [Timestamp]
-    #             FROM ChatMessages
-    #             WHERE [SenderId] = CAST(? AS UNIQUEIDENTIFIER)
-    #             AND [ChatId] = CAST(? AS UNIQUEIDENTIFIER)
-    #             ORDER BY [Timestamp]
-    #         """
-    #         cursor.execute(query, (str(user_id), str(chat_id)))
-    #         messages = []
-    #         for row in cursor.fetchall():
-    #             if hasattr(row, 'Message') and hasattr(row, 'MessageType'):
-    #                 content = row.Message
-    #                 msg_type = row.MessageType
-    #                 if msg_type == 'HumanMessage':
-    #                     messages.append(HumanMessage(content=content))
-    #                 elif msg_type == 'AIMessage':
-    #                     messages.append(AIMessage(content=content))
-    #         return messages
-    #     except Exception as e:
-    #         logging.error(f"Error retrieving chat messages: {e}")
-    #         return []
-    #     finally:
-    #         if 'cursor' in locals():
-    #             cursor.close()
-    #         if 'connection' in locals():
-    #             connection.close()
 
     def retrieve_dataset(self):
         """Retrieve all documents from the Pinecone index"""
@@ -817,39 +558,7 @@ Question to route: {question}
             print(f"Error retrieving dataset: {e}")
             return []
 
-    # def get_chat_history_messages(self, user_id: str, chat_id: str) -> List[Dict]:
-    #     """Get full chat history with messages for a specific chat"""
-    #     try:
-    #         if not self.is_valid_uuid(user_id) or not self.is_valid_uuid(chat_id):
-    #             return []
-
-    #         connection = pyodbc.connect(self.connection_string)
-    #         cursor = connection.cursor()
-    #         query = """
-    #             SELECT [Message], [MessageType], [Timestamp]
-    #             FROM ChatMessages
-    #             WHERE [SenderId] = CAST(? AS UNIQUEIDENTIFIER)
-    #             AND [ChatId] = CAST(? AS UNIQUEIDENTIFIER)
-    #             ORDER BY [Timestamp]
-    #         """
-    #         cursor.execute(query, (str(user_id), str(chat_id)))
-    #         messages = []
-    #         for row in cursor.fetchall():
-    #             messages.append({
-    #                 "role": "user" if row.MessageType == 'HumanMessage' else "assistant",
-    #                 "content": row.Message,
-    #                 "timestamp": row.Timestamp.isoformat() if hasattr(row, 'Timestamp') else None
-    #             })
-    #         return messages
-    #     except Exception as e:
-    #         logging.error(f"Error retrieving chat history: {e}")
-    #         return []
-    #     finally:
-    #         if 'cursor' in locals():
-    #             cursor.close()
-    #         if 'connection' in locals():
-    #             connection.close()
-
+    
     def _get_lawyer_recommendations(self, category: str) -> str:
         """Get formatted lawyer recommendations"""
         try:
@@ -877,26 +586,26 @@ Question to route: {question}
     def save_context(self, user_input: str, assistant_output: str):
         self.memory.save_context({"input": user_input}, {"output": assistant_output})
 
-    def chat_exists(self, user_id: str, chat_id: str) -> bool:
-        """Check if a chat exists for the given user"""
-        try:
-            connection = pyodbc.connect(self.connection_string)
-            cursor = connection.cursor()
-            query = """
-                SELECT TOP 1 1 
-                FROM ChatMessages 
-                WHERE [SenderId] = CAST(? AS UNIQUEIDENTIFIER) 
-                AND [ChatId] = CAST(? AS UNIQUEIDENTIFIER)
-            """
-            cursor.execute(query, (user_id, chat_id))
-            exists = cursor.fetchone() is not None
-            return exists
-        except Exception as e:
-            logging.error(f"Error checking chat existence: {e}")
-            return False
-        finally:
-            cursor.close()
-            connection.close()
+    # def chat_exists(self, user_id: str, chat_id: str) -> bool:
+    #     """Check if a chat exists for the given user"""
+    #     try:
+    #         connection = pyodbc.connect(self.connection_string)
+    #         cursor = connection.cursor()
+    #         query = """
+    #             SELECT TOP 1 1 
+    #             FROM ChatMessages 
+    #             WHERE [SenderId] = CAST(? AS UNIQUEIDENTIFIER) 
+    #             AND [ChatId] = CAST(? AS UNIQUEIDENTIFIER)
+    #         """
+    #         cursor.execute(query, (user_id, chat_id))
+    #         exists = cursor.fetchone() is not None
+    #         return exists
+    #     except Exception as e:
+    #         logging.error(f"Error checking chat existence: {e}")
+    #         return False
+    #     finally:
+    #         cursor.close()
+    #         connection.close()
 
     def is_valid_uuid(self, uuid_str: str) -> bool:
         try:
@@ -949,13 +658,13 @@ Question to route: {question}
             raise
 
 
-if __name__ == "__main__":
-    # Create valid UUIDs for testing
-    user_id = str(uuid.uuid4())
-    chat_id = str(uuid.uuid4())
-    agent = RAGAgent(user_id=user_id, chat_id=chat_id)
-    while True:
-        user_input = input("User: ")
-        result = agent.run(user_input, user_id)
-        print(f"Assistant: {result}")
-        agent.save_context(user_input, result["chat_response"])
+# if __name__ == "__main__":
+#     # Create valid UUIDs for testing
+#     user_id = str(uuid.uuid4())
+#     chat_id = str(uuid.uuid4())
+#     agent = RAGAgent(user_id=user_id, chat_id=chat_id)
+#     while True:
+#         user_input = input("User: ")
+#         result = agent.run(user_input, user_id)
+#         print(f"Assistant: {result}")
+#         agent.save_context(user_input, result["chat_response"])
