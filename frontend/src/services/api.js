@@ -7,7 +7,7 @@ const api = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
-  timeout: 30000, 
+  timeout: 30000,
 });
 
 api.interceptors.request.use(
@@ -50,6 +50,9 @@ api.interceptors.response.use(
   }
 );
 
+let UnChatId = null;
+let SessionId = null;
+
 export const apiService = {
   // Add this new utility function
   getUserRole() {
@@ -57,32 +60,31 @@ export const apiService = {
     return user?.role || null;
   },
 
-  async askQuestion(question ) {
-    const maxRetries = 3;
-    let retries = 0;
+  async askQuestion(question) {
+    try {
+      const response = await api.post('/ask', {
+        question,
+        UnChatId, // Pass UnChatId in the request body
+        SessionId, // Pass SessionId in the request body
+      });
 
-    while (retries < maxRetries) {
-      try {
-        const response = await api.post('/ask', { 
-          question,  
-        });
-        
-        if (!response.data) {
-          throw new Error('Empty response received');
-        }
-
-        return {
-          answer: response.data.answer,
-          references: response.data.references || [],
-          recommendedLawyers: response.data.recommended_lawyers || []
-        };
-      } catch (error) {
-        retries++;
-        if (retries === maxRetries) {
-          throw error;
-        }
-        await new Promise(resolve => setTimeout(resolve, 1000));
+      if (!response.data) {
+        throw new Error('Empty response received');
       }
+
+      // Update UnChatId and SessionId with the values received in the response
+      UnChatId = response.data.UnChatId || UnChatId;
+      SessionId = response.data.session_id || SessionId;
+
+      return {
+        answer: response.data.answer,
+        references: response.data.references || [],
+        recommendedLawyers: response.data.recommended_lawyers || [],
+        UnChatId: response.data.UnChatId || null,
+        SessionId: response.data.session_id || null
+      };
+    } catch (error) {
+      await new Promise(resolve => setTimeout(resolve, 1000));
     }
   },
   async startChat(recipientId) {

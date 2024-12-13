@@ -1,0 +1,392 @@
+2024-12-13 09:34:27,458 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-13 09:36:07,291 - app - ERROR - Login error: ('28000', '[28000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Login failed for user \'Nouman\\Nouma\'. (18456) (SQLDriverConnect); [28000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Cannot open database "AW_Database" requested by the login. The login failed. (4060); [28000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Login failed for user \'Nouman\\Nouma\'. (18456); [28000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Cannot open database "AW_Database" requested by the login. The login failed. (4060)')
+2024-12-13 09:36:28,789 - app - ERROR - Login error: ('28000', '[28000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Login failed for user \'Nouman\\Nouma\'. (18456) (SQLDriverConnect); [28000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Cannot open database "AW_Database" requested by the login. The login failed. (4060); [28000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Login failed for user \'Nouman\\Nouma\'. (18456); [28000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Cannot open database "AW_Database" requested by the login. The login failed. (4060)')
+2024-12-13 09:45:17,596 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-13 09:45:59,587 - app - INFO - Created new session 1 for user 1
+2024-12-13 09:45:59,615 - app - INFO - Initializing RAG agent...
+2024-12-13 09:45:59,634 - pinecone_plugin_interface.logging - INFO - Discovering subpackages in _NamespacePath(['C:\\Users\\Nouma\\OneDrive\\Desktop\\GenAi x Xavour\\ApnaWaqeel\\venv\\Lib\\site-packages\\pinecone_plugins'])
+2024-12-13 09:45:59,637 - pinecone_plugin_interface.logging - INFO - Looking for plugins in pinecone_plugins.inference
+2024-12-13 09:45:59,779 - pinecone_plugin_interface.logging - INFO - Installing plugin inference into Pinecone
+2024-12-13 09:46:06,089 - datasets - INFO - PyTorch version 2.4.1 available.
+2024-12-13 09:46:08,331 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2024-12-13 09:46:08,333 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2024-12-13 09:46:22,928 - app - INFO - RAG agent initialized successfully
+2024-12-13 09:46:22,928 - app - WARNING - Invalid UUID - chat_id: c0a4545b-79a2-417f-a846-236f0457563e, user_id: 1
+2024-12-13 09:46:23,507 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 09:46:23,972 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 09:46:23,987 - root - INFO - Sentiment: 1. Civil
+2024-12-13 09:46:31,807 - app - INFO - Created new session 2 for user 1
+2024-12-13 09:46:31,847 - app - WARNING - Invalid UUID - chat_id: 6c9571f1-f4df-493d-9db8-cbc71d21bda5, user_id: 1
+2024-12-13 09:46:32,407 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 09:46:32,838 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 09:46:32,854 - root - INFO - Sentiment: 1. Civil
+2024-12-13 09:46:58,100 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 09:46:58,211 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 09:46:58,608 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 09:46:58,738 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 09:46:59,050 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 09:46:59,237 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 09:46:59,539 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 09:47:00,145 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 09:47:03,517 - app - INFO - Created new session 3 for user 1
+2024-12-13 09:47:03,528 - app - WARNING - Invalid UUID - chat_id: 66208099-f9b9-48f6-a3fd-860c61a4d7bd, user_id: 1
+2024-12-13 09:47:03,996 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 09:47:04,435 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 09:47:04,861 - root - INFO - Sentiment: 1. Civil
+2024-12-13 09:47:08,051 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 09:47:08,932 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 09:47:09,501 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 09:47:09,561 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 09:47:10,770 - root - INFO - Result: The Tax Cuts and Jobs Act (TCJA), enacted in 2018, is a comprehensive tax reform legislation that has significant implications for both businesses and individuals. It was formerly known as the Tax Cuts and Jobs Act and was signed into law by President Trump on December 22, 2018. The TCJA is designed to stimulate economic growth, increase competitiveness, and simplify the tax code.
+
+Key Provisions of the TCJA:
+
+1. Corporate Tax Rate Reduction: The TCJA reduces the corporate tax rate from 35% to 21%, making it one of the lowest in the world. This reduction aims to increase competitiveness and attract businesses to the United States.
+
+2. Pass-Through Entities: The TCJA introduces a new deduction for pass-through entities, such as partnerships, S corporations, and sole proprietorships. This deduction allows these entities to deduct up to 20% of their qualified business income, reducing their tax liability.
+
+3. Estate and Gift Tax: The TCJA doubles the exemption amount for estate and gift tax from $5.6 million to $11.2 million per individual. This change aims to reduce the burden on wealthy individuals and families.
+
+4. State and Local Tax (SALT) Deduction Limitation: The TCJA limits the SALT deduction to $10,000 for individuals. This provision has been criticized for disproportionately affecting high-income earners in states with high property taxes.
+
+5. International Taxation: The TCJA introduces a territorial tax system, which means that U.S. corporations are no longer taxed on foreign-sourced income. However, a one-time transition tax is imposed on accumulated foreign earnings.
+
+6. Base Erosion and Anti-Abuse Tax (BEAT): The TCJA introduces the BEAT, a new tax aimed at preventing multinational companies from shifting profits offshore. The BEAT applies to large corporations with gross receipts of at least $500 million in the previous three years.
+
+Implications of the TCJA:
+
+1. Economic Growth: The TCJA is expected to stimulate economic growth by reducing tax rates and increasing competitiveness. Lower corporate tax rates may encourage businesses to invest more in the United States, leading to job creation and higher wages.
+
+2. Simplification of Tax Code: The TCJA simplifies the tax code by eliminating or limiting several deductions and exemptions. This simplification aims to reduce compliance costs and make the tax system more efficient.
+
+3. Revenue Impact: The TCJA is estimated to reduce government revenue by approximately $1.5 trillion over the next decade. This reduction in revenue could lead to increased budget deficits and national debt.
+
+4. Distributional Impact: The TCJA primarily benefits high-income earners and large corporations. Critics argue that the tax cuts disproportionately favor the wealthy, exacerbating income inequality.
+
+In conclusion, the TCJA is a significant tax reform that aims to stimulate economic growth, simplify the tax code, and increase competitiveness. While it has several benefits, it also raises concerns about revenue impact and distributional fairness.
+2024-12-13 09:47:10,778 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 09:47:11,220 - app - INFO - Successfully generated response for user 1
+2024-12-13 09:47:11,621 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 09:47:13,421 - root - INFO - Result: The Tax Cuts and Jobs Act (TCJA), enacted in 2018, is a comprehensive tax reform that significantly altered the U.S. tax code. It was designed to stimulate economic growth by reducing tax rates for individuals and businesses, simplifying the tax code, and encouraging businesses to invest in the United States.
+
+Key Provisions:
+
+1. Individual Tax Rates: The TCJA introduced a new tax bracket structure with seven brackets: 10%, 12%, 22%, 24%, 32%, 35%, and 37%. These rates apply to single filers with income up to $9,525, $38,700, $82,500, $157,500, $200,000, $500,000, and above $500,000, respectively. For married couples filing jointly, the brackets are 10%, 12%, 22%, 24%, 32%, 35%, and 37%, with income thresholds of $19,050, $77,400, $165,000, $315,000, $400,000, $600,000, and above $600,000, respectively.
+
+2. Standard Deduction and Personal Exemptions: The TCJA nearly doubled the standard deduction to $12,000 for single filers and $24,000 for married couples filing jointly. However, it also eliminated personal exemptions, which were $4,050 per person in 2017.
+
+3. State and Local Tax (SALT) Deduction: The TCJA limited the SALT deduction to $10,000 for state and local property taxes and state and local income taxes combined. This provision has been criticized for disproportionately affecting high-tax states.
+
+4. Child Tax Credit: The TCJA increased the child tax credit from $1,000 to $2,000 per child, with up to $1,400 of the credit being refundable. The phase-out threshold for the credit was also increased to $400,000 for married couples filing jointly.
+
+5. Estate and Gift Tax: The TCJA doubled the exemption for estate and gift taxes to $11.2 million per individual, indexed for inflation. This provision is set to expire in 2026.
+
+6. Corporate Tax Rate: The TCJA lowered the corporate tax rate from 35% to 21%, making it one of the lowest in the developed world. This provision is permanent.
+
+7. Pass-Through Entities: The TCJA introduced a new deduction for pass-through entities, such as partnerships and S corporations, allowing them to deduct 20% of their qualified business income. This provision is subject to certain limitations and phase-outs.
+
+8. Base Erosion and Anti-Abuse Tax (BEAT): The TCJA introduced the BEAT, which targets multinational corporations that shift profits offshore. The BEAT is a minimum tax on certain payments made by a U.S. corporation to a foreign related party.
+
+Implications:
+
+1. Economic Growth: The TCJA was intended to stimulate economic growth by reducing tax rates and encouraging businesses to invest in the United States. While the economy experienced a short-term boost, the long-term effects are still being debated among economists.
+
+2. Revenue Impact: The TCJA was projected to reduce federal revenues by approximately $1.5 trillion over ten years, according to the Congressional Budget Office. This has led to concerns about the national debt and potential future tax increases.
+
+3. Distributional Impact: The TCJA has been criticized for disproportionately benefiting high-income individuals and corporations, as they receive the largest tax cuts. Lower- and middle-income individuals may see smaller tax cuts or even tax increases due to the limitation on the SALT deduction and the elimination of personal exemptions.
+
+4. International Taxation: The TCJA introduced several provisions aimed at discouraging multinational corporations from shifting profits offshore, including the BEAT and a new tax on foreign-derived intangible income (FDII). These provisions have been subject to controversy and ongoing debate.
+
+In conclusion, the TCJA represents a significant overhaul of the U.S. tax code, with implications for both individuals and businesses. While its effects are still being evaluated, it has already led to changes in tax planning strategies and ongoing discussions about the future of U.S. tax policy.
+2024-12-13 09:47:13,889 - app - INFO - Successfully generated response for user 1
+2024-12-13 09:47:18,919 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 09:47:19,408 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 09:47:19,896 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 09:47:20,379 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 09:47:28,057 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 09:47:28,945 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 09:47:29,526 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 09:47:30,062 - root - INFO - Result: The Data Protection Act 2018 (DPA 2018) is a comprehensive piece of legislation that aims to protect the privacy and security of personal data. It was enacted in response to the increasing concerns about data breaches and misuse of personal information. The DPA 2018 builds upon the General Data Protection Regulation (GDPR) and provides additional protections for individuals' data rights.
+
+Key Provisions of the Data Protection Act 2018:
+
+1. Data Protection Impact Assessments (DPIAs): The DPA 2018 requires organizations to conduct DPIAs before implementing new data processing activities that are likely to result in a high risk to individuals' rights and freedoms. This provision ensures that organizations assess potential risks and take necessary measures to mitigate them.
+
+2. Data Protection Officers (DPOs): The DPA 2018 requires certain organizations, such as those involved in large-scale systematic monitoring or processing of sensitive data, to appoint a DPO. The DPO is responsible for overseeing data protection compliance within the organization and serving as a point of contact for data protection authorities.
+
+3. Consent: The DPA 2018 strengthens the requirement for consent in data processing activities. It requires that consent be freely given, specific, informed, and unambiguous. This provision ensures that individuals have control over their data and can make informed decisions about how their data is used.
+
+4. Data Subject Rights: The DPA 2018 provides individuals with several rights, including the right to access, rectify, erase, restrict processing, object to processing, and data portability. These rights empower individuals to control their data and ensure that it is accurate and up-to-date.
+
+5. Breach Notification: The DPA 2018 requires organizations to notify the relevant data protection authority of a data breach within 72 hours of becoming aware of the breach. This provision ensures that authorities can take prompt action to mitigate the effects of the breach and protect individuals' rights.
+
+Implications of the Data Protection Act 2018:
+
+1. Increased Compliance Burden: The DPA 2018 places a significant compliance burden on organizations, particularly those involved in large-scale data processing activities. Organizations must ensure that they have adequate data protection measures in place, including DPIAs, DPOs, and robust consent mechanisms.
+
+2. Enhanced Data Subject Rights: The DPA 2018 strengthens individuals' rights over their data, giving them more control and protection against data misuse. This could lead to increased requests from individuals for access, rectification, or erasure of their data.
+
+3. Stricter Enforcement: The DPA 2018 provides for stricter enforcement measures, including higher fines for non-compliance. This could result in increased scrutiny of organizations' data protection practices and a greater risk of penalties for non-compliance.
+
+4. International Cooperation: The DPA 2018 facilitates international cooperation in data protection matters, which could lead to more effective cross-border data protection enforcement and better protection for individuals' data across jurisdictions.
+
+In conclusion, the Data Protection Act 2018 is a significant piece of legislation that aims to protect individuals' data rights and ensure that organizations handle personal data responsibly. Its key provisions, such as DPIAs, DPOs, consent, data subject rights, and breach notification, place a significant compliance burden on organizations and enhance individuals' control over their data. The implications of the DPA 2018 include increased compliance burdens, enhanced data subject rights, stricter enforcement, and international cooperation, all of which are designed to promote better data protection practices and protect individuals' privacy and security.
+2024-12-13 09:47:30,309 - app - INFO - Successfully generated response for user 1
+2024-12-13 09:52:16,011 - app - INFO - Created new session 4 for user 1
+2024-12-13 09:52:16,080 - app - WARNING - Invalid UUID - chat_id: ed8c27fc-5f9c-4bee-86e1-3e50685496ca, user_id: 1
+2024-12-13 09:52:16,884 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 09:52:17,399 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 09:52:17,419 - root - INFO - Sentiment: Criminal
+2024-12-13 09:52:25,415 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 09:52:25,970 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 09:52:26,421 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 09:52:26,901 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 09:52:33,527 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 09:52:34,607 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 09:52:35,161 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 09:52:35,620 - root - INFO - Result: Based on the information provided, it appears that you have been physically attacked by your friend. This is a serious situation and requires immediate action to ensure your safety and well-being. 
+
+Firstly, you should contact the authorities at once to report the incident. This will not only help in ensuring your safety but also provide a legal record of the assault which can be crucial in any future legal proceedings. 
+
+Secondly, gather as much evidence as possible, be it physical, digital, or testimonial, to support your case if and when it goes to court. This could include photographs of your injuries, witness statements, and any other relevant documentation.
+
+Thirdly, as a general rule, you have the legal right to use force to protect yourself against physical violence if you reasonably believe someone poses an imminent threat of bodily harm to you. In your case, since you were physically attacked with a sharp object, your actions to neutralize the situation by putting your friend in a choke hold were likely justified. However, it is important to note that the use of force must be reasonable and proportionate to the threat posed.
+
+Lastly, it is important to seek medical attention for any injuries you may have sustained during the attack. This will not only help in your recovery but also provide additional evidence for your case.
+
+In conclusion, it is crucial to take immediate action to report the incident, gather evidence, and seek medical attention. Additionally, considering the severity of the attack, it may be beneficial to consult with a legal professional who can guide you through the legal process and ensure that your rights are protected under Pakistani law.
+2024-12-13 09:52:35,837 - app - INFO - Successfully generated response for user 1
+2024-12-13 09:57:02,009 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-13 10:08:10,720 - app - ERROR - Error processing question: 
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 585, in ask_question
+    data = request.get_json()
+           ^^^^^^^
+  File "C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\bdb.py", line 90, in trace_dispatch
+    return self.dispatch_line(frame)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\AppData\Local\Programs\Python\Python312\Lib\bdb.py", line 115, in dispatch_line
+    if self.quitting: raise BdbQuit
+                      ^^^^^^^^^^^^^
+bdb.BdbQuit
+2024-12-13 12:50:47,848 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-13 12:51:04,161 - app - ERROR - Error processing question: cannot access local variable 'data' where it is not associated with a value
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 585, in ask_question
+    UnChatId = data.get('UnChatId') if 'UnChatId' in data else None
+                                                     ^^^^
+UnboundLocalError: cannot access local variable 'data' where it is not associated with a value
+2024-12-13 12:51:53,979 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-13 12:52:43,057 - app - ERROR - Error processing question: cannot access local variable 'data' where it is not associated with a value
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 585, in ask_question
+    UnChatId = data.get('UnChatId')
+               ^^^^
+UnboundLocalError: cannot access local variable 'data' where it is not associated with a value
+2024-12-13 12:53:41,890 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-13 12:54:13,017 - app - INFO - Created new session 5 for user 1
+2024-12-13 12:54:13,086 - app - INFO - Initializing RAG agent...
+2024-12-13 12:54:13,133 - pinecone_plugin_interface.logging - INFO - Discovering subpackages in _NamespacePath(['C:\\Users\\Nouma\\OneDrive\\Desktop\\GenAi x Xavour\\ApnaWaqeel\\venv\\Lib\\site-packages\\pinecone_plugins'])
+2024-12-13 12:54:13,139 - pinecone_plugin_interface.logging - INFO - Looking for plugins in pinecone_plugins.inference
+2024-12-13 12:54:13,433 - pinecone_plugin_interface.logging - INFO - Installing plugin inference into Pinecone
+2024-12-13 12:54:20,562 - datasets - INFO - PyTorch version 2.4.1 available.
+2024-12-13 12:54:22,984 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2024-12-13 12:54:22,984 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2024-12-13 12:54:42,489 - app - INFO - RAG agent initialized successfully
+2024-12-13 12:54:42,489 - app - WARNING - Invalid UUID - chat_id: 285c7c49-0912-4cf3-a824-e3be662a002b, user_id: 1
+2024-12-13 12:54:43,324 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 12:54:43,924 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 12:54:43,929 - root - INFO - Sentiment: Constitutional
+2024-12-13 12:55:20,419 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 12:55:20,905 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 12:55:21,643 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 12:55:22,163 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 12:55:29,622 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 12:55:30,445 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 12:55:30,947 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 12:55:31,215 - root - INFO - Result: In Pakistan, the key legislative bodies are the Parliament and Provincial Assemblies. The Parliament consists of the Senate and the National Assembly. The Senate is the upper house, comprising 100 members who serve six-year terms. The National Assembly is the lower house, with 342 members elected by the people for a five-year term. The Parliament is responsible for making laws that govern the country, and it also has the power to amend the Constitution.
+
+The Provincial Assemblies, on the other hand, are the legislative bodies for each of Pakistan's four provinces: Punjab, Sindh, Khyber Pakhtunkhwa, and Balochistan. Each Provincial Assembly has a varying number of members, who are elected by the people of their respective province for a five-year term. The Provincial Assemblies are responsible for making laws that apply specifically to their province, as well as overseeing the provincial government.
+
+The legislative bodies in Pakistan play a crucial role in the country's democratic system. They not only create, amend, and repeal laws but also hold the executive branch accountable through various mechanisms such as parliamentary questions, motions, and debates. Additionally, the legislative bodies have the power to approve or reject the government's budget, which gives them significant influence over the country's financial policies.
+
+In terms of the separation of powers, Pakistan follows a parliamentary system, where the Prime Minister is the head of government and is responsible for implementing the laws passed by the Parliament. The President, who serves as the head of state, has ceremonial duties and limited executive powers. The judiciary, led by the Supreme Court, is responsible for interpreting the laws and ensuring that they comply with the Constitution.
+
+Overall, the legislative bodies in Pakistan play a vital role in the country's governance and democratic process, working in conjunction with the executive and judicial branches to ensure that the country is governed in accordance with the Constitution and the rule of law.
+2024-12-13 12:55:31,599 - app - INFO - Successfully generated response for user 1
+2024-12-13 12:55:36,409 - app - INFO - Created new session 6 for user 1
+2024-12-13 12:55:36,424 - app - WARNING - Invalid UUID - chat_id: 19d90cc6-1273-4737-95a6-03cffd429b33, user_id: 1
+2024-12-13 12:55:36,934 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 12:55:37,355 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 12:55:37,364 - root - INFO - Sentiment: Constitutional
+2024-12-13 12:55:41,909 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 12:55:42,409 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 12:55:42,901 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 12:55:43,403 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 12:55:49,218 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 12:55:49,924 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 12:55:50,402 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 12:55:50,776 - root - INFO - Result: In Pakistan, the key legislative bodies are the Parliament and Provincial Assemblies. The Parliament consists of the Senate and the National Assembly. The Senate represents the provinces and territories, while the National Assembly represents the people of Pakistan. The Provincial Assemblies, on the other hand, are responsible for making laws at the provincial level.
+
+The Parliament plays a crucial role in the legislative process, as it is responsible for enacting, amending, and repealing laws that govern the country. The Senate and National Assembly work together to pass legislation, with the President of Pakistan signing the bills into law. The Parliament also has the power to approve the budget and hold the government accountable through question periods and debates.
+
+The Provincial Assemblies, meanwhile, have the authority to make laws on matters that are not under the exclusive jurisdiction of the federal government. They also elect the Chief Minister, who heads the provincial government, and approve the provincial budget.
+
+In terms of the legislative process, both the Parliament and Provincial Assemblies follow a similar structure. Bills are introduced, debated, and voted upon in each house. If a bill is passed by both houses, it is sent to the President or Governor for assent. If the President or Governor vetoes the bill, it can still be passed with a two-thirds majority in each house.
+
+Committees also play an essential role in the legislative process in Pakistan. These committees are formed to scrutinize bills, conduct inquiries, and oversee government departments. They provide a platform for lawmakers to engage in detailed discussions and make recommendations for amendments before a bill is presented on the floor of the house.
+
+In conclusion, the key legislative bodies in Pakistan are the Parliament and Provincial Assemblies, which work together to enact, amend, and repeal laws. The legislative process involves the introduction, debate, and voting on bills, with the involvement of committees to ensure thorough scrutiny and oversight.
+2024-12-13 12:55:51,008 - app - INFO - Successfully generated response for user 1
+2024-12-13 12:56:12,569 - app - WARNING - Invalid UUID - chat_id: 19d90cc6-1273-4737-95a6-03cffd429b33, user_id: 1
+2024-12-13 12:56:13,299 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 12:56:13,785 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 12:56:13,806 - root - INFO - Sentiment: Constitutional
+2024-12-13 12:56:16,577 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 12:56:17,041 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 12:56:17,487 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 12:56:17,936 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 12:56:23,731 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 12:56:24,503 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 12:56:25,009 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 12:56:25,253 - root - INFO - Result: The structure and function of Parliament, as outlined in the retrieved information, primarily revolves around three key aspects: representing the electorate, making laws, and overseeing the government. In a democratic system, Parliament plays a crucial role in ensuring that the voices of the people are heard and represented through their elected representatives. This representation is essential for maintaining a fair and just society where all citizens have an equal say in the decision-making process.
+
+In terms of making laws, Parliament is responsible for drafting, debating, and passing legislation that governs the country. This process involves careful consideration of various viewpoints and interests to ensure that the laws passed are beneficial to the majority of the population. The legislative function of Parliament also includes amending existing laws to keep them relevant and effective in addressing contemporary issues.
+
+The oversight function of Parliament is perhaps one of its most critical roles. It involves holding the government accountable for its actions and ensuring that it operates in the best interests of the people. This can be achieved through various means, such as questioning government ministers, conducting inquiries into public matters, and scrutinizing government policies and budgets. By providing a check on the executive branch of government, Parliament helps to prevent abuses of power and promotes transparency and accountability.
+
+In addition to these core functions, Parliament also plays a role in selecting the national government. This typically involves electing a prime minister or head of government who is responsible for leading the executive branch and implementing the policies and laws passed by Parliament. This process ensures that the government is accountable to the people and that it reflects the will of the majority.
+
+Overall, the structure and function of Parliament are designed to promote democratic governance, protect individual rights, and ensure that the needs and interests of all citizens are represented and addressed. By fulfilling these essential roles, Parliament plays a vital part in maintaining a stable, just, and prosperous society.
+2024-12-13 12:56:25,452 - app - ERROR - Error generating response: ('23000', "[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Cannot insert the value NULL into column 'SessionId', table 'AW_Database.dbo.ChatMessages'; column does not allow nulls. INSERT fails. (515) (SQLParamData); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)")
+2024-12-13 13:01:01,299 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-13 13:02:41,881 - app - INFO - Created new session 7 for user 1
+2024-12-13 13:02:41,896 - app - INFO - Initializing RAG agent...
+2024-12-13 13:02:41,919 - pinecone_plugin_interface.logging - INFO - Discovering subpackages in _NamespacePath(['C:\\Users\\Nouma\\OneDrive\\Desktop\\GenAi x Xavour\\ApnaWaqeel\\venv\\Lib\\site-packages\\pinecone_plugins'])
+2024-12-13 13:02:41,923 - pinecone_plugin_interface.logging - INFO - Looking for plugins in pinecone_plugins.inference
+2024-12-13 13:02:42,082 - pinecone_plugin_interface.logging - INFO - Installing plugin inference into Pinecone
+2024-12-13 13:02:47,027 - datasets - INFO - PyTorch version 2.4.1 available.
+2024-12-13 13:02:48,963 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2024-12-13 13:02:48,963 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2024-12-13 13:03:09,009 - app - INFO - RAG agent initialized successfully
+2024-12-13 13:03:09,014 - app - WARNING - Invalid UUID - chat_id: 431c51b7-8d1e-4c9e-a5e5-00fff35fb1d9, user_id: 1
+2024-12-13 13:03:10,002 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 13:03:10,767 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 13:03:10,820 - root - INFO - Sentiment: Constitutional
+2024-12-13 13:03:40,298 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 13:03:40,847 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 13:03:41,339 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 13:03:41,829 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 13:03:48,585 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 13:03:49,437 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 13:03:49,954 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 13:03:50,850 - root - INFO - Result: The parliament in Pakistan, as in any democratic country, plays a crucial role in the governance of the nation. It is the supreme legislative body that makes laws, oversees the government, and represents the interests of the people. The parliament's main functions include lawmaking, scrutiny, and representation.
+
+Lawmaking is the primary function of parliament. It involves the process by which a parliament considers draft legislation and ultimately approves its final form. Almost all parliaments have a role to play in reviewing draft laws before they are adopted, including the ability to recommend amendments to draft laws. Some parliaments are more active in the lawmaking process than others, but all play a vital role in shaping the legal framework of the country.
+
+Scrutiny is another key function of parliament. This involves checking and challenging the work of the government. Parliament has the power to question government ministers, hold inquiries, and conduct investigations into government activities. This helps ensure that the government is accountable to the people and that it acts in their best interests.
+
+Representation is also a fundamental function of parliament. Members of parliament represent the interests of their constituents and are responsible for ensuring that their needs and concerns are addressed. They do this by participating in debates, voting on legislation, and engaging with government ministers to advocate for their constituents' interests.
+
+In Pakistan, the parliament is composed of two houses: the National Assembly and the Senate. The National Assembly is directly elected by the people, while the Senate is composed of representatives from each province. The parliament's role in Pakistani politics is to make and change laws, check and challenge the work of the government, and represent the interests of the people.
+
+The parliament also has a relationship with the government, the Crown, and Europe. The government is accountable to parliament and must answer questions from MPs. The Crown, represented by the President, has ceremonial and symbolic roles, but also plays a part in the legislative process by giving royal assent to bills passed by parliament. In terms of Europe, Pakistan is not a member of the European Union, but it does have diplomatic relations with European countries and engages in international cooperation on various issues.
+
+In summary, the parliament in Pakistan, as in any democratic country, plays a vital role in the governance of the nation. It makes laws, oversees the government, and represents the interests of the people. The parliament's main functions include lawmaking, scrutiny, and representation, and it has relationships with the government, the Crown, and Europe. 
+ Reference: https://apnawaqeel.blob.core.windows.net/pdfs/administrator9d8e2ecc414c6d3371ac41114b61a2c4.pdf?se=2024-12-13T09%3A03%3A48Z&sp=r&sv=2024-11-04&sr=b&sig=h4XJT4EvrUb02F21QOFapRTgVnJ8PCtccRzGLFQ4naM%3D, https://apnawaqeel.blob.core.windows.net/pdfs/administratorf9cbd16a4c92eb98d33c52dea80d5aca.pdf?se=2024-12-13T09%3A03%3A48Z&sp=r&sv=2024-11-04&sr=b&sig=9QD1PeamWjZJtoNdZeTsrPUWtomNos%2BvlWWgrF%2BM37w%3D
+2024-12-13 13:03:51,217 - app - INFO - Successfully generated response for user 1
+2024-12-13 13:50:57,806 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-13 13:51:42,249 - app - INFO - Created new session 8 for user 1
+2024-12-13 13:51:42,278 - app - INFO - Initializing RAG agent...
+2024-12-13 13:51:42,327 - pinecone_plugin_interface.logging - INFO - Discovering subpackages in _NamespacePath(['C:\\Users\\Nouma\\OneDrive\\Desktop\\GenAi x Xavour\\ApnaWaqeel\\venv\\Lib\\site-packages\\pinecone_plugins'])
+2024-12-13 13:51:42,331 - pinecone_plugin_interface.logging - INFO - Looking for plugins in pinecone_plugins.inference
+2024-12-13 13:51:42,442 - pinecone_plugin_interface.logging - INFO - Installing plugin inference into Pinecone
+2024-12-13 13:51:48,188 - datasets - INFO - PyTorch version 2.4.1 available.
+2024-12-13 13:51:50,217 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2024-12-13 13:51:50,218 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2024-12-13 13:52:03,416 - app - INFO - RAG agent initialized successfully
+2024-12-13 13:52:03,416 - app - WARNING - Invalid UUID - chat_id: 83a09067-8ed0-44dd-9239-83b82a3d4df2, user_id: 1
+2024-12-13 13:52:04,520 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 13:52:05,057 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 13:52:05,073 - root - INFO - Sentiment: Constitutional
+2024-12-13 13:52:34,883 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 13:52:35,396 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 13:52:35,894 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 13:52:36,357 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 13:52:43,932 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 13:52:44,766 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 13:52:45,299 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 13:52:45,621 - root - INFO - Result: The Australian parliament functions as a representative democracy, where eligible citizens elect members of parliament to make decisions and laws on their behalf. This system is based on respect for and tolerance of opposing ideas, ensuring that issues and new laws are debated and the Australian Government is held accountable to the Australian people.
+
+The parliament consists of two houses: the House of Representatives and the Senate. The House of Representatives has 150 federal electorates, with one member representing each electorate. The Senate, on the other hand, has 76 positions, with 12 senators representing each state and two representing each territory.
+
+One of the principal functions of parliament is making laws. Laws are created through a process that involves the introduction of a bill, debate, and voting. If a bill is passed by both houses, it is then sent to the Governor-General for royal assent, which makes it a law.
+
+The Australian Parliament House also plays a crucial role in educating Australians about parliamentary democracy. The Parliamentary Education Office develops and maintains resources to inspire enthusiasm for Australia's parliamentary democracy. Over the next six months, the About the House team will be exploring topics such as democracy, federation, government, and parliament.
+
+In terms of current activities, the Australian parliament is constantly working on various issues and new laws. They hold regular sessions to discuss and debate these matters, ensuring that the government is accountable to the Australian people. The parliament also engages in various educational initiatives to promote understanding and participation in the democratic process.
+
+In summary, the Australian parliament functions as a representative democracy, with the primary role of making laws and holding the government accountable. It consists of two houses, the House of Representatives and the Senate, and engages in various educational initiatives to promote understanding of parliamentary democracy.
+2024-12-13 13:52:45,945 - app - INFO - Successfully generated response for user 1
+2024-12-13 13:58:47,480 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-13 13:58:50,131 - app - INFO - Created new session 9 for user 1
+2024-12-13 13:58:50,142 - app - INFO - Initializing RAG agent...
+2024-12-13 13:58:50,156 - pinecone_plugin_interface.logging - INFO - Discovering subpackages in _NamespacePath(['C:\\Users\\Nouma\\OneDrive\\Desktop\\GenAi x Xavour\\ApnaWaqeel\\venv\\Lib\\site-packages\\pinecone_plugins'])
+2024-12-13 13:58:50,162 - pinecone_plugin_interface.logging - INFO - Looking for plugins in pinecone_plugins.inference
+2024-12-13 13:58:50,503 - pinecone_plugin_interface.logging - INFO - Installing plugin inference into Pinecone
+2024-12-13 13:58:57,108 - datasets - INFO - PyTorch version 2.4.1 available.
+2024-12-13 13:58:58,693 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2024-12-13 13:58:58,694 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2024-12-13 13:59:18,191 - app - INFO - RAG agent initialized successfully
+2024-12-13 13:59:18,192 - app - WARNING - Invalid UUID - chat_id: 61a7a501-218d-420d-9d4b-155ae14df9b5, user_id: 1
+2024-12-13 13:59:18,752 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 13:59:19,418 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 13:59:19,437 - root - INFO - Sentiment: Constitutional
+2024-12-13 13:59:45,161 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 13:59:45,671 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 13:59:46,141 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 13:59:46,591 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 13:59:52,911 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 13:59:53,645 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 13:59:54,136 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 13:59:54,461 - root - INFO - Result: The legislative process in the United States Congress is a complex journey that transforms ideas into laws. It begins with the introduction of a bill, which can be introduced by any member of Congress. The bill is then referred to a committee, where it undergoes review and debate. If the committee approves the bill, it is sent to the full chamber for consideration.
+
+In the House of Representatives, the bill is first considered by the Rules Committee, which determines the rules for debating the bill on the House floor. The bill is then debated and voted on by the full House. If it passes, it is sent to the Senate for further consideration.
+
+In the Senate, the bill is assigned to another committee and undergoes a similar process of review and debate. If the committee releases the bill, it is debated and voted on by the full Senate. If it passes, the bill is sent back to the House for a conference committee to work out any differences between the House and Senate versions of the bill.
+
+The conference committee, made up of House and Senate members, works to reconcile the differences between the two versions of the bill. Once an agreement is reached, the resulting bill returns to both the House and Senate for final approval. If approved, the bill is sent to the President for signature. If the President signs the bill, it becomes a law. If the President vetoes the bill, it returns to Congress, where a two-thirds majority vote in both the House and Senate can override the veto and enact the law.
+
+The Government Publishing Office prints the revised bill in a process called enrolling, and the law is then published in the Federal Register and the U.S. Code. Throughout this process, the President has influence in the legislative process, as they can propose legislation, sign or veto bills, and negotiate with Congress on legislative matters.
+2024-12-13 13:59:54,861 - app - INFO - Successfully generated response for user 1
+2024-12-13 14:08:48,858 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-13 14:09:15,237 - app - INFO - Created new session 10 for user 1
+2024-12-13 14:09:15,274 - app - INFO - Initializing RAG agent...
+2024-12-13 14:09:15,304 - pinecone_plugin_interface.logging - INFO - Discovering subpackages in _NamespacePath(['C:\\Users\\Nouma\\OneDrive\\Desktop\\GenAi x Xavour\\ApnaWaqeel\\venv\\Lib\\site-packages\\pinecone_plugins'])
+2024-12-13 14:09:15,304 - pinecone_plugin_interface.logging - INFO - Looking for plugins in pinecone_plugins.inference
+2024-12-13 14:09:15,449 - pinecone_plugin_interface.logging - INFO - Installing plugin inference into Pinecone
+2024-12-13 14:09:24,022 - datasets - INFO - PyTorch version 2.4.1 available.
+2024-12-13 14:09:26,132 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2024-12-13 14:09:26,132 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2024-12-13 14:09:40,358 - app - INFO - RAG agent initialized successfully
+2024-12-13 14:09:40,358 - app - WARNING - Invalid UUID - chat_id: ebc83e92-a9e0-48a9-8596-1190ab947650, user_id: 1
+2024-12-13 14:09:41,108 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 14:09:41,942 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 14:09:41,966 - root - INFO - Sentiment: Civil
+2024-12-13 14:10:06,387 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 14:10:06,827 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 14:10:07,262 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 14:10:07,743 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 14:10:13,236 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 14:10:13,917 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 14:10:14,431 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-13 14:10:14,695 - root - INFO - Result: Law and order refers to the state of society where the laws are generally accepted and obeyed, allowing for a normal functioning of society. It is a term used to describe a situation in which the legal system is working effectively and efficiently, ensuring that individuals and institutions adhere to the rules and regulations set forth by the government. In such a society, there is a sense of stability, security, and respect for authority, which allows people to live their lives without fear of crime or disorder.
+
+In the context of Pakistani law, maintaining law and order is crucial for the well-being of its citizens. The Constitution of Pakistan outlines the framework for the legal system, including the role of the judiciary, the executive, and the legislative branches of government. It also enshrines fundamental rights that are essential for the protection of individuals and the promotion of social justice.
+
+The maintenance of law and order in Pakistan is primarily the responsibility of the government, particularly the police and other law enforcement agencies. These bodies are tasked with enforcing the laws, investigating crimes, and ensuring that those who violate the law are held accountable. The judiciary plays a critical role in this process, as it interprets the laws and decides cases based on the evidence presented.
+
+However, the concept of law and order is not limited to the enforcement of criminal laws. It also encompasses the broader social and political context in which the legal system operates. For instance, a society with strong institutions, a robust economy, and a well-educated population is more likely to maintain law and order than one plagued by poverty, corruption, and political instability.
+
+In conclusion, law and order is a multifaceted concept that encompasses not only the enforcement of criminal laws but also the broader social and political context in which the legal system operates. It is essential for the well-being of individuals and the stability of society as a whole.
+2024-12-13 14:10:14,998 - app - INFO - Successfully generated response for user 1

@@ -1,27 +1,24 @@
-from flask import Flask, jsonify, request
-from flask_cors import CORS
-import logging
-from main import RAGAgent
-import gc
-import tracemalloc
-import random
-import httpx  
-import time  
-from datetime import timedelta
-from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity, get_jwt
-from werkzeug.security import generate_password_hash, check_password_hash
-from crud import UserCRUD, LawyerCRUD, LawyerDetailsCRUD, ChatMessageCRUD, ChatSessionCRUD
-from crud import VALID_USER_TYPES
-from dotenv import load_dotenv
-import uuid
-from database import Database
-from werkzeug.security import generate_password_hash, check_password_hash
 import os
-from werkzeug.utils import secure_filename
-from datetime import datetime
+import gc
+import time  
+import uuid
+import httpx  
+import logging
+import tracemalloc
 import recommend_lawyer
-load_dotenv()
+from main import RAGAgent
+from flask_cors import CORS
+from datetime import datetime
+from database import Database
+from dotenv import load_dotenv
+from datetime import timedelta
+from flask import Flask, jsonify, request
+from werkzeug.utils import secure_filename
+from sklearn.feature_extraction.text import TfidfVectorizer
+from werkzeug.security import generate_password_hash, check_password_hash
+from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity, get_jwt
 
+load_dotenv()
 UPLOAD_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'uploads', 'profile_images')
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
@@ -47,8 +44,8 @@ def log_memory_usage():
         logger.info(stat)
 
 app = Flask(__name__)
-# CORS(app)
-CORS(app, supports_credentials=True, origins=["http://localhost:5173"], methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"])
+CORS(app)
+# CORS(app, supports_credentials=True, origins=["http://localhost:5173"], methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"])
 
 agent = None
 
@@ -72,10 +69,6 @@ jwt = JWTManager(app)
 
 VALID_USER_TYPES = ['client', 'lawyer']
 
-user_crud = UserCRUD()
-lawyer_crud = LawyerCRUD()
-lawyer_details_crud = LawyerDetailsCRUD()
-chat_message_crud = ChatMessageCRUD()
 
 db = Database()
 
@@ -319,8 +312,8 @@ def add_lawyer_profile():
         # Log memory usage or cleanup if needed
         logger.debug("Finished processing lawyer profile creation request")
 
-# Route for fetching lawyer profile by
-@app.route('/api/lw/profile', methods=['GET'])
+# Route for fetching lawyer profile by user ID
+@app.route('/api/l/profile', methods=['GET'])
 @jwt_required()
 def get_profile():
     current_user_id = get_jwt_identity()
@@ -366,7 +359,7 @@ def get_profile():
             }
         }), 200
 # Route for updating client profile
-@app.route('/api/profile', methods=['PUT'])
+@app.route('/api/c/profile', methods=['PUT'])
 @jwt_required()
 def update_client_profile():
     data = request.get_json()
@@ -424,7 +417,7 @@ def get_lawyers():
         logger.error(f"Error fetching lawyers: {str(e)}")
         return jsonify({"error": "Failed to fetch lawyers"}), 500
 
-# Route for fetching a single lawyer
+# Route for fetching a single lawyer by lawyer ID
 @app.route('/api/lawyers/<lawyer_id>', methods=['GET'])
 def get_lawyer(lawyer_id):
     try:
@@ -451,7 +444,7 @@ def get_clients():
         logger.error(f"Error fetching clients: {str(e)}")
         return jsonify({"error": "Failed to fetch clients"}), 500
     
-# Route for fetching a single client
+# Route for fetching a single client by Client ID
 @app.route('/api/clients/<client_id>', methods=['GET'])
 def get_client(client_id):
     try:
@@ -552,9 +545,6 @@ def subscribe():
 def get_current_subs():
     try:
         current_user_id = get_jwt_identity()
-        print(current_user_id)
-        # role = get_jwt()['role']
-        # print(role)
         subscription = db.get_current_subscription(current_user_id)
         if not subscription:
             return jsonify({"error": "No active subscription found"}), 404
@@ -564,44 +554,6 @@ def get_current_subs():
     except Exception as e:
         logger.error(f"Error fetching current subscription: {str(e)}")
         return jsonify({"error": "Failed to fetch current subscription"}), 500
-
-# Route for adding a chat message
-@app.route('/api/chat/<chat_id>/messages', methods=['POST'])
-@jwt_required()
-def add_chat_message(chat_id):
-    data = request.get_json()
-    current_user_id = get_jwt_identity()
-    chat_message_data = {
-        'chat_id': chat_id,
-        'user_id': current_user_id,
-        'message': data.get('message')
-    }
-    try:
-        db.create_chat_message(**chat_message_data)
-        return jsonify({"message": "Chat message created successfully"}), 201
-    except Exception as e:
-        logger.error(f"Chat message creation error: {str(e)}")
-        return jsonify({"error": "Failed to create chat message"}), 500
-
-# Route for updating a chat message
-@app.route('/api/chat/<chat_id>/messages/<message_id>', methods=['PUT'])
-@jwt_required()
-def update_chat_message(chat_id, message_id):
-    data = request.get_json()
-    current_user_id = get_jwt_identity()
-    chat_message_data = {
-        'chat_id': chat_id,
-        'user_id': current_user_id,
-        'message': data.get('message')
-    }
-    try:
-        db.update_chat_message(message_id, **chat_message_data)
-        return jsonify({"message": "Chat message updated successfully"}), 200
-    except Exception as e:
-        logger.error(f"Chat message update error: {str(e)}")
-        return jsonify({"error": "Failed to update chat message"}), 500
-
-
 
 @app.route('/api/', methods=['GET'])
 def health_check2():
@@ -624,12 +576,17 @@ def ask_question():
     retries = 0
     max_retries = 3
     data_loaded = False
-    # UnChatId = str(uuid.uuid4())
+    session_id = None
     try:
         current_user_id = get_jwt_identity()
         role = get_jwt()['role']
-        UnChatId = get_jwt()['UnChatId'] if 'UnChatId' in get_jwt() else None
+        # UnChatId = get_jwt()['UnChatId'] if 'UnChatId' in get_jwt() else None
+        # print(UnChatId)
+        # breakpoint()
         data = request.get_json()
+        UnChatId = data.get('UnChatId') if 'UnChatId' in data else None
+        session_id = data.get('SessionId') if 'SessionId' in data else None
+        print(session_id)
         if not data:
             logger.error("No JSON data received")
             return jsonify({"error": "No data provided"}), 400            
@@ -637,15 +594,14 @@ def ask_question():
         if not question:
             logger.error("Missing question parameter")
             return jsonify({"error": "Missing required parameter: question"}), 400
-            
-        session_id = None
         if not UnChatId:
-            UnChatId = uuid.uuid4()  # Create as UUID object
-            # session_id = uuid.uuid4()  # Create as UUID object
-            session_id = db.create_session(user_id=current_user_id, topic="Legal")
+            UnChatId = uuid.uuid4()  
+            vectorizer = TfidfVectorizer(stop_words="english", max_features=5)
+            X = vectorizer.fit_transform([question])
+            key_phrases = vectorizer.get_feature_names_out()
+            chat_topic = " ".join(key_phrases).capitalize()
+            session_id = db.create_session(user_id=current_user_id, topic=chat_topic)
             logger.info(f"Created new session {session_id} for user {current_user_id}")
-            
-            # Store initial user message with UUID objects
             db.create_chat_message(
                 session_id=session_id,
                 message=question,
@@ -688,7 +644,8 @@ def ask_question():
                 "answer": result['chat_response'],
                 "UnChatId": str(UnChatId),
                 "references": result.get('references', []),
-                "recommended_lawyers": lawyer
+                "recommended_lawyers": lawyer,
+                "session_id": str(session_id)
             }
             access_token = create_access_token(
                 identity=current_user_id,
@@ -814,7 +771,6 @@ if __name__ == '__main__':
     import threading
     import time
     try:
-        # Start the keep_alive thread
         threading.Thread(target=keep_alive, daemon=True).start()
 
         # Run the Flask app
