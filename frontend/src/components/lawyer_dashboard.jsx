@@ -1,7 +1,30 @@
-import React from 'react';
-import { FaBriefcase, FaUser, FaStar, FaCalendar } from 'react-icons/fa';
+import React, { useState, useEffect } from 'react';
+import { FaBriefcase, FaUser, FaStar, FaCalendar, FaComments } from 'react-icons/fa';
+import io from 'socket.io-client';
 
 const LawyerDashboard = () => {
+  const [showChat, setShowChat] = useState(false);
+  const [messages, setMessages] = useState([]);
+  const [message, setMessage] = useState('');
+  const socket = io('http://localhost:3000');
+
+  useEffect(() => {
+    socket.on('message', (msg) => {
+      setMessages((prevMessages) => [...prevMessages, msg]);
+    });
+
+    return () => {
+      socket.off('message');
+    };
+  }, [socket]);
+
+  const sendMessage = () => {
+    if (message.trim()) {
+      socket.emit('message', message);
+      setMessage('');
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-100 p-8">
       {/* Header */}
@@ -9,6 +32,44 @@ const LawyerDashboard = () => {
         <h1 className="text-3xl font-bold text-gray-800">Welcome, Lawyer Name</h1>
         <p className="text-gray-600">Here's your dashboard overview</p>
       </div>
+
+      {/* Chat Icon */}
+      <div className="fixed bottom-8 right-8">
+        <button
+          className="bg-blue-600 text-white p-4 rounded-full shadow-lg"
+          onClick={() => setShowChat(!showChat)}
+        >
+          <FaComments size={24} />
+        </button>
+      </div>
+
+      {/* Chat Card */}
+      {showChat && (
+        <div className="fixed bottom-20 right-8 bg-white rounded-lg shadow-lg p-4 w-80">
+          <h2 className="text-xl font-semibold mb-4">Chat</h2>
+          <div className="h-64 overflow-y-scroll mb-4">
+            {messages.map((msg, index) => (
+              <div key={index} className="mb-2">
+                <div className="bg-gray-200 p-2 rounded">{msg}</div>
+              </div>
+            ))}
+          </div>
+          <div className="flex">
+            <input
+              type="text"
+              className="flex-1 border border-gray-300 rounded-l p-2"
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+            />
+            <button
+              className="bg-blue-600 text-white p-2 rounded-r"
+              onClick={sendMessage}
+            >
+              Send
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
