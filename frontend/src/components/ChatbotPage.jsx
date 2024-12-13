@@ -35,15 +35,10 @@ export function ChatbotPage() {
   const [inputMessage, setInputMessage] = useState("")
   const [processing, setProcessing] = useState(null) // 'thinking' or 'searching'
   const [isSidebarOpen, setIsSidebarOpen] = useState(true)
-  const [chatHistory, setChatHistory] = useState([
-    { id: 1, title: "Previous Chat 1", date: "2023-05-01" },
-    { id: 2, title: "Previous Chat 2", date: "2023-05-02" },
-  ])
+  const [chatHistory, setChatHistory] = useState([])
   const messagesEndRef = useRef(null)
   const [error, setError] = useState(null)
   const [references, setReferences] = useState([])
-  const userId = "test_user" // In production, get from auth system
-  const [currentChatId, setCurrentChatId] = useState(null)
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
@@ -53,43 +48,61 @@ export function ChatbotPage() {
     scrollToBottom()
   }, [messages])
 
-  const handleSendMessage = async (e) => {
-    e.preventDefault()
-    if (inputMessage.trim() === "") return
+  useEffect(() => {
+    const fetchChatTopics = async () => {
+      const chatTopics = await apiService.getChatTopic();
+      if (chatTopics) {
+        setChatHistory(chatTopics.topic.map((topic, index) => ({
+          id: chatTopics.session_id[index],
+          title: topic,
+          date: chatTopics.time[index]
+        })));
+      }
+    };
 
-    const newUserMessage = { id: messages.length + 1, text: inputMessage, sender: "user" }
-    setMessages(prev => [...prev, newUserMessage])
-    setInputMessage("")
-    setProcessing("thinking")
-    setError(null)
+    fetchChatTopics();
+    const intervalId = setInterval(fetchChatTopics, 5000); // Poll every 5 seconds
+
+    return () => clearInterval(intervalId); // Cleanup interval on component unmount
+  }, []);
+
+  const handleSendMessage = async (e) => {
+    e.preventDefault();
+    if (inputMessage.trim() === "") return;
+
+    const newUserMessage = { id: messages.length + 1, text: inputMessage, sender: "user" };
+    setMessages(prev => [...prev, newUserMessage]);
+    setInputMessage("");
+    setProcessing("thinking");
+    setError(null);
 
     try {
-      const response = await apiService.askQuestion(inputMessage, userId, currentChatId)
-      
+      const response = await apiService.askQuestion(inputMessage);
+
+      if (!response) {
+        throw new Error('Empty response received');
+      }
+
       const aiResponse = {
         id: messages.length + 2,
         text: response.answer,
         sender: "ai",
         lawyers: response.recommendedLawyers
-      }
+      };
 
-      setMessages(prev => [...prev, aiResponse])
-      setReferences(response.references || [])
-      
-      if (response.chatId && !currentChatId) {
-        setCurrentChatId(response.chatId)
-      }
+      setMessages(prev => [...prev, aiResponse]);
+      setReferences(response.references || []);
 
     } catch (err) {
-      setError(err.message)
+      setError(err.message);
       const errorMessage = {
         id: messages.length + 2,
         text: "Sorry, there was an error processing your request. Please try again.",
         sender: "ai"
-      }
-      setMessages(prev => [...prev, errorMessage])
+      };
+      setMessages(prev => [...prev, errorMessage]);
     } finally {
-      setProcessing(null)
+      setProcessing(null);
     }
   }
 

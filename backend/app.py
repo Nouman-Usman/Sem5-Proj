@@ -576,17 +576,13 @@ def ask_question():
     retries = 0
     max_retries = 3
     data_loaded = False
-    session_id = None
+    Session_Id = None
     try:
         current_user_id = get_jwt_identity()
         role = get_jwt()['role']
-        # UnChatId = get_jwt()['UnChatId'] if 'UnChatId' in get_jwt() else None
-        # print(UnChatId)
-        # breakpoint()
         data = request.get_json()
-        UnChatId = data.get('UnChatId') if 'UnChatId' in data else None
-        session_id = data.get('SessionId') if 'SessionId' in data else None
-        print(session_id)
+        Session_Id = data.get('SessionId') if 'SessionId' in data else None
+        print(Session_Id)
         if not data:
             logger.error("No JSON data received")
             return jsonify({"error": "No data provided"}), 400            
@@ -594,63 +590,60 @@ def ask_question():
         if not question:
             logger.error("Missing question parameter")
             return jsonify({"error": "Missing required parameter: question"}), 400
-        if not UnChatId:
-            UnChatId = uuid.uuid4()  
+        if not Session_Id:
             vectorizer = TfidfVectorizer(stop_words="english", max_features=5)
             X = vectorizer.fit_transform([question])
             key_phrases = vectorizer.get_feature_names_out()
-            chat_topic = " ".join(key_phrases).capitalize()
-            session_id = db.create_session(user_id=current_user_id, topic=chat_topic)
-            logger.info(f"Created new session {session_id} for user {current_user_id}")
-            db.create_chat_message(
-                session_id=session_id,
-                message=question,
-                msg_type="Human Message",
-                references=None,
-                recommended_lawyers=None,
-                UnChatId=UnChatId
-            )
+            chat_topic = " ".join(sorted(key_phrases)).title()
+            Session_Id = db.create_session(user_id=current_user_id, topic=chat_topic)
+            logger.info(f"Created new session {Session_Id} for user {current_user_id}")
             data_loaded = True
         rag_agent = get_agent()
         history = []
         
-        if UnChatId and is_valid_uuid(UnChatId) and is_valid_uuid(current_user_id):
+        if Session_Id:
             if not data_loaded:
-                history = db.get_chat_messages_by_chat_id(UnChatId=UnChatId)
+                history = db.get_chat_session_by_id(session_id=Session_Id)
                 data_loaded = True
+            else:
+                logger.warning(f"Chat loaded with : {Session_Id}, user_id: {current_user_id}")
         else:
-            logger.warning(f"Invalid UUID - chat_id: {UnChatId}, user_id: {current_user_id}")
+            logger.warning(f"Invalid UUID - chat_id: {Session_Id}, user_id: {current_user_id}")
 
         try:
             result = rag_agent.run(question,history)
-            
+            db.create_chat_message(
+                session_id=Session_Id,
+                message=question,
+                msg_type="Human Message",
+                references=None,
+                recommended_lawyers=None
+            )
             if not result or 'chat_response' not in result or not result['chat_response']:
                 logger.error("Invalid or empty response from RAG agent")
                 return jsonify({"error": "Failed to generate response"}), 500
 
             # Store AI response with UUID objects
             db.create_chat_message(
-                session_id=session_id,
+                session_id=Session_Id,
                 message=result['chat_response'],
                 msg_type="AI Message",
                 recommended_lawyers=result.get('recommended_lawyers', []),
-                references=result.get('references', []),
-                UnChatId=UnChatId
+                references=result.get('references', [])
             )
             sentiment = result.get('sentiment', 'neutral')
             lawyer = recommend_lawyer.recommend_top_lawyers(sentiment)
             # Create response object with string UUIDs for JSON
             response = {
                 "answer": result['chat_response'],
-                "UnChatId": str(UnChatId),
                 "references": result.get('references', []),
                 "recommended_lawyers": lawyer,
-                "session_id": str(session_id)
+                "session_id": Session_Id,
             }
             access_token = create_access_token(
                 identity=current_user_id,
                 additional_claims={
-                    "UnChatId": UnChatId,
+                    "SessionId": Session_Id,
                     "user_id": current_user_id
                 }
             )
@@ -665,21 +658,34 @@ def ask_question():
         logger.error(f"Error processing question: {str(e)}", exc_info=True)
         return jsonify({"error": "An unexpected error occurred"}), 500
 
-@app.route('/api/user/<user_id>/chats/<chat_id>', methods=['GET'])
-def get_user_chats(user_id, chat_id):
+# Route for loading All chat topics and session ids by userid
+@app.route('/api/topics', methods=['GET'])
+@jwt_required()
+def get_user_chats():
     try:
-        rag_agent = get_agent(user_id=user_id, chat_id=chat_id)
-
-        chat_history = rag_agent.get_user_chat_history(user_id, chat_id=chat_id)
-        # return jsonify({
-        #     "user_id": user_id,
-        #     "chat_ids": chat_history,
-        #     "count": len(chat_history)
-        # })
-        return None
+        user_id = get_jwt_identity()
+        response = db.get_chat_topics(user_id)
+        return jsonify(response), 200
     except Exception as e:
-        logger.error(f"Error retrieving chats: {e}")
-        return jsonify({"error": str(e)}), 500
+        logger.error(f"Error fetching chats: {str(e)}")
+        return jsonify({"error": "Failed to fetch chats"}), 500
+
+# Route for loading All chat topics and session ids by userid
+# @app.route('/api/user/<user_id>/chats/<chat_id>', methods=['GET'])
+# def get_user_chats(user_id, chat_id):
+#     try:
+#         rag_agent = get_agent(user_id=user_id, chat_id=chat_id)
+
+#         chat_history = rag_agent.get_user_chat_history(user_id, chat_id=chat_id)
+#         # return jsonify({
+#         #     "user_id": user_id,
+#         #     "chat_ids": chat_history,
+#         #     "count": len(chat_history)
+#         # })
+#         return None
+#     except Exception as e:
+#         logger.error(f"Error retrieving chats: {e}")
+#         return jsonify({"error": str(e)}), 500
 
 # @app.route('/api/lawyer/register', methods=['POST'])
 # @jwt_required()

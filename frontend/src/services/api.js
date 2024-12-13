@@ -7,7 +7,7 @@ const api = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
-  timeout: 30000,
+  // Remove timeout configuration
 });
 
 api.interceptors.request.use(
@@ -50,7 +50,6 @@ api.interceptors.response.use(
   }
 );
 
-let UnChatId = null;
 let SessionId = null;
 
 export const apiService = {
@@ -59,34 +58,48 @@ export const apiService = {
     const user = JSON.parse(localStorage.getItem('user'));
     return user?.role || null;
   },
-
+  async getChatTopic() {
+    try {
+        const chatTopic = await api.get('/topics');
+        return {
+          topic: chatTopic.data.chat_topics,
+          session_id: chatTopic.data.chat_sessions || null,
+          time: chatTopic.data.Time || null
+        };
+    } catch (error) {
+        console.error('Failed to fetch chat topic:', error.message);
+        return null;
+    }
+  },
   async askQuestion(question) {
     try {
       const response = await api.post('/ask', {
         question,
-        UnChatId, // Pass UnChatId in the request body
-        SessionId, // Pass SessionId in the request body
+        SessionId,
       });
 
       if (!response.data) {
         throw new Error('Empty response received');
       }
 
-      // Update UnChatId and SessionId with the values received in the response
-      UnChatId = response.data.UnChatId || UnChatId;
       SessionId = response.data.session_id || SessionId;
+      console.log('SessionId:', SessionId);
 
       return {
         answer: response.data.answer,
         references: response.data.references || [],
         recommendedLawyers: response.data.recommended_lawyers || [],
-        UnChatId: response.data.UnChatId || null,
-        SessionId: response.data.session_id || null
+        session_id: response.data.session_id || null
       };
     } catch (error) {
+      if (error.message.includes('Request timed out')) {
+        console.error('Request timed out. Please try again.');
+      }
       await new Promise(resolve => setTimeout(resolve, 1000));
+      throw error;
     }
   },
+
   async startChat(recipientId) {
     const response = await api.post('/chat/start', { recipient_id: recipientId });
     return response.data;
