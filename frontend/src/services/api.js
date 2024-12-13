@@ -59,8 +59,14 @@ export const apiService = {
     return user?.role || null;
   },
   async getChatTopic() {
+    const token = localStorage.getItem("token");
     try {
-        const chatTopic = await api.get('/topics');
+        const chatTopic = await api.get('/topics',{
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+        console.log("chat topic is ", chatTopic)
         return {
           topic: chatTopic.data.chat_topics,
           session_id: chatTopic.data.chat_sessions || null,
