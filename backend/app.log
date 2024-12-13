@@ -734,3 +734,5 @@
 2024-12-13 22:37:08,555 - werkzeug - INFO - 127.0.0.1 - - [13/Dec/2024 22:37:08] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
 2024-12-13 22:38:08,223 - werkzeug - INFO - 127.0.0.1 - - [13/Dec/2024 22:38:08] "OPTIONS /api/topics HTTP/1.1" 200 -
 2024-12-13 22:38:08,561 - werkzeug - INFO - 127.0.0.1 - - [13/Dec/2024 22:38:08] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
+2024-12-13 22:39:08,236 - werkzeug - INFO - 127.0.0.1 - - [13/Dec/2024 22:39:08] "OPTIONS /api/topics HTTP/1.1" 200 -
+2024-12-13 22:39:08,558 - werkzeug - INFO - 127.0.0.1 - - [13/Dec/2024 22:39:08] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
