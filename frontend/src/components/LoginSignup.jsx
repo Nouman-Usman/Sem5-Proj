@@ -23,6 +23,23 @@ export function LoginSignup() {
   const [loopNum, setLoopNum] = useState(0);
   const [delta, setDelta] = useState(200);
 
+  useEffect(()=>{
+
+    const init = async()=>{
+      const user = JSON.parse(localStorage.getItem("user"));
+      if (user == null){
+        return;
+      }
+      if (user.role == 'client') {
+        window.location.href = '/user-home';
+      }
+      else {
+        window.location.href = '/lawyer-dashboard';
+      }
+    }
+    init();
+  }, [])
+
   useEffect(() => {
     let ticker = setInterval(() => {
       tick();
