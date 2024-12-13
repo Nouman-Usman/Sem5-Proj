@@ -15,9 +15,9 @@ from datetime import timedelta
 from flask import Flask, jsonify, request
 from werkzeug.utils import secure_filename
 from sklearn.feature_extraction.text import TfidfVectorizer
+from flask_socketio import SocketIO, join_room, leave_room, send
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity, get_jwt
-from flask_socketio import SocketIO, join_room, leave_room, send
 
 load_dotenv()
 UPLOAD_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'uploads', 'profile_images')
@@ -820,6 +820,21 @@ def on_leave(data):
     chat_id = data['chat_id']
     leave_room(chat_id)
     send(f'User has left the chat {chat_id}', to=chat_id)
+
+@app.route('/api/lawyer/dashboard', methods=['GET'])
+@jwt_required()
+def get_lawyer_dashboard():
+    try:
+        current_user_id = get_jwt_identity()
+        lawyer_data = db.get_lawyer_dashboard_data(current_user_id)
+        recent_activities = db.get_recent_activities(current_user_id)
+        return jsonify({
+            "lawyerData": lawyer_data,
+            "recentActivities": recent_activities
+        }), 200
+    except Exception as e:
+        logger.error(f"Error fetching lawyer dashboard data: {str(e)}")
+        return jsonify({"error": "Failed to fetch dashboard data"}), 500
 
 def keep_alive():
     while True:

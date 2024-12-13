@@ -360,6 +360,37 @@ class Database:
             cursor.execute(query, limit)
             return cursor.fetchall()
 
+    def get_lawyer_dashboard_data(self, lawyer_id):
+        with self.get_connection() as conn:
+            cursor = conn.cursor()
+            query = """
+                SELECT 
+                    (SELECT COUNT(*) FROM Cases WHERE LawyerId = ?) AS totalCases,
+                    (SELECT COUNT(*) FROM Clients WHERE LawyerId = ?) AS activeClients,
+                    (SELECT AVG(Stars) FROM LawyerReview WHERE LawyerId = ?) AS rating,
+                    (SELECT COUNT(*) FROM Appointments WHERE LawyerId = ? AND Date >= GETDATE()) AS appointments
+            """
+            cursor.execute(query, (lawyer_id, lawyer_id, lawyer_id, lawyer_id))
+            row = cursor.fetchone()
+            return {
+                "totalCases": row.totalCases,
+                "activeClients": row.activeClients,
+                "rating": row.rating,
+                "appointments": row.appointments
+            }
+
+    def get_recent_activities(self, lawyer_id):
+        with self.get_connection() as conn:
+            cursor = conn.cursor()
+            query = """
+                SELECT TOP 10 Activity, Time
+                FROM Activities
+                WHERE LawyerId = ?
+                ORDER BY Time DESC
+            """
+            cursor.execute(query, lawyer_id)
+            return cursor.fetchall()
+
     # Session CRUD operations
     def create_session(self, user_id, topic):
         try:

@@ -136,6 +136,16 @@ export const apiService = {
     return response.data;
   },
 
+  async getLawyerDashboardData() {
+    try {
+      const response = await api.get('/lawyer/dashboard');
+      return response.data;
+    } catch (error) {
+      console.error('Failed to fetch lawyer dashboard data:', error.message);
+      return null;
+    }
+  },
+
   // Profile related endpoints
   async getUserProfile() {
     const response = await api.get('/user-profile');
