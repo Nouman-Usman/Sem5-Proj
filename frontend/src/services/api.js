@@ -136,6 +136,11 @@ export const apiService = {
     return response.data;
   },
 
+  async isLawyerProfileCompleted(lawyerid) {
+    const response = await api.get(`/lawyers/isCompleted/${lawyerid}`);
+    return response.data;
+  },
+
   // Profile related endpoints
   async getUserProfile() {
     const response = await api.get('/user-profile');
@@ -158,6 +163,7 @@ export const apiService = {
   },
 
   async createLawyerProfile(profileData) {
+    console.log(profileData)
     const response = await api.post('/lw/profile', profileData);
     return response.data;
   },

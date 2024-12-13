@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { authService } from "@/services/auth"
+import apiService from "@/services/api"
 
 export function LoginSignup() {
   const [showPassword, setShowPassword] = useState(false)
@@ -26,7 +27,14 @@ export function LoginSignup() {
     setError("");
     try {
       await authService.login(email, password);
-      window.location.href = '/dashboard';
+      const currentRole = apiService.getUserRole();
+
+      if (currentRole.role == 'client') {
+        window.location.href = '/user-home';
+      }
+      else {
+        window.location.href = '/lawyer-dashboard';
+      }
     } catch (err) {
       setError(err.message);
     } finally {
@@ -42,7 +50,7 @@ export function LoginSignup() {
       await authService.signup(name, email, password, role);
       // Auto login after successful signup
       // await authService.login(email, password);
-      window.location.href = '/user_home';
+
     } catch (err) {
       setError(err.message);
     } finally {
@@ -186,8 +194,8 @@ export function LoginSignup() {
                           name="role"
                           id="client"
                           value="client"
-                        checked={role === 'client'}
-                        onClick={()=>setRole('client')}
+                          checked={role === 'client'}
+                          onClick={() => setRole('client')}
                         />
                         <label className="form-check-label" htmlFor="client">
                           Client
@@ -201,8 +209,8 @@ export function LoginSignup() {
                           name="role"
                           id="lawyer"
                           value="lawyer"
-                        checked={role === 'lawyer'}
-                        onClick={()=>setRole('lawyer')}
+                          checked={role === 'lawyer'}
+                          onClick={() => setRole('lawyer')}
                         />
                         <label className="form-check-label" htmlFor="lawyer">
                           Lawyer
