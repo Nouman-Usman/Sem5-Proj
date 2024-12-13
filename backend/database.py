@@ -693,3 +693,33 @@ class Database:
                 elif isinstance(result[field], datetime):
                     pass
         return result
+
+    def create_chat_session(self, initiator_id, recipient_id):
+        with self.get_connection() as conn:
+            cursor = conn.cursor()
+            query = """
+                INSERT INTO ChatSessions (InitiatorId, RecipientId, StartTime)
+                OUTPUT INSERTED.ChatId
+                VALUES (?, ?, GETDATE())
+            """
+            cursor.execute(query, (initiator_id, recipient_id))
+            chat_id = cursor.fetchone()[0]
+            conn.commit()
+            return chat_id
+
+    def create_chat_message(self, chat_id, sender_id, message):
+        with self.get_connection() as conn:
+            cursor = conn.cursor()
+            query = """
+                INSERT INTO ChatMessages (ChatId, SenderId, Message, Timestamp)
+                VALUES (?, ?, ?, GETDATE())
+            """
+            cursor.execute(query, (chat_id, sender_id, message))
+            conn.commit()
+
+    def get_chat_messages(self, chat_id):
+        with self.get_connection() as conn:
+            cursor = conn.cursor()
+            query = "SELECT * FROM ChatMessages WHERE ChatId = ? ORDER BY Timestamp"
+            cursor.execute(query, (chat_id,))
+            return cursor.fetchall()

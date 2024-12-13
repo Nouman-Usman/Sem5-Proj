@@ -1,26 +1,37 @@
 import React, { useState, useEffect } from 'react';
 import { FaBriefcase, FaUser, FaStar, FaCalendar, FaComments } from 'react-icons/fa';
 import io from 'socket.io-client';
+import apiService from '../services/api';
 
 const LawyerDashboard = () => {
   const [showChat, setShowChat] = useState(false);
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState('');
-  const socket = io('http://localhost:3000');
+  const [chatId, setChatId] = useState(null);
+  const socket = io('http://localhost:5000');
 
   useEffect(() => {
-    socket.on('message', (msg) => {
-      setMessages((prevMessages) => [...prevMessages, msg]);
-    });
+    if (chatId) {
+      socket.emit('join', { chat_id: chatId });
+      socket.on('message', (msg) => {
+        setMessages((prevMessages) => [...prevMessages, msg]);
+      });
 
-    return () => {
-      socket.off('message');
-    };
-  }, [socket]);
+      return () => {
+        socket.emit('leave', { chat_id: chatId });
+        socket.off('message');
+      };
+    }
+  }, [chatId]);
+
+  const startChat = async (recipientId) => {
+    const response = await apiService.startChat(recipientId);
+    setChatId(response.chat_id);
+  };
 
   const sendMessage = () => {
     if (message.trim()) {
-      socket.emit('message', message);
+      socket.emit('message', { chat_id: chatId, message });
       setMessage('');
     }
   };
@@ -50,7 +61,7 @@ const LawyerDashboard = () => {
           <div className="h-64 overflow-y-scroll mb-4">
             {messages.map((msg, index) => (
               <div key={index} className="mb-2">
-                <div className="bg-gray-200 p-2 rounded">{msg}</div>
+                <div className="bg-gray-200 p-2 rounded">{msg.message}</div>
               </div>
             ))}
           </div>

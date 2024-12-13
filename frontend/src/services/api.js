@@ -105,6 +105,11 @@ export const apiService = {
     return response.data;
   },
 
+  async sendMessage(chatId, message) {
+    const response = await api.post(`/chat/${chatId}/message`, { message });
+    return response.data;
+  },
+
   async getChatHistory(chatId) {
     const response = await api.get(`/chat/${chatId}/messages`);
     return response.data;

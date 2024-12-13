@@ -17,6 +17,7 @@ from werkzeug.utils import secure_filename
 from sklearn.feature_extraction.text import TfidfVectorizer
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity, get_jwt
+from flask_socketio import SocketIO, join_room, leave_room, send
 
 load_dotenv()
 UPLOAD_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'uploads', 'profile_images')
@@ -45,7 +46,7 @@ def log_memory_usage():
 
 app = Flask(__name__)
 CORS(app)
-# CORS(app, supports_credentials=True, origins=["http://localhost:5173"], methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"])
+socketio = SocketIO(app, cors_allowed_origins="*")
 
 agent = None
 
@@ -769,6 +770,51 @@ def get_lawyers_by_category(specialization):
         logger.error(f"Error fetching lawyers by category: {str(e)}")
         return jsonify({"error": "Failed to fetch lawyers"}), 500
 
+@app.route('/api/chat/start', methods=['POST'])
+@jwt_required()
+def start_chat():
+    data = request.get_json()
+    initiator_id = get_jwt_identity()
+    recipient_id = data.get('recipient_id')
+    
+    if not recipient_id:
+        return jsonify({"error": "Recipient ID is required"}), 400
+    
+    chat_id = db.create_chat_session(initiator_id, recipient_id)
+    return jsonify({"chat_id": chat_id}), 201
+
+@app.route('/api/chat/<chat_id>/messages', methods=['POST'])
+@jwt_required()
+def send_message(chat_id):
+    data = request.get_json()
+    sender_id = get_jwt_identity()
+    message = data.get('message')
+    
+    if not message:
+        return jsonify({"error": "Message is required"}), 400
+    
+    db.create_chat_message(chat_id, sender_id, message)
+    socketio.emit('message', {'chat_id': chat_id, 'message': message}, room=chat_id)
+    return jsonify({"message": "Message sent"}), 201
+
+@app.route('/api/chat/<chat_id>/messages', methods=['GET'])
+@jwt_required()
+def get_chat_messages(chat_id):
+    messages = db.get_chat_messages(chat_id)
+    return jsonify({"messages": messages}), 200
+
+@socketio.on('join')
+def on_join(data):
+    chat_id = data['chat_id']
+    join_room(chat_id)
+    send(f'User has joined the chat {chat_id}', to=chat_id)
+
+@socketio.on('leave')
+def on_leave(data):
+    chat_id = data['chat_id']
+    leave_room(chat_id)
+    send(f'User has left the chat {chat_id}', to=chat_id)
+
 def keep_alive():
     while True:
         time.sleep(1)
@@ -780,7 +826,7 @@ if __name__ == '__main__':
         threading.Thread(target=keep_alive, daemon=True).start()
 
         # Run the Flask app
-        app.run(
+        socketio.run(app,
             host='127.0.0.1',
             port=5000,
             debug=True,  # Disable in production

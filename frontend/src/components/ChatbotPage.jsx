@@ -1,13 +1,13 @@
-import React, { useState, useRef, useEffect } from "react"
-import { Card } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { ScrollArea } from "@/components/ui/scroll-area"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Loader2, Send, User, Bot, ChevronLeft, ChevronRight, Star, PlusCircle, Trash2 } from "lucide-react"
-import apiService from "@/services/api"  // Add this import
+import React, { useState, useRef, useEffect } from "react";
+import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Loader2, Send, User, Bot, ChevronLeft, ChevronRight, Star, PlusCircle, Trash2 } from "lucide-react";
+import apiService from "@/services/api";  // Add this import
 
-const LawyerCard = ({ lawyer }) => (
+const LawyerCard = ({ lawyer, onContact }) => (
   <Card className="mt-2 p-4 bg-white shadow-md">
     <div className="flex items-center">
       <Avatar className="h-12 w-12 mr-4">
@@ -24,29 +24,32 @@ const LawyerCard = ({ lawyer }) => (
       </div>
     </div>
     <p className="mt-2 text-sm">{lawyer.description}</p>
-    <Button className="mt-2 w-full">Contact {lawyer.name}</Button>
+    <Button className="mt-2 w-full" onClick={() => onContact(lawyer)}>Contact {lawyer.name}</Button>
   </Card>
-)
+);
 
 export function ChatbotPage() {
   const [messages, setMessages] = useState([
     { id: 1, text: "Hello! How can I assist you with your legal questions today?", sender: "ai" }
-  ])
-  const [inputMessage, setInputMessage] = useState("")
-  const [processing, setProcessing] = useState(null) // 'thinking' or 'searching'
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true)
-  const [chatHistory, setChatHistory] = useState([])
-  const messagesEndRef = useRef(null)
-  const [error, setError] = useState(null)
-  const [references, setReferences] = useState([])
+  ]);
+  const [inputMessage, setInputMessage] = useState("");
+  const [processing, setProcessing] = useState(null); // 'thinking' or 'searching'
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [chatHistory, setChatHistory] = useState([]);
+  const messagesEndRef = useRef(null);
+  const [error, setError] = useState(null);
+  const [references, setReferences] = useState([]);
+  const [showContactPopup, setShowContactPopup] = useState(false);
+  const [selectedLawyer, setSelectedLawyer] = useState(null);
+  const [contactMessage, setContactMessage] = useState("");
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
-  }
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
 
   useEffect(() => {
-    scrollToBottom()
-  }, [messages])
+    scrollToBottom();
+  }, [messages]);
 
   useEffect(() => {
     const fetchChatTopics = async () => {
@@ -104,11 +107,29 @@ export function ChatbotPage() {
     } finally {
       setProcessing(null);
     }
-  }
+  };
 
   const toggleSidebar = () => {
-    setIsSidebarOpen(!isSidebarOpen)
-  }
+    setIsSidebarOpen(!isSidebarOpen);
+  };
+
+  const handleContact = (lawyer) => {
+    setSelectedLawyer(lawyer);
+    setShowContactPopup(true);
+  };
+
+  const handleSendContactMessage = async () => {
+    if (contactMessage.trim() === "") return;
+
+    try {
+      await apiService.startChat(selectedLawyer.id);
+      await apiService.sendMessage(selectedLawyer.id, contactMessage);
+      setContactMessage("");
+      setShowContactPopup(false);
+    } catch (error) {
+      console.error("Failed to send message:", error.message);
+    }
+  };
 
   return (
     <div className="flex h-screen overflow-hidden bg-gray-100">
@@ -162,14 +183,14 @@ export function ChatbotPage() {
                 {message.lawyer && (
                   <div className="flex justify-start mb-4">
                     <div className="max-w-[70%]">
-                      <LawyerCard lawyer={message.lawyer} />
+                      <LawyerCard lawyer={message.lawyer} onContact={handleContact} />
                     </div>
                   </div>
                 )}
                 {message.lawyers && message.lawyers.length > 0 && (
                   <div className="flex flex-col gap-2 mt-2">
                     {message.lawyers.map((lawyer, idx) => (
-                      <LawyerCard key={idx} lawyer={lawyer} />
+                      <LawyerCard key={idx} lawyer={lawyer} onContact={handleContact} />
                     ))}
                   </div>
                 )}
@@ -221,7 +242,27 @@ export function ChatbotPage() {
           </form>
         </div>
       </div>
+
+      {/* Contact Popup */}
+      {showContactPopup && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-96">
+            <h2 className="text-xl font-semibold mb-4">Contact {selectedLawyer.name}</h2>
+            <textarea
+              className="w-full p-2 border border-gray-300 rounded mb-4"
+              rows="4"
+              placeholder="Type your message here..."
+              value={contactMessage}
+              onChange={(e) => setContactMessage(e.target.value)}
+            />
+            <div className="flex justify-end gap-2">
+              <Button variant="outline" onClick={() => setShowContactPopup(false)}>Cancel</Button>
+              <Button onClick={handleSendContactMessage}>Send</Button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
-  )
+  );
 }
 
