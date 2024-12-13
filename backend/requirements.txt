@@ -28,3 +28,4 @@ azure-identity>=1.10.0  # or the latest version
 flask-sqlalchemy
 flask-bcrypt
 flask-jwt-extended
+flask_socketio>=5.3.2

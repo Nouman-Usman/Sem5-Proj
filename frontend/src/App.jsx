@@ -69,11 +69,13 @@ function App() {
   );
 }
 
-function NavbarWithConditionalRender() {
-  const location = useLocation(); 
-  const shouldHideNavbar = location.pathname === '/Login' || location.pathname === '/Signup' || location.pathname === '/';
+function NavbarWithConditionalRender() {  
+  const location = useLocation();
+  // Update the condition to handle both cases and normalize the path
+  const noNavbarPaths = ['/login', '/signup', '/'];
+  const shouldHideNavbar = noNavbarPaths.includes(location.pathname.toLowerCase());
 
-  return !shouldHideNavbar ? <Navbar /> : null; // Render Navbar conditionally
+  return !shouldHideNavbar ? <Navbar /> : null;
 }
 
 export default App;
