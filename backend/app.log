@@ -2,3 +2,23 @@
 2024-12-13 20:07:35,601 - waitress.queue - WARNING - Task queue depth is 1
 2024-12-13 20:07:38,640 - waitress.queue - WARNING - Task queue depth is 1
 2024-12-13 20:07:41,206 - waitress.queue - WARNING - Task queue depth is 1
+2024-12-14 00:03:47,286 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-12-14 00:03:47,286 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2024-12-14 00:04:08,197 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 00:04:08] "OPTIONS /api/auth/login HTTP/1.1" 200 -
+2024-12-14 00:04:09,549 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 00:04:09] "POST /api/auth/login HTTP/1.1" 200 -
+2024-12-14 00:04:16,069 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 00:04:16] "OPTIONS /api/topics HTTP/1.1" 200 -
+2024-12-14 00:04:16,408 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 00:04:16] "OPTIONS /api/topics HTTP/1.1" 200 -
+2024-12-14 00:04:16,481 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 00:04:16] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
+2024-12-14 00:04:16,865 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 00:04:16] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
+2024-12-14 00:04:20,084 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 00:04:20] "OPTIONS /api/ask HTTP/1.1" 200 -
+2024-12-14 00:04:20,395 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 00:04:20] "[31m[1mPOST /api/ask HTTP/1.1[0m" 422 -
+2024-12-14 00:04:21,055 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 00:04:21] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
+2024-12-14 00:04:26,369 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 00:04:26] "OPTIONS /api/topics HTTP/1.1" 200 -
+2024-12-14 00:04:26,623 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 00:04:26] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
+2024-12-14 00:04:31,059 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 00:04:31] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
+2024-12-14 00:04:31,546 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 00:04:31] "OPTIONS /api/ask HTTP/1.1" 200 -
+2024-12-14 00:04:31,811 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 00:04:31] "[31m[1mPOST /api/ask HTTP/1.1[0m" 422 -
+2024-12-14 00:04:44,504 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 00:04:44] "OPTIONS /api/auth/login HTTP/1.1" 200 -
+2024-12-14 00:04:45,153 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 00:04:45] "POST /api/auth/login HTTP/1.1" 200 -
+2024-12-14 00:04:45,171 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 00:04:45] "[33mOPTIONS /api/lawyers/isCompleted/2 HTTP/1.1[0m" 404 -

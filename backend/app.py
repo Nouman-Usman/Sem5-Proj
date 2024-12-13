@@ -854,7 +854,7 @@ if __name__ == '__main__':
     try:
         threading.Thread(target=keep_alive, daemon=True).start()
         # Run the Flask app
-        app.run(app,
+        app.run(
             host='127.0.0.1',
             port=5000,
             debug=True,  # Disable in production
