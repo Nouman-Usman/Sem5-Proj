@@ -797,10 +797,16 @@ def send_message(chat_id):
     socketio.emit('message', {'chat_id': chat_id, 'message': message}, room=chat_id)
     return jsonify({"message": "Message sent"}), 201
 
+
+# Route for fetching real time messages of clients and lawyers
+    
+# const response = await api.post(`/chat/${recipientId}/message`, { message });
+# According to the above make a function
+
 @app.route('/api/chat/<chat_id>/messages', methods=['GET'])
 @jwt_required()
-def get_chat_messages(chat_id):
-    messages = db.get_chat_messages(chat_id)
+def get_chat_msg(chat_id):
+    messages = db.get_chat_msg(chat_id)
     return jsonify({"messages": messages}), 200
 
 @socketio.on('join')

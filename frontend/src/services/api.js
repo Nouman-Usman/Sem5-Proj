@@ -105,8 +105,8 @@ export const apiService = {
     return response.data;
   },
 
-  async sendMessage(chatId, message) {
-    const response = await api.post(`/chat/${chatId}/message`, { message });
+  async sendMessage(recipientId, message) {
+    const response = await api.post(`/chat/${recipientId}/message`, { message });
     return response.data;
   },
 
