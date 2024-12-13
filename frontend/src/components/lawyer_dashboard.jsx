@@ -10,14 +10,20 @@ const LawyerDashboard = () => {
   const [message, setMessage] = useState('');
   const [chatId, setChatId] = useState(null);
   const [lawyerData, setLawyerData] = useState({});
+  const [recentActivities, setRecentActivities] = useState([]);
   const socket = io('http://localhost:5000');
 
   useEffect(() => {
     const fetchLawyerData = async () => {
-      const response = await apiService.getLawyerData();
-      setLawyerData(response.data);
+      const response = await apiService.getLawyerDashboardData();
+      setLawyerData(response.lawyerData);
+      setRecentActivities(response.recentActivities);
     };
+
     fetchLawyerData();
+    const intervalId = setInterval(fetchLawyerData, 5000); // Fetch data every 5 seconds
+
+    return () => clearInterval(intervalId); // Cleanup interval on component unmount
   }, []);
 
   useEffect(() => {
@@ -126,7 +132,7 @@ const LawyerDashboard = () => {
         <div className="lg:col-span-2 bg-card rounded-lg shadow-md p-6 fadeInLeft">
           <h2 className="text-xl font-semibold mb-4 text-white">Recent Activities</h2>
           <div className="space-y-4">
-            {lawyerData.recentActivities?.map((activity, index) => (
+            {recentActivities.map((activity, index) => (
               <ActivityItem key={index} activity={activity} />
             ))}
           </div>
@@ -166,8 +172,8 @@ const ActivityItem = ({ activity }) => (
   <div className="flex items-center p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition">
     <div className="w-2 h-2 bg-purple rounded-full mr-4"></div>
     <div>
-      <p className="font-medium text-gray-800">{activity.title}</p>
-      <p className="text-sm text-gray-600">{activity.time}</p>
+      <p className="font-medium text-gray-800">{activity.Activity}</p>
+      <p className="text-sm text-gray-600">{activity.Time}</p>
     </div>
   </div>
 );
