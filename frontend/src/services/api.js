@@ -59,8 +59,14 @@ export const apiService = {
     return user?.role || null;
   },
   async getChatTopic() {
+    const token = localStorage.getItem("token");
     try {
-        const chatTopic = await api.get('/topics');
+        const chatTopic = await api.get('/topics',{
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+        console.log("chat topic is ", chatTopic)
         return {
           topic: chatTopic.data.chat_topics,
           session_id: chatTopic.data.chat_sessions || null,
@@ -136,6 +142,11 @@ export const apiService = {
     return response.data;
   },
 
+  async isLawyerProfileCompleted(lawyerid) {
+    const response = await api.get(`/lawyers/isCompleted/${lawyerid}`);
+    return response.data;
+  },
+
   async getLawyerDashboardData() {
     try {
       const response = await api.get('/lawyer/dashboard');
@@ -168,6 +179,7 @@ export const apiService = {
   },
 
   async createLawyerProfile(profileData) {
+    console.log(profileData)
     const response = await api.post('/lw/profile', profileData);
     return response.data;
   },

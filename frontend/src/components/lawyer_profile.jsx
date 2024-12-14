@@ -42,7 +42,6 @@ const LawyerProfile = () => {
       if (parseInt(formData.experience) < 0) {
         throw new Error('Experience must be a positive number');
       }
-
       const response = await apiService.createLawyerProfile(formData);
       console.log('Profile created successfully:', response);
       navigate('/dashboard');

@@ -15,9 +15,9 @@ from datetime import timedelta
 from flask import Flask, jsonify, request
 from werkzeug.utils import secure_filename
 from sklearn.feature_extraction.text import TfidfVectorizer
-# from flask_socketio import SocketIO, join_room, leave_room, send
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity, get_jwt
+from flask_socketio import SocketIO, join_room, leave_room, send
 
 load_dotenv()
 UPLOAD_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'uploads', 'profile_images')
@@ -46,7 +46,7 @@ def log_memory_usage():
 
 app = Flask(__name__)
 CORS(app)
-# socketio = SocketIO(app, cors_allowed_origins="*")
+socketio = SocketIO(app, cors_allowed_origins="*")
 
 agent = None
 
@@ -432,6 +432,19 @@ def get_lawyer(lawyer_id):
         logger.error(f"Error fetching lawyer: {str(e)}")
         return jsonify({"error": "Failed to fetch lawyer"}), 500
     
+@app.route('/api/lawyers/isCompleted/<lawyer_id>', methods=['GET'])
+def getIsLayerIdCompleted(lawyer_id):
+    try:
+        lawyer = db.get_lawyer_by_id(lawyer_id)
+        if not lawyer:
+            return jsonify({"is_completed": False}), 200
+        return jsonify({
+            "is_completed": True
+        }), 200
+    except Exception as e:
+        logger.error(f"Error fetching lawyer: {str(e)}")
+        return jsonify({"error": "Failed to fetch lawyer"}), 500
+    
 # Route for fetching all clients
 @app.route('/api/clients', methods=['GET'])
 def get_clients():
@@ -783,66 +796,42 @@ def start_chat():
     chat_id = db.create_chat_session(initiator_id, recipient_id)
     return jsonify({"chat_id": chat_id}), 201
 
-# @app.route('/api/chat/<chat_id>/messages', methods=['POST'])
-# @jwt_required()
-# def send_message(chat_id):
-#     data = request.get_json()
-#     sender_id = get_jwt_identity()
-#     message = data.get('message')
+@app.route('/api/chat/<chat_id>/messages', methods=['POST'])
+@jwt_required()
+def send_message(chat_id):
+    data = request.get_json()
+    sender_id = get_jwt_identity()
+    message = data.get('message')
     
-#     if not message:
-#         return jsonify({"error": "Message is required"}), 400
+    if not message:
+        return jsonify({"error": "Message is required"}), 400
     
-#     db.create_chat_message(chat_id, sender_id, message)
-#     socketio.emit('message', {'chat_id': chat_id, 'message': message}, room=chat_id)
-#     return jsonify({"message": "Message sent"}), 201
-
+    db.create_chat_message(chat_id, sender_id, message)
+    socketio.emit('message', {'chat_id': chat_id, 'message': message}, room=chat_id)
+    return jsonify({"message": "Message sent"}), 201
 
 # Route for fetching real time messages of clients and lawyers
     
 # const response = await api.post(`/chat/${recipientId}/message`, { message });
 # According to the above make a function
 
-# @app.route('/api/chat/<chat_id>/messages', methods=['GET'])
-# @jwt_required()
-# def get_chat_msg(chat_id):
-#     messages = db.get_chat_msg(chat_id)
-#     return jsonify({"messages": messages}), 200
-
-# @socketio.on('join')
-# def on_join(data):
-#     chat_id = data['chat_id']
-#     join_room(chat_id)
-#     send(f'User has joined the chat {chat_id}', to=chat_id)
-
-# @socketio.on('leave')
-# def on_leave(data):
-#     chat_id = data['chat_id']
-#     leave_room(chat_id)
-#     send(f'User has left the chat {chat_id}', to=chat_id)
-
-@app.route('/api/lawyer/dashboard', methods=['GET'])
+@app.route('/api/chat/<chat_id>/messages', methods=['GET'])
 @jwt_required()
-def get_lawyer_dashboard():
-    try:
-        current_user_id = get_jwt_identity()
-        lawyer_data = db.get_lawyer_dashboard_data(current_user_id)
-        recent_activities = db.get_recent_activities(current_user_id)
-        print(lawyer_data)
-        print(recent_activities)
-        lawyer_data = {
-            "totalCases": 5,
-            "activeCLients": 2,
-            "rating": 4.5,
-            "appointments": 3
-        }
-        return jsonify({
-            "lawyerData": lawyer_data,
-            "recentActivities": recent_activities
-        }), 200
-    except Exception as e:
-        logger.error(f"Error fetching lawyer dashboard data: {str(e)}")
-        return jsonify({"error": "Failed to fetch dashboard data"}), 500
+def get_chat_msg(chat_id):
+    messages = db.get_chat_msg(chat_id)
+    return jsonify({"messages": messages}), 200
+
+@socketio.on('join')
+def on_join(data):
+    chat_id = data['chat_id']
+    join_room(chat_id)
+    send(f'User has joined the chat {chat_id}', to=chat_id)
+
+@socketio.on('leave')
+def on_leave(data):
+    chat_id = data['chat_id']
+    leave_room(chat_id)
+    send(f'User has left the chat {chat_id}', to=chat_id)
 
 def keep_alive():
     while True:
@@ -853,8 +842,9 @@ if __name__ == '__main__':
     import time
     try:
         threading.Thread(target=keep_alive, daemon=True).start()
+
         # Run the Flask app
-        app.run(app,
+        socketio.run(app,
             host='127.0.0.1',
             port=5000,
             debug=True,  # Disable in production
