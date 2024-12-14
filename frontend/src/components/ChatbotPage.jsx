@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import 'react-perfect-scrollbar/dist/css/styles.css';
 import Logo from "@/assets/Main logo.svg";
+import { authService } from "@/services/auth";  // Add this import at the top with other imports
 
 const LawyerCard = ({ lawyer, onContact }) => (
   <Card className="mt-2 p-4 bg-[#1A1A2E]/90 border border-[#9333EA]/20 backdrop-blur-lg shadow-[0_0_15px_rgba(147,51,234,0.2)] hover:shadow-[0_0_30px_rgba(147,51,234,0.3)] transition-all duration-300">
@@ -192,6 +193,20 @@ export function ChatbotPage() {
     setMessages(newChats);
   }
 
+  const handleGoPremium = () => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (user.role === 'lawyer') {
+      navigate('/lawyer-subscription');
+    } else if (user.role === 'client') {
+      navigate('/subscription-plans');
+    }
+  };
+
+  const handleLogout = () => {
+    authService.logout();  // Changed from apiService.logout() to authService.logout()
+    navigate('/login');
+  };
+
   return (
     <div className="flex h-screen overflow-hidden bg-[#030614]">
       {/* Sidebar with toggle button inside */}
@@ -262,7 +277,7 @@ export function ChatbotPage() {
               <Button 
                 variant="outline" 
                 className="w-full text-left text-white bg-black hover:text-white hover:bg-white/5 border border-[#9333EA] hover:shadow-[0_0_15px_rgba(147,51,234,0.3)]"
-                onClick={() => navigate('/lawyer-subscription')}
+                onClick={handleGoPremium}  // Updated onClick handler
               >
                 <StarIcon className="h-4 w-4 mr-2" />
                 {isSidebarOpen && "Go Premium"}
@@ -278,7 +293,7 @@ export function ChatbotPage() {
               <Button 
                 variant="outline" 
                 className="w-full text-left text-white bg-black hover:text-white hover:bg-white/5 border border-[#9333EA] hover:shadow-[0_0_15px_rgba(147,51,234,0.3)]"
-                onClick={() => apiService.logout()}
+                onClick={handleLogout}
               >
                 <LogOut className="h-4 w-4 mr-2" />
                 {isSidebarOpen && "Logout"}

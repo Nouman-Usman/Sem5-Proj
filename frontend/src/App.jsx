@@ -30,7 +30,7 @@ function App() {
           </ProtectedRoute>
         } />
         <Route path="/lawyers" element={
-          <ProtectedRoute allowedRoles={['lawyer']}>
+          <ProtectedRoute allowedRoles={['client']}>  {/* Changed from 'lawyer' to 'client' */}
             <LawyerRecommendationPage />
           </ProtectedRoute>
         } />

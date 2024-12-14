@@ -87,7 +87,7 @@ export function Navbar() {
               </a>
               {userRole === 'client' && (
                 <>
-                  <a href="/lawyers" className={linkClasses}>
+                  <a href="/lawyers" className={linkClasses}>  {/* Changed from /Lawyers to /lawyers */}
                     <span className="relative z-10">Lawyer Recommendation</span>
                   </a>
                   <a href="/subscription-plans" className={linkClasses}>
