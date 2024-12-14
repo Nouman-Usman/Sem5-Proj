@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export const ProtectedRoute = ({ children, allowedRoles }) => {
   const [showProfilePopup, setShowProfilePopup] = useState(false);
@@ -26,20 +27,66 @@ export const ProtectedRoute = ({ children, allowedRoles }) => {
   return (
     <>
       {children}
-      {showProfilePopup && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-          <div className="bg-white p-6 rounded-lg shadow-xl">
-            <h3 className="text-2xl font-bold text-purple-600 mb-2">Complete Your Profile</h3>
-            <p className="text-gray-600 mb-4">Please complete your profile to access the dashboard.</p>
-            <button
-              onClick={() => window.location.href = '/lawyer-profile'}
-              className="bg-purple-600 text-white py-2 px-4 rounded-lg hover:bg-purple-700 transition-colors"
+      <AnimatePresence>
+        {showProfilePopup && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 flex items-center justify-center bg-black/50 backdrop-blur-sm z-50"
+          >
+            <motion.div
+              initial={{ scale: 0.5, y: 100 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.5, y: 100 }}
+              transition={{ type: "spring", bounce: 0.4 }}
+              className="relative bg-[#1A1A2E]/90 rounded-2xl overflow-hidden"
             >
-              Complete Profile
-            </button>
-          </div>
-        </div>
-      )}
+              {/* Glowing border effect */}
+              <div className="absolute inset-0 bg-gradient-to-r from-[#9333EA] to-[#7E22CE] animate-borderGlow"></div>
+              
+              {/* Content container */}
+              <div className="relative m-[1px] bg-[#1A1A2E] rounded-2xl p-8">
+                {/* Purple orb background effects */}
+                <div className="absolute inset-0 overflow-hidden">
+                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[200px] h-[200px] bg-[#9333EA]/20 rounded-full blur-[32px]"></div>
+                  <div className="absolute top-0 right-0 w-[100px] h-[100px] bg-[#7E22CE]/20 rounded-full blur-[24px]"></div>
+                </div>
+
+                {/* Content */}
+                <div className="relative z-10">
+                  <motion.div
+                    initial={{ y: -20 }}
+                    animate={{ y: 0 }}
+                    className="text-center"
+                  >
+                    <h3 className="text-3xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">
+                      Complete Your Profile
+                    </h3>
+                    <p className="text-gray-300 mb-6 max-w-md">
+                      Please complete your profile to unlock all features and start connecting with clients.
+                    </p>
+                    <motion.button
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      onClick={() => {
+                        setShowProfilePopup(false);
+                        window.location.href = '/lawyer-profile';
+                      }}
+                      className="bg-gradient-to-r from-[#9333EA] to-[#7E22CE] text-white 
+                        py-3 px-8 rounded-lg font-medium
+                        hover:shadow-[0_0_20px_rgba(147,51,234,0.5)]
+                        transition-all duration-300"
+                    >
+                      Complete Profile
+                    </motion.button>
+                  </motion.div>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 };
