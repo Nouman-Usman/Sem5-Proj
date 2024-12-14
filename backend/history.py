@@ -210,6 +210,23 @@ class SQLChatMessageHistory(BaseChatMessageHistory):
             cursor.close()
             conn.close()
 
+    def update_user(self, user_id, name, email, password, role):
+        try:
+            conn = self._get_db_connection()
+            cursor = conn.cursor()
+            query = """UPDATE Users 
+                      SET UserName = ?, Email = ?, Password = ?, UserType = ?
+                      WHERE UserId = ?"""
+            cursor.execute(query, (name, email, password, role, user_id))
+            conn.commit()
+            return True
+        except Exception as e:
+            logging.error(f"Error updating user: {e}")
+            return False
+        finally:
+            cursor.close()
+            conn.close()
+
     def get_user(self, email: str) -> Optional[Dict]:
         try:
             conn = self._get_db_connection()

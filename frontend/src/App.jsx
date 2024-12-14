@@ -14,6 +14,7 @@ import LawyerSubscription from './components/lawyer_sub.jsx';
 import SubscriptionPlans from './components/cleint_sub.jsx';
 import LawyerDashboard from './components/lawyer_dashboard';
 import { ProtectedRoute } from './components/ProtectedRoute';
+import AccountSettings from './components/AccountSettings.jsx';
 
 function App() {
   return (    
@@ -58,6 +59,11 @@ function App() {
         <Route path="/subscription-plans" element={
           <ProtectedRoute allowedRoles={['client']}>
             <SubscriptionPlans />
+          </ProtectedRoute>
+        } />
+        <Route path="/account-settings" element={
+          <ProtectedRoute allowedRoles={['client', 'lawyer']}>
+            <AccountSettings />
           </ProtectedRoute>
         } />
         <Route path="/about" element={<About />} />

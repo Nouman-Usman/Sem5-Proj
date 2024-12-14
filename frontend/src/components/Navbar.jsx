@@ -2,10 +2,12 @@ import React, { useState, useEffect } from "react";
 import { Menu as MenuIcon, X, ChevronDown, User, LogOut, Settings } from "lucide-react";
 import { Menu } from "@headlessui/react";
 import { authService } from "@/services/auth";
+import { useNavigate } from 'react-router-dom';
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -14,6 +16,19 @@ export function Navbar() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const handleHomeClick = () => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (user) {
+      if (user.role === 'client') {
+        navigate('/user-home');
+      } else if (user.role === 'lawyer') {
+        navigate('/lawyer-dashboard');
+      }
+    } else {
+      navigate('/');
+    }
+  };
 
   const navbarClasses = `
     w-full 
@@ -56,9 +71,9 @@ export function Navbar() {
           {/* Centered Navigation Items */}
           <div className="hidden md:flex flex-1 justify-center">
             <div className="flex items-baseline space-x-6">
-              <a href="/" className={linkClasses}>
+              <button onClick={handleHomeClick} className={linkClasses}>
                 <span className="relative z-10">Home</span>
-              </a>
+              </button>
               <a href="/chatbot" className={linkClasses}>
                 <span className="relative z-10">Chatbot</span>
               </a>
@@ -160,7 +175,7 @@ export function Navbar() {
           rounded-b-[50px]
         ">
           <div className="px-2 pt-2 pb-3 space-y-1">
-            <a href="/" className={linkClasses}>Home</a>
+            <button onClick={handleHomeClick} className={linkClasses}>Home</button>
             <a href="/chatbot" className={linkClasses}>Chatbot</a>
             <a href="/lawyers" className={linkClasses}>Explore Lawyers</a>
           </div>
