@@ -54,7 +54,7 @@ export function ChatbotPage() {
   useEffect(() => {
     const fetchChatTopics = async () => {
       const chatTopics = await apiService.getChatTopic();
-      console.log("chat topics are ", chatTopics)
+      // console.log("chat topics are ", chatTopics)
       // console.log(cha)
       if (chatTopics) {
         setSessionHistory(chatTopics.topic.map((topic, index) => ({
@@ -141,7 +141,8 @@ export function ChatbotPage() {
 
     // now we will just load chats in this syntax
     // { id: 1, text: "Hello! How can I assist you with your legal questions today?", sender: "ai" }
-
+    const chatTopics = await apiService.getChatsFromSessionId(session.id);
+    console.log(chatTopics);
   }
 
   return (

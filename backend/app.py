@@ -430,6 +430,11 @@ def get_lawyer(lawyer_id):
         logger.error(f"Error fetching lawyer: {str(e)}")
         return jsonify({"error": "Failed to fetch lawyer"}), 500
     
+
+
+
+
+    
 @app.route('/api/lawyers/isCompleted/<user_id>', methods=['GET'])
 def getIsLayerIdCompleted(user_id):
     try:
@@ -495,6 +500,21 @@ def get_chats():
     except Exception as e:
         logger.error(f"Error fetching chat sessions: {str(e)}")
         return jsonify({"error": "Failed to fetch chat sessions"}), 500
+    
+
+@app.route('/api/chats/<session_id>', methods=['GET'])
+def get_chat(session_id):
+    try:
+        newChats = db.get_chats_by_session_id(session_id)
+        if not newChats:
+            return jsonify({"error": "Chat session not found"}), 404
+        return jsonify({
+            "newChats": newChats
+        }), 200
+    except Exception as e:
+        logger.error(f"Error fetching chat session: {str(e)}")
+        return jsonify({"error": "Failed to fetch chat session"}), 500
+
 
 # Route for fetching a single chat session
 @app.route('/api/chats/<chat_id>', methods=['GET'])

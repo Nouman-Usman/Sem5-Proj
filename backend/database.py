@@ -454,6 +454,12 @@ class Database:
             cursor = conn.cursor()
             cursor.execute("SELECT * FROM Sessions WHERE SessionId = ?", session_id)
             return cursor.fetchone()
+        
+    def get_chats_by_session_id(self, session_id):
+        with self.get_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute("SELECT * FROM ChatMessages WHERE SessionId = ?", session_id)
+            return cursor.fetchone()
 
     def delete_session(self, session_id):
         with self.get_connection() as conn:

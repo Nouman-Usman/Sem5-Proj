@@ -199,6 +199,18 @@ export const apiService = {
       return null;
     }
   },
+
+  async getChatsFromSessionId(sessionId) {
+    try {
+      const chats = await api.get(`/chats/${sessionId}`);
+      return chats
+    } catch (error) {
+      console.error('Failed to fetch session messages:', error.message);
+      return null;
+    }
+  
+  },
+
   async askQuestion(question) {
     try {
       const response = await api.post('/ask', {
