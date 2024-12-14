@@ -771,3 +771,20 @@ class Database:
             query = "SELECT * FROM ChatMessages WHERE SessionId = ? ORDER BY Timestamp"
             cursor.execute(query, (session_id,))
             return cursor.fetchall()
+
+    def get_credits_by_user_id(user_id):
+        db = Database()
+        subscription = db.get_current_subscription(user_id)
+        if subscription:
+            return subscription["RemainingCredits"]
+        return 0
+
+    def update_credits_by_user_id(user_id, credits):
+        db = Database()
+        subscription = db.get_current_subscription(user_id)
+        if subscription:
+            remaining_credits = credits
+            expiry_date = subscription["ExpiryDate"]
+            db.update_subscription(subscription["SubsId"], subscription["CurrentSubscription"], expiry_date, remaining_credits)
+            return remaining_credits
+        return 0

@@ -501,6 +501,35 @@ def get_chats():
         logger.error(f"Error fetching chat sessions: {str(e)}")
         return jsonify({"error": "Failed to fetch chat sessions"}), 500
     
+# Route for getting credits by user_id
+@app.route('/api/get/credits/', methods=['GET'])
+@jwt_required()
+def get_credits():
+    try:
+        user_id = get_jwt_identity()
+        credits = db.get_credits_by_user_id(user_id)
+        return jsonify({
+            "credits": credits
+            }), 200
+    except Exception as e:
+        logger.error(f"Error fetching credits: {str(e)}")
+        return jsonify({"error": "Failed to fetch credits"}), 500
+
+# Route for updating credits by user_id
+@app.route('/api/up/credits/', methods=['PUT'])
+@jwt_required()
+def update_credits():
+    try:
+        user_id = get_jwt_identity()
+        data = request.get_json()
+        credits = data.get('credits')
+        if not credits:
+            return jsonify({"error": "Missing required fields"}), 400
+        db.update_credits_by_user_id(user_id, credits)
+        return jsonify({"message": "Credits updated successfully"}), 200
+    except Exception as e:
+        logger.error(f"Error updating credits: {str(e)}")
+        return jsonify({"error": "Failed to update credits"}), 500
 
 @app.route('/api/chats/<session_id>', methods=['GET'])
 def get_chat(session_id):
@@ -520,7 +549,6 @@ def get_chat(session_id):
                 "recommended_lawyers": json.loads(chat[6]) if chat[6] else None
             }
             formatted_chats.append(formatted_chat)
-        print(formatted_chats)
         return jsonify({
             "data": formatted_chats
         }), 200
