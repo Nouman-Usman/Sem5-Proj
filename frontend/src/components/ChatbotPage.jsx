@@ -80,38 +80,33 @@ export function ChatbotPage() {
     if (inputMessage.trim() === "") return;
 
     try {
-      // function to get current credits
-      const currentCredits = apiService.getUserCredits();
-      if (currentCredits == 0) {
-        if (apiService.getUserRole() == 'lawyer') {
-          navigate("/lawyer-subscription");
-        }
-        else{
-          navigate("/subscription-plans");
-        }
+      // Get current credits
+      const currentCredits = await apiService.getUserCredits();
+      
+      if (currentCredits <= 0) {
+        const userRole = apiService.getUserRole();
+        navigate(userRole === 'lawyer' ? "/lawyer-subscription" : "/subscription-plans");
+        return;
       }
-      else{
-        apiService.updateCredits(currentCredits - 1);
-      }
-    } catch (error) {
-      console.log("error handling credits: ", error);
-      return;
-    }
 
+      // Add message to chat
+      const newUserMessage = { id: messages.length + 1, text: inputMessage, sender: "user" };
+      setMessages(prev => [...prev, newUserMessage]);
+      setInputMessage("");
+      setProcessing("thinking");
+      setError(null);
 
-    const newUserMessage = { id: messages.length + 1, text: inputMessage, sender: "user" };
-    setMessages(prev => [...prev, newUserMessage]);
-    setInputMessage("");
-    setProcessing("thinking");
-    setError(null);
-
-    try {
+      // Get AI response
       const response = await apiService.askQuestion(inputMessage);
 
       if (!response) {
         throw new Error('Empty response received');
       }
 
+      // Deduct credit only after successful response
+      await apiService.updateCredits(currentCredits - 1);
+
+      // Add AI response to chat
       const aiResponse = {
         id: messages.length + 2,
         text: response.answer,

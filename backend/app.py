@@ -507,10 +507,16 @@ def get_chats():
 def get_credits():
     try:
         user_id = get_jwt_identity()
+        if not user_id:
+            return jsonify({"error": "User not authenticated"}), 401
+            
         credits = db.get_credits_by_user_id(user_id)
+        
         return jsonify({
-            "credits": credits
-            }), 200
+            "credits": credits,
+            "user_id": user_id
+        }), 200
+
     except Exception as e:
         logger.error(f"Error fetching credits: {str(e)}")
         return jsonify({"error": "Failed to fetch credits"}), 500
@@ -521,12 +527,26 @@ def get_credits():
 def update_credits():
     try:
         user_id = get_jwt_identity()
+        if not user_id:
+            return jsonify({"error": "User not authenticated"}), 401
+            
         data = request.get_json()
-        credits = data.get('credits')
-        if not credits:
-            return jsonify({"error": "Missing required fields"}), 400
-        db.update_credits_by_user_id(user_id, credits)
-        return jsonify({"message": "Credits updated successfully"}), 200
+        if not isinstance(data.get('credits'), (int, float)):
+            return jsonify({"error": "Invalid credits value"}), 400
+            
+        credits = int(data['credits'])
+        if credits < 0:
+            return jsonify({"error": "Credits cannot be negative"}), 400
+            
+        rows_updated = db.update_credits_by_user_id(user_id, credits)
+        if rows_updated == 0:
+            return jsonify({"error": "No active subscription found"}), 404
+            
+        return jsonify({
+            "message": "Credits updated successfully",
+            "credits": credits
+        }), 200
+        
     except Exception as e:
         logger.error(f"Error updating credits: {str(e)}")
         return jsonify({"error": "Failed to update credits"}), 500

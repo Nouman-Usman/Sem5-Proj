@@ -290,17 +290,30 @@ export const apiService = {
       return null;
     }
   },
-  async getUserCredits()
-  {
-    const cred = await api.get('/get/credits/');
-    console.log(cred);
-    return cred;
+  async getUserCredits() {
+    try {
+      const response = await api.get('/get/credits/');
+      if (!response.data || typeof response.data.credits !== 'number') {
+        throw new Error('Invalid credits data received');
+      }
+      return response.data.credits;
+    } catch (error) {
+      console.error('Failed to fetch credits:', error);
+      throw new Error('Failed to fetch credits');
+    }
   },
-  async updateCredits(credits)
-  {
-    const cred = await api.put('/up/credits/', {credits});
-    console.log(cred);
-    return cred;
+
+  async updateCredits(credits) {
+    try {
+      if (typeof credits !== 'number' || credits < 0) {
+        throw new Error('Invalid credits value');
+      }
+      const response = await api.put('/up/credits/', { credits });
+      return response.data;
+    } catch (error) {
+      console.error('Failed to update credits:', error);
+      throw new Error(error.response?.data?.error || 'Failed to update credits');
+    }
   },
 
   // Profile related endpoints

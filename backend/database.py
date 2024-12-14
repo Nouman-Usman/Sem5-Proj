@@ -772,19 +772,38 @@ class Database:
             cursor.execute(query, (session_id,))
             return cursor.fetchall()
 
-    def get_credits_by_user_id(user_id):
-        db = Database()
-        subscription = db.get_current_subscription(user_id)
-        if subscription:
-            return subscription["RemainingCredits"]
-        return 0
+    def get_credits_by_user_id(self, user_id):
+        """Get credits for a user from their current subscription"""
+        with self.get_connection() as conn:
+            cursor = conn.cursor()
+            query = """
+                SELECT TOP 1 RemainingCredits 
+                FROM Subscription 
+                WHERE UserId = ? 
+                  AND ExpiryDate > GETDATE()
+                ORDER BY ExpiryDate DESC
+            """
+            cursor.execute(query, (user_id,))
+            row = cursor.fetchone()
+            return row[0] if row else 0
 
-    def update_credits_by_user_id(user_id, credits):
-        db = Database()
-        subscription = db.get_current_subscription(user_id)
-        if subscription:
-            remaining_credits = credits
-            expiry_date = subscription["ExpiryDate"]
-            db.update_subscription(subscription["SubsId"], subscription["CurrentSubscription"], expiry_date, remaining_credits)
-            return remaining_credits
-        return 0
+    def update_credits_by_user_id(self, user_id, credits):
+        """Update credits for a user's current subscription"""
+        with self.get_connection() as conn:
+            cursor = conn.cursor()
+            query = """
+                UPDATE Subscription 
+                SET RemainingCredits = ?
+                WHERE UserId = ? 
+                  AND ExpiryDate > GETDATE()
+                  AND SubsId = (
+                    SELECT TOP 1 SubsId 
+                    FROM Subscription 
+                    WHERE UserId = ? 
+                      AND ExpiryDate > GETDATE()
+                    ORDER BY ExpiryDate DESC
+                  )
+            """
+            cursor.execute(query, (credits, user_id, user_id))
+            conn.commit()
+            return cursor.rowcount
