@@ -47,18 +47,40 @@ const LawyerProfile = () => {
     let hasError = false;
     setError('');
 
-    // Validate only filled fields before moving to next step
-    if (currentStep === 1) {
-      if (formData.cnic && (formData.cnic.length !== 13 || !/^\d+$/.test(formData.cnic))) {
-        setError('CNIC must be 13 digits');
-        hasError = true;
+    try {
+      // Validate current step fields
+      switch (currentStep) {
+        case 1:
+          if (!formData.cnic || !formData.licenseNumber) {
+            throw new Error('Please fill in all fields for this step');
+          }
+          if (formData.cnic && (formData.cnic.length !== 13 || !/^\d+$/.test(formData.cnic))) {
+            throw new Error('CNIC must be 13 digits');
+          }
+          break;
+        case 2:
+          if (!formData.location || !formData.experience) {
+            throw new Error('Please fill in all fields for this step');
+          }
+          if (parseInt(formData.experience) < 0) {
+            throw new Error('Experience must be a positive number');
+          }
+          break;
+        case 3:
+          if (!formData.specialization || !formData.contact || !formData.email) {
+            throw new Error('Please fill in all fields for this step');
+          }
+          if (formData.email && !formData.email.includes('@')) {
+            throw new Error('Please enter a valid email address');
+          }
+          break;
       }
-    }
 
-    if (!hasError && validateStep(currentStep)) {
-      setCurrentStep(currentStep + 1);
-    } else if (!hasError) {
-      setError('Please fill in all required fields');
+      if (!hasError) {
+        setCurrentStep(currentStep + 1);
+      }
+    } catch (err) {
+      setError(err.message);
     }
   };
 
@@ -72,17 +94,30 @@ const LawyerProfile = () => {
     setLoading(true);
 
     try {
-      // Only validate when submitting
-      if (formData.cnic && (formData.cnic.length !== 13 || !/^\d+$/.test(formData.cnic))) {
+      // Validate all required fields first
+      if (!formData.cnic || !formData.licenseNumber || !formData.location || 
+          !formData.experience || !formData.specialization || !formData.contact || 
+          !formData.email) {
+        throw new Error('Please complete all fields before submitting');
+      }
+
+      // Validate field formats
+      if (formData.cnic.length !== 13 || !/^\d+$/.test(formData.cnic)) {
         throw new Error('CNIC must be 13 digits');
       }
 
-      if (formData.email && !formData.email.includes('@')) {
+      if (!formData.email.includes('@')) {
         throw new Error('Please enter a valid email address');
       }
 
-      if (formData.experience && parseInt(formData.experience) < 0) {
+      if (parseInt(formData.experience) < 0) {
         throw new Error('Experience must be a positive number');
+      }
+
+      // Only proceed if we're on the last step
+      if (currentStep !== 3) {
+        handleNext();
+        return;
       }
 
       const response = await apiService.createLawyerProfile(formData);
