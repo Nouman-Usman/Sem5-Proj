@@ -85,8 +85,7 @@ export function ChatbotPage() {
       if (currentCredits == 0) {
         if (apiService.getUserRole() == 'lawyer') {
           navigate("/lawyer-subscription");
-        }
-        else{
+        } else {
           navigate("/subscription-plans");
         }
       }
@@ -97,7 +96,6 @@ export function ChatbotPage() {
       console.log("error handling credits: ", error);
       return;
     }
-
 
     const newUserMessage = { id: messages.length + 1, text: inputMessage, sender: "user" };
     setMessages(prev => [...prev, newUserMessage]);
