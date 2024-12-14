@@ -513,9 +513,9 @@ def get_chat(chat_id):
 
 # Route for fetching all chat messages
 @app.route('/api/chat/<chat_id>/messages', methods=['GET'])
-def get_chat_messages(chat_id):
+def get_chat_messages(session_id):
     try:
-        chat_messages = db.get_chat_messages_by_chat_id(chat_id)
+        chat_messages = db.get_chat_messages_by_session_id(session_id)
         return jsonify({
             "chat_messages": chat_messages,
             "count": len(chat_messages)

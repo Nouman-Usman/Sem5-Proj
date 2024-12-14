@@ -471,15 +471,16 @@ Question to route: {question}
                         print("Output:")
                         last_output = value                        
                     gc.collect()
-                result = last_output["generation"]
+                result = last_output["source"]
+                breakpoint()
                 logging.info(f"Result: {result}")
                 response_text = result if isinstance(result, str) else str(result)
                 response = {
                     "chat_response": response_text,
                     "references": [
-                        doc.metadata.get("source", "")
-                        for doc in last_output["documents"]
-                        if "source" or "file_name" in doc.metadata
+                        # for source in last_output["source"]:
+                        #     source,
+                        # ],
                     ],
                     "Sentiment": sentiment,
                 }
