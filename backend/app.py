@@ -264,8 +264,6 @@ def add_lawyer_profile():
         except (ValueError, TypeError) as e:
             logger.error(f"Invalid experience value: {data.get('experience')}")
             return jsonify({"error": "Experience must be a valid positive number"}), 400
-
-        # Basic format validations
         if not data['cnic'].isdigit() or len(data['cnic']) != 13:
             logger.error(f"Invalid CNIC format: {data['cnic']}")
             return jsonify({"error": "Invalid CNIC format. Must be 13 digits"}), 400
@@ -273,7 +271,6 @@ def add_lawyer_profile():
         if not '@' in data['email']:
             logger.error(f"Invalid email format: {data['email']}")
             return jsonify({"error": "Invalid email format"}), 400
-
         lawyer_data = {
             'user_id': current_user_id,
             'cnic': data.get('cnic'),

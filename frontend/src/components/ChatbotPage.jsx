@@ -144,6 +144,7 @@ export function ChatbotPage() {
     const prevChat = await apiService.getChatsFromSessionId(session.id);
     if (prevChat == null) {
       console.log("No chats found for this session");
+      setMessages([]);
       return;
     };
     console.log(prevChat);

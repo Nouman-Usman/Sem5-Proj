@@ -314,8 +314,17 @@ export const apiService = {
 
   async createLawyerProfile(profileData) {
     console.log(profileData)
-    const response = await api.post('/lw/profile', profileData);
-    return response.data;
+    try {
+      console.log("profile data is ", profileData)
+      const response = await api.post('/lw/profile', profileData);
+
+      localStorage.setItem('isProfileCompleted', true);
+      return response.data;
+    } catch (error) {
+      console.error('Failed to create lawyer profile:', error.message);
+      return null; 
+    }
+
   },
 
   async createSubscription(subscriptionData) {
