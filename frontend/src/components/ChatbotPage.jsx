@@ -79,29 +79,23 @@ export function ChatbotPage() {
     e.preventDefault();
     if (inputMessage.trim() === "") return;
 
-    try {
-      // function to get current credits
-      const currentCredits = apiService.getUserCredits();
-      if (currentCredits == 0) {
-        if (apiService.getUserRole() == 'lawyer') {
-          navigate("/lawyer-subscription");
-        } else {
-          navigate("/subscription-plans");
-        }
-      }
-      else{
-        apiService.updateCredits(currentCredits - 1);
-      }
-    } catch (error) {
-      console.log("error handling credits: ", error);
-      return;
-    }
-
     const newUserMessage = { id: messages.length + 1, text: inputMessage, sender: "user" };
     setMessages(prev => [...prev, newUserMessage]);
     setInputMessage("");
     setProcessing("thinking");
     setError(null);
+
+    try {
+      // Check credits
+      const currentCredits = await apiService.getUserCredits();
+      if (currentCredits === 0) {
+        if (apiService.getUserRole() === 'lawyer') {
+          navigate("/lawyer-subscription");
+        } else {
+          navigate("/subscription-plans");
+        }
+        return;
+      }
 
       // Get AI response
       const response = await apiService.askQuestion(inputMessage);
@@ -125,6 +119,7 @@ export function ChatbotPage() {
       setReferences(response.references || []);
 
     } catch (err) {
+      console.error("Error:", err);
       setError(err.message);
       const errorMessage = {
         id: messages.length + 2,
