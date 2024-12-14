@@ -6,6 +6,8 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Loader2, Send, User, Bot, ChevronLeft, ChevronRight, Star, PlusCircle, Trash2 } from "lucide-react";
 import apiService from "@/services/api";  // Add this import
+import { useNavigate } from "react-router-dom";
+
 
 const LawyerCard = ({ lawyer, onContact }) => (
   <Card className="mt-2 p-4 bg-white shadow-md">
@@ -29,6 +31,8 @@ const LawyerCard = ({ lawyer, onContact }) => (
 );
 
 export function ChatbotPage() {
+  const navigate = useNavigate(); // useNavigate hook for navigation
+
   const [messages, setMessages] = useState([
     { id: 1, text: "Hello! How can I assist you with your legal questions today?", sender: "ai" }
   ]);
@@ -74,6 +78,26 @@ export function ChatbotPage() {
   const handleSendMessage = async (e) => {
     e.preventDefault();
     if (inputMessage.trim() === "") return;
+
+    try {
+      // function to get current credits
+      // const currentCredits = getUserCredits();
+      const currentCredits = 0;
+      if (currentCredits == 0) {
+        if (apiService.getUserRole() == 'lawyer') {
+          navigate("/lawyer-subscription");
+        }
+        else{
+          navigate("/subscription-plans");
+        }
+      }
+      // function to update credits, this will also less credit by 1 on backend
+      // await updateCredits
+    } catch (error) {
+      console.log("error handling credits: ", error);
+      return;
+    }
+
 
     const newUserMessage = { id: messages.length + 1, text: inputMessage, sender: "user" };
     setMessages(prev => [...prev, newUserMessage]);

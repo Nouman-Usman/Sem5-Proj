@@ -11,6 +11,9 @@ const LawyerDashboard = () => {
   const [lawyerData, setLawyerData] = useState({});
   const [recentActivities, setRecentActivities] = useState([]);
   const socket = io('http://localhost:5000');
+  const [displayName, setDisplayName] = useState("");
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [delta, setDelta] = useState(200);
 
   useEffect(() => {
     const fetchLawyerData = async () => {
@@ -39,6 +42,40 @@ const LawyerDashboard = () => {
     }
   }, [chatId]);
 
+  useEffect(() => {
+    // Get user name from localStorage
+    const user = JSON.parse(localStorage.getItem('user'));
+    const userName = user?.name || 'Lawyer';
+    setDisplayName(userName.charAt(0)); // Start with first character
+  }, []);
+
+  useEffect(() => {
+    let ticker = setInterval(() => {
+      tick();
+    }, delta);
+
+    return () => clearInterval(ticker);
+  }, [displayName, isDeleting]);
+
+  const tick = () => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    const fullName = user?.name || 'Lawyer';
+    
+    if (isDeleting) {
+      setDisplayName(fullName.substring(0, displayName.length - 1));
+      setDelta(100);
+    } else {
+      setDisplayName(fullName.substring(0, displayName.length + 1));
+      setDelta(200);
+    }
+
+    if (!isDeleting && displayName === fullName) {
+      setTimeout(() => setIsDeleting(true), 2000);
+    } else if (isDeleting && displayName === '') {
+      setIsDeleting(false);
+    }
+  };
+
   const startChat = async (recipientId) => {
     const response = await apiService.startChat(recipientId);
     setChatId(response.chat_id);
@@ -60,10 +97,13 @@ const LawyerDashboard = () => {
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] bg-[#6B21A8]/20 rounded-full blur-[64px] animate-fadeInSlow delay-500"></div>
       </div>
 
-      {/* Header with animation */}
+      {/* Updated Header with animation */}
       <div className="mb-8 animate-fadeIn relative z-10 opacity-0 animate-slideInDown delay-200">
-        <h1 className="text-3xl font-bold text-white bg-clip-text text-transparent bg-gradient-to-r from-white to-purple-500">
-          Welcome, {lawyerData.name}
+        <h1 className="text-3xl font-bold text-white">
+          Welcome, {' '}
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400 typewriter">
+            {displayName}
+          </span>
         </h1>
         <p className="text-gray-400">Here's your dashboard overview</p>
       </div>
@@ -280,6 +320,18 @@ const LawyerDashboard = () => {
 
         .animate-borderGlow {
           animation: borderGlow 2s ease-in-out infinite;
+        }
+
+        .typewriter {
+          display: inline-block;
+          border-right: 4px solid #9333EA;
+          animation: blink 0.75s step-end infinite;
+          padding-right: 4px;
+        }
+
+        @keyframes blink {
+          from, to { border-color: transparent }
+          50% { border-color: #9333EA }
         }
       `}</style>
     </div>
