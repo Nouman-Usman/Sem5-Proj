@@ -311,104 +311,112 @@ export function ChatbotPage() {
         </div>
       </div>
 
-      {/* Main Chat Area */}
-      <div className="flex-1 flex flex-col overflow-hidden bg-[#030614] relative">
-        {/* NavBar - Outside the centered container */}
-        <header className="flex items-center justify-center p-4 bg-[#1A1A2E]/90 w-full border-b border-[#9333EA]/20">
+      {/* Main Content Area */}
+      <div className="flex-1 flex flex-col h-screen">
+        {/* Fixed Header */}
+        <header className="flex-shrink-0 h-16 flex items-center justify-center bg-[#1A1A2E]/90 border-b border-[#9333EA]/20">
           <img src={Logo} alt="Logo" className="h-10" />
         </header>
 
-        {/* Centered content container */}
-        <div className="max-w-4xl mx-auto w-full flex flex-col h-full">
+        {/* Chat Container */}
+        <div className="flex-1 flex flex-col min-h-0 relative">
           {/* Background Effects */}
-          <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#9333EA]/20 rounded-full blur-[128px]"></div>
             <div className="absolute top-1/4 left-1/4 w-[400px] h-[400px] bg-[#7E22CE]/20 rounded-full blur-[96px]"></div>
             <div className="absolute bottom-1/4 right-1/4 w-[300px] h-[300px] bg-[#6B21A8]/20 rounded-full blur-[64px]"></div>
           </div>
 
-          {/* Main Chat Area with centered content */}
-          <div className="flex-1 overflow-y-auto relative z-10 p-4">
-            {error && (
-              <div className="bg-red-900/20 border border-red-500 text-red-400 px-4 py-3 rounded-lg mb-4">
-                {error}
-              </div>
-            )}
-
-            {messages.map((message) => (
-              <div key={message.id} className={`flex ${message.sender === "user" ? "justify-end" : "justify-start"} mb-4`}>
-                <div className={`max-w-[70%] rounded-lg p-3 ${
-                  message.sender === "user" 
-                    ? "bg-gradient-to-r from-[#9333EA] to-[#7E22CE] text-white" 
-                    : "bg-[#2E2E3A] text-gray-200"
-                } shadow-[0_0_15px_rgba(147,51,234,0.2)] animate-pop`}>
-                  <div className="flex items-start">
-                    {message.sender === "user" ? (
-                      <User className="h-5 w-5 mr-2 mt-1" />
-                    ) : (
-                      <Bot className="h-5 w-5 mr-2 mt-1" />
-                    )}
-                    <p>{message.text}</p>
+          {/* Messages Area */}
+          <div className="flex-1 min-h-0 relative">
+            <PerfectScrollbar
+              options={{
+                suppressScrollX: true,
+                wheelPropagation: true
+              }}
+              className="absolute inset-0"
+            >
+              <div className="max-w-4xl mx-auto p-4">
+                {error && (
+                  <div className="bg-red-900/20 border border-red-500 text-red-400 px-4 py-3 rounded-lg mb-4">
+                    {error}
                   </div>
-                </div>
-              </div>
-            ))}
+                )}
 
-            {references.length > 0 && (
-              <div className="mt-4 p-3 bg-gray-50 rounded">
-                <h4 className="font-semibold mb-2">References:</h4>
-                <ul className="list-disc pl-5">
-                  {references.map((ref, idx) => (
-                    <li key={idx} className="text-sm text-blue-600 hover:underline">
-                      <a href={ref} target="_blank" rel="noopener noreferrer">{ref}</a>
-                    </li>
+                <div className="space-y-4">
+                  {messages.map((message) => (
+                    <div key={message.id} className={`flex ${message.sender === "user" ? "justify-end" : "justify-start"} mb-4`}>
+                      <div className={`max-w-[70%] rounded-lg p-3 ${
+                        message.sender === "user" 
+                          ? "bg-gradient-to-r from-[#9333EA] to-[#7E22CE] text-white" 
+                          : "bg-[#2E2E3A] text-gray-200"
+                      } shadow-[0_0_15px_rgba(147,51,234,0.2)] animate-pop`}>
+                        <div className="flex items-start">
+                          {message.sender === "user" ? (
+                            <User className="h-5 w-5 mr-2 mt-1" />
+                          ) : (
+                            <Bot className="h-5 w-5 mr-2 mt-1" />
+                          )}
+                          <p>{message.text}</p>
+                        </div>
+                      </div>
+                    </div>
                   ))}
-                </ul>
-              </div>
-            )}
 
-            {processing && (
-              <div className="flex justify-start mb-4">
-                <div className="bg-[#2E2E3A] text-gray-200 rounded-lg p-3 shadow-[0_0_15px_rgba(147,51,234,0.2)] animate-message">
-                  <div className="flex items-center">
-                    <Bot className="h-5 w-5 mr-2" />
-                    <Loader2 className="h-5 w-5 animate-spin mr-2" />
-                    <p>{processing === "thinking" ? "Thinking..." : "Searching the web..."}</p>
-                  </div>
+                  {references.length > 0 && (
+                    <div className="mt-4 p-3 bg-gray-50 rounded">
+                      <h4 className="font-semibold mb-2">References:</h4>
+                      <ul className="list-disc pl-5">
+                        {references.map((ref, idx) => (
+                          <li key={idx} className="text-sm text-blue-600 hover:underline">
+                            <a href={ref} target="_blank" rel="noopener noreferrer">{ref}</a>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
+                  {processing && (
+                    <div className="flex justify-start mb-4">
+                      <div className="bg-[#2E2E3A] text-gray-200 rounded-lg p-3 shadow-[0_0_15px_rgba(147,51,234,0.2)] animate-message">
+                        <div className="flex items-center">
+                          <Bot className="h-5 w-5 mr-2" />
+                          <Loader2 className="h-5 w-5 animate-spin mr-2" />
+                          <p>{processing === "thinking" ? "Thinking..." : "Searching the web..."}</p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                  <div ref={messagesEndRef} />
                 </div>
               </div>
-            )}
-            <div ref={messagesEndRef} />
+            </PerfectScrollbar>
           </div>
-        </div>
 
-        {/* Input Area and Disclaimer Text */}
-        <div className="relative z-10 w-full flex flex-col">
-          <div className="p-4 bg-[#1A1A2E]/90 backdrop-blur-lg border-t border-[#9333EA]/20">
-            <form onSubmit={handleSendMessage} className="flex items-center gap-2 px-4">
-              <div className={`flex-grow bg-[#2E2E3A] border border-[#9333EA]/20 rounded-lg p-2 mx-2`}>
-                <Input
-                  type="text"
-                  placeholder="Type your message here..."
-                  value={inputMessage}
-                  onChange={(e) => setInputMessage(e.target.value)}
-                  onFocus={() => setInputFocused(true)}
-                  onBlur={() => setInputFocused(false)}
-                  className="w-full bg-transparent text-white placeholder:text-gray-400 focus:outline-none px-4 py-2"
-                />
+          {/* Fixed Input Area */}
+          <div className="flex-shrink-0 bg-[#1A1A2E]/90 border-t border-[#9333EA]/20 p-4">
+            <div className="max-w-4xl mx-auto">
+              <form onSubmit={handleSendMessage} className="flex gap-2">
+                <div className="flex-1 bg-[#2E2E3A] rounded-lg border border-[#9333EA]/20">
+                  <Input
+                    type="text"
+                    placeholder="Type your message here..."
+                    value={inputMessage}
+                    onChange={(e) => setInputMessage(e.target.value)}
+                    className="w-full bg-transparent text-white placeholder:text-gray-400 focus:outline-none px-4 py-2"
+                  />
+                </div>
+                <Button 
+                  type="submit"
+                  className="bg-gradient-to-r from-[#9333EA] to-[#7E22CE] hover:opacity-90 transition-all duration-300 flex items-center px-4"
+                >
+                  <Send className="h-5 w-5 mr-2" />
+                  Send
+                </Button>
+              </form>
+              <div className="text-center text-gray-400 text-sm mt-2">
+                Apna Waqeel can make mistakes. Check important info.
               </div>
-              <Button 
-                type="submit"
-                className="ml-2 bg-gradient-to-r from-[#9333EA] to-[#7E22CE] 
-                  hover:opacity-90 transition-opacity rounded-lg flex items-center px-4 py-2"
-              >
-                <Send className="h-5 w-5 mr-2" />
-                Send
-              </Button>
-            </form>
-            {/* Disclaimer Text */}
-            <div className="p-4 text-center text-gray-400">
-              Apna Waqeel can make mistakes. Check important info.
             </div>
           </div>
         </div>
@@ -624,5 +632,34 @@ export function ChatbotPage() {
       0 0 10px rgba(147, 51, 234, 0.5),
       0 0 20px rgba(147, 51, 234, 0.3),
       0 0 30px rgba(147, 51, 234, 0.2);
+  }
+
+  /* Custom styles for the main chat area PerfectScrollbar */
+  .ps__rail-y {
+    background-color: transparent !important;
+    width: 10px !important;
+    margin-right: 0;
+  }
+
+  .ps__rail-y:hover {
+    background-color: rgba(147, 51, 234, 0.1) !important;
+  }
+
+  .ps__thumb-y {
+    background: linear-gradient(180deg, #9333EA 0%, #7E22CE 100%) !important;
+    width: 6px !important;
+    right: 2px !important;
+    border-radius: 10px !important;
+  }
+
+  .ps__thumb-y:hover {
+    background: linear-gradient(180deg, #7E22CE 0%, #9333EA 100%) !important;
+  }
+
+  .ps .ps__rail-y.ps--clicking,
+  .ps .ps__rail-y:focus,
+  .ps .ps__rail-y:hover {
+    background-color: rgba(147, 51, 234, 0.1) !important;
+    width: 10px !important;
   }
 `}</style>
