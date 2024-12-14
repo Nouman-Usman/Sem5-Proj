@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-route
 import Home from './components/Home.jsx';
 import About from './components/About.jsx';
 import { LoginSignup } from './components/LoginSignup.jsx';
-import { Navbar } from './components/navbar.jsx';
+import { Navbar } from './components/Navbar.jsx';
 import { LawyerRecommendationPage } from './components/LawyerRecommendationPage.jsx';
 import { UserHome } from './components/UserHome.jsx';
 import { ChatbotPage } from './components/ChatbotPage.jsx';
@@ -17,9 +17,12 @@ import { ProtectedRoute } from './components/ProtectedRoute';
 import AccountSettings from './components/AccountSettings.jsx';
 
 function App() {
-  return (    
-    <Router>
-      <NavbarWithConditionalRender />
+  const location = useLocation();
+  const hideNavbarRoutes = ['/chatbot', '/login', '/signup', '/'];
+
+  return (
+    <div className="App">
+      {!hideNavbarRoutes.includes(location.pathname) && <Navbar />}
       <Routes>
         <Route path="/chatbot" element={
           <ProtectedRoute allowedRoles={['client', 'lawyer']}>
@@ -71,17 +74,14 @@ function App() {
         <Route path="/login" element={<LoginSignup />} />
         <Route path="/" element={<Home />} />
       </Routes>
-    </Router>
+    </div>
   );
 }
 
-function NavbarWithConditionalRender() {  
-  const location = useLocation();
-  // Update the condition to handle both cases and normalize the path
-  const noNavbarPaths = ['/login', '/signup', '/'];
-  const shouldHideNavbar = noNavbarPaths.includes(location.pathname.toLowerCase());
-
-  return !shouldHideNavbar ? <Navbar /> : null;
+export default function AppWrapper() {
+  return (
+    <Router>
+      <App />
+    </Router>
+  );
 }
-
-export default App;
