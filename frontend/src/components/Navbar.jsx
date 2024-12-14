@@ -8,6 +8,7 @@ export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const navigate = useNavigate();
+  const [userRole, setUserRole] = useState(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -15,6 +16,13 @@ export function Navbar() {
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (user) {
+      setUserRole(user.role);
+    }
   }, []);
 
   const handleHomeClick = () => {
@@ -77,9 +85,21 @@ export function Navbar() {
               <a href="/chatbot" className={linkClasses}>
                 <span className="relative z-10">Chatbot</span>
               </a>
-              <a href="/lawyers" className={linkClasses}>
-                <span className="relative z-10">Explore Lawyers</span>
-              </a>
+              {userRole === 'client' && (
+                <>
+                  <a href="/lawyers" className={linkClasses}>
+                    <span className="relative z-10">Lawyer Recommendation</span>
+                  </a>
+                  <a href="/subscription-plans" className={linkClasses}>
+                    <span className="relative z-10">Pricing</span>
+                  </a>
+                </>
+              )}
+              {userRole === 'lawyer' && (
+                <a href="/lawyer-subscription" className={linkClasses}>
+                  <span className="relative z-10">Pricing</span>
+                </a>
+              )}
             </div>
           </div>
 
@@ -177,7 +197,15 @@ export function Navbar() {
           <div className="px-2 pt-2 pb-3 space-y-1">
             <button onClick={handleHomeClick} className={linkClasses}>Home</button>
             <a href="/chatbot" className={linkClasses}>Chatbot</a>
-            <a href="/lawyers" className={linkClasses}>Explore Lawyers</a>
+            {userRole === 'client' && (
+              <>
+                <a href="/lawyers" className={linkClasses}>Lawyer Recommendation</a>
+                <a href="/subscription-plans" className={linkClasses}>Pricing</a>
+              </>
+            )}
+            {userRole === 'lawyer' && (
+              <a href="/lawyer-subscription" className={linkClasses}>Pricing</a>
+            )}
           </div>
           <div className="pt-4 pb-3 border-t border-white/10">
             <div className="flex items-center px-5">
