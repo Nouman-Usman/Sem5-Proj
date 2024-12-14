@@ -309,3 +309,349 @@ In conclusion, the Parliament of Pakistan is a bicameral federal legislature tha
 2024-12-14 11:12:46,160 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
 2024-12-14 11:12:52,475 - app - INFO - Successfully generated response for user 1
 2024-12-14 11:36:01,104 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-14 12:07:25,308 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-14 12:08:09,516 - app - INFO - Created new session 27 for user 1
+2024-12-14 12:08:09,516 - app - INFO - Initializing RAG agent...
+2024-12-14 12:08:09,544 - pinecone_plugin_interface.logging - INFO - Discovering subpackages in _NamespacePath(['C:\\Users\\Nouma\\OneDrive\\Desktop\\GenAi x Xavour\\ApnaWaqeel\\venv\\Lib\\site-packages\\pinecone_plugins'])
+2024-12-14 12:08:09,555 - pinecone_plugin_interface.logging - INFO - Looking for plugins in pinecone_plugins.inference
+2024-12-14 12:08:09,852 - pinecone_plugin_interface.logging - INFO - Installing plugin inference into Pinecone
+2024-12-14 12:08:17,348 - datasets - INFO - PyTorch version 2.4.1 available.
+2024-12-14 12:08:19,978 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2024-12-14 12:08:19,978 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2024-12-14 12:08:40,720 - app - INFO - RAG agent initialized successfully
+2024-12-14 12:08:40,720 - app - WARNING - Chat loaded with : 27, user_id: 1
+2024-12-14 12:08:41,733 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:08:42,599 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:08:42,619 - root - INFO - Sentiment: Constitutional
+2024-12-14 12:08:44,484 - waitress - WARNING - 1 thread(s) still running
+2024-12-14 12:10:59,846 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-14 12:11:09,475 - app - INFO - Created new session 28 for user 1
+2024-12-14 12:11:09,476 - app - INFO - Initializing RAG agent...
+2024-12-14 12:11:09,509 - pinecone_plugin_interface.logging - INFO - Discovering subpackages in _NamespacePath(['C:\\Users\\Nouma\\OneDrive\\Desktop\\GenAi x Xavour\\ApnaWaqeel\\venv\\Lib\\site-packages\\pinecone_plugins'])
+2024-12-14 12:11:09,518 - pinecone_plugin_interface.logging - INFO - Looking for plugins in pinecone_plugins.inference
+2024-12-14 12:11:09,882 - pinecone_plugin_interface.logging - INFO - Installing plugin inference into Pinecone
+2024-12-14 12:11:16,058 - datasets - INFO - PyTorch version 2.4.1 available.
+2024-12-14 12:11:18,174 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2024-12-14 12:11:18,176 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2024-12-14 12:11:36,239 - app - INFO - RAG agent initialized successfully
+2024-12-14 12:11:36,241 - app - WARNING - Chat loaded with : 28, user_id: 1
+2024-12-14 12:11:37,111 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:11:38,233 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:11:38,258 - root - INFO - Sentiment: Constitutional
+2024-12-14 12:12:14,194 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:12:15,459 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:12:15,944 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:12:16,444 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:12:22,881 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:12:23,777 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:12:24,287 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:12:24,582 - root - INFO - Result: The concept of law has been a cornerstone in maintaining societal order and promoting justice since ancient civilizations. It is a set of rules and regulations enforced by a governing authority, which aims to ensure that all individuals within a society are treated fairly and equally. The significance of law in society is multifaceted, extending from maintaining order and preventing chaos to facilitating social change and promoting equity.
+
+Law plays a crucial role in shaping behaviors and interacting with basic social institutions to foster change. It helps maintain order and stability by setting clear guidelines for acceptable behavior and consequences for violations. Moreover, technological advancements have given rise to new legal fields such as cyberlaw, data privacy laws, e-commerce laws, and social media law, which deal with legal issues arising from the use of technology and online platforms.
+
+In addition to maintaining order, law also promotes justice by providing a framework for resolving disputes and enforcing punishment. It helps protect individual rights and promotes social change by adapting to societal changes, ensuring that the legal framework remains relevant and effective in governing behavior. Through both direct and indirect roles, laws impact society by shaping behaviors and interacting with basic social institutions to foster change.
+
+In conclusion, the importance of law in society is evident through its ability to adapt to societal changes, ensuring that the legal framework remains relevant and effective in governing behavior. It maintains order, promotes justice, resolves disputes, and facilitates social change, making it an essential component of any functioning society.
+2024-12-14 12:12:24,878 - app - INFO - Successfully generated response for user 1
+2024-12-14 12:16:37,948 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-14 12:16:54,163 - app - INFO - Initializing RAG agent...
+2024-12-14 12:16:54,631 - pinecone_plugin_interface.logging - INFO - Discovering subpackages in _NamespacePath(['C:\\Users\\Nouma\\OneDrive\\Desktop\\GenAi x Xavour\\ApnaWaqeel\\venv\\Lib\\site-packages\\pinecone_plugins'])
+2024-12-14 12:16:54,705 - pinecone_plugin_interface.logging - INFO - Looking for plugins in pinecone_plugins.inference
+2024-12-14 12:16:54,929 - pinecone_plugin_interface.logging - INFO - Installing plugin inference into Pinecone
+2024-12-14 12:17:02,223 - datasets - INFO - PyTorch version 2.4.1 available.
+2024-12-14 12:17:04,915 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2024-12-14 12:17:04,916 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2024-12-14 12:17:22,762 - app - INFO - RAG agent initialized successfully
+2024-12-14 12:17:23,530 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:17:24,188 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:17:24,205 - root - INFO - Sentiment: Civil
+2024-12-14 12:17:55,892 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:17:56,566 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:17:57,326 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:17:57,863 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:18:03,280 - app - INFO - Successfully generated response for user 1
+2024-12-14 12:21:05,425 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-14 12:23:33,631 - app - INFO - Initializing RAG agent...
+2024-12-14 12:23:33,657 - pinecone_plugin_interface.logging - INFO - Discovering subpackages in _NamespacePath(['C:\\Users\\Nouma\\OneDrive\\Desktop\\GenAi x Xavour\\ApnaWaqeel\\venv\\Lib\\site-packages\\pinecone_plugins'])
+2024-12-14 12:23:33,665 - pinecone_plugin_interface.logging - INFO - Looking for plugins in pinecone_plugins.inference
+2024-12-14 12:23:33,845 - pinecone_plugin_interface.logging - INFO - Installing plugin inference into Pinecone
+2024-12-14 12:23:39,658 - datasets - INFO - PyTorch version 2.4.1 available.
+2024-12-14 12:23:42,135 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2024-12-14 12:23:42,136 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2024-12-14 12:23:56,602 - app - INFO - RAG agent initialized successfully
+2024-12-14 12:23:57,297 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:23:57,876 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:23:57,890 - root - INFO - Sentiment: Constitutional
+2024-12-14 12:24:18,073 - app - INFO - Successfully generated response for user 1
+2024-12-14 12:27:24,269 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-14 12:28:00,850 - app - INFO - Initializing RAG agent...
+2024-12-14 12:28:00,885 - pinecone_plugin_interface.logging - INFO - Discovering subpackages in _NamespacePath(['C:\\Users\\Nouma\\OneDrive\\Desktop\\GenAi x Xavour\\ApnaWaqeel\\venv\\Lib\\site-packages\\pinecone_plugins'])
+2024-12-14 12:28:00,893 - pinecone_plugin_interface.logging - INFO - Looking for plugins in pinecone_plugins.inference
+2024-12-14 12:28:01,099 - pinecone_plugin_interface.logging - INFO - Installing plugin inference into Pinecone
+2024-12-14 12:28:07,403 - datasets - INFO - PyTorch version 2.4.1 available.
+2024-12-14 12:28:09,348 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2024-12-14 12:28:09,349 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2024-12-14 12:28:25,518 - app - INFO - RAG agent initialized successfully
+2024-12-14 12:28:26,107 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:28:26,610 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:28:26,625 - root - INFO - Sentiment: Constitutional
+2024-12-14 12:28:56,849 - app - INFO - Successfully generated response for user 1
+2024-12-14 12:32:23,044 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-14 12:33:08,758 - app - INFO - Initializing RAG agent...
+2024-12-14 12:33:08,788 - pinecone_plugin_interface.logging - INFO - Discovering subpackages in _NamespacePath(['C:\\Users\\Nouma\\OneDrive\\Desktop\\GenAi x Xavour\\ApnaWaqeel\\venv\\Lib\\site-packages\\pinecone_plugins'])
+2024-12-14 12:33:08,812 - pinecone_plugin_interface.logging - INFO - Looking for plugins in pinecone_plugins.inference
+2024-12-14 12:33:09,108 - pinecone_plugin_interface.logging - INFO - Installing plugin inference into Pinecone
+2024-12-14 12:33:17,012 - datasets - INFO - PyTorch version 2.4.1 available.
+2024-12-14 12:33:19,479 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2024-12-14 12:33:19,480 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2024-12-14 12:33:33,190 - app - INFO - RAG agent initialized successfully
+2024-12-14 12:33:34,124 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:33:34,821 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:33:34,844 - root - INFO - Sentiment: Constitutional
+2024-12-14 12:33:59,403 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:33:59,904 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:34:00,399 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:34:00,878 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:34:07,579 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:34:08,278 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:34:08,792 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:34:08,998 - root - INFO - Result: The legislative process in the United States is a complex and multi-step procedure that involves the creation, debate, and passage of laws by the U.S. Congress. The U.S. Congress, which consists of the Senate and the House of Representatives, is the primary body responsible for making the country's laws.
+
+The process begins when a member of Congress introduces a bill, which is a proposed law. The bill is then referred to a committee, where it undergoes review, debate, and possible amendments. If the committee approves the bill, it is sent to the full chamber for consideration. In the House of Representatives, the bill is debated and voted on, and if it receives a majority vote, it is sent to the Senate for further consideration.
+
+In the Senate, the bill is assigned to another committee and undergoes a similar process of review, debate, and possible amendments. If the Senate committee releases the bill, it is then debated and voted on by the full Senate. If the bill passes in the Senate, it is sent back to the House of Representatives for reconciliation of any differences between the House and Senate versions of the bill.
+
+A conference committee, composed of members from both the House and Senate, works to resolve these differences and produce a final version of the bill. Once the conference committee has reached an agreement, the bill returns to both the House and Senate for final approval. If the bill is approved by both chambers, it is sent to the President for signature.
+
+If the President signs the bill, it becomes a law. However, if the President vetoes the bill, it is returned to Congress, which can attempt to override the veto with a two-thirds majority vote in both the House and Senate. If the override is successful, the bill becomes a law despite the President's objections.
+
+The Government Publishing Office prints the revised bill in a process called enrolling, marking the final step in the legislative process. Throughout this process, the U.S. Congress plays a crucial role in representing the interests of the American people and ensuring that the laws passed reflect the needs and values of the nation.
+2024-12-14 12:35:01,523 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-14 12:35:29,296 - app - INFO - Initializing RAG agent...
+2024-12-14 12:35:29,316 - pinecone_plugin_interface.logging - INFO - Discovering subpackages in _NamespacePath(['C:\\Users\\Nouma\\OneDrive\\Desktop\\GenAi x Xavour\\ApnaWaqeel\\venv\\Lib\\site-packages\\pinecone_plugins'])
+2024-12-14 12:35:29,321 - pinecone_plugin_interface.logging - INFO - Looking for plugins in pinecone_plugins.inference
+2024-12-14 12:35:29,468 - pinecone_plugin_interface.logging - INFO - Installing plugin inference into Pinecone
+2024-12-14 12:35:37,203 - datasets - INFO - PyTorch version 2.4.1 available.
+2024-12-14 12:35:40,179 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2024-12-14 12:35:40,179 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2024-12-14 12:35:56,014 - app - INFO - RAG agent initialized successfully
+2024-12-14 12:35:56,700 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:35:57,278 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:35:57,287 - root - INFO - Sentiment: Constitutional
+2024-12-14 12:36:17,367 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:36:17,837 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:36:18,301 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:36:18,791 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:36:25,254 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:36:26,020 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:36:26,571 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:36:26,870 - root - INFO - Result: The legislative process in the United States begins with the introduction of a bill, which is a proposal for a new law or an amendment to an existing law. This bill is then referred to a committee, where it undergoes review and debate. If the committee approves the bill, it is sent to the full chamber for further debate and voting. If the bill passes in both the House of Representatives and the Senate, it is sent to the President for signature. If the President signs the bill, it becomes a law. If the President vetoes the bill, it returns to Congress, which can override the veto with a two-thirds majority vote in both chambers.
+
+The U.S. Congress, comprising the House of Representatives and the Senate, plays a crucial role in this process. Members of Congress introduce bills, participate in committee reviews, engage in debates, and vote on the passage of laws. They also have the power to check and balance the other branches of government, ensuring that no single branch holds too much power.
+
+In addition to lawmaking, Congress has other key responsibilities. These include:
+
+1. Budget and Appropriations: Congress is responsible for approving the federal budget and appropriating funds for various government programs and services.
+
+2. Advice and Consent: The Senate provides advice and consent on presidential appointments, including Supreme Court justices, federal judges, and high-ranking government officials.
+
+3. Impeachment: The House of Representatives has the power to impeach, or charge, government officials for "high crimes and misdemeanors." The Senate then tries these officials, with the Chief Justice of the Supreme Court presiding over the trial.
+
+4. Oversight: Congress conducts hearings and investigations to ensure that the executive branch is carrying out its duties effectively and in accordance with the law.
+
+5. Representation: Members of Congress represent the interests of their constituents and work to address their concerns and needs.
+
+In summary, the legislative process in the United States involves the introduction, review, debate, and passage of bills, which ultimately become laws if signed by the President. The U.S. Congress, comprising the House of Representatives and the Senate, plays a vital role in this process and has various responsibilities beyond lawmaking, including budgeting, appointments, impeachment, oversight, and representation.
+2024-12-14 12:37:08,378 - app - INFO - Successfully generated response for user 1
+2024-12-14 12:38:02,357 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-14 12:38:16,020 - app - INFO - Initializing RAG agent...
+2024-12-14 12:38:16,066 - pinecone_plugin_interface.logging - INFO - Discovering subpackages in _NamespacePath(['C:\\Users\\Nouma\\OneDrive\\Desktop\\GenAi x Xavour\\ApnaWaqeel\\venv\\Lib\\site-packages\\pinecone_plugins'])
+2024-12-14 12:38:16,073 - pinecone_plugin_interface.logging - INFO - Looking for plugins in pinecone_plugins.inference
+2024-12-14 12:38:16,233 - pinecone_plugin_interface.logging - INFO - Installing plugin inference into Pinecone
+2024-12-14 12:38:21,748 - datasets - INFO - PyTorch version 2.4.1 available.
+2024-12-14 12:38:24,451 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2024-12-14 12:38:24,452 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2024-12-14 12:38:37,311 - app - INFO - RAG agent initialized successfully
+2024-12-14 12:38:37,929 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:38:38,474 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:38:38,485 - root - INFO - Sentiment: Constitutional
+2024-12-14 12:39:00,798 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:39:01,378 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:39:01,928 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:39:02,514 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:39:09,624 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:39:10,568 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:39:11,114 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:39:17,647 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:39:18,511 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:39:19,060 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:39:24,971 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:39:25,849 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:39:26,364 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:39:34,089 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:39:35,114 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:39:35,644 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:39:41,582 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:39:42,714 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:39:43,280 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:39:50,800 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:39:51,967 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2024-12-14 12:39:51,971 - groq._base_client - INFO - Retrying request to /openai/v1/chat/completions in 3.000000 seconds
+2024-12-14 12:39:55,744 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:39:56,265 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:40:02,528 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:40:03,333 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2024-12-14 12:40:03,336 - groq._base_client - INFO - Retrying request to /openai/v1/chat/completions in 16.000000 seconds
+2024-12-14 12:40:20,228 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:40:21,503 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:40:27,742 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:40:28,470 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2024-12-14 12:40:28,475 - groq._base_client - INFO - Retrying request to /openai/v1/chat/completions in 17.000000 seconds
+2024-12-14 12:41:00,431 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-14 12:41:06,130 - app - INFO - Initializing RAG agent...
+2024-12-14 12:41:06,147 - pinecone_plugin_interface.logging - INFO - Discovering subpackages in _NamespacePath(['C:\\Users\\Nouma\\OneDrive\\Desktop\\GenAi x Xavour\\ApnaWaqeel\\venv\\Lib\\site-packages\\pinecone_plugins'])
+2024-12-14 12:41:06,152 - pinecone_plugin_interface.logging - INFO - Looking for plugins in pinecone_plugins.inference
+2024-12-14 12:41:06,270 - pinecone_plugin_interface.logging - INFO - Installing plugin inference into Pinecone
+2024-12-14 12:41:11,786 - datasets - INFO - PyTorch version 2.4.1 available.
+2024-12-14 12:41:14,739 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2024-12-14 12:41:14,741 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2024-12-14 12:41:31,839 - app - INFO - RAG agent initialized successfully
+2024-12-14 12:41:32,496 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:41:33,030 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:41:33,053 - root - INFO - Sentiment: Criminal
+2024-12-14 12:41:48,531 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:41:49,023 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:41:49,498 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:41:50,000 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:41:57,940 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:41:58,729 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:41:59,248 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:41:59,476 - root - INFO - Result: The Zainab Alert Case, also known as the Zainab Alert Response and Recovery Act 2020, is a landmark legislation in Pakistan that was enacted to combat the growing problem of child abduction and trafficking. The case was sparked by the tragic murder of seven-year-old Zainab Ansari in Kasur, Punjab, in January 2018. Her body was found in a garbage heap, and it was later discovered that she had been sexually assaulted before being killed.
+
+The incident sparked nationwide outrage and protests, highlighting the need for a comprehensive legislation to address the issue of child abduction and trafficking. In response to this, the government of Pakistan drafted the Zainab Alert Response and Recovery Act 2020, which aimed to establish a system for notifying the public and recovering kidnapped children.
+
+The Zainab Alert Act defines the system of one-window operations to notify the public and recover kidnapped children in Pakistan. It provides ease of use for the missing child's parents/guardians to notify the police. The act also includes the formation of a government agency, ZARRA, responsible for coordinating and establishing a nationwide alert and recovery process, as well as a continuously updated national database of abducted and trafficked children.
+
+The key provisions of the Zainab Alert Act include:
+
+1. Establishment of ZARRA: The act establishes a government agency, ZARRA, which is responsible for coordinating and establishing a nationwide alert and recovery process for abducted and trafficked children.
+
+2. Nationwide Alert System: The act sets up an alert system that notifies the public and relevant authorities about missing children through various media platforms.
+
+3. National Database: The act mandates the creation of a continuously updated national database of abducted and trafficked children, which will help in tracking and recovering missing children.
+
+4. Definition of Abduction: The act defines abduction as any act of kidnapping, trafficking, or removing a child from the custody of his parents or lawful guardianship.
+
+5. Punishment for Abductors: The act provides for severe punishment for those found guilty of abduction, including imprisonment and fines.
+
+6. Child Protection Advisory Board: The act establishes the ICT Child Protection Advisory Board, which advises the government on matters related to child protection and welfare.
+
+The impact of the Zainab Alert Case and the subsequent legislation has been significant. It has raised awareness about the issue of child abduction and trafficking in Pakistan, and it has led to the establishment of a comprehensive system for notifying the public and recovering kidnapped children. The act has also provided a framework for the government and civil society to work together to protect children and prevent such crimes from happening again.
+
+In conclusion, the Zainab Alert Case and the Zainab Alert Response and Recovery Act 2020 are important milestones in Pakistan's efforts to combat child abduction and trafficking. The case has highlighted the need for a comprehensive legislation to address this growing problem, and the act has provided a framework for the government and civil society to work together to protect children and prevent such crimes from happening again.
+2024-12-14 12:41:59,819 - app - INFO - Successfully generated response for user 1
+2024-12-14 12:44:41,766 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-14 12:44:51,236 - app - INFO - Initializing RAG agent...
+2024-12-14 12:44:51,256 - pinecone_plugin_interface.logging - INFO - Discovering subpackages in _NamespacePath(['C:\\Users\\Nouma\\OneDrive\\Desktop\\GenAi x Xavour\\ApnaWaqeel\\venv\\Lib\\site-packages\\pinecone_plugins'])
+2024-12-14 12:44:51,259 - pinecone_plugin_interface.logging - INFO - Looking for plugins in pinecone_plugins.inference
+2024-12-14 12:44:51,421 - pinecone_plugin_interface.logging - INFO - Installing plugin inference into Pinecone
+2024-12-14 12:44:57,225 - datasets - INFO - PyTorch version 2.4.1 available.
+2024-12-14 12:45:00,320 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2024-12-14 12:45:00,323 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2024-12-14 12:45:18,433 - app - INFO - RAG agent initialized successfully
+2024-12-14 12:45:19,132 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:45:19,791 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:45:19,817 - root - INFO - Sentiment: 1. Civil
+2024-12-14 12:45:43,484 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:45:44,075 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:45:44,618 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:45:45,108 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:45:51,449 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:45:52,225 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:45:52,740 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:45:52,972 - root - INFO - Result: The law enacted in 2018, specifically the Bipartisan Budget Act of 2018 (BBA 2018; P.L. 115-123), is a comprehensive legislative package that addresses various issues. It includes provisions related to advancing chronic care, modifying certain new law provisions, and making changes to the tax reform measures.
+
+One of the key provisions of the BBA 2018 is the Advancing Chronic Care, which aims to improve the quality of care for patients with chronic conditions. This provision includes several measures such as expanding the use of telehealth services, enhancing the role of non-physician providers in care coordination, and improving the quality of care for patients with chronic conditions.
+
+Another significant aspect of the BBA 2018 is the modifications made to a few new law provisions by the Bipartisan Budget Act of 2018. These modifications cover various areas, including healthcare, education, and infrastructure. For instance, the law modifies the Consolidated Appropriations Act, 2018 (Pub. L. No. 115-141), which was enacted on March 23, 2018. This modification includes changes to healthcare funding, education grants, and infrastructure projects.
+
+The BBA 2018 also includes changes made by the Bipartisan Budget Act of 2018, which was enacted on February 9, 2018. These changes cover a range of issues, including tax reform measures. The newly enacted law, officially known as An Act to provide for reconciliation pursuant to titles II and V of the concurrent resolution on the budget for fiscal year 2018, is an amalgam of two competing tax reform measures. One measure was approved in the House on November 16, 2017, and the other was approved in the Senate on December 2, 2017. The final law combines elements from both measures and aims to reform the tax code in various ways, including reducing corporate and individual tax rates, eliminating certain deductions, and modifying the estate tax.
+
+In conclusion, the law enacted in 2018, specifically the BBA 2018, is a multifaceted legislative package that addresses various issues such as advancing chronic care, modifying new law provisions, and making changes to tax reform measures. The key provisions of this law aim to improve the quality of care for patients with chronic conditions, modify certain new law provisions, and reform the tax code in various ways.
+2024-12-14 12:45:53,232 - app - INFO - Successfully generated response for user 1
+2024-12-14 12:46:48,750 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:46:49,196 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:46:49,208 - root - INFO - Sentiment: Criminal
+2024-12-14 12:46:53,620 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:46:54,138 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:46:54,632 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:46:55,157 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:47:03,120 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:47:04,030 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:47:04,592 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:47:04,857 - root - INFO - Result: The Zainab Alert Case, also known as the Zainab Alert, Response and Recovery Act 2020, is a landmark legislation in Pakistan that was enacted to combat the growing problem of child abduction and trafficking. The case was sparked by the tragic murder of seven-year-old Zainab Ansari in Kasur, Punjab, in January 2018. Her body was found in a garbage heap, and it was later discovered that she had been sexually assaulted before being murdered.
+
+The incident sparked nationwide outrage and protests, highlighting the need for a comprehensive legislation to address the issue of child abduction and trafficking. In response to this, the government and civil society organizations worked together to draft the Zainab Alert Bill, which aimed to establish a system for notifying the public and recovering kidnapped children.
+
+The Zainab Alert Bill was drafted by Naeem Sadiq and Shimaila Matri Dawood of Kasur Hamara Hai (KHH), a citizen's advocacy group for child protection and welfare. The proposed bill included the formation of a government agency, ZARRA (Zainab Alert, Response and Recovery Agency), responsible for coordinating and establishing a nationwide alert and recovery process. It also proposed the creation of a continuously updated national database of abducted and trafficked children.
+
+The Zainab Alert Bill was filed in the National Assembly in 2018 and was later approved by the Senate in 2020. The Act came into force on March 10, 2020, and is applicable throughout Pakistan.
+
+Key provisions of the Zainab Alert Act include:
+
+1. Establishment of ZARRA: The Act establishes the Zainab Alert, Response and Recovery Agency (ZARRA), which is responsible for coordinating and establishing a nationwide alert and recovery process for missing children.
+
+2. Alert System: The Act sets up an alert system that will notify the public through various media channels when a child goes missing or is abducted. This alert system will be activated by ZARRA after receiving any information or complaint about missing children.
+
+3. Helpline: A helpline, 1099, has been set up to help the public report a missing or abducted child or any information related to a missing child.
+
+4. Police Notification: The police station where a case of missing or abducted child is reported shall, immediately, within two hours, inform ZARRA.
+
+5. Definition of Abduction: The Act defines abduction as any act of kidnapping, trafficking, or removing a child from the custody of his parents or lawful guardianship.
+
+6. Child Protection Advisory Board: The Act also establishes the ICT Child Protection Advisory Board, which is responsible for overseeing the implementation of the Act and providing advice to the government on matters related to child protection.
+
+The Zainab Alert Act has had a significant impact on society, as it has raised awareness about the issue of child abduction and trafficking in Pakistan. It has also led to the establishment of a dedicated agency, ZARRA, which is responsible for coordinating efforts to recover missing children. Furthermore, the Act has provided a legal framework for addressing the issue of child abduction and trafficking, which was previously lacking in Pakistan.
+
+In conclusion, the Zainab Alert Case and the subsequent legislation have brought attention to the critical issue of child abduction and trafficking in Pakistan. The Act aims to protect children by establishing a nationwide alert and recovery process, and it has already started to make a positive impact on society by raising awareness and providing a legal framework for addressing this problem.
+2024-12-14 12:47:05,127 - app - INFO - Successfully generated response for user 1
+2024-12-14 12:48:09,336 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-14 12:48:17,800 - app - INFO - Initializing RAG agent...
+2024-12-14 12:48:17,833 - pinecone_plugin_interface.logging - INFO - Discovering subpackages in _NamespacePath(['C:\\Users\\Nouma\\OneDrive\\Desktop\\GenAi x Xavour\\ApnaWaqeel\\venv\\Lib\\site-packages\\pinecone_plugins'])
+2024-12-14 12:48:17,884 - pinecone_plugin_interface.logging - INFO - Looking for plugins in pinecone_plugins.inference
+2024-12-14 12:48:18,099 - pinecone_plugin_interface.logging - INFO - Installing plugin inference into Pinecone
+2024-12-14 12:48:23,924 - datasets - INFO - PyTorch version 2.4.1 available.
+2024-12-14 12:48:25,860 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2024-12-14 12:48:25,861 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2024-12-14 12:48:39,690 - app - INFO - RAG agent initialized successfully
+2024-12-14 12:48:40,358 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:48:40,874 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:48:40,894 - root - INFO - Sentiment: Criminal
+2024-12-14 12:49:08,338 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:49:08,955 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:49:09,493 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:49:10,027 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:49:18,544 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:49:19,440 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:49:19,982 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 12:49:20,327 - root - INFO - Result: The Zainab Alert Case, also known as the Zainab Alert Response and Recovery Act 2020, is a landmark legislation in Pakistan that was enacted to combat child abuse and kidnapping. The case was sparked by the tragic murder of six-year-old Zainab in Kasur, Punjab, in 2018, which led to nationwide outrage and calls for action against child abuse.
+
+Background:
+Zainab's case highlighted the growing problem of child abuse and kidnapping in Pakistan. It was evident that there was a lack of comprehensive legislation to address these issues effectively. In response, child rights activists, civil society members, and the general public demanded a robust legal framework to protect children and prevent such crimes from happening again.
+
+Key Events:
+1. Zainab's murder in 2018: The gruesome murder of Zainab in Kasur, Punjab, sparked nationwide outrage and calls for action against child abuse.
+2. Drafting of the Zainab Alert Bill: Naeem Sadiq and Shimaila Matri Dawood of Kasur Hamara Hai (KHH), a citizen's advocacy group for child protection and welfare, drafted a new proposed bill that included the formation of a government agency, ZARRA, responsible for coordinating and establishing a nationwide alert and recovery process as well as a continuously updated national database of abducted and trafficked children.
+3. Passage of the Zainab Alert Bill: After much debate and delay, the bill was finally approved by the National Assembly of Pakistan on January 9, 2020, exactly two years after Zainab's murder. The bill then headed to the Senate of Pakistan for the Upper House's nod.
+
+Key Provisions of the Act:
+1. Definition of Terms: The Act defines key terms such as "Alert," "Alert System," "Abduction," "Abductor," "Board," and "Child."
+2. Establishment of ZARRA: The Act provides for the establishment of ZARRA, a government agency responsible for coordinating and establishing a nationwide alert and recovery process.
+3. National Database: The Act mandates the creation of a continuously updated national database of abducted and trafficked children.
+4. Alert System: The Act establishes an alert system that notifies the public and relevant authorities about missing children.
+
+Impact on Society:
+The Zainab Alert Case and the subsequent passage of the Zainab Alert Response and Recovery Act 2020 have had a significant impact on society in Pakistan. The legislation has raised awareness about the importance of protecting children from abuse and kidnapping, and it has provided a legal framework for addressing these issues. The Act has also led to increased cooperation between law enforcement agencies and civil society organizations in combating child abuse and kidnapping.
+
+In conclusion, the Zainab Alert Case and the Zainab Alert Response and Recovery Act 2020 represent a crucial step forward in Pakistan's efforts to protect children from abuse and kidnapping. The legislation has the potential to significantly reduce the incidence of these crimes and ensure that those responsible are held accountable.
+2024-12-14 12:49:20,705 - app - INFO - Successfully generated response for user 1

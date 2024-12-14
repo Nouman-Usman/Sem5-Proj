@@ -36,6 +36,7 @@ class GraphState(TypedDict):
     generation: str
     web_search: str
     documents: List[Document]
+    source: List[str]
 
 
 class RAGAgent:
@@ -178,9 +179,8 @@ Question to route: {question}
         print("---GENERATE---")
         question = state["question"]
         documents = state["documents"]
-        chat_context = self.memory.load_memory_variables({})[
-            "history"
-        ]  # Use conversation buffer memory
+        sources = []  # Initialize empty sources list
+        chat_context = self.memory.load_memory_variables({})["history"]
 
         doc_texts = []
         total_length = len(question) + len(chat_context)
@@ -190,42 +190,38 @@ Question to route: {question}
                 break
             doc_texts.append(doc_text)
             total_length += len(doc_text)
+            # Extract source from document metadata if available
+            if isinstance(doc, Document):
+                if "source" in doc.metadata:
+                    if not doc.metadata["source"].startswith("/kaggle"):                        
+                        sources.append(doc.metadata["source"])
+                elif "file_name" in doc.metadata:
+                    sources.append(doc.metadata["file_name"])
 
         context = "\n".join(doc_texts)
-
         gc.collect()
 
         generation = self.rag_chain.invoke(
             {"context": context, "question": question, "chat_history": chat_context}
         )
 
-        if filtered_metadata := blob.get_blob_urls(
-            [
-                doc.metadata["file_name"]
-                for doc in documents
-                if "file_name" in doc.metadata
-            ]
-        ):
-            source = filtered_metadata
-            final_answer = f"{generation}"
-        else:
-            for doc in documents:
-                if "source" in doc.metadata:
-                    source = doc.metadata["source"]
-                    print(f"Source: {source}")
-                else:
-                    source = []
+        if filtered_metadata := blob.get_blob_urls([
+            doc.metadata["file_name"]
+            for doc in documents
+            if "file_name" in doc.metadata
+        ]):
+            sources.extend(filtered_metadata)
 
-            final_answer = f"{generation}"
+        final_answer = f"{generation}"
 
         del generation
         gc.collect()
 
         return {
-            "documents": documents,
+            "documents": documents,  
             "question": question,
             "generation": final_answer,
-            "source": source,
+            "source": sources  
         }
 
     def retrieve(self, state: Dict) -> Dict:
@@ -237,12 +233,14 @@ Question to route: {question}
         return {
             "documents": documents,
             "question": question,
+            "source": [],  # Initialize empty source list
         }
 
     def grade_documents(self, state: Dict) -> Dict:
         print("---CHECK DOCUMENT RELEVANCE TO QUESTION---")
         question = state["question"]
         documents = state["documents"]
+        source = state["source"]
         filtered_docs = []
         web_search = "No"
         for d in documents:
@@ -262,12 +260,14 @@ Question to route: {question}
             "documents": filtered_docs,
             "question": question,
             "web_search": web_search,
+            "source": source,
         }
 
     def web_search(self, state: Dict) -> Dict:
         print("---WEB SEARCH---")
         question = state["question"]
         documents = state.get("documents", [])
+        sources = state.get("source", [])  # Get existing sources or initialize empty list
 
         try:
             docs = self.web_search_tool.invoke({"query": question})
@@ -298,6 +298,7 @@ Question to route: {question}
         return {
             "documents": web_documents,
             "question": question,
+            "source": sources,  # Maintain source state
         }
 
     def route_question(self, state: Dict) -> str:
@@ -331,6 +332,7 @@ Question to route: {question}
         print("---CHECK HALLUCINATIONS---")
         question = state["question"]
         documents = state["documents"]
+        source = state["source"]
         generation = state["generation"]
         attempts = state.get("attempts", 0)  # Track retry attempts
 
@@ -462,6 +464,7 @@ Question to route: {question}
             inputs = {
                 "question": updated_question,
                 "chat_history": chat_context,
+                "source": [],  # Initialize source in initial state
             }
             last_output = None
             try:
@@ -471,17 +474,14 @@ Question to route: {question}
                         print("Output:")
                         last_output = value                        
                     gc.collect()
-                result = last_output["source"]
-                breakpoint()
+                result = last_output["generation"]
                 logging.info(f"Result: {result}")
+                # print(f"Result: {last_output['source']}")
+                # breakpoint()
                 response_text = result if isinstance(result, str) else str(result)
                 response = {
                     "chat_response": response_text,
-                    "references": [
-                        # for source in last_output["source"]:
-                        #     source,
-                        # ],
-                    ],
+                    "references": last_output["source"],
                     "Sentiment": sentiment,
                 }
                 return response
