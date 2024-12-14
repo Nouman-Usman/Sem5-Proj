@@ -47,8 +47,8 @@ export function Navbar() {
           {/* Logo */}
           <div className="flex-shrink-0">
             <img
-              className="h-8 w-auto"
-              src="/placeholder.svg?height=32&width=32"
+              className="h-12 w-auto" // Increase the height to 12
+              src="/src/assets/Main logo.svg"
               alt="Apna Waqeel Logo" 
             />
           </div>
@@ -103,16 +103,15 @@ export function Navbar() {
                         Login
                       </a>
                     )}
-                  </Menu.Item> */}
+                  </Menu.Item>
                   <Menu.Item>
                     {({ active }) => (
                       <a
                         href="/Signup"
-                        className={`${
-                          active ? "bg-gray-100" : ""
-                        } flex items-center px-4 py-2 text-sm text-gray-700`}
+                        className={`${active ? "bg-gray-100" : ""} 
+                          flex items-center px-4 py-2 text-sm text-gray-700`}
                         onClick={authService.logout}
-                        >
+                      >
                         <LogOut className="mr-2 h-4 w-4" />
                         Logout
                       </a>
@@ -122,9 +121,9 @@ export function Navbar() {
                     {({ active }) => (
                       <a
                         href="/Account-settings"
-                        className={`${
-                          active ? "bg-gray-100" : ""
-                        } flex items-center px-4 py-2 text-sm text-gray-700`}>
+                        className={`${active ? "bg-gray-100" : ""} 
+                          flex items-center px-4 py-2 text-sm text-gray-700`}
+                      >
                         <Settings className="mr-2 h-4 w-4" />
                         Account Settings
                       </a>
@@ -180,15 +179,18 @@ export function Navbar() {
               </div>
             </div>
             <div className="mt-3 px-2 space-y-1">
-              {/* <a
-                href="#"
-                className="block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-gray-200">Login</a> */}
               <a
                 href="#"
-                className="block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-gray-200" onClick={authService.logout}>Logout</a>
+                className="block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-gray-200"
+              >
+                Logout
+              </a>
               <a
                 href="#"
-                className="block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-gray-200">Account Settings</a>
+                className="block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-gray-200"
+              >
+                Account Settings
+              </a>
             </div>
           </div>
         </div>
