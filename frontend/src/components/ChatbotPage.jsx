@@ -10,7 +10,6 @@ import { useNavigate } from "react-router-dom";
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import 'react-perfect-scrollbar/dist/css/styles.css';
 import Logo from "@/assets/Main logo.svg";
-import { authService } from "@/services/auth";  // Add this import at the top with other imports
 
 const LawyerCard = ({ lawyer, onContact }) => (
   <Card className="mt-2 p-4 bg-[#1A1A2E]/90 border border-[#9333EA]/20 backdrop-blur-lg shadow-[0_0_15px_rgba(147,51,234,0.2)] hover:shadow-[0_0_30px_rgba(147,51,234,0.3)] transition-all duration-300">
@@ -203,7 +202,7 @@ export function ChatbotPage() {
   };
 
   const handleLogout = () => {
-    authService.logout();  // Changed from apiService.logout() to authService.logout()
+    apiService.logout();
     navigate('/login');
   };
 
@@ -239,26 +238,35 @@ export function ChatbotPage() {
           </div>
 
           {/* Second section for recent chats */}
-          <div className="flex-1 p-4 overflow-hidden">
+          <div className="flex-1 p-4 overflow-hidden flex flex-col">
             <h3 className="text-white/90 mb-2 sticky top-0 bg-[#1A1A2E]/90 z-10">
               {isSidebarOpen && "Recent"}
             </h3>
-            <div className="h-[calc(100vh-16rem)]">
-              <PerfectScrollbar>
-                {sessionHistory.map((session) => (
-                  <div
-                    key={session.id}
-                    onClick={() => loadPreviousSession(session)}
-                    className="mb-2 p-2 hover:bg-white/5 rounded-lg cursor-pointer border border-transparent hover:border-[#9333EA]/20 transition-all duration-300"
-                  >
-                    <h3 className="font-medium text-white/90">
-                      {isSidebarOpen && session.title}
-                    </h3>
-                    <p className="text-sm text-gray-400">
-                      {isSidebarOpen && session.date}
-                    </p>
-                  </div>
-                ))}
+            <div className="flex-1 overflow-y-hidden">
+              <PerfectScrollbar
+                options={{
+                  suppressScrollX: true,
+                  wheelPropagation: true
+                }}
+                className="h-full pr-2"
+              >
+                <div className="space-y-2">
+                  {sessionHistory.map((session) => (
+                    <div
+                      key={session.id}
+                      onClick={() => loadPreviousSession(session)}
+                      className="p-2 hover:bg-white/5 rounded-lg cursor-pointer border border-transparent 
+                        hover:border-[#9333EA]/20 transition-all duration-300"
+                    >
+                      <h3 className="font-medium text-white/90 truncate">
+                        {isSidebarOpen && session.title}
+                      </h3>
+                      <p className="text-sm text-gray-400 truncate">
+                        {isSidebarOpen && session.date}
+                      </p>
+                    </div>
+                  ))}
+                </div>
               </PerfectScrollbar>
             </div>
           </div>
@@ -293,7 +301,7 @@ export function ChatbotPage() {
               <Button 
                 variant="outline" 
                 className="w-full text-left text-white bg-black hover:text-white hover:bg-white/5 border border-[#9333EA] hover:shadow-[0_0_15px_rgba(147,51,234,0.3)]"
-                onClick={handleLogout}
+                onClick={handleLogout}  // Updated onClick handler
               >
                 <LogOut className="h-4 w-4 mr-2" />
                 {isSidebarOpen && "Logout"}
