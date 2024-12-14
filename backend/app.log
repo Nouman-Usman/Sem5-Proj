@@ -428,3 +428,20 @@ In conclusion, the Parliament of Pakistan is a bicameral federal legislature tha
 2024-12-14 11:28:39,056 - app - ERROR - Error fetching chats: You must call `@jwt_required()` or `verify_jwt_in_request()` before using this method
 2024-12-14 11:28:56,747 - waitress - INFO - Serving on http://127.0.0.1:5000
 2024-12-14 12:35:47,873 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-14 12:54:56,063 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-14 12:55:17,228 - app - ERROR - Error fetching chat session: Object of type Row is not JSON serializable
+2024-12-14 12:55:17,355 - app - ERROR - Error fetching chat session: Object of type Row is not JSON serializable
+2024-12-14 12:56:23,786 - app - ERROR - Error fetching chat session: Object of type Row is not JSON serializable
+2024-12-14 12:56:25,936 - app - ERROR - Error fetching chat session: Object of type Row is not JSON serializable
+2024-12-14 13:00:18,245 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-14 13:02:52,832 - app - ERROR - Error fetching chat session: 
+2024-12-14 13:03:27,383 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-14 13:03:58,607 - app - ERROR - Error fetching chat session: Object of type Row is not JSON serializable
+2024-12-14 13:04:14,001 - app - ERROR - Error fetching chat session: Object of type Row is not JSON serializable
+2024-12-14 13:06:20,794 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-14 13:06:27,356 - app - ERROR - Error fetching chat session: Object of type Row is not JSON serializable
+2024-12-14 13:07:48,915 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-14 13:07:55,723 - app - ERROR - Error fetching chat session: unhashable type: 'list'
+2024-12-14 13:09:25,782 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-14 13:09:30,055 - app - ERROR - Error fetching chat session: Object of type Row is not JSON serializable
+2024-12-14 13:13:12,007 - waitress - INFO - Serving on http://127.0.0.1:5000

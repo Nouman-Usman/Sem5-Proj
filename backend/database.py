@@ -459,7 +459,7 @@ class Database:
         with self.get_connection() as conn:
             cursor = conn.cursor()
             cursor.execute("SELECT * FROM ChatMessages WHERE SessionId = ?", session_id)
-            return cursor.fetchone()
+            return cursor.fetchall()
 
     def delete_session(self, session_id):
         with self.get_connection() as conn:

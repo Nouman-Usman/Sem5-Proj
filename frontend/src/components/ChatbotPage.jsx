@@ -134,15 +134,29 @@ export function ChatbotPage() {
   };
 
 
-  const loadPreviousSession = async(session)=>{
+  const loadPreviousSession = async (session) => {
     console.log(session);
     // select * from ChatMessages where ChatMessages.SessionId = session.id
 
 
     // now we will just load chats in this syntax
     // { id: 1, text: "Hello! How can I assist you with your legal questions today?", sender: "ai" }
-    const chatTopics = await apiService.getChatsFromSessionId(session.id);
-    console.log(chatTopics);
+    const prevChat = await apiService.getChatsFromSessionId(session.id);
+    if (prevChat == null) {
+      console.log("No chats found for this session");
+      return;
+    };
+    console.log(prevChat);
+    const newChats = [];
+    prevChat.data.data.forEach((chat) => {
+      newChats.push({
+        id: chat.message_id,
+        text: chat.message,
+        sender: chat.message_type === "AI Message" ? "ai" : "user",
+      });
+    });
+    console.log(newChats);
+    setMessages(newChats);
   }
 
   return (
@@ -157,7 +171,7 @@ export function ChatbotPage() {
               {sessionHistory.map((session) => (
                 <div
                   key={session.id}
-                  onClick={()=>loadPreviousSession(session)}
+                  onClick={() => loadPreviousSession(session)}
                   className="mb-2 p-2 hover:bg-gray-100 rounded cursor-pointer">
                   <h3 className="font-medium">{session.title}</h3>
                   <p className="text-sm text-gray-500">{session.date}</p>
@@ -182,9 +196,8 @@ export function ChatbotPage() {
                 <div
                   className={`flex ${message.sender === "user" ? "justify-end" : "justify-start"} mb-4`}>
                   <div
-                    className={`max-w-[70%] rounded-lg p-3 ${
-                      message.sender === "user" ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-800"
-                    }`}>
+                    className={`max-w-[70%] rounded-lg p-3 ${message.sender === "user" ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-800"
+                      }`}>
                     <div className="flex items-start">
                       {message.sender === "user" ? (
                         <User className="h-5 w-5 mr-2 mt-1" />

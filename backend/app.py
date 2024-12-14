@@ -1,5 +1,6 @@
 import os
 import gc
+import json
 import time  
 import uuid
 import httpx  
@@ -505,30 +506,44 @@ def get_chats():
 @app.route('/api/chats/<session_id>', methods=['GET'])
 def get_chat(session_id):
     try:
-        newChats = db.get_chats_by_session_id(session_id)
-        if not newChats:
+        chats = db.get_chats_by_session_id(session_id)
+        if not chats:
             return jsonify({"error": "Chat session not found"}), 404
+        formatted_chats = []
+        for chat in chats:
+            formatted_chat = {
+                "message_id": chat[0],
+                "session_id": chat[1],
+                "message": chat[2],
+                "message_type": chat[3],
+                "timestamp": chat[4].isoformat() if chat[4] else None,
+                "references": json.loads(chat[5]) if chat[5] else None,
+                "recommended_lawyers": json.loads(chat[6]) if chat[6] else None
+            }
+            formatted_chats.append(formatted_chat)
+        print(formatted_chats)
         return jsonify({
-            "newChats": newChats
+            "data": formatted_chats
         }), 200
+
     except Exception as e:
         logger.error(f"Error fetching chat session: {str(e)}")
         return jsonify({"error": "Failed to fetch chat session"}), 500
 
 
 # Route for fetching a single chat session
-@app.route('/api/chats/<chat_id>', methods=['GET'])
-def get_chat(chat_id):
-    try:
-        chat_session = db.get_chat_session_by_id(chat_id)
-        if not chat_session:
-            return jsonify({"error": "Chat session not found"}), 404
-        return jsonify({
-            "chat_session": chat_session
-        }), 200
-    except Exception as e:
-        logger.error(f"Error fetching chat session: {str(e)}")
-        return jsonify({"error": "Failed to fetch chat session"}), 500
+# @app.route('/api/chats/<chat_id>', methods=['GET'])
+# def get_chat(chat_id):
+#     try:
+#         chat_session = db.get_chat_session_by_id(chat_id)
+#         if not chat_session:
+#             return jsonify({"error": "Chat session not found"}), 404
+#         return jsonify({
+#             "chat_session": chat_session
+#         }), 200
+#     except Exception as e:
+#         logger.error(f"Error fetching chat session: {str(e)}")
+#         return jsonify({"error": "Failed to fetch chat session"}), 500
 
 
 # Route for fetching all chat messages
