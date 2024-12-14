@@ -288,3 +288,24 @@ In conclusion, the Parliament of Pakistan is a bicameral federal legislature tha
 2024-12-14 10:43:52,204 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
 2024-12-14 10:43:52,757 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
 2024-12-14 10:46:39,014 - app - INFO - Successfully generated response for user 1
+2024-12-14 11:10:30,616 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-14 11:10:46,980 - app - INFO - Initializing RAG agent...
+2024-12-14 11:10:47,001 - pinecone_plugin_interface.logging - INFO - Discovering subpackages in _NamespacePath(['C:\\Users\\Nouma\\OneDrive\\Desktop\\GenAi x Xavour\\ApnaWaqeel\\venv\\Lib\\site-packages\\pinecone_plugins'])
+2024-12-14 11:10:47,015 - pinecone_plugin_interface.logging - INFO - Looking for plugins in pinecone_plugins.inference
+2024-12-14 11:10:47,213 - pinecone_plugin_interface.logging - INFO - Installing plugin inference into Pinecone
+2024-12-14 11:10:55,581 - datasets - INFO - PyTorch version 2.4.1 available.
+2024-12-14 11:10:58,155 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2024-12-14 11:10:58,155 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2024-12-14 11:11:17,137 - app - INFO - RAG agent initialized successfully
+2024-12-14 11:11:18,222 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 11:11:18,851 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 11:11:18,866 - root - INFO - Sentiment: Constitutional
+2024-12-14 11:12:21,272 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 11:12:21,823 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 11:12:22,390 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 11:12:22,892 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 11:12:37,750 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 11:12:45,590 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 11:12:46,160 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 11:12:52,475 - app - INFO - Successfully generated response for user 1
+2024-12-14 11:36:01,104 - waitress - INFO - Serving on http://127.0.0.1:5000

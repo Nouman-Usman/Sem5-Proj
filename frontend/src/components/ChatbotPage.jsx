@@ -54,6 +54,8 @@ export function ChatbotPage() {
   useEffect(() => {
     const fetchChatTopics = async () => {
       const chatTopics = await apiService.getChatTopic();
+      console.log("chat topics are ", chatTopics)
+      // console.log(cha)
       if (chatTopics) {
         setChatHistory(chatTopics.topic.map((topic, index) => ({
           id: chatTopics.session_id[index],
