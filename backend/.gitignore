@@ -9,4 +9,5 @@ venv
 # Ignore uploaded files but keep the directory
 uploads/profile_images/*
 !uploads/profile_images/.gitkeep
-backend\app.log
+# backend\app.log
+app.log
