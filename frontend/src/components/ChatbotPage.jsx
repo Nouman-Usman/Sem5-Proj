@@ -35,7 +35,7 @@ export function ChatbotPage() {
   const [inputMessage, setInputMessage] = useState("");
   const [processing, setProcessing] = useState(null); // 'thinking' or 'searching'
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-  const [chatHistory, setChatHistory] = useState([]);
+  const [sessionHistory, setSessionHistory] = useState([]);
   const messagesEndRef = useRef(null);
   const [error, setError] = useState(null);
   const [references, setReferences] = useState([]);
@@ -54,10 +54,10 @@ export function ChatbotPage() {
   useEffect(() => {
     const fetchChatTopics = async () => {
       const chatTopics = await apiService.getChatTopic();
-      console.log("chat topics are ", chatTopics)
+      // console.log("chat topics are ", chatTopics)
       // console.log(cha)
       if (chatTopics) {
-        setChatHistory(chatTopics.topic.map((topic, index) => ({
+        setSessionHistory(chatTopics.topic.map((topic, index) => ({
           id: chatTopics.session_id[index],
           title: topic,
           date: chatTopics.time[index]
@@ -133,6 +133,18 @@ export function ChatbotPage() {
     }
   };
 
+
+  const loadPreviousSession = async(session)=>{
+    console.log(session);
+    // select * from ChatMessages where ChatMessages.SessionId = session.id
+
+
+    // now we will just load chats in this syntax
+    // { id: 1, text: "Hello! How can I assist you with your legal questions today?", sender: "ai" }
+    const chatTopics = await apiService.getChatsFromSessionId(session.id);
+    console.log(chatTopics);
+  }
+
   return (
     <div className="flex h-screen overflow-hidden bg-gray-100">
       {/* Sidebar */}
@@ -142,12 +154,13 @@ export function ChatbotPage() {
           <div className="p-4">
             <h2 className="text-xl font-bold mb-4">Chat History</h2>
             <ScrollArea className="h-[calc(100vh-8rem)]">
-              {chatHistory.map((chat) => (
+              {sessionHistory.map((session) => (
                 <div
-                  key={chat.id}
+                  key={session.id}
+                  onClick={()=>loadPreviousSession(session)}
                   className="mb-2 p-2 hover:bg-gray-100 rounded cursor-pointer">
-                  <h3 className="font-medium">{chat.title}</h3>
-                  <p className="text-sm text-gray-500">{chat.date}</p>
+                  <h3 className="font-medium">{session.title}</h3>
+                  <p className="text-sm text-gray-500">{session.date}</p>
                 </div>
               ))}
             </ScrollArea>

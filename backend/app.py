@@ -430,10 +430,15 @@ def get_lawyer(lawyer_id):
         logger.error(f"Error fetching lawyer: {str(e)}")
         return jsonify({"error": "Failed to fetch lawyer"}), 500
     
-@app.route('/api/lawyers/isCompleted/<lawyer_id>', methods=['GET'])
-def getIsLayerIdCompleted(lawyer_id):
+
+
+
+
+    
+@app.route('/api/lawyers/isCompleted/<user_id>', methods=['GET'])
+def getIsLayerIdCompleted(user_id):
     try:
-        lawyer = db.get_lawyer_by_id(lawyer_id)
+        lawyer = db.get_lawyer_by_Userid(user_id)
         if not lawyer:
             return jsonify({"is_completed": False}), 200
         return jsonify({
@@ -442,6 +447,19 @@ def getIsLayerIdCompleted(lawyer_id):
     except Exception as e:
         logger.error(f"Error fetching lawyer: {str(e)}")
         return jsonify({"error": "Failed to fetch lawyer"}), 500
+    
+@app.route('/api/client/isCompleted/<user_id>', methods=['GET'])
+def getIsClientIdCompleted(user_id):
+    try:
+        client = db.get_client_by_Userid(user_id)
+        if not client:
+            return jsonify({"is_completed": False}), 200
+        return jsonify({
+            "is_completed": True
+        }), 200
+    except Exception as e:
+        logger.error(f"Error fetching client: {str(e)}")
+        return jsonify({"error": "Failed to fetch client"}), 500
     
 # Route for fetching all clients
 @app.route('/api/clients', methods=['GET'])
@@ -482,6 +500,21 @@ def get_chats():
     except Exception as e:
         logger.error(f"Error fetching chat sessions: {str(e)}")
         return jsonify({"error": "Failed to fetch chat sessions"}), 500
+    
+
+@app.route('/api/chats/<session_id>', methods=['GET'])
+def get_chat(session_id):
+    try:
+        newChats = db.get_chats_by_session_id(session_id)
+        if not newChats:
+            return jsonify({"error": "Chat session not found"}), 404
+        return jsonify({
+            "newChats": newChats
+        }), 200
+    except Exception as e:
+        logger.error(f"Error fetching chat session: {str(e)}")
+        return jsonify({"error": "Failed to fetch chat session"}), 500
+
 
 # Route for fetching a single chat session
 @app.route('/api/chats/<chat_id>', methods=['GET'])

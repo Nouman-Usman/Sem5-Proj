@@ -284,6 +284,12 @@ class Database:
             cursor = conn.cursor()
             cursor.execute("SELECT * FROM Lawyer WHERE LawyerId = ?", lawyer_id)
             return cursor.fetchone()
+        
+    def get_lawyer_by_Userid(self, user_id):
+        with self.get_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute("SELECT * FROM Lawyer WHERE UserId = ?", user_id)
+            return cursor.fetchone()
 
     def get_lawyers_by_experience(self, min_experience):
         with self.get_connection() as conn:
@@ -447,6 +453,12 @@ class Database:
         with self.get_connection() as conn:
             cursor = conn.cursor()
             cursor.execute("SELECT * FROM Sessions WHERE SessionId = ?", session_id)
+            return cursor.fetchone()
+        
+    def get_chats_by_session_id(self, session_id):
+        with self.get_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute("SELECT * FROM ChatMessages WHERE SessionId = ?", session_id)
             return cursor.fetchone()
 
     def delete_session(self, session_id):

@@ -78,7 +78,6 @@ export function LoginSignup() {
     try {
       await authService.login(email, password);
       const currentRole = apiService.getUserRole();
-
       if (currentRole.role == 'client') {
         window.location.href = '/user-home';
       }
