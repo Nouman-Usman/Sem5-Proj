@@ -1,16 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export const ProtectedRoute = ({ children, allowedRoles }) => {
   const [showProfilePopup, setShowProfilePopup] = useState(false);
   const user = JSON.parse(localStorage.getItem('user'));
+  const location = useLocation();
 
   useEffect(() => {
-    if (user && user.role === 'lawyer' && !JSON.parse(localStorage.getItem("isProfileCompleted"))) {
+    if (user && 
+        user.role === 'lawyer' && 
+        !JSON.parse(localStorage.getItem("isProfileCompleted")) && 
+        location.pathname !== '/lawyer-profile') {
       setShowProfilePopup(true);
     }
-  }, [user]);
+  }, [user, location]);
 
   if (!user || !user.role) {
     return <Navigate to="/login" />;
@@ -24,6 +28,11 @@ export const ProtectedRoute = ({ children, allowedRoles }) => {
     }
   }
 
+  const handleCompleteProfile = () => {
+    setShowProfilePopup(false);
+    window.location.href = '/lawyer-profile';
+  };
+
   return (
     <>
       {children}
@@ -34,6 +43,7 @@ export const ProtectedRoute = ({ children, allowedRoles }) => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="fixed inset-0 flex items-center justify-center bg-black/50 backdrop-blur-sm z-50"
+            onClick={() => setShowProfilePopup(false)} // Close on backdrop click
           >
             <motion.div
               initial={{ scale: 0.5, y: 100 }}
@@ -41,6 +51,7 @@ export const ProtectedRoute = ({ children, allowedRoles }) => {
               exit={{ scale: 0.5, y: 100 }}
               transition={{ type: "spring", bounce: 0.4 }}
               className="relative bg-[#1A1A2E]/90 rounded-2xl overflow-hidden"
+              onClick={e => e.stopPropagation()} // Prevent closing when clicking the popup
             >
               {/* Glowing border effect */}
               <div className="absolute inset-0 bg-gradient-to-r from-[#9333EA] to-[#7E22CE] animate-borderGlow"></div>
@@ -69,10 +80,7 @@ export const ProtectedRoute = ({ children, allowedRoles }) => {
                     <motion.button
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
-                      onClick={() => {
-                        setShowProfilePopup(false);
-                        window.location.href = '/lawyer-profile';
-                      }}
+                      onClick={handleCompleteProfile}
                       className="bg-gradient-to-r from-[#9333EA] to-[#7E22CE] text-white 
                         py-3 px-8 rounded-lg font-medium
                         hover:shadow-[0_0_20px_rgba(147,51,234,0.5)]
