@@ -81,8 +81,7 @@ export function ChatbotPage() {
 
     try {
       // function to get current credits
-      const currentCredits = getUserCredits();
-      const currentCredits = 0;
+      const currentCredits = apiService.getUserCredits();
       if (currentCredits == 0) {
         if (apiService.getUserRole() == 'lawyer') {
           navigate("/lawyer-subscription");
@@ -91,8 +90,9 @@ export function ChatbotPage() {
           navigate("/subscription-plans");
         }
       }
-      // function to update credits, this will also less credit by 1 on backend
-      // await updateCredits
+      else{
+        apiService.updateCredits(currentCredits - 1);
+      }
     } catch (error) {
       console.log("error handling credits: ", error);
       return;
