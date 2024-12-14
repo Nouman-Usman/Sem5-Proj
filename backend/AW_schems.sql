@@ -1,6 +1,6 @@
 USE [master]
 GO
-/****** Object:  Database [AW_Database]    Script Date: 12/13/2024 7:42:33 PM ******/
+/****** Object:  Database [AW_Database]    Script Date: 12/14/2024 9:29:22 AM ******/
 CREATE DATABASE [AW_Database]
  CONTAINMENT = NONE
  ON  PRIMARY 
@@ -84,7 +84,23 @@ ALTER DATABASE [AW_Database] SET QUERY_STORE (OPERATION_MODE = READ_WRITE, CLEAN
 GO
 USE [AW_Database]
 GO
-/****** Object:  Table [dbo].[Appointments]    Script Date: 12/13/2024 7:42:34 PM ******/
+/****** Object:  Table [dbo].[Activities]    Script Date: 12/14/2024 9:29:23 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Activities](
+	[ActivityId] [int] NOT NULL,
+	[LawyerId] [int] NULL,
+	[Activity] [nvarchar](500) NULL,
+	[Time] [datetime] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[ActivityId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Appointments]    Script Date: 12/14/2024 9:29:23 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -102,7 +118,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Cases]    Script Date: 12/13/2024 7:42:34 PM ******/
+/****** Object:  Table [dbo].[Cases]    Script Date: 12/14/2024 9:29:23 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -121,7 +137,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[ChatMessages]    Script Date: 12/13/2024 7:42:34 PM ******/
+/****** Object:  Table [dbo].[ChatMessages]    Script Date: 12/14/2024 9:29:23 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -140,14 +156,13 @@ CREATE TABLE [dbo].[ChatMessages](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Clients]    Script Date: 12/13/2024 7:42:34 PM ******/
+/****** Object:  Table [dbo].[Client]    Script Date: 12/14/2024 9:29:23 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE TABLE [dbo].[Clients](
+CREATE TABLE [dbo].[Client](
 	[ClientId] [int] NOT NULL,
-	[LawyerId] [int] NULL,
 	[FirstName] [nvarchar](50) NULL,
 	[LastName] [nvarchar](50) NULL,
 	[Email] [nvarchar](100) NULL,
@@ -159,7 +174,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Lawyer]    Script Date: 12/13/2024 7:42:34 PM ******/
+/****** Object:  Table [dbo].[Lawyer]    Script Date: 12/14/2024 9:29:23 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -191,7 +206,7 @@ UNIQUE NONCLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[LawyerReview]    Script Date: 12/13/2024 7:42:34 PM ******/
+/****** Object:  Table [dbo].[LawyerReview]    Script Date: 12/14/2024 9:29:23 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -209,7 +224,7 @@ CREATE TABLE [dbo].[LawyerReview](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Sessions]    Script Date: 12/13/2024 7:42:34 PM ******/
+/****** Object:  Table [dbo].[Sessions]    Script Date: 12/14/2024 9:29:23 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -226,7 +241,7 @@ CREATE TABLE [dbo].[Sessions](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Subscription]    Script Date: 12/13/2024 7:42:34 PM ******/
+/****** Object:  Table [dbo].[Subscription]    Script Date: 12/14/2024 9:29:23 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -244,7 +259,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[User]    Script Date: 12/13/2024 7:42:34 PM ******/
+/****** Object:  Table [dbo].[User]    Script Date: 12/14/2024 9:29:23 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -265,7 +280,7 @@ UNIQUE NONCLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Index [IX_LawyerReview_LawyerId]    Script Date: 12/13/2024 7:42:34 PM ******/
+/****** Object:  Index [IX_LawyerReview_LawyerId]    Script Date: 12/14/2024 9:29:23 AM ******/
 CREATE NONCLUSTERED INDEX [IX_LawyerReview_LawyerId] ON [dbo].[LawyerReview]
 (
 	[LawyerId] ASC
@@ -291,14 +306,17 @@ ALTER TABLE [dbo].[Sessions] ADD  DEFAULT ((1)) FOR [Active]
 GO
 ALTER TABLE [dbo].[Subscription] ADD  DEFAULT ((0)) FOR [RemainingCredits]
 GO
+ALTER TABLE [dbo].[Activities]  WITH CHECK ADD FOREIGN KEY([LawyerId])
+REFERENCES [dbo].[Lawyer] ([LawyerId])
+GO
 ALTER TABLE [dbo].[Appointments]  WITH CHECK ADD FOREIGN KEY([ClientId])
-REFERENCES [dbo].[Clients] ([ClientId])
+REFERENCES [dbo].[Client] ([ClientId])
 GO
 ALTER TABLE [dbo].[Appointments]  WITH CHECK ADD FOREIGN KEY([LawyerId])
 REFERENCES [dbo].[Lawyer] ([LawyerId])
 GO
 ALTER TABLE [dbo].[Cases]  WITH CHECK ADD FOREIGN KEY([ClientId])
-REFERENCES [dbo].[Clients] ([ClientId])
+REFERENCES [dbo].[Client] ([ClientId])
 GO
 ALTER TABLE [dbo].[Cases]  WITH CHECK ADD FOREIGN KEY([LawyerId])
 REFERENCES [dbo].[Lawyer] ([LawyerId])

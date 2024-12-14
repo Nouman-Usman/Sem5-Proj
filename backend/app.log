@@ -1,73 +1,290 @@
-2024-12-13 20:06:36,406 - waitress - INFO - Serving on http://127.0.0.1:5000
-2024-12-13 20:07:35,601 - waitress.queue - WARNING - Task queue depth is 1
-2024-12-13 20:07:38,640 - waitress.queue - WARNING - Task queue depth is 1
-2024-12-13 20:07:41,206 - waitress.queue - WARNING - Task queue depth is 1
-2024-12-14 00:03:47,286 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
- * Running on http://127.0.0.1:5000
-2024-12-14 00:03:47,286 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
-2024-12-14 00:04:08,197 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 00:04:08] "OPTIONS /api/auth/login HTTP/1.1" 200 -
-2024-12-14 00:04:09,549 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 00:04:09] "POST /api/auth/login HTTP/1.1" 200 -
-2024-12-14 00:04:16,069 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 00:04:16] "OPTIONS /api/topics HTTP/1.1" 200 -
-2024-12-14 00:04:16,408 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 00:04:16] "OPTIONS /api/topics HTTP/1.1" 200 -
-2024-12-14 00:04:16,481 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 00:04:16] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
-2024-12-14 00:04:16,865 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 00:04:16] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
-2024-12-14 00:04:20,084 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 00:04:20] "OPTIONS /api/ask HTTP/1.1" 200 -
-2024-12-14 00:04:20,395 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 00:04:20] "[31m[1mPOST /api/ask HTTP/1.1[0m" 422 -
-2024-12-14 00:04:21,055 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 00:04:21] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
-2024-12-14 00:04:26,369 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 00:04:26] "OPTIONS /api/topics HTTP/1.1" 200 -
-2024-12-14 00:04:26,623 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 00:04:26] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
-2024-12-14 00:04:31,059 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 00:04:31] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
-2024-12-14 00:04:31,546 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 00:04:31] "OPTIONS /api/ask HTTP/1.1" 200 -
-2024-12-14 00:04:31,811 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 00:04:31] "[31m[1mPOST /api/ask HTTP/1.1[0m" 422 -
-2024-12-14 00:04:44,504 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 00:04:44] "OPTIONS /api/auth/login HTTP/1.1" 200 -
-2024-12-14 00:04:45,153 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 00:04:45] "POST /api/auth/login HTTP/1.1" 200 -
-2024-12-14 00:04:45,171 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 00:04:45] "[33mOPTIONS /api/lawyers/isCompleted/2 HTTP/1.1[0m" 404 -
-2024-12-14 00:08:17,286 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
- * Running on http://127.0.0.1:5000
-2024-12-14 00:08:17,286 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
-2024-12-14 00:09:24,627 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 00:09:24] "OPTIONS /api/auth/login HTTP/1.1" 200 -
-2024-12-14 00:09:25,689 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 00:09:25] "POST /api/auth/login HTTP/1.1" 200 -
-2024-12-14 00:09:25,703 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 00:09:25] "[33mOPTIONS /api/lawyers/isCompleted/2 HTTP/1.1[0m" 404 -
-2024-12-14 00:09:32,064 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 00:09:32] "OPTIONS /api/auth/login HTTP/1.1" 200 -
-2024-12-14 00:09:32,633 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 00:09:32] "POST /api/auth/login HTTP/1.1" 200 -
-2024-12-14 00:09:38,836 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 00:09:38] "OPTIONS /api/topics HTTP/1.1" 200 -
-2024-12-14 00:09:39,199 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 00:09:39] "OPTIONS /api/topics HTTP/1.1" 200 -
-2024-12-14 00:09:39,308 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 00:09:39] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
-2024-12-14 00:09:39,645 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 00:09:39] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
-2024-12-14 00:09:41,798 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 00:09:41] "OPTIONS /api/ask HTTP/1.1" 200 -
-2024-12-14 00:09:42,109 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 00:09:42] "[31m[1mPOST /api/ask HTTP/1.1[0m" 422 -
-2024-12-14 00:09:44,202 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 00:09:44] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
-2024-12-14 00:09:49,489 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 00:09:49] "OPTIONS /api/topics HTTP/1.1" 200 -
-2024-12-14 00:09:49,749 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 00:09:49] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
-2024-12-14 00:09:53,831 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 00:09:53] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
-2024-12-14 00:09:59,505 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 00:09:59] "OPTIONS /api/topics HTTP/1.1" 200 -
-2024-12-14 00:09:59,763 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 00:09:59] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
-2024-12-14 00:10:04,185 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 00:10:04] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
-2024-12-14 00:10:09,521 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 00:10:09] "OPTIONS /api/topics HTTP/1.1" 200 -
-2024-12-14 00:10:09,768 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 00:10:09] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
-2024-12-14 00:10:14,196 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 00:10:14] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
-2024-12-14 00:10:19,507 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 00:10:19] "OPTIONS /api/topics HTTP/1.1" 200 -
-2024-12-14 00:10:19,756 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 00:10:19] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
-2024-12-14 00:10:24,194 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 00:10:24] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
-2024-12-14 00:10:29,491 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 00:10:29] "OPTIONS /api/topics HTTP/1.1" 200 -
-2024-12-14 00:10:29,765 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 00:10:29] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
-2024-12-14 00:10:34,196 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 00:10:34] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
-2024-12-14 00:10:39,534 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 00:10:39] "OPTIONS /api/topics HTTP/1.1" 200 -
-2024-12-14 00:10:39,761 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 00:10:39] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
-2024-12-14 00:10:44,200 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 00:10:44] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
-2024-12-14 00:10:49,496 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 00:10:49] "OPTIONS /api/topics HTTP/1.1" 200 -
-2024-12-14 00:10:49,751 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 00:10:49] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
-2024-12-14 00:10:54,185 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 00:10:54] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
-2024-12-14 00:11:08,533 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 00:11:08] "OPTIONS /api/topics HTTP/1.1" 200 -
-2024-12-14 00:11:08,793 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 00:11:08] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
-2024-12-14 00:12:08,192 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 00:12:08] "OPTIONS /api/topics HTTP/1.1" 200 -
-2024-12-14 00:12:08,515 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 00:12:08] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
-2024-12-14 00:13:02,618 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 00:13:02] "OPTIONS /api/topics HTTP/1.1" 200 -
-2024-12-14 00:13:02,978 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 00:13:02] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
-2024-12-14 00:13:03,824 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 00:13:03] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
-2024-12-14 00:13:57,810 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 00:13:57] "OPTIONS /api/auth/login HTTP/1.1" 200 -
-2024-12-14 00:13:58,428 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 00:13:58] "POST /api/auth/login HTTP/1.1" 200 -
-2024-12-14 00:13:58,442 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 00:13:58] "[33mOPTIONS /api/lawyers/isCompleted/2 HTTP/1.1[0m" 404 -
-2024-12-14 00:18:07,779 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 00:18:07] "OPTIONS /api/auth/login HTTP/1.1" 200 -
-2024-12-14 00:18:08,263 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 00:18:08] "POST /api/auth/login HTTP/1.1" 200 -
-2024-12-14 00:18:08,274 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 00:18:08] "[33mOPTIONS /api/lawyers/isCompleted/2 HTTP/1.1[0m" 404 -
+2024-12-14 09:31:18,708 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-14 09:31:28,861 - waitress - ERROR - Exception while serving /socket.io/
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\waitress\channel.py", line 430, in service
+    task.service()
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\waitress\task.py", line 167, in service
+    self.execute()
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\waitress\task.py", line 435, in execute
+    app_iter = self.channel.server.application(environ, start_response)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\waitress\proxy_headers.py", line 64, in translate_proxy_headers
+    return app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\flask\app.py", line 1498, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\flask_socketio\__init__.py", line 43, in __call__
+    return super(_SocketIOMiddleware, self).__call__(environ,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\engineio\middleware.py", line 63, in __call__
+    return self.engineio_app.handle_request(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\socketio\server.py", line 433, in handle_request
+    return self.eio.handle_request(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\engineio\server.py", line 274, in handle_request
+    packets = socket.handle_get_request(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\engineio\socket.py", line 90, in handle_get_request
+    return getattr(self, '_upgrade_' + transport)(environ,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\engineio\socket.py", line 146, in _upgrade_websocket
+    return ws(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\engineio\async_drivers\_websocket_wsgi.py", line 14, in __call__
+    self.ws = simple_websocket.Server(environ, **self.server_args)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\simple_websocket\ws.py", line 285, in __init__
+    raise RuntimeError('Cannot obtain socket from WSGI environment.')
+RuntimeError: Cannot obtain socket from WSGI environment.
+2024-12-14 09:31:28,963 - waitress - ERROR - Exception while serving /socket.io/
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\waitress\channel.py", line 430, in service
+    task.service()
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\waitress\task.py", line 167, in service
+    self.execute()
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\waitress\task.py", line 435, in execute
+    app_iter = self.channel.server.application(environ, start_response)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\waitress\proxy_headers.py", line 64, in translate_proxy_headers
+    return app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\flask\app.py", line 1498, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\flask_socketio\__init__.py", line 43, in __call__
+    return super(_SocketIOMiddleware, self).__call__(environ,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\engineio\middleware.py", line 63, in __call__
+    return self.engineio_app.handle_request(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\socketio\server.py", line 433, in handle_request
+    return self.eio.handle_request(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\engineio\server.py", line 274, in handle_request
+    packets = socket.handle_get_request(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\engineio\socket.py", line 90, in handle_get_request
+    return getattr(self, '_upgrade_' + transport)(environ,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\engineio\socket.py", line 146, in _upgrade_websocket
+    return ws(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\engineio\async_drivers\_websocket_wsgi.py", line 14, in __call__
+    self.ws = simple_websocket.Server(environ, **self.server_args)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\simple_websocket\ws.py", line 285, in __init__
+    raise RuntimeError('Cannot obtain socket from WSGI environment.')
+RuntimeError: Cannot obtain socket from WSGI environment.
+2024-12-14 09:34:37,271 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-14 09:35:06,173 - app - INFO - Creating lawyer profile for user ID: 3
+2024-12-14 09:35:06,199 - app - INFO - Successfully created lawyer profile for user ID: 3
+2024-12-14 09:38:02,238 - app - INFO - Created new session 24 for user 1
+2024-12-14 09:38:02,248 - app - INFO - Initializing RAG agent...
+2024-12-14 09:38:02,431 - pinecone_plugin_interface.logging - INFO - Discovering subpackages in _NamespacePath(['C:\\Users\\Nouma\\OneDrive\\Desktop\\GenAi x Xavour\\ApnaWaqeel\\venv\\Lib\\site-packages\\pinecone_plugins'])
+2024-12-14 09:38:02,439 - pinecone_plugin_interface.logging - INFO - Looking for plugins in pinecone_plugins.inference
+2024-12-14 09:38:04,315 - pinecone_plugin_interface.logging - INFO - Installing plugin inference into Pinecone
+2024-12-14 09:38:14,296 - datasets - INFO - PyTorch version 2.4.1 available.
+2024-12-14 09:38:17,761 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2024-12-14 09:38:17,762 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2024-12-14 09:38:35,524 - app - INFO - RAG agent initialized successfully
+2024-12-14 09:38:35,525 - app - WARNING - Chat loaded with : 24, user_id: 1
+2024-12-14 09:38:36,542 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 09:38:37,870 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 09:38:37,881 - root - INFO - Sentiment: Constitutional
+2024-12-14 09:39:25,760 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 09:39:26,465 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 09:39:27,161 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 09:39:27,665 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 09:39:34,661 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 09:39:35,901 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 09:39:36,481 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 09:39:37,128 - root - INFO - Result: The key principles and components of law and order in a legal system, such as the one in the United States, encompass several essential elements. These include:
+
+1. **Legal Supremacy**: This principle ensures that the law applies equally to all individuals and institutions, regardless of their status or position. It is a cornerstone of democratic societies, as it promotes fairness and justice.
+
+2. **Legislation**: This refers to the body of laws that govern a society. Laws are enacted by legislative bodies and serve as the foundation for the legal system, providing guidelines for behavior and penalties for non-compliance.
+
+3. **Courts**: These are institutions responsible for interpreting and applying the law. They provide a forum for resolving disputes and ensuring that justice is served. The court system includes various levels of courts, such as trial courts, appellate courts, and supreme courts.
+
+4. **Law Enforcement Agencies**: These are organizations responsible for enforcing the law and maintaining public order. They include police departments, sheriff's offices, and other agencies that work to prevent and investigate crimes, apprehend criminals, and protect the public.
+
+5. **Legal Professionals**: These are individuals who work within the legal system, including lawyers, judges, prosecutors, and other professionals. They play a crucial role in ensuring that the legal system functions effectively and that individuals receive fair representation and justice.
+
+6. **Contract Law**: This is a branch of law that deals with agreements between parties, including the formation, interpretation, and enforcement of contracts. It is essential for businesses and individuals alike, as it provides a framework for resolving disputes and ensuring that agreements are upheld.
+
+7. **Rule of Law**: This principle ensures that no one is above the law and that everyone is subject to the same legal standards. It promotes accountability, transparency, and fairness within the legal system.
+
+In summary, the key principles and components of law and order in a legal system include legal supremacy, legislation, courts, law enforcement agencies, legal professionals, contract law, and the rule of law. These elements work together to maintain order, protect individual rights, and ensure the functioning of a fair and equitable society.
+2024-12-14 09:39:37,444 - app - ERROR - Error generating response: Database.create_chat_message() got an unexpected keyword argument 'session_id'
+2024-12-14 09:43:38,196 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-14 09:44:23,194 - app - INFO - Created new session 25 for user 1
+2024-12-14 09:44:23,195 - app - INFO - Initializing RAG agent...
+2024-12-14 09:44:23,220 - pinecone_plugin_interface.logging - INFO - Discovering subpackages in _NamespacePath(['C:\\Users\\Nouma\\OneDrive\\Desktop\\GenAi x Xavour\\ApnaWaqeel\\venv\\Lib\\site-packages\\pinecone_plugins'])
+2024-12-14 09:44:23,223 - pinecone_plugin_interface.logging - INFO - Looking for plugins in pinecone_plugins.inference
+2024-12-14 09:44:23,414 - pinecone_plugin_interface.logging - INFO - Installing plugin inference into Pinecone
+2024-12-14 09:44:30,147 - datasets - INFO - PyTorch version 2.4.1 available.
+2024-12-14 09:44:32,272 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2024-12-14 09:44:32,272 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2024-12-14 09:44:45,308 - app - INFO - RAG agent initialized successfully
+2024-12-14 09:44:45,309 - app - WARNING - Chat loaded with : 25, user_id: 1
+2024-12-14 09:44:45,909 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 09:44:46,578 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 09:44:46,604 - root - INFO - Sentiment: Constitutional
+2024-12-14 09:45:11,565 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 09:45:12,139 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 09:45:12,730 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 09:45:13,179 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 09:45:19,106 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 09:45:20,465 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 09:45:21,046 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 09:45:21,761 - root - INFO - Result: The Parliament of Pakistan is a bicameral federal legislature, consisting of the President of Pakistan and two houses: the Senate and the National Assembly. The National Assembly is the country's sovereign legislative body, with the President and the two houses forming the Parliament of Pakistan as per Article 50 of the Constitution.
+
+The National Assembly is composed of 342 members, with 272 elected directly by the people and 70 reserved seats for women and minorities. The Senate, on the other hand, consists of 104 members, with 14 members from each of the four provinces, eight from the Federally Administered Tribal Areas, and two from the Federal Capital.
+
+The Parliament plays a crucial role in the functioning of the government, as it is responsible for making laws, overseeing the executive branch, and representing the interests of the people. The Parliament also has the power to amend the Constitution, although this requires a two-thirds majority in both houses.
+
+In terms of its structure, the Parliament is headed by the President, who serves as the ceremonial head of state. The National Assembly is presided over by the Speaker, while the Senate is presided over by the Chairman. Both the Speaker and the Chairman are elected by their respective houses.
+
+The Parliament's functions include passing laws, approving the budget, and holding the government accountable through question hour and legislative committees. The Parliament also has the power to remove the President, the Prime Minister, and judges of the Supreme Court and High Courts through impeachment.
+
+In addition, the Parliament plays a key role in the election of the President, as it elects the President through a joint sitting of both houses. Furthermore, the Parliament is responsible for electing the Prime Minister, who is the head of government and responsible for advising the President on the exercise of his powers.
+
+Overall, the Parliament of Pakistan is a vital institution that plays a central role in the country's democratic system, ensuring that the government remains accountable to the people and that the Constitution is upheld. 
+ Reference: https://apnawaqeel.blob.core.windows.net/pdfs/administrator9d8e2ecc414c6d3371ac41114b61a2c4.pdf?se=2024-12-14T05%3A45%3A19Z&sp=r&sv=2024-11-04&sr=b&sig=HsBNHWgafdK4ltjVPHKCcw3fwTp8XEwpCoI%2BQzDAd6g%3D
+2024-12-14 09:45:22,161 - app - INFO - Successfully generated response for user 1
+2024-12-14 09:53:34,397 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-14 09:53:46,213 - app - INFO - Created new session 26 for user 1
+2024-12-14 09:53:46,216 - app - INFO - Initializing RAG agent...
+2024-12-14 09:53:46,237 - pinecone_plugin_interface.logging - INFO - Discovering subpackages in _NamespacePath(['C:\\Users\\Nouma\\OneDrive\\Desktop\\GenAi x Xavour\\ApnaWaqeel\\venv\\Lib\\site-packages\\pinecone_plugins'])
+2024-12-14 09:53:46,242 - pinecone_plugin_interface.logging - INFO - Looking for plugins in pinecone_plugins.inference
+2024-12-14 09:53:46,585 - pinecone_plugin_interface.logging - INFO - Installing plugin inference into Pinecone
+2024-12-14 09:53:54,669 - datasets - INFO - PyTorch version 2.4.1 available.
+2024-12-14 09:53:57,205 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2024-12-14 09:53:57,206 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2024-12-14 09:54:11,204 - app - INFO - RAG agent initialized successfully
+2024-12-14 09:54:11,205 - app - WARNING - Chat loaded with : 26, user_id: 1
+2024-12-14 09:54:11,798 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 09:54:12,665 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 09:54:12,686 - root - INFO - Sentiment: Constitutional
+2024-12-14 09:54:43,921 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 09:54:44,844 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 09:54:46,361 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 09:54:46,861 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 09:55:02,394 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 09:55:03,235 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 09:55:03,751 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 09:55:04,028 - root - INFO - Result: The Parliament of Pakistan, as outlined in Article 50 of the Constitution, consists of the President and two Houses: the National Assembly and the Senate. The President serves as the head of state, while the National Assembly and the Senate are the lower and upper houses of the legislative branch, respectively.
+
+The National Assembly is composed of 342 members, with 272 elected directly by the people and 70 reserved seats for women and minorities. The term of the National Assembly is five years, unless it is dissolved earlier. The Speaker of the National Assembly is the presiding officer of the house and is responsible for maintaining order and decorum during sessions.
+
+The Senate, on the other hand, has 104 members, with each province electing 23 members, the Federally Administered Tribal Areas electing eight members, and the Federal Capital electing four members. The term of the Senate is six years, with half of its members retiring every three years. The Chairman of the Senate is the presiding officer of the house and is responsible for maintaining order and decorum during sessions.
+
+The Parliament plays a crucial role in the governance of Pakistan, as it is responsible for making laws, overseeing the executive branch, and representing the interests of the people. The President, as the head of state, has ceremonial and symbolic duties, as well as certain constitutional powers, such as appointing the Prime Minister and dissolving the National Assembly.
+
+In the event of a vacancy in the office of the President, the Chairman or Speaker of the National Assembly acts as President until a new President is elected. Similarly, if the President is unable to perform their functions due to absence or any other cause, the Chairman or Speaker of the National Assembly assumes the role of President until the President returns or resumes their functions.
+
+In summary, the Parliament of Pakistan is a bicameral legislative body consisting of the President, the National Assembly, and the Senate. It plays a vital role in the country's governance, law-making, and representation of the people's interests.
+2024-12-14 09:55:04,289 - app - INFO - Successfully generated response for user 1
+2024-12-14 09:59:58,036 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-14 10:00:16,899 - app - INFO - Initializing RAG agent...
+2024-12-14 10:00:16,950 - pinecone_plugin_interface.logging - INFO - Discovering subpackages in _NamespacePath(['C:\\Users\\Nouma\\OneDrive\\Desktop\\GenAi x Xavour\\ApnaWaqeel\\venv\\Lib\\site-packages\\pinecone_plugins'])
+2024-12-14 10:00:16,982 - pinecone_plugin_interface.logging - INFO - Looking for plugins in pinecone_plugins.inference
+2024-12-14 10:00:17,255 - pinecone_plugin_interface.logging - INFO - Installing plugin inference into Pinecone
+2024-12-14 10:00:30,336 - datasets - INFO - PyTorch version 2.4.1 available.
+2024-12-14 10:00:33,269 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2024-12-14 10:00:33,272 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2024-12-14 10:00:56,743 - app - INFO - RAG agent initialized successfully
+2024-12-14 10:00:57,771 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 10:00:58,303 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 10:00:58,323 - root - INFO - Sentiment: Criminal
+2024-12-14 10:02:04,171 - app - INFO - Successfully generated response for user 1
+2024-12-14 10:02:41,773 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-14 10:02:54,683 - app - INFO - Initializing RAG agent...
+2024-12-14 10:02:54,702 - pinecone_plugin_interface.logging - INFO - Discovering subpackages in _NamespacePath(['C:\\Users\\Nouma\\OneDrive\\Desktop\\GenAi x Xavour\\ApnaWaqeel\\venv\\Lib\\site-packages\\pinecone_plugins'])
+2024-12-14 10:02:54,709 - pinecone_plugin_interface.logging - INFO - Looking for plugins in pinecone_plugins.inference
+2024-12-14 10:02:54,862 - pinecone_plugin_interface.logging - INFO - Installing plugin inference into Pinecone
+2024-12-14 10:02:59,251 - datasets - INFO - PyTorch version 2.4.1 available.
+2024-12-14 10:03:00,573 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2024-12-14 10:03:00,573 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2024-12-14 10:03:11,521 - app - INFO - RAG agent initialized successfully
+2024-12-14 10:03:12,051 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 10:03:12,571 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 10:03:12,618 - root - INFO - Sentiment: Criminal
+2024-12-14 10:29:14,764 - app - INFO - Successfully generated response for user 1
+2024-12-14 10:35:28,679 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-14 10:36:06,220 - app - INFO - Initializing RAG agent...
+2024-12-14 10:36:06,255 - pinecone_plugin_interface.logging - INFO - Discovering subpackages in _NamespacePath(['C:\\Users\\Nouma\\OneDrive\\Desktop\\GenAi x Xavour\\ApnaWaqeel\\venv\\Lib\\site-packages\\pinecone_plugins'])
+2024-12-14 10:36:06,295 - pinecone_plugin_interface.logging - INFO - Looking for plugins in pinecone_plugins.inference
+2024-12-14 10:36:06,520 - pinecone_plugin_interface.logging - INFO - Installing plugin inference into Pinecone
+2024-12-14 10:36:13,730 - datasets - INFO - PyTorch version 2.4.1 available.
+2024-12-14 10:36:16,280 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2024-12-14 10:36:16,280 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2024-12-14 10:36:33,220 - app - INFO - RAG agent initialized successfully
+2024-12-14 10:36:34,107 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 10:36:34,793 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 10:36:34,810 - root - INFO - Sentiment: Criminal
+2024-12-14 10:37:09,270 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 10:37:09,782 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 10:37:10,280 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 10:37:10,722 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 10:37:17,590 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 10:37:18,786 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 10:37:19,315 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 10:37:19,576 - root - INFO - Result: In the context of Pakistani law, assault is considered a serious crime and can have lasting effects on the victim. If you have been physically attacked with a sharp object, it is essential to seek immediate medical attention and report the incident to the police. 
+
+Firstly, if the attack is taking place or has just happened, call the emergency number 15 for urgent medical attention and emergency support. If it's not an emergency, you can report the incident online, go to a police station, or call the police on 100. If you need medical help but it's not an emergency, you can call 1122 for an ambulance.
+
+Secondly, getting help to recover from the physical and emotional aftermath of the attack is crucial. Counseling can help you overcome your fears and cope with post-traumatic stress disorder. You can seek help from a therapist or counselor who specializes in dealing with victims of assault.
+
+Lastly, sharp force injuries caused by sharp objects like knives are typical in assault cases. These injuries can be produced by various objects that have sharp edges or pointed extremities. It is important to document these injuries as evidence for any legal proceedings that may follow.
+
+In conclusion, if you have been physically attacked with a sharp object, it is vital to seek immediate medical attention, report the incident to the police, and get help to recover from the physical and emotional trauma.
+2024-12-14 10:37:19,879 - app - INFO - Successfully generated response for user 1
+2024-12-14 10:37:38,329 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 10:37:38,830 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 10:37:39,021 - root - INFO - Sentiment: Constitutional
+2024-12-14 10:37:45,110 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 10:37:45,615 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 10:37:46,157 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 10:37:46,698 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 10:37:53,903 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 10:37:54,874 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 10:37:55,489 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 10:37:55,739 - root - INFO - Result: The Parliament of Pakistan, also known as the Majlise Shoora Parliament, is the supreme legislative body of the Islamic Republic of Pakistan. It is a bicameral federal legislature, composed of the President of Pakistan and two houses: the Senate and the National Assembly.
+
+The National Assembly of Pakistan is the country's sovereign legislative body. It consists of 342 seats for members, including seats reserved for women and non-Muslims. The seats in the National Assembly are allocated to each Province, the Federally Administered Tribal Areas, and the Federal Capital as follows: Balochistan has 14 general seats and 3 women seats, totaling 17 seats; Khyber Pakhtunkhwa has 35 general seats and 8 women seats, totaling 43 seats; Punjab has 148 general seats and 35 women seats, totaling 183 seats; Sindh has 61 general seats and 14 women seats, totaling 75 seats; and the Federally Administered Tribal Areas and the Federal Capital have 12 general seats and 2 women seats, totaling 14 seats.
+
+The Senate of Pakistan has 23 members from each of the four provinces, totaling 96 members. The Senate is a permanent legislative body with equal representation, and it ensures that all the federating units are treated equally in the federation, no matter the size of their population.
+
+The second function of Parliament is to legislate. The government will normally set the legislative agenda and propose most bills that have a chance of passing, but Parliament has the power to scrutinize legislation, to discuss its principles, to pick it over in detail, and to propose amendments. The Parliament of Pakistan also has the power to confer functions upon officers or authorities subordinate to the Federal Government.
+
+In terms of duration and meetings, the Parliament of Pakistan is required to meet at least once in every six months, and the interval between its last sitting in one session and the date appointed for its first sitting in the next session shall not exceed six months. The President may summon the Parliament to meet at such time as he thinks fit, and may also prorogue the Parliament.
+
+The Parliament of Pakistan also has the power to elect the President of Pakistan. The President is elected by the members of both Houses of Parliament and the members of the Provincial Assemblies. The President serves as the ceremonial head of state and represents the unity of the Republic.
+
+In conclusion, the Parliament of Pakistan is a bicameral federal legislature that consists of the President of Pakistan and two houses: the Senate and the National Assembly. It has the power to legislate, scrutinize legislation, and confer functions upon officers or authorities subordinate to the Federal Government. The Parliament also meets at least once in every six months, and it has the power to elect the President of Pakistan.
+2024-12-14 10:37:56,061 - app - INFO - Successfully generated response for user 1
+2024-12-14 10:39:45,542 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-14 10:41:51,939 - app - INFO - Initializing RAG agent...
+2024-12-14 10:41:51,967 - pinecone_plugin_interface.logging - INFO - Discovering subpackages in _NamespacePath(['C:\\Users\\Nouma\\OneDrive\\Desktop\\GenAi x Xavour\\ApnaWaqeel\\venv\\Lib\\site-packages\\pinecone_plugins'])
+2024-12-14 10:41:51,970 - pinecone_plugin_interface.logging - INFO - Looking for plugins in pinecone_plugins.inference
+2024-12-14 10:41:52,133 - pinecone_plugin_interface.logging - INFO - Installing plugin inference into Pinecone
+2024-12-14 10:42:13,190 - urllib3.connectionpool - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ConnectTimeoutError(<urllib3.connection.HTTPSConnection object at 0x000001F22D9ACEC0>, 'Connection to api.pinecone.io timed out. (connect timeout=None)')': /indexes/apna-waqeel3
+2024-12-14 10:42:21,745 - urllib3.connectionpool - WARNING - Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x000001F22D9ACD70>: Failed to establish a new connection: [WinError 10053] An established connection was aborted by the software in your host machine')': /indexes/apna-waqeel3
+2024-12-14 10:42:47,739 - datasets - INFO - PyTorch version 2.4.1 available.
+2024-12-14 10:42:51,663 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2024-12-14 10:42:51,663 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2024-12-14 10:43:11,014 - app - INFO - RAG agent initialized successfully
+2024-12-14 10:43:11,718 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 10:43:12,264 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 10:43:12,276 - root - INFO - Sentiment: Constitutional
+2024-12-14 10:43:42,476 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 10:43:43,061 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 10:43:43,600 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 10:43:44,174 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 10:43:51,244 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 10:43:52,204 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 10:43:52,757 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-14 10:46:39,014 - app - INFO - Successfully generated response for user 1

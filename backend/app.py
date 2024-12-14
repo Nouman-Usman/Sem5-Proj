@@ -17,7 +17,6 @@ from werkzeug.utils import secure_filename
 from sklearn.feature_extraction.text import TfidfVectorizer
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity, get_jwt
-from flask_socketio import SocketIO, join_room, leave_room, send
 
 load_dotenv()
 UPLOAD_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'uploads', 'profile_images')
@@ -46,7 +45,6 @@ def log_memory_usage():
 
 app = Flask(__name__)
 CORS(app)
-socketio = SocketIO(app, cors_allowed_origins="*")
 
 agent = None
 
@@ -807,7 +805,6 @@ def send_message(chat_id):
         return jsonify({"error": "Message is required"}), 400
     
     db.create_chat_message(chat_id, sender_id, message)
-    socketio.emit('message', {'chat_id': chat_id, 'message': message}, room=chat_id)
     return jsonify({"message": "Message sent"}), 201
 
 # Route for fetching real time messages of clients and lawyers
@@ -821,18 +818,6 @@ def get_chat_msg(chat_id):
     messages = db.get_chat_msg(chat_id)
     return jsonify({"messages": messages}), 200
 
-@socketio.on('join')
-def on_join(data):
-    chat_id = data['chat_id']
-    join_room(chat_id)
-    send(f'User has joined the chat {chat_id}', to=chat_id)
-
-@socketio.on('leave')
-def on_leave(data):
-    chat_id = data['chat_id']
-    leave_room(chat_id)
-    send(f'User has left the chat {chat_id}', to=chat_id)
-
 def keep_alive():
     while True:
         time.sleep(1)
@@ -844,7 +829,7 @@ if __name__ == '__main__':
         threading.Thread(target=keep_alive, daemon=True).start()
 
         # Run the Flask app
-        socketio.run(app,
+        app.run(
             host='127.0.0.1',
             port=5000,
             debug=True,  # Disable in production

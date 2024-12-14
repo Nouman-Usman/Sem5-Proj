@@ -64,7 +64,6 @@ class RAGAgent:
         self.memory = ConversationBufferWindowMemory(k=5)
         self.chats_loaded = False
 
-
     def analyze_sentiment(self, question: str) -> str:
         print("---SENTIMENT ANALYSIS---")
         prompt = f"""
@@ -88,6 +87,7 @@ Please return only the category name that best fits the text: "{question}"
 """
         sentiment_result = self.llm.invoke(prompt)
         sentiment = sentiment_result.content.strip()
+        print(f"Sentiment: {sentiment}")
         return sentiment
 
     def _initialize_vectorstore(self):
@@ -174,7 +174,6 @@ Question to route: {question}
             self.question_router_prompt | self.llm | StrOutputParser()
         )
 
-
     def generate(self, state: Dict) -> Dict:
         print("---GENERATE---")
         question = state["question"]
@@ -207,7 +206,8 @@ Question to route: {question}
                 if "file_name" in doc.metadata
             ]
         ):
-            final_answer = f"{generation} \n Reference: {', '.join(filtered_metadata)}"
+            source = filtered_metadata
+            final_answer = f"{generation}"
         else:
             for doc in documents:
                 if "source" in doc.metadata:
@@ -224,7 +224,8 @@ Question to route: {question}
         return {
             "documents": documents,
             "question": question,
-            "generation": final_answer,            
+            "generation": final_answer,
+            "source": source,
         }
 
     def retrieve(self, state: Dict) -> Dict:
@@ -442,9 +443,6 @@ Question to route: {question}
 
         return workflow.compile()
 
-    
-
-
     def run(
         self,
         question: str,
@@ -468,23 +466,22 @@ Question to route: {question}
             last_output = None
             try:
                 for output in app.stream(inputs):
-                    for key, value in output.items():
+                    for key, value,  in output.items():
                         pprint(f"Finished running: {key}:")
                         print("Output:")
-                        pprint(value)
-                        last_output = value
+                        last_output = value                        
                     gc.collect()
                 result = last_output["generation"]
                 logging.info(f"Result: {result}")
-                response_text = result if isinstance(result, str) else str(result)                   
+                response_text = result if isinstance(result, str) else str(result)
                 response = {
                     "chat_response": response_text,
                     "references": [
                         doc.metadata.get("source", "")
                         for doc in last_output["documents"]
-                        if "source" in doc.metadata
+                        if "source" or "file_name" in doc.metadata
                     ],
-                    "Sentiment": sentiment,                   
+                    "Sentiment": sentiment,
                 }
                 return response
 
@@ -515,7 +512,6 @@ Question to route: {question}
             print(f"Error retrieving dataset: {e}")
             return []
 
-    
     def _get_lawyer_recommendations(self, category: str) -> str:
         """Get formatted lawyer recommendations"""
         try:
@@ -543,12 +539,9 @@ Question to route: {question}
     def save_context(self, user_input: str, assistant_output: str):
         self.memory.save_context({"input": user_input}, {"output": assistant_output})
 
-
     def is_valid_uuid(self, uuid_str: str) -> bool:
         try:
             uuid.UUID(uuid_str)
             return True
         except (ValueError, AttributeError, TypeError):
             return False
-
-

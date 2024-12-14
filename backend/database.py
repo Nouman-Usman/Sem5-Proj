@@ -738,15 +738,15 @@ class Database:
             conn.commit()
             return chat_id
 
-    def create_chat_message(self, chat_id, sender_id, message):
-        with self.get_connection() as conn:
-            cursor = conn.cursor()
-            query = """
-                INSERT INTO ChatMessages (ChatId, SenderId, Message, Timestamp)
-                VALUES (?, ?, ?, GETDATE())
-            """
-            cursor.execute(query, (chat_id, sender_id, message))
-            conn.commit()
+    # def create_chat_message(self, chat_id, sender_id, message):
+    #     with self.get_connection() as conn:
+    #         cursor = conn.cursor()
+    #         query = """
+    #             INSERT INTO ChatMessages (ChatId, SenderId, Message, Timestamp)
+    #             VALUES (?, ?, ?, GETDATE())
+    #         """
+    #         cursor.execute(query, (chat_id, sender_id, message))
+    #         conn.commit()
 
     def get_chat_messages(self, chat_id):
         with self.get_connection() as conn:
