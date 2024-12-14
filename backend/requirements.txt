@@ -25,6 +25,7 @@ flask-cors>=3.1.1
 httpx>=0.23.0
 azure-data-tables>=12.1.0
 azure-identity>=1.10.0  # or the latest version
-flask-sqlalchemy
-flask-bcrypt
-flask-jwt-extended
+pyodbc>=4.0.32
+flask-sqlalchemy == 3.1.1
+flask-bcrypt == 1.0.1
+flask-jwt-extended == 4.7.1
