@@ -15,6 +15,7 @@ export const authService = {
       }
       if (response.data.user.role == 'lawyer'){
         const isProfileCompleted = (await apiService.isLawyerProfileCompleted(response.data.user.id)).is_completed;
+        console.log(isProfileCompleted);
         localStorage.setItem('isProfileCompleted', isProfileCompleted);
       }
       else{

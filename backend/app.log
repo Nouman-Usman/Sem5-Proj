@@ -426,3 +426,4 @@ In conclusion, the Parliament of Pakistan is a bicameral federal legislature tha
 2024-12-14 11:28:29,050 - app - ERROR - Error fetching chats: You must call `@jwt_required()` or `verify_jwt_in_request()` before using this method
 2024-12-14 11:28:34,057 - app - ERROR - Error fetching chats: You must call `@jwt_required()` or `verify_jwt_in_request()` before using this method
 2024-12-14 11:28:39,056 - app - ERROR - Error fetching chats: You must call `@jwt_required()` or `verify_jwt_in_request()` before using this method
+2024-12-14 11:28:56,747 - waitress - INFO - Serving on http://127.0.0.1:5000
