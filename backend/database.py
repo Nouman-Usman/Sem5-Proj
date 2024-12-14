@@ -748,9 +748,9 @@ class Database:
     #         cursor.execute(query, (chat_id, sender_id, message))
     #         conn.commit()
 
-    def get_chat_messages(self, chat_id):
+    def get_chat_messages_by_session_id(self, session_id):
         with self.get_connection() as conn:
             cursor = conn.cursor()
-            query = "SELECT * FROM ChatMessages WHERE ChatId = ? ORDER BY Timestamp"
-            cursor.execute(query, (chat_id,))
+            query = "SELECT * FROM ChatMessages WHERE SessionId = ? ORDER BY Timestamp"
+            cursor.execute(query, (session_id,))
             return cursor.fetchall()
