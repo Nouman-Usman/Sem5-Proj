@@ -163,15 +163,42 @@
 
             <div class="mx-auto max-w-[900px] px-4 sm:px-8 xl:px-0 relative z-1">
                 <div class="text-center">
-                    <a href="/#"
-                        class="hero-subtitle-gradient hover:hero-subtitle-hover relative mb-5 font-medium text-sm inline-flex items-center gap-2 py-2 px-4.5 rounded-full">
-                        <img src="images/icon-title.svg" alt="icon">
-                        <span class="hero-subtitle-text" onclick="GotoNewLink('chatbot')" >
-                            Your Ultimate AI Legal Chatbot!
-                        </span>
-                    </a>
+                    <div class="text-center">
+                        <div class="hero-subtitle-gradient hover:hero-subtitle-hover relative mb-5 font-medium text-sm inline-flex items-center gap-2 py-2 px-4.5 rounded-full">
+                            <img src="images/icon-title.svg" alt="icon">
+                            <input type="text" class="hero-subtitle-text py-2 px-4.5 rounded-full" placeholder="Ask Any Legal Query Here.." style="border: none; outline: none; flex-grow: 1;" onkeydown="if(event.key === 'Enter') GotoNewLink('search')">
+                            <button onclick="GotoNewLink('search')" class="hero-subtitle-text py-2 px-4.5 rounded-full" style="background: none; border: none; cursor: pointer;">
+                                Search
+                            </button>
+                        </div>
                     <h1 class="text-white mb-6 text-3xl font-extrabold sm:text-5xl xl:text-heading-1">
-                        Your Personal Legal Assistant, Anytime, Anywhere
+                        <!-- I want typing animation -->
+                    <span id="typed-text"></span>
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function() {
+                            const baseText = "Your Personal ";
+                            const texts = ["Legal Assistant, Anytime, Anywhere", "Case Management Tool"];
+                            let textIndex = 0;
+                            let charIndex = 0;
+                            const speed = 100; // typing speed in milliseconds
+                    
+                            function typeWriter() {
+                                if (charIndex < texts[textIndex].length) {
+                                    document.getElementById("typed-text").innerHTML = baseText + texts[textIndex].substring(0, charIndex + 1);
+                                    charIndex++;
+                                    setTimeout(typeWriter, speed);
+                                } else {
+                                    setTimeout(() => {
+                                        charIndex = 0;
+                                        textIndex = (textIndex + 1) % texts.length;
+                                        typeWriter();
+                                    }, 2000); // wait 2 seconds before typing the next text
+                                }
+                            }
+                    
+                            typeWriter();
+                        });
+                    </script>
                     </h1>
                     <p class="max-w-[500px] mx-auto mb-9 font-medium md:text-lg">
                         Apna Waqeel helps you connect with expert lawyers and get legal advice based on Pakistani law. Our AI-powered chatbot makes legal guidance simple for clients, while offering detailed research tools for lawyers.
