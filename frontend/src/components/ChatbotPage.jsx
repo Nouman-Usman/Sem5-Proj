@@ -80,21 +80,28 @@ export function ChatbotPage() {
     if (inputMessage.trim() === "") return;
 
     try {
-      // Get current credits
-      const currentCredits = await apiService.getUserCredits();
-      
-      if (currentCredits <= 0) {
-        const userRole = apiService.getUserRole();
-        navigate(userRole === 'lawyer' ? "/lawyer-subscription" : "/subscription-plans");
-        return;
+      // function to get current credits
+      const currentCredits = apiService.getUserCredits();
+      if (currentCredits == 0) {
+        if (apiService.getUserRole() == 'lawyer') {
+          navigate("/lawyer-subscription");
+        } else {
+          navigate("/subscription-plans");
+        }
       }
+      else{
+        apiService.updateCredits(currentCredits - 1);
+      }
+    } catch (error) {
+      console.log("error handling credits: ", error);
+      return;
+    }
 
-      // Add message to chat
-      const newUserMessage = { id: messages.length + 1, text: inputMessage, sender: "user" };
-      setMessages(prev => [...prev, newUserMessage]);
-      setInputMessage("");
-      setProcessing("thinking");
-      setError(null);
+    const newUserMessage = { id: messages.length + 1, text: inputMessage, sender: "user" };
+    setMessages(prev => [...prev, newUserMessage]);
+    setInputMessage("");
+    setProcessing("thinking");
+    setError(null);
 
       // Get AI response
       const response = await apiService.askQuestion(inputMessage);
