@@ -8,3 +8,38 @@
 2024-12-13 22:47:15,461 - app - ERROR - Login error: argument 1 must be a string or unicode object
 2024-12-13 22:47:52,098 - waitress - INFO - Serving on http://127.0.0.1:5000
 2024-12-13 22:54:30,222 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-14 11:22:35,962 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-14 11:32:23,578 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-14 11:53:29,019 - waitress.queue - WARNING - Task queue depth is 1
+2024-12-14 11:53:41,078 - waitress.queue - WARNING - Task queue depth is 1
+2024-12-14 11:53:47,117 - waitress.queue - WARNING - Task queue depth is 1
+2024-12-14 11:53:59,053 - waitress.queue - WARNING - Task queue depth is 1
+2024-12-14 11:54:05,015 - waitress.queue - WARNING - Task queue depth is 1
+2024-12-14 11:54:11,044 - waitress.queue - WARNING - Task queue depth is 1
+2024-12-14 11:54:17,055 - waitress.queue - WARNING - Task queue depth is 1
+2024-12-14 11:54:29,018 - waitress.queue - WARNING - Task queue depth is 1
+2024-12-14 11:54:35,072 - waitress.queue - WARNING - Task queue depth is 1
+2024-12-14 11:54:41,123 - waitress.queue - WARNING - Task queue depth is 1
+2024-12-14 11:54:53,055 - waitress.queue - WARNING - Task queue depth is 1
+2024-12-14 11:55:11,023 - waitress.queue - WARNING - Task queue depth is 1
+2024-12-14 11:55:17,015 - waitress.queue - WARNING - Task queue depth is 1
+2024-12-14 11:55:22,121 - waitress.queue - WARNING - Task queue depth is 1
+2024-12-14 11:55:37,501 - waitress.queue - WARNING - Task queue depth is 1
+2024-12-14 11:56:09,055 - waitress.queue - WARNING - Task queue depth is 1
+2024-12-14 11:56:21,030 - waitress.queue - WARNING - Task queue depth is 1
+2024-12-14 11:56:27,020 - waitress.queue - WARNING - Task queue depth is 1
+2024-12-14 11:56:39,018 - waitress.queue - WARNING - Task queue depth is 1
+2024-12-14 11:58:23,058 - waitress.queue - WARNING - Task queue depth is 1
+2024-12-14 11:58:29,050 - waitress.queue - WARNING - Task queue depth is 1
+2024-12-14 11:58:35,146 - waitress.queue - WARNING - Task queue depth is 1
+2024-12-14 11:58:47,018 - waitress.queue - WARNING - Task queue depth is 1
+2024-12-14 11:59:11,055 - waitress.queue - WARNING - Task queue depth is 1
+2024-12-14 11:59:17,016 - waitress.queue - WARNING - Task queue depth is 1
+2024-12-14 11:59:22,307 - waitress.queue - WARNING - Task queue depth is 1
+2024-12-14 11:59:22,338 - waitress.queue - WARNING - Task queue depth is 2
+2024-12-14 11:59:27,669 - waitress.queue - WARNING - Task queue depth is 1
+2024-12-14 11:59:27,681 - waitress.queue - WARNING - Task queue depth is 2
+2024-12-14 11:59:32,818 - waitress.queue - WARNING - Task queue depth is 1
+2024-12-14 11:59:50,361 - waitress.queue - WARNING - Task queue depth is 1
+2024-12-14 11:59:56,126 - waitress.queue - WARNING - Task queue depth is 1
+2024-12-14 11:59:56,146 - waitress.queue - WARNING - Task queue depth is 2
