@@ -248,8 +248,15 @@ def add_lawyer_profile():
         if not data:
             logger.error("No JSON data received in lawyer profile creation")
             return jsonify({"error": "No data provided"}), 400
+            
         current_user_id = get_jwt_identity()
         logger.info(f"Creating lawyer profile for user ID: {current_user_id}")
+        
+        # Check if lawyer profile already exists
+        existing_lawyer = db.get_lawyer_by_user_id(current_user_id)
+        if existing_lawyer:
+            return jsonify({"error": "Lawyer profile already exists for this user"}), 409
+
         required_fields = ['cnic', 'licenseNumber', 'location', 'experience', 'specialization', 'contact', 'email']
         missing_fields = [field for field in required_fields if not data.get(field)]
         if missing_fields:
@@ -261,9 +268,10 @@ def add_lawyer_profile():
             experience = int(data.get('experience'))
             if experience < 0:
                 raise ValueError("Experience must be a positive number")
-        except (ValueError, TypeError) as e:
+        except (ValueError, TypeError):
             logger.error(f"Invalid experience value: {data.get('experience')}")
             return jsonify({"error": "Experience must be a valid positive number"}), 400
+
         if not data['cnic'].isdigit() or len(data['cnic']) != 13:
             logger.error(f"Invalid CNIC format: {data['cnic']}")
             return jsonify({"error": "Invalid CNIC format. Must be 13 digits"}), 400
@@ -271,6 +279,7 @@ def add_lawyer_profile():
         if not '@' in data['email']:
             logger.error(f"Invalid email format: {data['email']}")
             return jsonify({"error": "Invalid email format"}), 400
+
         lawyer_data = {
             'user_id': current_user_id,
             'cnic': data.get('cnic'),
@@ -281,8 +290,6 @@ def add_lawyer_profile():
             'contact': data.get('contact'),
             'email': data.get('email')
         }
-
-        logger.debug(f"Attempting to create lawyer profile with data: {lawyer_data}")
 
         try:
             db.create_lawyer(**lawyer_data)
@@ -297,16 +304,11 @@ def add_lawyer_profile():
             logger.error(f"Validation error while creating lawyer profile: {str(ve)}")
             return jsonify({"error": str(ve)}), 400
             
-        except Exception as e:
-            logger.error(f"Database error while creating lawyer profile: {str(e)}", exc_info=True)
-            return jsonify({"error": "Database error occurred while creating profile"}), 500
-
     except Exception as e:
         logger.error(f"Unexpected error in add_lawyer_profile: {str(e)}", exc_info=True)
         return jsonify({"error": "An unexpected error occurred"}), 500
 
     finally:
-        # Log memory usage or cleanup if needed
         logger.debug("Finished processing lawyer profile creation request")
 
 # Route for fetching lawyer profile by user ID

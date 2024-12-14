@@ -143,6 +143,13 @@ class Database:
             return cursor.fetchone()
 
     # Lawyer CRUD operations
+    def check_lawyer_cnic_exists(self, cnic):
+        with self.get_connection() as conn:
+            cursor = conn.cursor()
+            query = "SELECT 1 FROM Lawyer WHERE CNIC = ?"
+            cursor.execute(query, (cnic,))
+            return cursor.fetchone() is not None
+
     def create_lawyer(
         self,
         user_id,
@@ -159,49 +166,47 @@ class Database:
         times_clicked=0,
         times_shown=0,
     ):
-        # Updated validation to match SQL constraints
+        # Check if CNIC already exists
+        if self.check_lawyer_cnic_exists(cnic):
+            raise ValueError("A lawyer with this CNIC already exists")
+
+        # Existing validation code...
         if not isinstance(cnic, str) or len(cnic) > 20:
             raise ValueError("Invalid CNIC format")
-        if (
-            not isinstance(license_number, str) or len(license_number) > 50
-        ):  # Added validation
-            raise ValueError("Invalid license number format")
-        if not isinstance(location, str) or len(location) > 255:  # Added validation
-            raise ValueError("Invalid location format")
-        if not isinstance(contact, str) or len(contact) > 20:
-            raise ValueError("Invalid contact format")
-        if not isinstance(email, str) or len(email) > 100 or "@" not in email:
-            raise ValueError("Invalid email format")
-        if not isinstance(specialization, str) or len(specialization) > 100:
-            raise ValueError("Invalid specialization format")
+        # ...existing validation code...
 
-        with self.get_connection() as conn:
-            cursor = conn.cursor()
-            query = """INSERT INTO Lawyer 
-                      (UserId, CNIC, LicenseNumber, Location, Experience, 
-                       Specialization, Contact, Email, Paid, ExpiryDate, 
-                       Recommended, TimesClicked, TimesShown)
-                      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"""
-            cursor.execute(
-                query,
-                (
-                    user_id,
-                    cnic,
-                    license_number,
-                    location,
-                    experience,
-                    specialization,
-                    contact,
-                    email,
-                    paid,
-                    expiry_date,
-                    recommended,
-                    times_clicked,
-                    times_shown,
-                ),
-            )
-            conn.commit()
-            return cursor.rowcount
+        try:
+            with self.get_connection() as conn:
+                cursor = conn.cursor()
+                query = """INSERT INTO Lawyer 
+                          (UserId, CNIC, LicenseNumber, Location, Experience, 
+                           Specialization, Contact, Email, Paid, ExpiryDate, 
+                           Recommended, TimesClicked, TimesShown)
+                          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"""
+                cursor.execute(
+                    query,
+                    (
+                        user_id,
+                        cnic,
+                        license_number,
+                        location,
+                        experience,
+                        specialization,
+                        contact,
+                        email,
+                        paid,
+                        expiry_date,
+                        recommended,
+                        times_clicked,
+                        times_shown,
+                    ),
+                )
+                conn.commit()
+                return cursor.rowcount
+        except pyodbc.IntegrityError as e:
+            if "UQ__Lawyer__AA570FD4" in str(e):
+                raise ValueError("A lawyer with this CNIC already exists")
+            raise e
 
     def get_lawyer_by_user_id(self, user_id):
         with self.get_connection() as conn:

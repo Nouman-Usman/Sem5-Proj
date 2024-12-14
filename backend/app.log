@@ -1,0 +1,12 @@
+2024-12-14 13:56:25,149 - app - INFO - Creating lawyer profile for user ID: 4
+2024-12-14 13:56:25,244 - app - ERROR - Database error while creating lawyer profile: ('23000', "[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Violation of UNIQUE KEY constraint 'UQ__Lawyer__AA570FD450D08CE3'. Cannot insert duplicate key in object 'dbo.Lawyer'. The duplicate key value is (3520180667435). (2627) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)")
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 291, in add_lawyer_profile
+    "message": "Lawyer profile created successfully",
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\database.py", line 185, in create_lawyer
+    cursor.execute(
+pyodbc.IntegrityError: ('23000', "[23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Violation of UNIQUE KEY constraint 'UQ__Lawyer__AA570FD450D08CE3'. Cannot insert duplicate key in object 'dbo.Lawyer'. The duplicate key value is (3520180667435). (2627) (SQLExecDirectW); [23000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)")
+2024-12-14 14:00:19,334 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-14 14:00:33,408 - app - INFO - Creating lawyer profile for user ID: 4
+2024-12-14 14:00:33,704 - app - INFO - Successfully created lawyer profile for user ID: 4
