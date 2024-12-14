@@ -91,7 +91,177 @@ def save_profile_image(file):
         return unique_filename
     return None
 
-# Route for Signup
+# ============= Chat Related Routes =============
+@app.route('/api/ask', methods=['POST'])
+@jwt_required()
+def ask_question():
+    retries = 0
+    max_retries = 3
+    data_loaded = False
+    Session_Id = None
+    try:
+        current_user_id = get_jwt_identity()
+        role = get_jwt()['role']
+        data = request.get_json()
+        Session_Id = data.get('SessionId') if 'SessionId' in data else None
+        print(Session_Id)
+        if not data:
+            logger.error("No JSON data received")
+            return jsonify({"error": "No data provided"}), 400            
+        question = data.get('question')
+        if not question:
+            logger.error("Missing question parameter")
+            return jsonify({"error": "Missing required parameter: question"}), 400
+        if not Session_Id:
+            vectorizer = TfidfVectorizer(stop_words="english", max_features=5)
+            X = vectorizer.fit_transform([question])
+            key_phrases = vectorizer.get_feature_names_out()
+            chat_topic = " ".join(sorted(key_phrases)).title()
+            Session_Id = db.create_session(user_id=current_user_id, topic=chat_topic)
+            logger.info(f"Created new session {Session_Id} for user {current_user_id}")
+            data_loaded = True
+        rag_agent = get_agent()
+        history = []
+        
+        if Session_Id:
+            if not data_loaded:
+                history = db.get_chat_session_by_id(session_id=Session_Id)
+                data_loaded = True
+            else:
+                logger.warning(f"Chat loaded with : {Session_Id}, user_id: {current_user_id}")
+        else:
+            logger.warning(f"Invalid UUID - chat_id: {Session_Id}, user_id: {current_user_id}")
+
+        try:
+            result = rag_agent.run(question,history)
+            db.create_chat_message(
+                session_id=Session_Id,
+                message=question,
+                msg_type="Human Message",
+                references=None,
+                recommended_lawyers=None
+            )
+            if not result or 'chat_response' not in result or not result['chat_response']:
+                logger.error("Invalid or empty response from RAG agent")
+                return jsonify({"error": "Failed to generate response"}), 500
+
+            # Store AI response with UUID objects
+            db.create_chat_message(
+                session_id=Session_Id,
+                message=result['chat_response'],
+                msg_type="AI Message",
+                recommended_lawyers=result.get('recommended_lawyers', []),
+                references=result.get('references', [])
+            )
+            sentiment = result.get('sentiment', 'neutral')
+            lawyer = recommend_lawyer.recommend_top_lawyers(sentiment)
+            # Create response object with string UUIDs for JSON
+            response = {
+                "answer": result['chat_response'],
+                "references": result.get('references', []),
+                "recommended_lawyers": lawyer,
+                "session_id": Session_Id,
+            }
+            access_token = create_access_token(
+                identity=current_user_id,
+                additional_claims={
+                    "SessionId": Session_Id,
+                    "user_id": current_user_id
+                }
+            )
+            logger.info(f"Successfully generated response for user {current_user_id}")
+            return jsonify(response), 200
+
+        except Exception as e:
+            logger.error(f"Error generating response: {str(e)}")
+            return jsonify({"error": "Failed to generate response"}), 500
+        
+    except Exception as e:
+        logger.error(f"Error processing question: {str(e)}", exc_info=True)
+        return jsonify({"error": "An unexpected error occurred"}), 500
+
+@app.route('/api/chat/start', methods=['POST'])
+@jwt_required()
+def start_chat():
+    data = request.get_json()
+    initiator_id = get_jwt_identity()
+    recipient_id = data.get('recipient_id')
+    
+    if not recipient_id:
+        return jsonify({"error": "Recipient ID is required"}), 400
+    
+    chat_id = db.create_chat_session(initiator_id, recipient_id)
+    return jsonify({"chat_id": chat_id}), 201
+
+@app.route('/api/chat/<chat_id>/messages', methods=['POST'])
+@jwt_required()
+def send_message(chat_id):
+    data = request.get_json()
+    sender_id = get_jwt_identity()
+    message = data.get('message')
+    
+    if not message:
+        return jsonify({"error": "Message is required"}), 400
+    
+    db.create_chat_message(chat_id, sender_id, message)
+    return jsonify({"message": "Message sent"}), 201
+
+@app.route('/api/chat/<chat_id>/messages', methods=['GET'])
+@jwt_required()
+def get_chat_msg(chat_id):
+    messages = db.get_chat_msg(chat_id)
+    return jsonify({"messages": messages}), 200
+
+@app.route('/api/topics', methods=['GET'])
+@jwt_required()
+def get_user_chats():
+    try:
+        user_id = get_jwt_identity()
+        response = db.get_chat_topics(user_id)
+        return jsonify(response), 200
+    except Exception as e:
+        logger.error(f"Error fetching chats: {str(e)}")
+        return jsonify({"error": "Failed to fetch chats"}), 500
+
+@app.route('/api/chats', methods=['GET'])
+def get_chats():
+    try:
+        chat_sessions = db.get_all_chat_sessions()
+        return jsonify({
+            "chat_sessions": chat_sessions,
+            "count": len(chat_sessions)
+        }), 200
+    except Exception as e:
+        logger.error(f"Error fetching chat sessions: {str(e)}")
+        return jsonify({"error": "Failed to fetch chat sessions"}), 500
+
+@app.route('/api/chats/<session_id>', methods=['GET'])
+def get_chat(session_id):
+    try:
+        chats = db.get_chats_by_session_id(session_id)
+        if not chats:
+            return jsonify({"error": "Chat session not found"}), 404
+        formatted_chats = []
+        for chat in chats:
+            formatted_chat = {
+                "message_id": chat[0],
+                "session_id": chat[1],
+                "message": chat[2],
+                "message_type": chat[3],
+                "timestamp": chat[4].isoformat() if chat[4] else None,
+                "references": json.loads(chat[5]) if chat[5] else None,
+                "recommended_lawyers": json.loads(chat[6]) if chat[6] else None
+            }
+            formatted_chats.append(formatted_chat)
+        return jsonify({
+            "data": formatted_chats
+        }), 200
+
+    except Exception as e:
+        logger.error(f"Error fetching chat session: {str(e)}")
+        return jsonify({"error": "Failed to fetch chat session"}), 500
+
+# ============= Auth Related Routes =============
 @app.route('/api/signup', methods=['POST'])
 def signup():
     data = request.get_json()
@@ -141,7 +311,6 @@ def signup():
         logger.error(f"Signup error: {str(e)}")
         return jsonify({"error": "Failed to create user"}), 500
 
-# Route for Login
 @app.route('/api/auth/login', methods=['POST'])
 def login():
     data = request.get_json()
@@ -178,6 +347,7 @@ def login():
         logger.error(f"Login error: {str(e)}")
         return jsonify({"error": "Login failed"}), 500
 
+# ============= Profile Related Routes =============
 @app.route('/api/cl/profile', methods=['POST'])
 @jwt_required()
 def add_client_profile():
@@ -311,7 +481,6 @@ def add_lawyer_profile():
     finally:
         logger.debug("Finished processing lawyer profile creation request")
 
-# Route for fetching lawyer profile by user ID
 @app.route('/api/l/profile', methods=['GET'])
 @jwt_required()
 def get_profile():
@@ -357,7 +526,7 @@ def get_profile():
                 "email": lawyer.Email
             }
         }), 200
-# Route for updating client profile
+
 @app.route('/api/c/profile', methods=['PUT'])
 @jwt_required()
 def update_client_profile():
@@ -402,8 +571,8 @@ def update_client_profile():
         except Exception as e:
             logger.error(f"Lawyer profile update error: {str(e)}")
             return jsonify({"error": "Failed to update lawyer profile"}), 500
-    
-# Route for fetching all lawyers
+
+# ============= Lawyer Related Routes =============
 @app.route('/api/lawyers', methods=['GET'])
 def get_lawyers():
     try:
@@ -416,7 +585,6 @@ def get_lawyers():
         logger.error(f"Error fetching lawyers: {str(e)}")
         return jsonify({"error": "Failed to fetch lawyers"}), 500
 
-# Route for fetching a single lawyer by lawyer ID
 @app.route('/api/lawyers/<lawyer_id>', methods=['GET'])
 def get_lawyer(lawyer_id):
     try:
@@ -429,12 +597,29 @@ def get_lawyer(lawyer_id):
     except Exception as e:
         logger.error(f"Error fetching lawyer: {str(e)}")
         return jsonify({"error": "Failed to fetch lawyer"}), 500
-    
 
+@app.route('/api/lawyers/category/<specialization>', methods=['GET'])
+def get_lawyers_by_category(specialization):
+    try:
+        lawyers = db.get_lawyers_by_specialization(specialization)
+        return jsonify({
+            "lawyers": [
+                {
+                    "name": lawyer[0],
+                    "email": lawyer[1],
+                    "contact": lawyer[2],
+                    "experience": lawyer[3],
+                    "category": lawyer[4],
+                    "ratings": float(lawyer[5])
+                }
+                for lawyer in lawyers
+            ],
+            "count": len(lawyers)
+        }), 200
+    except Exception as e:
+        logger.error(f"Error fetching lawyers by category: {str(e)}")
+        return jsonify({"error": "Failed to fetch lawyers"}), 500
 
-
-
-    
 @app.route('/api/lawyers/isCompleted/<user_id>', methods=['GET'])
 def getIsLayerIdCompleted(user_id):
     try:
@@ -447,21 +632,8 @@ def getIsLayerIdCompleted(user_id):
     except Exception as e:
         logger.error(f"Error fetching lawyer: {str(e)}")
         return jsonify({"error": "Failed to fetch lawyer"}), 500
-    
-@app.route('/api/client/isCompleted/<user_id>', methods=['GET'])
-def getIsClientIdCompleted(user_id):
-    try:
-        client = db.get_client_by_Userid(user_id)
-        if not client:
-            return jsonify({"is_completed": False}), 200
-        return jsonify({
-            "is_completed": True
-        }), 200
-    except Exception as e:
-        logger.error(f"Error fetching client: {str(e)}")
-        return jsonify({"error": "Failed to fetch client"}), 500
-    
-# Route for fetching all clients
+
+# ============= Client Related Routes =============
 @app.route('/api/clients', methods=['GET'])
 def get_clients():
     try:
@@ -473,8 +645,7 @@ def get_clients():
     except Exception as e:
         logger.error(f"Error fetching clients: {str(e)}")
         return jsonify({"error": "Failed to fetch clients"}), 500
-    
-# Route for fetching a single client by Client ID
+
 @app.route('/api/clients/<client_id>', methods=['GET'])
 def get_client(client_id):
     try:
@@ -488,20 +659,63 @@ def get_client(client_id):
         logger.error(f"Error fetching client: {str(e)}")
         return jsonify({"error": "Failed to fetch client"}), 500
 
-# Route for fetching all chat sessions
-@app.route('/api/chats', methods=['GET'])
-def get_chats():
+@app.route('/api/client/isCompleted/<user_id>', methods=['GET'])
+def getIsClientIdCompleted(user_id):
     try:
-        chat_sessions = db.get_all_chat_sessions()
+        client = db.get_client_by_Userid(user_id)
+        if not client:
+            return jsonify({"is_completed": False}), 200
         return jsonify({
-            "chat_sessions": chat_sessions,
-            "count": len(chat_sessions)
+            "is_completed": True
         }), 200
     except Exception as e:
-        logger.error(f"Error fetching chat sessions: {str(e)}")
-        return jsonify({"error": "Failed to fetch chat sessions"}), 500
-    
-# Route for getting credits by user_id
+        logger.error(f"Error fetching client: {str(e)}")
+        return jsonify({"error": "Failed to fetch client"}), 500
+
+# ============= Subscription Related Routes =============
+@app.route('/api/subscribe', methods=['POST'])
+@jwt_required()
+def subscribe():
+    try:
+        data = request.get_json()
+        current_user_id = get_jwt_identity()
+        role = get_jwt()['role']
+        print(role)
+        subscription_data = {
+            'user_id': current_user_id,
+            'subscription_type': data.get('plan'),
+            'start_date': data.get('start_date'),
+            'expiry_date': data.get('end_date'),
+            'remaining_credits': data.get('amount')
+        }
+        try:
+            db.create_subscription(**subscription_data)
+            if (role == 'lawyer'):
+                db.update_lawyer_paid_status(current_user_id)
+            return jsonify({"message": "Subscription created successfully"}), 201
+        except Exception as e:
+            logger.error(f"Subscription creation error: {str(e)}")
+            return jsonify({"error": "Failed to create subscription"}), 500
+    except Exception as e:
+        logger.error(f"Error in subscribe endpoint: {str(e)}")
+        return jsonify({"error": "An unexpected error occurred"}), 500
+
+@app.route('/subscription/current', methods=['GET'])
+@jwt_required()
+def get_current_subs():
+    try:
+        current_user_id = get_jwt_identity()
+        subscription = db.get_current_subscription(current_user_id)
+        if not subscription:
+            return jsonify({"error": "No active subscription found"}), 404
+        return jsonify({
+            "subscription": subscription
+        }), 200
+    except Exception as e:
+        logger.error(f"Error fetching current subscription: {str(e)}")
+        return jsonify({"error": "Failed to fetch current subscription"}), 500
+
+# ============= Credits Related Routes =============
 @app.route('/api/get/credits/', methods=['GET'])
 @jwt_required()
 def get_credits():
@@ -521,7 +735,6 @@ def get_credits():
         logger.error(f"Error fetching credits: {str(e)}")
         return jsonify({"error": "Failed to fetch credits"}), 500
 
-# Route for updating credits by user_id
 @app.route('/api/up/credits/', methods=['PUT'])
 @jwt_required()
 def update_credits():
@@ -551,117 +764,7 @@ def update_credits():
         logger.error(f"Error updating credits: {str(e)}")
         return jsonify({"error": "Failed to update credits"}), 500
 
-@app.route('/api/chats/<session_id>', methods=['GET'])
-def get_chat(session_id):
-    try:
-        chats = db.get_chats_by_session_id(session_id)
-        if not chats:
-            return jsonify({"error": "Chat session not found"}), 404
-        formatted_chats = []
-        for chat in chats:
-            formatted_chat = {
-                "message_id": chat[0],
-                "session_id": chat[1],
-                "message": chat[2],
-                "message_type": chat[3],
-                "timestamp": chat[4].isoformat() if chat[4] else None,
-                "references": json.loads(chat[5]) if chat[5] else None,
-                "recommended_lawyers": json.loads(chat[6]) if chat[6] else None
-            }
-            formatted_chats.append(formatted_chat)
-        return jsonify({
-            "data": formatted_chats
-        }), 200
-
-    except Exception as e:
-        logger.error(f"Error fetching chat session: {str(e)}")
-        return jsonify({"error": "Failed to fetch chat session"}), 500
-
-
-# Route for fetching a single chat session
-# @app.route('/api/chats/<chat_id>', methods=['GET'])
-# def get_chat(chat_id):
-#     try:
-#         chat_session = db.get_chat_session_by_id(chat_id)
-#         if not chat_session:
-#             return jsonify({"error": "Chat session not found"}), 404
-#         return jsonify({
-#             "chat_session": chat_session
-#         }), 200
-#     except Exception as e:
-#         logger.error(f"Error fetching chat session: {str(e)}")
-#         return jsonify({"error": "Failed to fetch chat session"}), 500
-
-
-# Route for fetching all chat messages
-@app.route('/api/chat/<chat_id>/messages', methods=['GET'])
-def get_chat_messages(session_id):
-    try:
-        chat_messages = db.get_chat_messages_by_session_id(session_id)
-        return jsonify({
-            "chat_messages": chat_messages,
-            "count": len(chat_messages)
-        }), 200
-    except Exception as e:
-        logger.error(f"Error fetching chat messages: {str(e)}")
-        return jsonify({"error": "Failed to fetch chat messages"}), 500
-
-# Route for fetching a single chat message
-@app.route('/api/chat/<chat_id>/messages/<message_id>', methods=['GET'])
-def get_chat_message(chat_id, message_id):
-    try:
-        chat_message = db.get_chat_message_by_message_id(message_id)
-        if not chat_message:
-            return jsonify({"error": "Chat message not found"}), 404
-        return jsonify({
-            "chat_message": chat_message
-        }), 200
-    except Exception as e:
-        logger.error(f"Error fetching chat message: {str(e)}")
-        return jsonify({"error": "Failed to fetch chat message"}), 500
-# Route for adding client subscription
-@app.route('/api/subscribe', methods=['POST'])
-@jwt_required()
-def subscribe():
-    try:
-        data = request.get_json()
-        current_user_id = get_jwt_identity()
-        role = get_jwt()['role']
-        print(role)
-        subscription_data = {
-            'user_id': current_user_id,
-            'subscription_type': data.get('plan'),
-            'start_date': data.get('start_date'),
-            'expiry_date': data.get('end_date'),
-            'remaining_credits': data.get('amount')
-        }
-        try:
-            db.create_subscription(**subscription_data)
-            if (role == 'lawyer'):
-                db.update_lawyer_paid_status(current_user_id)
-            return jsonify({"message": "Subscription created successfully"}), 201
-        except Exception as e:
-            logger.error(f"Subscription creation error: {str(e)}")
-            return jsonify({"error": "Failed to create subscription"}), 500
-    except Exception as e:
-        logger.error(f"Error in subscribe endpoint: {str(e)}")
-        return jsonify({"error": "An unexpected error occurred"}), 500
-# Route for fetching current subscription
-@app.route('/subscription/current', methods=['GET'])
-@jwt_required()
-def get_current_subs():
-    try:
-        current_user_id = get_jwt_identity()
-        subscription = db.get_current_subscription(current_user_id)
-        if not subscription:
-            return jsonify({"error": "No active subscription found"}), 404
-        return jsonify({
-            "subscription": subscription
-        }), 200
-    except Exception as e:
-        logger.error(f"Error fetching current subscription: {str(e)}")
-        return jsonify({"error": "Failed to fetch current subscription"}), 500
-
+# ============= Health Check Routes =============
 @app.route('/api/', methods=['GET'])
 def health_check2():
     return jsonify({"status": "healthy"})
@@ -676,242 +779,6 @@ def is_valid_uuid(uuid_str: str) -> bool:
         return True
     except (ValueError, AttributeError, TypeError):
         return False
-# Ask endpoint
-@app.route('/api/ask', methods=['POST'])
-@jwt_required()
-def ask_question():
-    retries = 0
-    max_retries = 3
-    data_loaded = False
-    Session_Id = None
-    try:
-        current_user_id = get_jwt_identity()
-        role = get_jwt()['role']
-        data = request.get_json()
-        Session_Id = data.get('SessionId') if 'SessionId' in data else None
-        print(Session_Id)
-        if not data:
-            logger.error("No JSON data received")
-            return jsonify({"error": "No data provided"}), 400            
-        question = data.get('question')
-        if not question:
-            logger.error("Missing question parameter")
-            return jsonify({"error": "Missing required parameter: question"}), 400
-        if not Session_Id:
-            vectorizer = TfidfVectorizer(stop_words="english", max_features=5)
-            X = vectorizer.fit_transform([question])
-            key_phrases = vectorizer.get_feature_names_out()
-            chat_topic = " ".join(sorted(key_phrases)).title()
-            Session_Id = db.create_session(user_id=current_user_id, topic=chat_topic)
-            logger.info(f"Created new session {Session_Id} for user {current_user_id}")
-            data_loaded = True
-        rag_agent = get_agent()
-        history = []
-        
-        if Session_Id:
-            if not data_loaded:
-                history = db.get_chat_session_by_id(session_id=Session_Id)
-                data_loaded = True
-            else:
-                logger.warning(f"Chat loaded with : {Session_Id}, user_id: {current_user_id}")
-        else:
-            logger.warning(f"Invalid UUID - chat_id: {Session_Id}, user_id: {current_user_id}")
-
-        try:
-            result = rag_agent.run(question,history)
-            db.create_chat_message(
-                session_id=Session_Id,
-                message=question,
-                msg_type="Human Message",
-                references=None,
-                recommended_lawyers=None
-            )
-            if not result or 'chat_response' not in result or not result['chat_response']:
-                logger.error("Invalid or empty response from RAG agent")
-                return jsonify({"error": "Failed to generate response"}), 500
-
-            # Store AI response with UUID objects
-            db.create_chat_message(
-                session_id=Session_Id,
-                message=result['chat_response'],
-                msg_type="AI Message",
-                recommended_lawyers=result.get('recommended_lawyers', []),
-                references=result.get('references', [])
-            )
-            sentiment = result.get('sentiment', 'neutral')
-            lawyer = recommend_lawyer.recommend_top_lawyers(sentiment)
-            # Create response object with string UUIDs for JSON
-            response = {
-                "answer": result['chat_response'],
-                "references": result.get('references', []),
-                "recommended_lawyers": lawyer,
-                "session_id": Session_Id,
-            }
-            access_token = create_access_token(
-                identity=current_user_id,
-                additional_claims={
-                    "SessionId": Session_Id,
-                    "user_id": current_user_id
-                }
-            )
-            logger.info(f"Successfully generated response for user {current_user_id}")
-            return jsonify(response), 200
-
-        except Exception as e:
-            logger.error(f"Error generating response: {str(e)}")
-            return jsonify({"error": "Failed to generate response"}), 500
-        
-    except Exception as e:
-        logger.error(f"Error processing question: {str(e)}", exc_info=True)
-        return jsonify({"error": "An unexpected error occurred"}), 500
-
-# Route for loading All chat topics and session ids by userid
-@app.route('/api/topics', methods=['GET'])
-@jwt_required()
-def get_user_chats():
-    try:
-        user_id = get_jwt_identity()
-        response = db.get_chat_topics(user_id)
-        return jsonify(response), 200
-    except Exception as e:
-        logger.error(f"Error fetching chats: {str(e)}")
-        return jsonify({"error": "Failed to fetch chats"}), 500
-
-# Route for loading All chat topics and session ids by userid
-# @app.route('/api/user/<user_id>/chats/<chat_id>', methods=['GET'])
-# def get_user_chats(user_id, chat_id):
-#     try:
-#         rag_agent = get_agent(user_id=user_id, chat_id=chat_id)
-
-#         chat_history = rag_agent.get_user_chat_history(user_id, chat_id=chat_id)
-#         # return jsonify({
-#         #     "user_id": user_id,
-#         #     "chat_ids": chat_history,
-#         #     "count": len(chat_history)
-#         # })
-#         return None
-#     except Exception as e:
-#         logger.error(f"Error retrieving chats: {e}")
-#         return jsonify({"error": str(e)}), 500
-
-# @app.route('/api/lawyer/register', methods=['POST'])
-# @jwt_required()
-# def register_lawyer():
-#     try:
-#         data = request.get_json()
-#         lawyer_store = LawyerStore(connection_string=os.getenv("SQL_CONN_STRING"))
-        
-#         lawyer_data = {
-#             "name": data["name"],
-#             "email": data["email"],
-#             "specialization": data["specialization"],
-#             "experience": data["experience"],
-#             "license_number": data["license_number"],
-#             "rating": 0.0,  # Default rating for new lawyers
-#             "location": data["location"],
-#             "specializations": data.get("specializations", [])
-#         }
-        
-#         lawyer_store.add_lawyer(lawyer_data)
-#         return jsonify({"message": "Lawyer registered successfully"}), 201
-#     except Exception as e:
-#         return jsonify({"error": str(e)}), 500
-
-# @app.route('/api/chat/start', methods=['POST'])
-# @jwt_required()
-# def start_chat():
-#     try:
-#         data = request.get_json()
-#         initiator_id = get_jwt_identity()
-#         recipient_id = data.get('recipient_id', "00000000-0000-0000-0000-000000000000")  # Default to system ID
-        
-#         # Get agent instance to use its methods
-#         agent = get_agent(initiator_id, None)
-        
-#         # Ensure both users exist
-#         if not (agent.ensure_user_exists(initiator_id) and agent.ensure_user_exists(recipient_id)):
-#             return jsonify({"error": "Failed to ensure users exist"}), 500
-        
-#         chat_id = str(uuid.uuid4())
-#         conn = pyodbc.connect(os.getenv("SQL_CONN_STRING"))
-#         cursor = conn.cursor()
-        
-#         query = """
-#             INSERT INTO ChatSessions 
-#             (ChatId, InitiatorId, RecipientId, Status, StartTime)
-#             VALUES (?, ?, ?, 'Active', GETDATE())
-#         """
-#         cursor.execute(query, (chat_id, initiator_id, recipient_id))
-#         conn.commit()
-        
-#         return jsonify({"chat_id": chat_id}), 201
-#     except Exception as e:
-#         logger.error(f"Error starting chat: {e}")
-#         return jsonify({"error": str(e)}), 500
-#     finally:
-#         if 'cursor' in locals():
-#             cursor.close()
-#         if 'conn' in locals():
-#             conn.close()
-
-@app.route('/api/lawyers/category/<specialization>', methods=['GET'])
-def get_lawyers_by_category(specialization):
-    try:
-        lawyers = db.get_lawyers_by_specialization(specialization)
-        return jsonify({
-            "lawyers": [
-                {
-                    "name": lawyer[0],
-                    "email": lawyer[1],
-                    "contact": lawyer[2],
-                    "experience": lawyer[3],
-                    "category": lawyer[4],
-                    "ratings": float(lawyer[5])
-                }
-                for lawyer in lawyers
-            ],
-            "count": len(lawyers)
-        }), 200
-    except Exception as e:
-        logger.error(f"Error fetching lawyers by category: {str(e)}")
-        return jsonify({"error": "Failed to fetch lawyers"}), 500
-
-@app.route('/api/chat/start', methods=['POST'])
-@jwt_required()
-def start_chat():
-    data = request.get_json()
-    initiator_id = get_jwt_identity()
-    recipient_id = data.get('recipient_id')
-    
-    if not recipient_id:
-        return jsonify({"error": "Recipient ID is required"}), 400
-    
-    chat_id = db.create_chat_session(initiator_id, recipient_id)
-    return jsonify({"chat_id": chat_id}), 201
-
-@app.route('/api/chat/<chat_id>/messages', methods=['POST'])
-@jwt_required()
-def send_message(chat_id):
-    data = request.get_json()
-    sender_id = get_jwt_identity()
-    message = data.get('message')
-    
-    if not message:
-        return jsonify({"error": "Message is required"}), 400
-    
-    db.create_chat_message(chat_id, sender_id, message)
-    return jsonify({"message": "Message sent"}), 201
-
-# Route for fetching real time messages of clients and lawyers
-    
-# const response = await api.post(`/chat/${recipientId}/message`, { message });
-# According to the above make a function
-
-@app.route('/api/chat/<chat_id>/messages', methods=['GET'])
-@jwt_required()
-def get_chat_msg(chat_id):
-    messages = db.get_chat_msg(chat_id)
-    return jsonify({"messages": messages}), 200
 
 def keep_alive():
     while True:
