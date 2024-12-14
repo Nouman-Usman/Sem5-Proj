@@ -290,6 +290,11 @@ export const apiService = {
       return null;
     }
   },
+  async getUserCredits()
+  {
+    const cred = await api.get('/get/credits/')
+
+  },
 
   // Profile related endpoints
   async getUserProfile() {

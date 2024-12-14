@@ -81,7 +81,7 @@ export function ChatbotPage() {
 
     try {
       // function to get current credits
-      // const currentCredits = getUserCredits();
+      const currentCredits = getUserCredits();
       const currentCredits = 0;
       if (currentCredits == 0) {
         if (apiService.getUserRole() == 'lawyer') {
