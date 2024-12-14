@@ -1,19 +1,19 @@
-import React, { useState, useEffect } from "react"
-import { Menu as MenuIcon, X, ChevronDown, User, LogIn, LogOut, Settings } from "lucide-react"
-import { Menu } from "@headlessui/react"
-import {authService} from "@/services/auth"
+import React, { useState, useEffect } from "react";
+import { Menu as MenuIcon, X, ChevronDown, User, LogOut, Settings } from "lucide-react";
+import { Menu } from "@headlessui/react";
+import { authService } from "@/services/auth";
 
 export function Navbar() {
-  const [isOpen, setIsOpen] = useState(false)
-  const [scrolled, setScrolled] = useState(false)
+  const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 0)
-    }
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+      setScrolled(window.scrollY > 0);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const navbarClasses = `
     w-full 
@@ -28,7 +28,7 @@ export function Navbar() {
     after:absolute after:w-full after:h-[1px] after:top-0 
     after:bg-gradient-to-r after:from-transparent after:via-white/20 after:to-transparent
     after:animate-glow
-  `
+  `;
 
   const linkClasses = `
     text-white/90 hover:text-white 
@@ -38,7 +38,7 @@ export function Navbar() {
     hover:bg-white/10 
     hover:shadow-[0_0_15px_rgba(255,255,255,0.1)]
     group
-  `
+  `;
 
   return (
     <nav className={navbarClasses}>
@@ -93,40 +93,35 @@ export function Navbar() {
                 ">
                   <Menu.Item>
                     {({ active }) => (
-                      <a href="/Login" className={`
-                        ${active ? 'bg-white/10' : ''} 
-                        flex items-center px-4 py-2 
-                        text-sm text-white/90 hover:text-white 
-                        rounded-xl transition-all duration-300
-                      `}>
-                        <LogIn className="mr-2 h-4 w-4" />
-                        Login
-                      </a>
-                    )}
-                  </Menu.Item>
-                  <Menu.Item>
-                    {({ active }) => (
                       <a
-                        href="/Signup"
-                        className={`${active ? "bg-gray-100" : ""} 
-                          flex items-center px-4 py-2 text-sm text-gray-700`}
-                        onClick={authService.logout}
-                      >
-                        <LogOut className="mr-2 h-4 w-4" />
-                        Logout
-                      </a>
-                    )}
-                  </Menu.Item>
-                  <Menu.Item>
-                    {({ active }) => (
-                      <a
-                        href="/Account-settings"
-                        className={`${active ? "bg-gray-100" : ""} 
-                          flex items-center px-4 py-2 text-sm text-gray-700`}
+                        href="/account-settings"
+                        className={`
+                          ${active ? 'bg-white/10' : ''} 
+                          flex items-center px-4 py-2 
+                          text-sm text-white/90 hover:text-white 
+                          rounded-xl transition-all duration-300
+                        `}
                       >
                         <Settings className="mr-2 h-4 w-4" />
                         Account Settings
                       </a>
+                    )}
+                  </Menu.Item>
+                  <Menu.Item>
+                    {({ active }) => (
+                      <button
+                        onClick={authService.logout}
+                        className={`
+                          ${active ? 'bg-white/10' : ''} 
+                          flex items-center px-4 py-2 
+                          text-sm text-white/90 hover:text-white 
+                          rounded-xl transition-all duration-300
+                          w-full text-left
+                        `}
+                      >
+                        <LogOut className="mr-2 h-4 w-4" />
+                        Logout
+                      </button>
                     )}
                   </Menu.Item>
                 </Menu.Items>
@@ -167,7 +162,7 @@ export function Navbar() {
           <div className="px-2 pt-2 pb-3 space-y-1">
             <a href="/" className={linkClasses}>Home</a>
             <a href="/chatbot" className={linkClasses}>Chatbot</a>
-            <a href="/Lawyers" className={linkClasses}>Explore Lawyers</a>
+            <a href="/lawyers" className={linkClasses}>Explore Lawyers</a>
           </div>
           <div className="pt-4 pb-3 border-t border-white/10">
             <div className="flex items-center px-5">
@@ -180,21 +175,21 @@ export function Navbar() {
             </div>
             <div className="mt-3 px-2 space-y-1">
               <a
-                href="#"
-                className="block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-gray-200"
-              >
-                Logout
-              </a>
-              <a
-                href="#"
+                href="/account-settings"
                 className="block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-gray-200"
               >
                 Account Settings
               </a>
+              <button
+                onClick={authService.logout}
+                className="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-gray-200"
+              >
+                Logout
+              </button>
             </div>
           </div>
         </div>
       )}
     </nav>
-  )
+  );
 }
