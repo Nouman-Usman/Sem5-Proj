@@ -27,22 +27,37 @@ const LawyerProfile = () => {
   };
 
   const validateStep = (step) => {
-    switch(step) {
-      case 1:
-        return formData.cnic && formData.licenseNumber;
-      case 2:
-        return formData.location && formData.experience;
-      case 3:
-        return formData.specialization && formData.contact && formData.email;
-      default:
-        return false;
+    try {
+      switch(step) {
+        case 1:
+          return formData.cnic && formData.licenseNumber;
+        case 2:
+          return formData.location && formData.experience;
+        case 3:
+          return formData.specialization && formData.contact && formData.email;
+        default:
+          return false;
+      }
+    } catch (err) {
+      return false;
     }
   };
 
   const handleNext = () => {
-    if (validateStep(currentStep)) {
+    let hasError = false;
+    setError('');
+
+    // Validate only filled fields before moving to next step
+    if (currentStep === 1) {
+      if (formData.cnic && (formData.cnic.length !== 13 || !/^\d+$/.test(formData.cnic))) {
+        setError('CNIC must be 13 digits');
+        hasError = true;
+      }
+    }
+
+    if (!hasError && validateStep(currentStep)) {
       setCurrentStep(currentStep + 1);
-    } else {
+    } else if (!hasError) {
       setError('Please fill in all required fields');
     }
   };
@@ -57,21 +72,23 @@ const LawyerProfile = () => {
     setLoading(true);
 
     try {
-      // Validate form data before sending
-      if (!formData.cnic || formData.cnic.length !== 13 || !/^\d+$/.test(formData.cnic)) {
+      // Only validate when submitting
+      if (formData.cnic && (formData.cnic.length !== 13 || !/^\d+$/.test(formData.cnic))) {
         throw new Error('CNIC must be 13 digits');
       }
 
-      if (!formData.email || !formData.email.includes('@')) {
+      if (formData.email && !formData.email.includes('@')) {
         throw new Error('Please enter a valid email address');
       }
 
-      if (parseInt(formData.experience) < 0) {
+      if (formData.experience && parseInt(formData.experience) < 0) {
         throw new Error('Experience must be a positive number');
       }
+
       const response = await apiService.createLawyerProfile(formData);
+      localStorage.setItem('isProfileCompleted', 'true');
       console.log('Profile created successfully:', response);
-      navigate('/dashboard');
+      navigate('/lawyer-dashboard');
     } catch (err) {
       console.error('Profile creation error:', err);
       setError(
