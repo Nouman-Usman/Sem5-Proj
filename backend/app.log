@@ -288,3 +288,141 @@ In conclusion, the Parliament of Pakistan is a bicameral federal legislature tha
 2024-12-14 10:43:52,204 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
 2024-12-14 10:43:52,757 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
 2024-12-14 10:46:39,014 - app - INFO - Successfully generated response for user 1
+2024-12-14 11:10:18,145 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-12-14 11:10:18,145 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2024-12-14 11:10:47,559 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:10:47] "OPTIONS /api/topics HTTP/1.1" 200 -
+2024-12-14 11:10:47,565 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:10:47] "OPTIONS /api/topics HTTP/1.1" 200 -
+2024-12-14 11:10:47,819 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:10:47] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
+2024-12-14 11:10:47,893 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:10:47] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
+2024-12-14 11:10:52,685 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:10:52] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
+2024-12-14 11:10:52,959 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:10:52] "OPTIONS /api/ask HTTP/1.1" 200 -
+2024-12-14 11:10:53,031 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:10:53] "[31m[1mPOST /api/ask HTTP/1.1[0m" 422 -
+2024-12-14 11:10:57,539 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:10:57] "OPTIONS /api/topics HTTP/1.1" 200 -
+2024-12-14 11:10:57,818 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:10:57] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
+2024-12-14 11:11:02,548 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:11:02] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
+2024-12-14 11:11:07,224 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:11:07] "OPTIONS /api/topics HTTP/1.1" 200 -
+2024-12-14 11:11:07,538 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:11:07] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
+2024-12-14 11:11:12,533 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:11:12] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
+2024-12-14 11:11:17,211 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:11:17] "OPTIONS /api/topics HTTP/1.1" 200 -
+2024-12-14 11:11:17,529 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:11:17] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
+2024-12-14 11:11:22,547 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:11:22] "OPTIONS /api/topics HTTP/1.1" 200 -
+2024-12-14 11:11:22,856 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:11:22] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
+2024-12-14 11:11:27,991 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:11:27] "OPTIONS /api/topics HTTP/1.1" 200 -
+2024-12-14 11:11:28,315 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:11:28] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
+2024-12-14 11:11:33,286 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:11:33] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
+2024-12-14 11:11:38,002 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:11:38] "OPTIONS /api/topics HTTP/1.1" 200 -
+2024-12-14 11:11:38,335 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:11:38] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
+2024-12-14 11:11:43,284 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:11:43] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
+2024-12-14 11:11:47,987 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:11:47] "OPTIONS /api/topics HTTP/1.1" 200 -
+2024-12-14 11:11:48,313 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:11:48] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
+2024-12-14 11:11:53,273 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:11:53] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
+2024-12-14 11:11:57,978 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:11:57] "OPTIONS /api/topics HTTP/1.1" 200 -
+2024-12-14 11:11:58,314 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:11:58] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
+2024-12-14 11:12:02,550 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:12:02] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
+2024-12-14 11:12:07,974 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:12:07] "OPTIONS /api/topics HTTP/1.1" 200 -
+2024-12-14 11:12:08,289 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:12:08] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
+2024-12-14 11:12:12,573 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:12:12] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
+2024-12-14 11:12:17,222 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:12:17] "OPTIONS /api/topics HTTP/1.1" 200 -
+2024-12-14 11:12:17,538 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:12:17] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
+2024-12-14 11:12:22,533 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:12:22] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
+2024-12-14 11:12:27,227 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:12:27] "OPTIONS /api/topics HTTP/1.1" 200 -
+2024-12-14 11:12:27,545 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:12:27] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
+2024-12-14 11:12:32,536 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:12:32] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
+2024-12-14 11:12:37,220 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:12:37] "OPTIONS /api/topics HTTP/1.1" 200 -
+2024-12-14 11:12:37,539 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:12:37] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
+2024-12-14 11:12:42,531 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:12:42] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
+2024-12-14 11:12:47,981 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:12:47] "OPTIONS /api/topics HTTP/1.1" 200 -
+2024-12-14 11:12:48,359 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:12:48] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
+2024-12-14 11:12:53,289 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:12:53] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
+2024-12-14 11:12:58,275 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:12:58] "OPTIONS /api/topics HTTP/1.1" 200 -
+2024-12-14 11:12:58,594 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:12:58] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
+2024-12-14 11:13:03,298 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:13:03] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
+2024-12-14 11:13:08,308 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:13:08] "OPTIONS /api/topics HTTP/1.1" 200 -
+2024-12-14 11:13:08,575 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:13:08] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
+2024-12-14 11:13:13,287 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:13:13] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
+2024-12-14 11:13:18,282 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:13:18] "OPTIONS /api/topics HTTP/1.1" 200 -
+2024-12-14 11:13:18,548 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:13:18] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
+2024-12-14 11:13:22,983 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:13:22] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
+2024-12-14 11:13:28,275 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:13:28] "OPTIONS /api/topics HTTP/1.1" 200 -
+2024-12-14 11:13:28,546 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:13:28] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
+2024-12-14 11:13:32,998 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:13:32] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
+2024-12-14 11:13:38,298 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:13:38] "OPTIONS /api/topics HTTP/1.1" 200 -
+2024-12-14 11:13:38,559 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:13:38] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
+2024-12-14 11:13:42,990 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:13:42] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
+2024-12-14 11:13:48,293 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:13:48] "OPTIONS /api/topics HTTP/1.1" 200 -
+2024-12-14 11:13:48,558 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:13:48] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
+2024-12-14 11:13:52,973 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:13:52] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
+2024-12-14 11:13:58,292 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:13:58] "OPTIONS /api/topics HTTP/1.1" 200 -
+2024-12-14 11:13:58,558 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:13:58] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
+2024-12-14 11:14:02,970 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:14:02] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
+2024-12-14 11:14:08,277 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:14:08] "OPTIONS /api/topics HTTP/1.1" 200 -
+2024-12-14 11:14:08,534 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:14:08] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
+2024-12-14 11:14:12,974 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:14:12] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
+2024-12-14 11:14:18,276 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:14:18] "OPTIONS /api/topics HTTP/1.1" 200 -
+2024-12-14 11:14:18,536 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:14:18] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
+2024-12-14 11:14:22,996 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:14:22] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
+2024-12-14 11:14:28,278 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:14:28] "OPTIONS /api/topics HTTP/1.1" 200 -
+2024-12-14 11:14:28,556 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:14:28] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
+2024-12-14 11:14:32,966 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:14:32] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
+2024-12-14 11:14:38,280 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:14:38] "OPTIONS /api/topics HTTP/1.1" 200 -
+2024-12-14 11:14:38,555 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:14:38] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
+2024-12-14 11:14:42,983 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:14:42] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
+2024-12-14 11:14:48,323 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:14:48] "OPTIONS /api/topics HTTP/1.1" 200 -
+2024-12-14 11:14:48,589 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:14:48] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
+2024-12-14 11:14:52,987 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:14:52] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
+2024-12-14 11:14:58,280 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:14:58] "OPTIONS /api/topics HTTP/1.1" 200 -
+2024-12-14 11:14:58,548 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:14:58] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
+2024-12-14 11:15:02,976 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:15:02] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
+2024-12-14 11:15:08,283 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:15:08] "OPTIONS /api/topics HTTP/1.1" 200 -
+2024-12-14 11:15:08,560 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:15:08] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
+2024-12-14 11:15:12,974 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:15:12] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
+2024-12-14 11:15:18,282 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:15:18] "OPTIONS /api/topics HTTP/1.1" 200 -
+2024-12-14 11:15:18,546 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:15:18] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
+2024-12-14 11:15:51,134 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:15:51] "OPTIONS /api/topics HTTP/1.1" 200 -
+2024-12-14 11:15:51,378 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:15:51] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
+2024-12-14 11:15:52,218 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:15:52] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
+2024-12-14 11:15:58,288 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:15:58] "OPTIONS /api/topics HTTP/1.1" 200 -
+2024-12-14 11:15:58,557 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:15:58] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
+2024-12-14 11:16:02,982 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:16:02] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
+2024-12-14 11:16:08,288 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:16:08] "OPTIONS /api/topics HTTP/1.1" 200 -
+2024-12-14 11:16:08,554 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:16:08] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
+2024-12-14 11:16:12,226 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:16:12] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
+2024-12-14 11:16:18,285 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:16:18] "OPTIONS /api/topics HTTP/1.1" 200 -
+2024-12-14 11:16:18,550 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:16:18] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
+2024-12-14 11:16:22,972 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:16:22] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
+2024-12-14 11:16:28,294 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:16:28] "OPTIONS /api/topics HTTP/1.1" 200 -
+2024-12-14 11:16:28,547 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:16:28] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
+2024-12-14 11:16:32,980 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:16:32] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
+2024-12-14 11:16:38,283 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:16:38] "OPTIONS /api/topics HTTP/1.1" 200 -
+2024-12-14 11:16:38,555 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:16:38] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
+2024-12-14 11:16:42,983 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:16:42] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
+2024-12-14 11:16:48,285 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:16:48] "OPTIONS /api/topics HTTP/1.1" 200 -
+2024-12-14 11:16:48,546 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:16:48] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
+2024-12-14 11:16:52,992 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:16:52] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
+2024-12-14 11:16:58,286 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:16:58] "OPTIONS /api/topics HTTP/1.1" 200 -
+2024-12-14 11:16:58,551 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:16:58] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
+2024-12-14 11:17:02,982 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:17:02] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
+2024-12-14 11:17:08,290 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:17:08] "OPTIONS /api/topics HTTP/1.1" 200 -
+2024-12-14 11:17:08,559 - werkzeug - INFO - 127.0.0.1 - - [14/Dec/2024 11:17:08] "[31m[1mGET /api/topics HTTP/1.1[0m" 422 -
+2024-12-14 11:19:45,753 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-14 11:27:06,914 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-14 11:27:10,311 - app - ERROR - Error fetching chats: You must call `@jwt_required()` or `verify_jwt_in_request()` before using this method
+2024-12-14 11:27:14,968 - app - ERROR - Error fetching chats: You must call `@jwt_required()` or `verify_jwt_in_request()` before using this method
+2024-12-14 11:27:19,534 - app - ERROR - Error fetching chats: You must call `@jwt_required()` or `verify_jwt_in_request()` before using this method
+2024-12-14 11:27:24,050 - app - ERROR - Error fetching chats: You must call `@jwt_required()` or `verify_jwt_in_request()` before using this method
+2024-12-14 11:27:29,058 - app - ERROR - Error fetching chats: You must call `@jwt_required()` or `verify_jwt_in_request()` before using this method
+2024-12-14 11:27:34,058 - app - ERROR - Error fetching chats: You must call `@jwt_required()` or `verify_jwt_in_request()` before using this method
+2024-12-14 11:27:39,063 - app - ERROR - Error fetching chats: You must call `@jwt_required()` or `verify_jwt_in_request()` before using this method
+2024-12-14 11:27:44,049 - app - ERROR - Error fetching chats: You must call `@jwt_required()` or `verify_jwt_in_request()` before using this method
+2024-12-14 11:27:49,057 - app - ERROR - Error fetching chats: You must call `@jwt_required()` or `verify_jwt_in_request()` before using this method
+2024-12-14 11:27:54,048 - app - ERROR - Error fetching chats: You must call `@jwt_required()` or `verify_jwt_in_request()` before using this method
+2024-12-14 11:27:59,063 - app - ERROR - Error fetching chats: You must call `@jwt_required()` or `verify_jwt_in_request()` before using this method
+2024-12-14 11:28:04,048 - app - ERROR - Error fetching chats: You must call `@jwt_required()` or `verify_jwt_in_request()` before using this method
+2024-12-14 11:28:09,057 - app - ERROR - Error fetching chats: You must call `@jwt_required()` or `verify_jwt_in_request()` before using this method
+2024-12-14 11:28:14,063 - app - ERROR - Error fetching chats: You must call `@jwt_required()` or `verify_jwt_in_request()` before using this method
+2024-12-14 11:28:19,044 - app - ERROR - Error fetching chats: You must call `@jwt_required()` or `verify_jwt_in_request()` before using this method
+2024-12-14 11:28:24,060 - app - ERROR - Error fetching chats: You must call `@jwt_required()` or `verify_jwt_in_request()` before using this method
+2024-12-14 11:28:29,050 - app - ERROR - Error fetching chats: You must call `@jwt_required()` or `verify_jwt_in_request()` before using this method
+2024-12-14 11:28:34,057 - app - ERROR - Error fetching chats: You must call `@jwt_required()` or `verify_jwt_in_request()` before using this method
+2024-12-14 11:28:39,056 - app - ERROR - Error fetching chats: You must call `@jwt_required()` or `verify_jwt_in_request()` before using this method
