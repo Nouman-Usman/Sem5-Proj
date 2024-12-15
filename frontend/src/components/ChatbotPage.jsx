@@ -283,7 +283,7 @@ const ReferenceCard = ({ reference }) => {
     if (!url) return;
 
     // Check if the URL ends with .pdf
-    if (url.toLowerCase().endsWith('.pdf')) {
+    if (url.toLowerCase().contains('azure')) {
       setShowPdfViewer(true);
     } else {
       window.open(url, '_blank', 'noopener,noreferrer');
