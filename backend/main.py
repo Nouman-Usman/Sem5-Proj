@@ -78,7 +78,7 @@ class RAGAgent:
         7. Intellectual Property
         8. Labor and Employment 
         9. Immigration 
-        10. Human Rights
+        10. Commercial 
         11. Environmental
         12. Banking and Finance
         13. Cyber Law 
