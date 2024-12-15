@@ -13,6 +13,7 @@ import Logo from "@/assets/Main logo.svg";
 import { Document, Page, pdfjs } from 'react-pdf';
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 import 'react-pdf/dist/esm/Page/TextLayer.css';
+import ReactMarkdown from 'react-markdown';
 
 // Configure PDF.js with better error handling
 const pdfjsVersion = pdfjs.version;
@@ -382,6 +383,35 @@ const LawyerRecommendationCard = ({ lawyer, onContact }) => (
     </div>
   </Card>
 );
+
+const FormattedMessage = ({ content }) => {
+  return (
+    <div className="prose prose-invert max-w-none">
+      <ReactMarkdown
+        components={{
+          h1: ({node, ...props}) => <h1 className="text-2xl font-bold text-purple-400 mb-4" {...props} />,
+          h2: ({node, ...props}) => <h2 className="text-xl font-semibold text-purple-300 mb-3" {...props} />,
+          h3: ({node, ...props}) => <h3 className="text-lg font-medium text-purple-200 mb-2" {...props} />,
+          p: ({node, ...props}) => <p className="text-gray-300 mb-4" {...props} />,
+          ul: ({node, ...props}) => <ul className="list-disc list-inside space-y-2 mb-4" {...props} />,
+          ol: ({node, ...props}) => <ol className="list-decimal list-inside space-y-2 mb-4" {...props} />,
+          li: ({node, ...props}) => <li className="text-gray-300" {...props} />,
+          blockquote: ({node, ...props}) => (
+            <blockquote className="border-l-4 border-purple-500 pl-4 my-4" {...props} />
+          ),
+          code: ({node, inline, ...props}) => 
+            inline ? (
+              <code className="bg-[#2E2E3A] px-1 rounded text-purple-300" {...props} />
+            ) : (
+              <code className="block bg-[#2E2E3A] p-4 rounded-lg text-purple-300 my-4 whitespace-pre-wrap" {...props} />
+            ),
+        }}
+      >
+        {content}
+      </ReactMarkdown>
+    </div>
+  );
+};
 
 export function ChatbotPage() {
   const navigate = useNavigate();
@@ -758,7 +788,11 @@ export function ChatbotPage() {
                             ) : (
                               <Bot className="h-5 w-5 mr-2 mt-1" />
                             )}
-                            <p>{message.text}</p>
+                            {message.sender === "ai" ? (
+                              <FormattedMessage content={message.text} />
+                            ) : (
+                              <p>{message.text}</p>
+                            )}
                           </div>
                         </div>
                       </div>

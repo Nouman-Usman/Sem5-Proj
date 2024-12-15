@@ -116,7 +116,22 @@ Please return only the category name that best fits the text: "{question}"
         )
 
         self.generate_prompt = PromptTemplate(
-            template="""<|begin_of_text|><|start_header_id|>system<|end_header_id|> You are a legal assistant for question-answering tasks in the context of Pakistani law. Use the following pieces of retrieved legal information and conversation history to answer the query. If the question is asking for elaboration, provide more detailed information about the previous response. If you are unsure about the answer, simply state that. Provide well structured answers.
+            template="""<|begin_of_text|><|start_header_id|>system<|end_header_id|> You are a legal assistant for question-answering tasks in the context of Pakistani law. Structure your responses in Markdown format following this template:
+
+# Legal Response
+[Provide a clear, concise summary of the answer]
+
+## Detailed Explanation
+[Provide a detailed explanation of the legal concepts, requirements, or procedures]
+
+## Key Points
+[List the most important points or steps as bullet points]
+* Point 1
+* Point 2
+* Point 3
+
+## Legal Context
+[If relevant, provide any important legal context, citations, or references]
 
 Previous conversation context:
 {chat_history}
@@ -124,7 +139,13 @@ Previous conversation context:
 Question: {question} 
 Retrieved information: {context} 
 
-Provide a detailed response that builds upon the previous context when appropriate.
+Remember to:
+1. Use Markdown headers (# for main title, ## for sections)
+2. Use bullet points (*) for lists
+3. Use bold (**) for emphasis on important terms
+4. Include relevant legal citations where applicable
+5. Use <br> for line breaks
+
 <|eot_id|><|start_header_id|>assistant<|end_header_id|>""",
             input_variables=["question", "context", "chat_history"],
         )
@@ -179,7 +200,7 @@ Question to route: {question}
         print("---GENERATE---")
         question = state["question"]
         documents = state["documents"]
-        sources = []  # Initialize empty sources list
+        sources = []
         chat_context = self.memory.load_memory_variables({})["history"]
 
         doc_texts = []
@@ -200,10 +221,11 @@ Question to route: {question}
 
         context = "\n".join(doc_texts)
         gc.collect()
-
-        generation = self.rag_chain.invoke(
-            {"context": context, "question": question, "chat_history": chat_context}
-        )
+        generation = self.rag_chain.invoke({
+            "context": context,
+            "question": question,
+            "chat_history": chat_context
+        })
 
         if filtered_metadata := blob.get_blob_urls([
             doc.metadata["file_name"]
@@ -212,16 +234,18 @@ Question to route: {question}
         ]):
             sources.extend(filtered_metadata)
 
+        # Add sources section in Markdown
+        # source_list = "\n".join([f"* {source}" for source in sources])
         final_answer = f"{generation}"
 
         del generation
         gc.collect()
 
         return {
-            "documents": documents,  
+            "documents": documents,
             "question": question,
             "generation": final_answer,
-            "source": sources  
+            "source": sources
         }
 
     def retrieve(self, state: Dict) -> Dict:
