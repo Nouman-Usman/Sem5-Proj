@@ -14,6 +14,169 @@ class Database:
     def get_connection(self):
         return pyodbc.connect(self.conn_string)
 
+    # ============= Chat Related Methods =============
+    def create_chat_message(
+        self,
+        session_id,
+        message,
+        msg_type="Human Message",
+        references=None,
+        recommended_lawyers=None,
+    ):
+        with self.get_connection() as conn:
+            cursor = conn.cursor()
+            # Convert lists to JSON strings
+            references_str = json.dumps(references) if references else None
+            recommended_lawyers_str = (
+                json.dumps(recommended_lawyers) if recommended_lawyers else None
+            )
+
+            query = """
+            INSERT INTO ChatMessages 
+            (SessionId, Message, Type, [References], RecommendedLawyers)
+            VALUES (?, ?, ?, ?, ?)
+            """
+            cursor.execute(
+                query,
+                (
+                    session_id,
+                    message,
+                    msg_type,
+                    references_str,
+                    recommended_lawyers_str,
+                ),
+            )
+            conn.commit()
+            return True
+
+    def get_chat_messages_by_session_id(self, session_id):
+        with self.get_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute("SELECT * FROM ChatMessages WHERE SessionId = ?", session_id)
+            return cursor.fetchall()
+
+    def get_chat_topics(self, user_id):
+        with self.get_connection() as conn:
+            cursor = conn.cursor()
+            query = """
+    SELECT DISTINCT Topic, SessionId, Time
+    FROM Sessions
+    WHERE UserId = ? AND Active = 1
+    ORDER BY Time DESC
+"""
+            cursor.execute(query, user_id)
+            rows = cursor.fetchall()
+            topics = [row.Topic for row in rows]
+            session_ids = [row.SessionId for row in rows]
+            times = [row.Time for row in rows]
+            return {"chat_topics": topics, "chat_sessions": session_ids, "Time": times}
+
+    def update_chat_message(
+        self, chat_id, message, msg_type, references=None, recommended_lawyers=None
+    ):
+        with self.get_connection() as conn:
+            cursor = conn.cursor()
+            query = """UPDATE ChatMessages 
+                      SET Message = ?, Type = ?, References = ?, RecommendedLawyers = ?
+                      WHERE ChatId = ?"""
+            cursor.execute(
+                query, (message, msg_type, references, recommended_lawyers, chat_id)
+            )
+            conn.commit()
+            return cursor.rowcount
+
+    def delete_chat_message(self, chat_id):
+        with self.get_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute("DELETE FROM ChatMessages WHERE ChatId = ?", chat_id)
+            conn.commit()
+            return cursor.rowcount
+
+    def get_all_chat_messages(self):
+        with self.get_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute("SELECT * FROM ChatMessages ORDER BY Time")
+            return cursor.fetchall()
+
+    def create_chat_session(self, initiator_id, recipient_id):
+        with self.get_connection() as conn:
+            cursor = conn.cursor()
+            query = """
+                INSERT INTO ChatSessions (InitiatorId, RecipientId, StartTime)
+                OUTPUT INSERTED.ChatId
+                VALUES (?, ?, GETDATE())
+            """
+            cursor.execute(query, (initiator_id, recipient_id))
+            chat_id = cursor.fetchone()[0]
+            conn.commit()
+            return chat_id
+
+    # ============= Session Related Methods =============
+    def create_session(self, user_id, topic):
+        try:
+            with self.get_connection() as conn:
+                cursor = conn.cursor()
+                # Check if user exists
+                check_user_query = "SELECT 1 FROM [User] WHERE UserId = ?"
+                cursor.execute(check_user_query, (user_id,))
+                if not cursor.fetchone():
+                    raise ValueError(f"User with ID {user_id} does not exist")
+
+                # Insert session and get the ID using OUTPUT clause
+                query = """
+                    INSERT INTO Sessions (UserId, Topic, Time, Active)
+                    OUTPUT INSERTED.SessionId
+                    VALUES (?, ?, GETDATE(), 1)
+                """
+                cursor.execute(query, (user_id, topic))
+                result = cursor.fetchone()
+                conn.commit()
+
+                if result:
+                    return result[0]
+                return None
+
+        except pyodbc.IntegrityError as e:
+            raise ValueError(f"Database integrity error: {str(e)}")
+        except Exception as e:
+            raise ValueError(f"Error creating a new session: {str(e)}")
+
+    def get_session(self, session_id):
+        with self.get_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute("SELECT * FROM Sessions WHERE SessionId = ?", session_id)
+            return cursor.fetchone()
+
+    def update_session(self, session_id, topic, active=True):
+        with self.get_connection() as conn:
+            cursor = conn.cursor()
+            query = """UPDATE Sessions 
+                      SET Topic = ?, Active = ?
+                      WHERE SessionId = ?"""
+            cursor.execute(query, (topic, active, session_id))
+            conn.commit()
+            return cursor.rowcount
+
+    def delete_session(self, session_id):
+        with self.get_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute("DELETE FROM Sessions WHERE SessionId = ?", session_id)
+            conn.commit()
+            return cursor.rowcount
+
+    def get_all_chat_sessions(self):
+        with self.get_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute("SELECT * FROM Sessions WHERE Active = 1")
+            return cursor.fetchall()
+
+    def get_chat_session_by_id(self, session_id):
+        with self.get_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute("SELECT * FROM Sessions WHERE SessionId = ?", session_id)
+            return cursor.fetchone()
+
+    # ============= User Related Methods =============
     def get_user_by_email(self, email):
         with self.get_connection() as conn:
             cursor = conn.cursor()
@@ -60,12 +223,6 @@ class Database:
             conn.commit()
             return cursor.rowcount
 
-    def get_user(self, user_id):
-        with self.get_connection() as conn:
-            cursor = conn.cursor()
-            cursor.execute("SELECT * FROM [User] WHERE UserId = ?", user_id)
-            return cursor.fetchone()
-
     def update_user(self, user_id, name, email, password, role):
         with self.get_connection() as conn:
             cursor = conn.cursor()
@@ -83,7 +240,13 @@ class Database:
             conn.commit()
             return cursor.rowcount
 
-    # Client CRUD operations
+    def get_all_users(self):
+        with self.get_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute("SELECT * FROM [User]")
+            return cursor.fetchall()
+
+    # ============= Client Related Methods =============
     def create_client(
         self, user_id, cnic, contact, location, credits=0, profile_picture=None
     ):
@@ -123,12 +286,6 @@ class Database:
             conn.commit()
             return cursor.rowcount
 
-    def get_client_by_id(self, client_id):
-        with self.get_connection() as conn:
-            cursor = conn.cursor()
-            cursor.execute("SELECT * FROM Client WHERE ClientId = ?", client_id)
-            return cursor.fetchone()
-
     def delete_client(self, client_id):
         with self.get_connection() as conn:
             cursor = conn.cursor()
@@ -136,13 +293,25 @@ class Database:
             conn.commit()
             return cursor.rowcount
 
+    def get_client_by_id(self, client_id):
+        with self.get_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute("SELECT * FROM Client WHERE ClientId = ?", client_id)
+            return cursor.fetchone()
+
     def get_client_by_user_id(self, user_id):
         with self.get_connection() as conn:
             cursor = conn.cursor()
             cursor.execute("SELECT * FROM Client WHERE UserId = ?", user_id)
             return cursor.fetchone()
 
-    # Lawyer CRUD operations
+    def get_all_clients(self):
+        with self.get_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute("SELECT * FROM Client")
+            return cursor.fetchall()
+
+    # ============= Lawyer Related Methods =============
     def check_lawyer_cnic_exists(self, cnic):
         with self.get_connection() as conn:
             cursor = conn.cursor()
@@ -402,162 +571,24 @@ class Database:
             cursor.execute(query, lawyer_id)
             return cursor.fetchall()
 
-    # Session CRUD operations
-    def create_session(self, user_id, topic):
-        try:
-            with self.get_connection() as conn:
-                cursor = conn.cursor()
-                # Check if user exists
-                check_user_query = "SELECT 1 FROM [User] WHERE UserId = ?"
-                cursor.execute(check_user_query, (user_id,))
-                if not cursor.fetchone():
-                    raise ValueError(f"User with ID {user_id} does not exist")
-
-                # Insert session and get the ID using OUTPUT clause
-                query = """
-                    INSERT INTO Sessions (UserId, Topic, Time, Active)
-                    OUTPUT INSERTED.SessionId
-                    VALUES (?, ?, GETDATE(), 1)
-                """
-                cursor.execute(query, (user_id, topic))
-                result = cursor.fetchone()
-                conn.commit()
-
-                if result:
-                    return result[0]
-                return None
-
-        except pyodbc.IntegrityError as e:
-            raise ValueError(f"Database integrity error: {str(e)}")
-        except Exception as e:
-            raise ValueError(f"Error creating a new session: {str(e)}")
-
-    def get_session(self, session_id):
+    def update_lawyer_recommendation(self, lawyer_id):
         with self.get_connection() as conn:
             cursor = conn.cursor()
-            cursor.execute("SELECT * FROM Sessions WHERE SessionId = ?", session_id)
-            return cursor.fetchone()
-
-    def update_session(self, session_id, topic, active=True):
-        with self.get_connection() as conn:
-            cursor = conn.cursor()
-            query = """UPDATE Sessions 
-                      SET Topic = ?, Active = ?
-                      WHERE SessionId = ?"""
-            cursor.execute(query, (topic, active, session_id))
-            conn.commit()
-            return cursor.rowcount
-
-    def get_all_chat_sessions(self):
-        with self.get_connection() as conn:
-            cursor = conn.cursor()
-            cursor.execute("SELECT * FROM Sessions WHERE Active = 1")
-            return cursor.fetchall()
-
-    def get_chat_session_by_id(self, session_id):
-        with self.get_connection() as conn:
-            cursor = conn.cursor()
-            cursor.execute("SELECT * FROM Sessions WHERE SessionId = ?", session_id)
-            return cursor.fetchone()
-
-    def get_chats_by_session_id(self, session_id):
-        with self.get_connection() as conn:
-            cursor = conn.cursor()
-            cursor.execute("SELECT * FROM ChatMessages WHERE SessionId = ?", session_id)
-            return cursor.fetchall()
-
-    def delete_session(self, session_id):
-        with self.get_connection() as conn:
-            cursor = conn.cursor()
-            cursor.execute("DELETE FROM Sessions WHERE SessionId = ?", session_id)
-            conn.commit()
-            return cursor.rowcount
-
-    # ChatMessages CRUD operations
-    def create_chat_message(
-        self,
-        session_id,
-        message,
-        msg_type="Human Message",
-        references=None,
-        recommended_lawyers=None,
-    ):
-
-        with self.get_connection() as conn:
-            cursor = conn.cursor()
-            # Convert lists to JSON strings
-            references_str = json.dumps(references) if references else None
-            recommended_lawyers_str = (
-                json.dumps(recommended_lawyers) if recommended_lawyers else None
-            )
-
-            query = """
-            INSERT INTO ChatMessages 
-            (SessionId, Message, Type, [References], RecommendedLawyers)
-            VALUES (?, ?, ?, ?, ?)
-            """
             cursor.execute(
-                query,
-                (
-                    session_id,
-                    message,
-                    msg_type,
-                    references_str,
-                    recommended_lawyers_str,
-                ),
-            )
-            conn.commit()
-            return True
-
-    def get_chat_topics(self, user_id):
-        with self.get_connection() as conn:
-            cursor = conn.cursor()
-            query = """
-    SELECT DISTINCT Topic, SessionId, Time
-    FROM Sessions
-    WHERE UserId = ? AND Active = 1
-    ORDER BY Time DESC
-"""
-            cursor.execute(query, user_id)
-            rows = cursor.fetchall()
-            topics = [row.Topic for row in rows]
-            session_ids = [row.SessionId for row in rows]
-            times = [row.Time for row in rows]
-            return {"chat_topics": topics, "chat_sessions": session_ids, "Time": times}
-
-    def update_chat_message(
-        self, chat_id, message, msg_type, references=None, recommended_lawyers=None
-    ):
-        with self.get_connection() as conn:
-            cursor = conn.cursor()
-            query = """UPDATE ChatMessages 
-                      SET Message = ?, Type = ?, References = ?, RecommendedLawyers = ?
-                      WHERE ChatId = ?"""
-            cursor.execute(
-                query, (message, msg_type, references, recommended_lawyers, chat_id)
+                "UPDATE Lawyer SET Recommended = 1, LastRecommended = CURRENT_TIMESTAMP, RecommendationCount = RecommendationCount + 1 WHERE LawyerId = ?",
+                lawyer_id,
             )
             conn.commit()
             return cursor.rowcount
 
-    def delete_chat_message(self, chat_id):
+    def get_lawyer_recommendations(self, lawyer_id):
         with self.get_connection() as conn:
+            lawyer_id = int(lawyer_id)
             cursor = conn.cursor()
-            cursor.execute("DELETE FROM ChatMessages WHERE ChatId = ?", chat_id)
-            conn.commit()
-            return cursor.rowcount
+            cursor.execute("SELECT * FROM Lawyer WHERE LawyerId = ?", lawyer_id)
+            return self._row_to_dict(cursor.fetchone(), cursor)
 
-    def get_chat_messages_by_Session_Id(self, SessionId):
-        with self.get_connection() as conn:
-            cursor = conn.cursor()
-            cursor.execute("SELECT * FROM ChatMessages WHERE SessionId = ?", SessionId)
-            return cursor.fetchone()
-
-    def get_all_chat_messages(self):
-        with self.get_connection() as conn:
-            cursor = conn.cursor()
-            cursor.execute("SELECT * FROM ChatMessages ORDER BY Time")
-            return cursor.fetchall()
-
+    # ============= Subscription Related Methods =============
     def create_subscription(
         self, user_id, subscription_type, start_date, expiry_date, remaining_credits=0
     ):
@@ -641,156 +672,7 @@ class Database:
             cursor.execute("SELECT * FROM Subscription")
             return cursor.fetchall()
 
-    def get_all_users(self):
-        with self.get_connection() as conn:
-            cursor = conn.cursor()
-            cursor.execute("SELECT * FROM [User]")
-            return cursor.fetchall()
-
-    def get_all_clients(self):
-        with self.get_connection() as conn:
-            cursor = conn.cursor()
-            cursor.execute("SELECT * FROM Client")
-            return cursor.fetchall()
-
-    def get_all_lawyers(self):
-        with self.get_connection() as conn:
-            cursor = conn.cursor()
-            cursor.execute("SELECT * FROM Lawyer")
-            return cursor.fetchall()
-
-    def get_all_sessions(self):
-        with self.get_connection() as conn:
-            cursor = conn.cursor()
-            cursor.execute("SELECT * FROM Sessions ORDER BY Time DESC")
-            return cursor.fetchall()
-
-    def update_lawyer_recommendation(self, lawyer_id):
-        with self.get_connection() as conn:
-            cursor = conn.cursor()
-            cursor.execute(
-                "UPDATE Lawyer SET Recommended = 1, LastRecommended = CURRENT_TIMESTAMP, RecommendationCount = RecommendationCount + 1 WHERE LawyerId = ?",
-                lawyer_id,
-            )
-            conn.commit()
-            return cursor.rowcount
-
-    # LawyerReview methods
-    def create_lawyer_review(self, lawyer_id, client_id, stars, review_message=None):
-        # Updated validation to match SQL constraints
-        if not isinstance(stars, int) or not 1 <= stars <= 5:
-            raise ValueError("Stars must be between 1 and 5")
-        if review_message and len(review_message) > 1000:
-            raise ValueError("Review message too long")
-        if not self.get_user_by_id(lawyer_id) or not self.get_user_by_id(client_id):
-            raise ValueError("Invalid lawyer_id or client_id")
-
-        with self.get_connection() as conn:
-            cursor = conn.cursor()
-            query = """INSERT INTO LawyerReview 
-                      (LawyerId, ClientId, Stars, ReviewMessage, ReviewTime)
-                      VALUES (?, ?, ?, ?, GETDATE())"""
-            cursor.execute(query, (lawyer_id, client_id, stars, review_message))
-            conn.commit()
-            return cursor.rowcount
-
-    def get_lawyer_recommendations(self, lawyer_id):
-        with self.get_connection() as conn:
-            lawyer_id = int(lawyer_id)
-            cursor = conn.cursor()
-            cursor.execute("SELECT * FROM Lawyer WHERE LawyerId = ?", lawyer_id)
-            return self._row_to_dict(cursor.fetchone(), cursor)
-
-    def get_lawyer_reviews(self, lawyer_id):
-        with self.get_connection() as conn:
-            cursor = conn.cursor()
-            query = """SELECT lr.*, u.Name as ClientName 
-                      FROM LawyerReview lr
-                      JOIN [User] u ON lr.ClientId = u.UserId
-                      WHERE lr.LawyerId = ?
-                      ORDER BY lr.ReviewTime DESC"""
-            cursor.execute(query, (lawyer_id,))
-            return cursor.fetchall()
-
-    def update_lawyer_review(self, review_id, stars, review_message):
-        if not 1 <= stars <= 5:
-            raise ValueError("Stars must be between 1 and 5")
-
-        with self.get_connection() as conn:
-            cursor = conn.cursor()
-            query = """UPDATE LawyerReview 
-                      SET Stars = ?, ReviewMessage = ?
-                      WHERE ReviewId = ?"""
-            cursor.execute(query, (stars, review_message, review_id))
-            conn.commit()
-            return cursor.rowcount
-
-    def delete_lawyer_review(self, review_id):
-        with self.get_connection() as conn:
-            cursor = conn.cursor()
-            cursor.execute("DELETE FROM LawyerReview WHERE ReviewId = ?", review_id)
-            conn.commit()
-            return cursor.rowcount
-
-    def _row_to_dict(self, row, cursor):
-        if not row:
-            return None
-        columns = [column[0] for column in cursor.description]
-        result = dict(zip(columns, row))
-        datetime_fields = ["LastRecommended", "Time", "ExpiryDate", "ReviewTime"]
-        for field in datetime_fields:
-            if field in result and result[field]:
-                # Handle SQL Server datetime format
-                if isinstance(result[field], str):
-                    try:
-                        # Try multiple datetime formats
-                        formats = [
-                            "%b %d %Y %I:%M%p",  # Dec 12 2024 11:06PM
-                            "%Y-%m-%d %H:%M:%S",  # 2024-12-12 23:06:00
-                            "%Y-%m-%d %H:%M:%S.%f",  # 2024-12-12 23:06:00.000
-                        ]
-                        for fmt in formats:
-                            try:
-                                result[field] = datetime.strptime(result[field], fmt)
-                                break
-                            except ValueError:
-                                continue
-                    except Exception as e:
-                        print(f"Error parsing datetime {result[field]}: {e}")
-                elif isinstance(result[field], datetime):
-                    pass
-        return result
-
-    def create_chat_session(self, initiator_id, recipient_id):
-        with self.get_connection() as conn:
-            cursor = conn.cursor()
-            query = """
-                INSERT INTO ChatSessions (InitiatorId, RecipientId, StartTime)
-                OUTPUT INSERTED.ChatId
-                VALUES (?, ?, GETDATE())
-            """
-            cursor.execute(query, (initiator_id, recipient_id))
-            chat_id = cursor.fetchone()[0]
-            conn.commit()
-            return chat_id
-
-    # def create_chat_message(self, chat_id, sender_id, message):
-    #     with self.get_connection() as conn:
-    #         cursor = conn.cursor()
-    #         query = """
-    #             INSERT INTO ChatMessages (ChatId, SenderId, Message, Timestamp)
-    #             VALUES (?, ?, ?, GETDATE())
-    #         """
-    #         cursor.execute(query, (chat_id, sender_id, message))
-    #         conn.commit()
-
-    def get_chat_messages_by_session_id(self, session_id):
-        with self.get_connection() as conn:
-            cursor = conn.cursor()
-            query = "SELECT * FROM ChatMessages WHERE SessionId = ? ORDER BY Timestamp"
-            cursor.execute(query, (session_id,))
-            return cursor.fetchall()
-
+    # ============= Credits Related Methods =============
     def get_credits_by_user_id(self, user_id):
         """Get credits for a user from their current subscription"""
         with self.get_connection() as conn:
@@ -826,3 +708,83 @@ class Database:
             cursor.execute(query, (credits, user_id, user_id))
             conn.commit()
             return cursor.rowcount
+
+    # ============= Review Related Methods =============
+    def create_lawyer_review(self, lawyer_id, client_id, stars, review_message=None):
+        # Updated validation to match SQL constraints
+        if not isinstance(stars, int) or not 1 <= stars <= 5:
+            raise ValueError("Stars must be between 1 and 5")
+        if review_message and len(review_message) > 1000:
+            raise ValueError("Review message too long")
+        if not self.get_user_by_id(lawyer_id) or not self.get_user_by_id(client_id):
+            raise ValueError("Invalid lawyer_id or client_id")
+
+        with self.get_connection() as conn:
+            cursor = conn.cursor()
+            query = """INSERT INTO LawyerReview 
+                      (LawyerId, ClientId, Stars, ReviewMessage, ReviewTime)
+                      VALUES (?, ?, ?, ?, GETDATE())"""
+            cursor.execute(query, (lawyer_id, client_id, stars, review_message))
+            conn.commit()
+            return cursor.rowcount
+
+    def get_lawyer_reviews(self, lawyer_id):
+        with self.get_connection() as conn:
+            cursor = conn.cursor()
+            query = """SELECT lr.*, u.Name as ClientName 
+                      FROM LawyerReview lr
+                      JOIN [User] u ON lr.ClientId = u.UserId
+                      WHERE lr.LawyerId = ?
+                      ORDER BY lr.ReviewTime DESC"""
+            cursor.execute(query, (lawyer_id,))
+            return cursor.fetchall()
+
+    def update_lawyer_review(self, review_id, stars, review_message):
+        if not 1 <= stars <= 5:
+            raise ValueError("Stars must be between 1 and 5")
+
+        with self.get_connection() as conn:
+            cursor = conn.cursor()
+            query = """UPDATE LawyerReview 
+                      SET Stars = ?, ReviewMessage = ?
+                      WHERE ReviewId = ?"""
+            cursor.execute(query, (stars, review_message, review_id))
+            conn.commit()
+            return cursor.rowcount
+
+    def delete_lawyer_review(self, review_id):
+        with self.get_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute("DELETE FROM LawyerReview WHERE ReviewId = ?", review_id)
+            conn.commit()
+            return cursor.rowcount
+
+    # ============= Helper Methods =============
+    def _row_to_dict(self, row, cursor):
+        if not row:
+            return None
+        columns = [column[0] for column in cursor.description]
+        result = dict(zip(columns, row))
+        datetime_fields = ["LastRecommended", "Time", "ExpiryDate", "ReviewTime"]
+        for field in datetime_fields:
+            if field in result and result[field]:
+                # Handle SQL Server datetime format
+                if isinstance(result[field], str):
+                    try:
+                        # Try multiple datetime formats
+                        formats = [
+                            "%b %d %Y %I:%M%p",  # Dec 12 2024 11:06PM
+                            "%Y-%m-%d %H:%M:%S",  # 2024-12-12 23:06:00
+                            "%Y-%m-%d %H:%M:%S.%f",  # 2024-12-12 23:06:00.000
+                        ]
+                        for fmt in formats:
+                            try:
+                                result[field] = datetime.strptime(result[field], fmt)
+                                break
+                            except ValueError:
+                                continue
+                    except Exception as e:
+                        print(f"Error parsing datetime {result[field]}: {e}")
+                elif isinstance(result[field], datetime):
+                    pass
+        return result

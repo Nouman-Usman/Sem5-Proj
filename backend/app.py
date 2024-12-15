@@ -18,6 +18,9 @@ from werkzeug.utils import secure_filename
 from sklearn.feature_extraction.text import TfidfVectorizer
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity, get_jwt
+import requests
+from urllib.parse import unquote
+from flask import Response, stream_with_context
 
 load_dotenv()
 UPLOAD_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'uploads', 'profile_images')
@@ -91,6 +94,56 @@ def save_profile_image(file):
         return unique_filename
     return None
 
+# Add these helper functions after imports
+def get_custom_headers(url):
+    """Get custom headers based on URL domain"""
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+        'Accept': 'application/pdf,*/*'
+    }
+    
+    if 'assets.publishing.service.gov.uk' in url:
+        headers.update({
+            'Accept': 'application/pdf',
+            'Referer': 'https://www.gov.uk/',
+            'Origin': 'https://www.gov.uk'
+        })
+    elif 'legislation.gov.uk' in url:
+        headers.update({
+            'Accept': 'application/pdf',
+            'Referer': 'https://www.legislation.gov.uk/'
+        })
+    
+    return headers
+
+# Add this helper function
+def get_pdf_with_ssl_handling(url, headers):
+    """Handle PDF downloads with SSL verification options"""
+    try:
+        # First try with SSL verification
+        response = requests.get(url, headers=headers, stream=True, timeout=30)
+        if response.status_code == 200:
+            return response
+
+        # If failed, try without SSL verification
+        response = requests.get(
+            url, 
+            headers=headers, 
+            stream=True, 
+            timeout=30, 
+            verify=False,
+            allow_redirects=True
+        )
+        if response.status_code == 200:
+            logger.warning(f"Retrieved PDF without SSL verification from: {url}")
+            return response
+
+        raise requests.RequestException(f"Failed to fetch PDF. Status: {response.status_code}")
+
+    except requests.RequestException as e:
+        logger.error(f"Error fetching PDF from {url}: {str(e)}")
+        raise
+
 # ============= Chat Related Routes =============
 @app.route('/api/ask', methods=['POST'])
 @jwt_required()
@@ -98,84 +151,92 @@ def ask_question():
     retries = 0
     max_retries = 3
     data_loaded = False
-    Session_Id = None
     try:
         current_user_id = get_jwt_identity()
         role = get_jwt()['role']
         data = request.get_json()
-        Session_Id = data.get('SessionId') if 'SessionId' in data else None
-        print(Session_Id)
-        if not data:
-            logger.error("No JSON data received")
-            return jsonify({"error": "No data provided"}), 400            
+        
+        # Get session_id from request data
         question = data.get('question')
+        session_id = data.get('session_id')  # This will be passed from frontend when URL has session param
+        print(session_id)
         if not question:
             logger.error("Missing question parameter")
             return jsonify({"error": "Missing required parameter: question"}), 400
-        if not Session_Id:
+            
+        # If no session_id provided, create new session
+        if not session_id:
             vectorizer = TfidfVectorizer(stop_words="english", max_features=5)
             X = vectorizer.fit_transform([question])
             key_phrases = vectorizer.get_feature_names_out()
             chat_topic = " ".join(sorted(key_phrases)).title()
-            Session_Id = db.create_session(user_id=current_user_id, topic=chat_topic)
-            logger.info(f"Created new session {Session_Id} for user {current_user_id}")
+            session_id = db.create_session(user_id=current_user_id, topic=chat_topic)
+            logger.info(f"Created new session {session_id} for user {current_user_id}")
             data_loaded = True
+            
         rag_agent = get_agent()
         history = []
         
-        if Session_Id:
+        if session_id:
             if not data_loaded:
-                history = db.get_chat_session_by_id(session_id=Session_Id)
+                history = db.get_chat_session_by_id(session_id=session_id)
                 data_loaded = True
+                logger.info(f"Loaded existing session {session_id}")
             else:
-                logger.warning(f"Chat loaded with : {Session_Id}, user_id: {current_user_id}")
+                logger.info(f"Using new session {session_id}")
         else:
-            logger.warning(f"Invalid UUID - chat_id: {Session_Id}, user_id: {current_user_id}")
+            logger.warning(f"No valid session ID available")
 
         try:
-            result = rag_agent.run(question,history)
+            result = rag_agent.run(question, history)
+            
+            # Store user message
             db.create_chat_message(
-                session_id=Session_Id,
+                session_id=session_id,
                 message=question,
                 msg_type="Human Message",
                 references=None,
                 recommended_lawyers=None
             )
+
             if not result or 'chat_response' not in result or not result['chat_response']:
                 logger.error("Invalid or empty response from RAG agent")
                 return jsonify({"error": "Failed to generate response"}), 500
 
-            # Store AI response with UUID objects
+            # Store AI response
             db.create_chat_message(
-                session_id=Session_Id,
+                session_id=session_id,
                 message=result['chat_response'],
                 msg_type="AI Message",
                 recommended_lawyers=result.get('recommended_lawyers', []),
                 references=result.get('references', [])
             )
+
             sentiment = result.get('sentiment', 'neutral')
             lawyer = recommend_lawyer.recommend_top_lawyers(sentiment)
-            # Create response object with string UUIDs for JSON
+
             response = {
                 "answer": result['chat_response'],
-                "references": result.get('references', []),
+                "references": result["references"],
                 "recommended_lawyers": lawyer,
-                "session_id": Session_Id,
+                "session_id": session_id,
             }
+
             access_token = create_access_token(
                 identity=current_user_id,
                 additional_claims={
-                    "SessionId": Session_Id,
+                    "session_id": session_id,
                     "user_id": current_user_id
                 }
             )
-            logger.info(f"Successfully generated response for user {current_user_id}")
+
+            logger.info(f"Successfully generated response for user {current_user_id} in session {session_id}")
             return jsonify(response), 200
 
         except Exception as e:
             logger.error(f"Error generating response: {str(e)}")
             return jsonify({"error": "Failed to generate response"}), 500
-        
+
     except Exception as e:
         logger.error(f"Error processing question: {str(e)}", exc_info=True)
         return jsonify({"error": "An unexpected error occurred"}), 500
@@ -238,7 +299,7 @@ def get_chats():
 @app.route('/api/chats/<session_id>', methods=['GET'])
 def get_chat(session_id):
     try:
-        chats = db.get_chats_by_session_id(session_id)
+        chats = db.get_chat_messages_by_session_id(session_id)
         if not chats:
             return jsonify({"error": "Chat session not found"}), 404
         formatted_chats = []
@@ -772,6 +833,70 @@ def health_check2():
 @app.route('/api/health', methods=['GET'])
 def health_check():
     return jsonify({"status": "healthy"})
+
+# Update the proxy_pdf route
+@app.route('/api/proxy-pdf')
+def proxy_pdf():
+    print("Proxy PDF")
+    try:
+        # Get the PDF URL from query parameter and decode it
+        pdf_url = unquote(request.args.get('url', ''))
+        print(pdf_url)
+        # breakpoint()
+        if not pdf_url:
+            return jsonify({"error": "No URL provided"}), 400
+
+        headers = get_custom_headers(pdf_url)
+        
+        try:
+            pdf_response = get_pdf_with_ssl_handling(pdf_url, headers)
+        except requests.RequestException as e:
+            return jsonify({"error": str(e)}), 500
+
+        # Set response headers
+        response_headers = {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET, OPTIONS',
+            'Access-Control-Allow-Headers': 'Content-Type',
+            'Content-Type': pdf_response.headers.get('content-type', 'application/pdf'),
+            'Content-Disposition': 'inline',
+            'Cache-Control': 'public, max-age=3600',
+        }
+
+        return Response(
+            stream_with_context(pdf_response.iter_content(chunk_size=8192)),
+            headers=response_headers
+        )
+
+    except requests.RequestException as e:
+        logger.error(f"PDF proxy error: {str(e)}")
+        return jsonify({"error": "Failed to fetch PDF", "details": str(e)}), 500
+
+@app.route('/api/validate-pdf')
+def validate_pdf_url():
+    try:
+        pdf_url = unquote(request.args.get('url', ''))
+        if not pdf_url:
+            return jsonify({"valid": False, "error": "No URL provided"}), 400
+
+        response = requests.head(
+            pdf_url,
+            headers={'User-Agent': 'Mozilla/5.0'},
+            allow_redirects=True,
+            timeout=5
+        )
+
+        is_pdf = response.headers.get('content-type', '').lower().startswith('application/pdf')
+        
+        return jsonify({
+            "valid": is_pdf and response.status_code == 200,
+            "content_type": response.headers.get('content-type'),
+            "size": response.headers.get('content-length')
+        })
+
+    except Exception as e:
+        logger.error(f"PDF validation error: {str(e)}")
+        return jsonify({"valid": False, "error": str(e)}), 500
 
 def is_valid_uuid(uuid_str: str) -> bool:
     try:

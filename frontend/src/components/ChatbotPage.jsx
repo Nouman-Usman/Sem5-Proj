@@ -4,41 +4,389 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Loader2, Send, User, Bot, ChevronLeft, ChevronRight, Star, History, Plus, LogOut, Settings, Star as StarIcon } from "lucide-react";
+import { Loader2, Send, User, Bot, ChevronLeft, ChevronRight, Star, History, Plus, LogOut, Settings, Star as StarIcon, BookOpen, ExternalLink, FileText, AlertCircle, Minus } from "lucide-react";
 import apiService from "@/services/api";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams, useLocation } from "react-router-dom";
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import 'react-perfect-scrollbar/dist/css/styles.css';
 import Logo from "@/assets/Main logo.svg";
+import { Document, Page, pdfjs } from 'react-pdf';
+import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
+import 'react-pdf/dist/esm/Page/TextLayer.css';
 
-const LawyerCard = ({ lawyer, onContact }) => (
-  <Card className="mt-2 p-4 bg-[#1A1A2E]/90 border border-[#9333EA]/20 backdrop-blur-lg shadow-[0_0_15px_rgba(147,51,234,0.2)] hover:shadow-[0_0_30px_rgba(147,51,234,0.3)] transition-all duration-300">
-    <div className="flex items-center">
-      <Avatar className="h-12 w-12 mr-4 ring-2 ring-[#9333EA]/50">
-        <AvatarImage src={lawyer.avatar} alt={lawyer.name} />
-        <AvatarFallback className="bg-[#2E2E3A] text-white">{lawyer.name.split("").map(n => n[0]).join("")}</AvatarFallback>
-      </Avatar>
-      <div>
-        <h3 className="font-bold text-lg text-white">{lawyer.name}</h3>
-        <p className="text-sm text-gray-400">{lawyer.specialization}</p>
-        <div className="flex items-center mt-1">
-          <Star className="h-4 w-4 text-yellow-400 fill-current" />
-          <span className="ml-1 text-sm text-gray-400">{lawyer.rating} ({lawyer.reviewCount} reviews)</span>
+// Configure PDF.js with better error handling
+const pdfjsVersion = pdfjs.version;
+const pdfjsWorkerPath = new URL(
+  `../../../node_modules/pdfjs-dist/build/pdf.worker.min.js`,
+  import.meta.url
+).href;
+
+pdfjs.GlobalWorkerOptions.workerSrc = pdfjsWorkerPath;
+
+// Add this error handling utility
+const handlePdfError = (error) => {
+  console.error('PDF Error:', error);
+  if (error.message.includes('getHexString')) {
+    return 'The PDF contains unsupported characters. Try opening in browser.';
+  }
+  return error.message;
+};
+
+// Add this utility function
+const isGovtUrl = (url) => {
+  try {
+    const domain = new URL(url).hostname;
+    return domain.includes('.gov.') || domain.includes('.mohr.gov.pk');
+  } catch {
+    return false;
+  }
+};
+
+// Update the fetchPDFAsBlob function
+const fetchPDFAsBlob = async (url) => {
+  try {
+    // For government websites, show a warning
+    if (isGovtUrl(url)) {
+      console.warn('Accessing government website, SSL verification might fail');
+    }
+
+    const proxyUrl = `${apiService.API_BASE_URL}/proxy-pdf?url=${encodeURIComponent(url)}`;
+    
+    const response = await fetch(proxyUrl, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/pdf,*/*',
+      },
+      cache: 'no-cache',
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
+    }
+
+    const blob = await response.blob();
+    if (blob.size === 0) {
+      throw new Error('Empty PDF received');
+    }
+
+    return URL.createObjectURL(blob);
+  } catch (error) {
+    console.error('Error fetching PDF:', error);
+    throw new Error(
+      isGovtUrl(url) 
+        ? 'This government website is temporarily inaccessible. Please try opening in browser.' 
+        : error.message
+    );
+  }
+};
+
+// Update the PDFViewerPopup component
+const PDFViewerPopup = ({ url, onClose }) => {
+  const [numPages, setNumPages] = useState(null);
+  const [pageNumber, setPageNumber] = useState(1);
+  const [scale, setScale] = useState(1.0);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [pdfUrl, setPdfUrl] = useState(null);
+
+  useEffect(() => {
+    const loadPDF = async () => {
+      try {
+        setIsLoading(true);
+        setError(null);
+        
+        const blobUrl = await fetchPDFAsBlob(url);
+        setPdfUrl(blobUrl);
+        
+      } catch (err) {
+        console.error('Error:', err);
+        setError(handlePdfError(err));
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadPDF();
+    return () => {
+      // Cleanup blob URL when component unmounts
+      if (pdfUrl) {
+        URL.revokeObjectURL(pdfUrl);
+      }
+    };
+  }, [url]);
+
+  function onDocumentLoadSuccess({ numPages }) {
+    setNumPages(numPages);
+    setIsLoading(false);
+  }
+
+  function onDocumentLoadError(error) {
+    console.error('Error loading PDF:', error);
+    setError(handlePdfError(error));
+    setIsLoading(false);
+  }
+
+  return (
+    <div className="fixed inset-0 flex items-center justify-center bg-black/70 backdrop-blur-sm z-50">
+      <div className="w-[90%] h-[90%] bg-[#1A1A2E]/90 p-4 rounded-lg shadow-[0_0_30px_rgba(147,51,234,0.3)] border border-[#9333EA]/20">
+        <div className="flex justify-between items-center mb-4">
+          <div className="flex items-center gap-4">
+            <h2 className="text-xl font-semibold text-white">PDF Document</h2>
+            {numPages && (
+              <div className="text-gray-400 text-sm">
+                Page {pageNumber} of {numPages}
+              </div>
+            )}
+          </div>
+          <div className="flex items-center gap-4">
+            {/* Zoom controls */}
+            <div className="flex items-center gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setScale(scale => Math.max(0.5, scale - 0.1))}
+                className="border-[#9333EA]/20 text-white hover:bg-white/5"
+              >
+                <Minus className="h-4 w-4" />
+              </Button>
+              <span className="text-white min-w-[3rem] text-center">
+                {Math.round(scale * 100)}%
+              </span>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setScale(scale => Math.min(2, scale + 0.1))}
+                className="border-[#9333EA]/20 text-white hover:bg-white/5"
+              >
+                <Plus className="h-4 w-4" />
+              </Button>
+            </div>
+            
+            {/* Page navigation */}
+            <div className="flex items-center gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                disabled={pageNumber <= 1}
+                onClick={() => setPageNumber(page => page - 1)}
+                className="border-[#9333EA]/20 text-white hover:bg-white/5"
+              >
+                <ChevronLeft className="h-4 w-4" />
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                disabled={pageNumber >= numPages}
+                onClick={() => setPageNumber(page => page + 1)}
+                className="border-[#9333EA]/20 text-white hover:bg-white/5"
+              >
+                <ChevronRight className="h-4 w-4" />
+              </Button>
+            </div>
+
+            {/* Actions */}
+            <div className="flex items-center gap-2">
+              <Button
+                variant="outline"
+                onClick={() => window.open(url, '_blank', 'noopener,noreferrer')}
+                className="border-[#9333EA]/20 text-white hover:bg-white/5"
+              >
+                Open in Browser
+              </Button>
+              <Button
+                variant="outline"
+                onClick={onClose}
+                className="border-[#9333EA]/20 text-white hover:bg-white/5"
+              >
+                Close
+              </Button>
+            </div>
+          </div>
+        </div>
+
+        <div className="relative w-full h-[calc(100%-4rem)] rounded-lg bg-[#2E2E3A] overflow-auto">
+          {isLoading && (
+            <div className="absolute inset-0 flex items-center justify-center">
+              <Loader2 className="h-8 w-8 animate-spin text-purple-400" />
+            </div>
+          )}
+
+          {error ? (
+            <div className="absolute inset-0 flex flex-col items-center justify-center text-white">
+              <AlertCircle className="h-12 w-12 text-red-400 mb-4" />
+              <p className="text-lg font-medium mb-2">{error}</p>
+              <p className="text-sm text-gray-400 mb-4">
+                {isGovtUrl(url) 
+                  ? "Government websites may have security restrictions. Try opening in your browser."
+                  : "Try opening in browser instead"}
+              </p>
+              <div className="flex gap-2">
+                <Button
+                  variant="outline"
+                  onClick={() => window.open(url, '_blank', 'noopener,noreferrer')}
+                  className="border-[#9333EA]/20 text-white hover:bg-white/5"
+                >
+                  Open in Browser
+                </Button>
+                {error.includes('temporarily') && (
+                  <Button
+                    variant="outline"
+                    onClick={() => handleRetry()}
+                    className="border-[#9333EA]/20 text-white hover:bg-white/5"
+                  >
+                    Retry
+                  </Button>
+                )}
+              </div>
+            </div>
+          ) : (
+            <div className="flex justify-center p-4">
+              {pdfUrl && (
+                <Document
+                  file={pdfUrl}
+                  onLoadSuccess={onDocumentLoadSuccess}
+                  onLoadError={onDocumentLoadError}
+                  loading={
+                    <div className="flex items-center justify-center">
+                      <Loader2 className="h-8 w-8 animate-spin text-purple-400" />
+                    </div>
+                  }
+                >
+                  <Page
+                    pageNumber={pageNumber}
+                    scale={scale}
+                    className="shadow-xl"
+                    loading={
+                      <div className="flex items-center justify-center h-[800px]">
+                        <Loader2 className="h-8 w-8 animate-spin text-purple-400" />
+                      </div>
+                    }
+                  />
+                </Document>
+              )}
+            </div>
+          )}
         </div>
       </div>
     </div>
-    <p className="mt-2 text-sm text-gray-300">{lawyer.description}</p>
-    <Button 
-      className="mt-2 w-full bg-gradient-to-r from-[#9333EA] to-[#7E22CE] hover:opacity-90 transition-opacity"
-      onClick={() => onContact(lawyer)}
-    >
-      Contact {lawyer.name}
-    </Button>
+  );
+};
+
+// Update the ReferenceCard component
+const ReferenceCard = ({ reference }) => {
+  const [showPdfViewer, setShowPdfViewer] = useState(false);
+  
+  const handleClick = () => {
+    const url = typeof reference === 'string' ? reference : reference.url;
+    if (!url) return;
+
+    // Check if the URL ends with .pdf
+    if (url.toLowerCase().endsWith('.pdf')) {
+      setShowPdfViewer(true);
+    } else {
+      window.open(url, '_blank', 'noopener,noreferrer');
+    }
+  };
+
+  return (
+    <>
+      <Card 
+        className="p-3 bg-[#1A1A2E]/90 border border-[#9333EA]/20 backdrop-blur-lg shadow-[0_0_15px_rgba(147,51,234,0.2)] hover:shadow-[0_0_30px_rgba(147,51,234,0.3)] transition-all duration-300 cursor-pointer hover:scale-[1.01]"
+        onClick={handleClick}
+      >
+        <div className="flex items-start space-x-3">
+          <div className="h-8 w-8 flex items-center justify-center rounded-full bg-[#9333EA]/20">
+            {(typeof reference === 'string' ? reference : reference.url)?.toLowerCase().endsWith('.pdf') ? (
+              <FileText className="h-4 w-4 text-purple-400" />
+            ) : (
+              <BookOpen className="h-4 w-4 text-purple-400" />
+            )}
+          </div>
+          <div className="flex-1">
+            <h4 className="text-white font-medium mb-1 hover:text-purple-400 transition-colors">
+              {reference.title || 'Legal Reference'}
+            </h4>
+            <p className="text-sm text-gray-400 mb-2">{reference.description || reference}</p>
+            {(reference.url || typeof reference === 'string') && (
+              <div className="text-sm text-purple-400 hover:text-purple-300 flex items-center group">
+                <ExternalLink className="h-4 w-4 mr-1 group-hover:translate-x-0.5 transition-transform" />
+                {(typeof reference === 'string' ? reference : reference.url)?.toLowerCase().endsWith('.pdf') 
+                  ? 'View PDF document' 
+                  : 'Click to view source'
+                }
+              </div>
+            )}
+          </div>
+        </div>
+      </Card>
+
+      {/* PDF Viewer Popup */}
+      {showPdfViewer && (
+        <PDFViewerPopup 
+          url={typeof reference === 'string' ? reference : reference.url}
+          onClose={() => setShowPdfViewer(false)}
+        />
+      )}
+    </>
+  );
+};
+
+const LawyerRecommendationCard = ({ lawyer, onContact }) => (
+  <Card className="p-4 bg-[#1A1A2E]/90 border border-[#9333EA]/20 backdrop-blur-lg shadow-[0_0_15px_rgba(147,51,234,0.2)] hover:shadow-[0_0_30px_rgba(147,51,234,0.3)] transition-all duration-300">
+    <div className="flex items-start space-x-4">
+      <Avatar className="h-12 w-12 ring-2 ring-[#9333EA]/50">
+        <AvatarImage src={lawyer.avatar} alt={lawyer.name} />
+        <AvatarFallback className="bg-[#2E2E3A] text-white">
+          {lawyer.name.split(' ').map(n => n[0]).join('')}
+        </AvatarFallback>
+      </Avatar>
+      <div className="flex-1">
+        <div className="flex justify-between items-start">
+          <div>
+            <h3 className="font-bold text-white">{lawyer.name}</h3>
+            <p className="text-sm text-gray-400">{lawyer.specialization}</p>
+          </div>
+          <div className="flex items-center">
+            <Star className="h-4 w-4 text-yellow-400 fill-current" />
+            <span className="ml-1 text-sm text-gray-400">{lawyer.rating}</span>
+          </div>
+        </div>
+        <p className="text-sm text-gray-300 mt-2">{lawyer.description}</p>
+        <div className="mt-3 flex items-center gap-2">
+          {lawyer.expertise?.map((tag, index) => (
+            <span 
+              key={index}
+              className="text-xs px-2 py-1 rounded-full bg-[#9333EA]/20 text-purple-300"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+        <div className="mt-4 flex gap-2">
+          <Button 
+            className="flex-1 bg-gradient-to-r from-[#9333EA] to-[#7E22CE] hover:opacity-90"
+            onClick={() => onContact(lawyer)}
+          >
+            Contact
+          </Button>
+          <Button 
+            variant="outline" 
+            className="border-[#9333EA]/20 text-purple-400 hover:bg-white/5"
+            onClick={() => window.open(lawyer.profile_url, '_blank')}
+          >
+            View Profile
+          </Button>
+        </div>
+      </div>
+    </div>
   </Card>
 );
 
 export function ChatbotPage() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const [messages, setMessages] = useState([
     { id: 1, text: "", sender: "ai" } // Start with empty text
@@ -85,14 +433,13 @@ export function ChatbotPage() {
 
   const simulateResponse = async (text) => {
     setIsTyping(true);
-    // Add a small delay before showing the message
     await new Promise(resolve => setTimeout(resolve, 500));
     setIsTyping(false);
     return text;
   };
 
   useEffect(() => {
-    const initialMessage = "Hello! How can I assist you with your legal questions today?";
+    const initialMessage = "Hello! How can I assist you with your legal question?";
     simulateResponse(initialMessage).then(text => {
       setMessages([{ id: 1, text, sender: "ai" }]);
     });
@@ -105,7 +452,7 @@ export function ChatbotPage() {
     const newUserMessage = { id: messages.length + 1, text: inputMessage, sender: "user" };
     setMessages(prev => [...prev, newUserMessage]);
     setInputMessage("");
-    setProcessing("thinking");
+    setProcessing("Cooking Best Results...");
     setError(null);
 
     try {
@@ -119,7 +466,9 @@ export function ChatbotPage() {
         return;
       }
 
-      const response = await apiService.askQuestion(inputMessage);
+      // Get current session ID from URL
+      const sessionId = searchParams.get('session');
+      const response = await apiService.askQuestion(inputMessage, sessionId);
 
       if (!response) {
         throw new Error('Empty response received');
@@ -127,17 +476,21 @@ export function ChatbotPage() {
 
       await apiService.updateCredits(currentCredits - 1);
 
-      // Show the AI response immediately with pop animation
+      // If we got a new session ID from response and no existing session, update URL
+      if (response.session_id && !sessionId) {
+        setSearchParams({ session: response.session_id });
+      }
+
       const aiResponse = {
         id: messages.length + 2,
         text: response.answer,
         sender: "ai",
-        lawyers: response.recommendedLawyers
+        references: response.references || [],
+        lawyers: response.recommendedLawyers || []
       };
 
       await simulateResponse(response.answer);
       setMessages(prev => [...prev, aiResponse]);
-      setReferences(response.references || []);
 
     } catch (err) {
       console.error("Error:", err);
@@ -176,21 +529,44 @@ export function ChatbotPage() {
   };
 
   const loadPreviousSession = async (session) => {
-    const prevChat = await apiService.getChatsFromSessionId(session.id);
-    if (prevChat == null) {
-      setMessages([]);
-      return;
-    };
-    const newChats = [];
-    prevChat.data.data.forEach((chat) => {
-      newChats.push({
-        id: chat.message_id,
-        text: chat.message,
-        sender: chat.message_type === "AI Message" ? "ai" : "user",
+    try {
+      const prevChat = await apiService.getChatsFromSessionId(session.id);
+      if (prevChat == null) {
+        setMessages([]);
+        // Update URL with session ID
+        setSearchParams({ session: session.id });
+        return;
+      }
+      
+      const newChats = [];
+      prevChat.data.data.forEach((chat) => {
+        newChats.push({
+          id: chat.message_id,
+          text: chat.message,
+          sender: chat.message_type === "AI Message" ? "ai" : "user",
+          references: chat.references || [],
+        });
       });
-    });
-    setMessages(newChats);
-  }
+      setMessages(newChats);
+      
+      // Update URL with session ID
+      setSearchParams({ session: session.id });
+    } catch (error) {
+      console.error("Error loading previous session:", error);
+    }
+  };
+
+  // Add useEffect to check URL params on mount
+  useEffect(() => {
+    const sessionId = searchParams.get('session');
+    if (sessionId) {
+      // Find the session in history and load it
+      const session = sessionHistory.find(s => s.id === sessionId);
+      if (session) {
+        loadPreviousSession(session);
+      }
+    }
+  }, [sessionHistory]); // Depends on sessionHistory to ensure it's loaded
 
   const handleGoPremium = () => {
     const user = JSON.parse(localStorage.getItem('user'));
@@ -204,6 +580,27 @@ export function ChatbotPage() {
   const handleLogout = () => {
     apiService.logout();
     navigate('/login');
+  };
+
+  const handleNewChat = () => {
+    // Clear the session ID from URL
+    setSearchParams({});
+    
+    // Reset messages to initial state
+    setMessages([
+      { 
+        id: 1, 
+        text: "Hello! How can I assist you with your legal question?", 
+        sender: "ai" 
+      }
+    ]);
+    
+    setError(null);
+    
+    setProcessing(null);
+    
+    // Clear references
+    setReferences([]);
   };
 
   return (
@@ -227,10 +624,13 @@ export function ChatbotPage() {
                 <ChevronLeft className="h-4 w-4 transition-colors" />
               </Button>
             </div>
-            <div className="flex items-center border-[#9333EA]/20 text-purple-400
-              hover:text-purple-300 hover:bg-white/5 bg-[#1A1A2E]/90 backdrop-blur-lg
-              animate-fadeIn hover:scale-110 transition-all duration-200
-              shadow-[0_0_15px_rgba(147,51,234,0.2)] group rounded-full p-2"
+            <div 
+              onClick={handleNewChat}
+              className="flex items-center border-[#9333EA]/20 text-purple-400
+                hover:text-purple-300 hover:bg-white/5 bg-[#1A1A2E]/90 backdrop-blur-lg
+                animate-fadeIn hover:scale-110 transition-all duration-200
+                shadow-[0_0_15px_rgba(147,51,234,0.2)] group rounded-full p-2
+                cursor-pointer"
             >
               <Plus className="h-4 w-4 transition-colors" />
               {isSidebarOpen && <span className="ml-2 text-white">New Chat</span>}
@@ -345,21 +745,50 @@ export function ChatbotPage() {
 
                 <div className="space-y-4">
                   {messages.map((message) => (
-                    <div key={message.id} className={`flex ${message.sender === "user" ? "justify-end" : "justify-start"} mb-4`}>
-                      <div className={`max-w-[70%] rounded-lg p-3 ${
-                        message.sender === "user" 
-                          ? "bg-gradient-to-r from-[#9333EA] to-[#7E22CE] text-white" 
-                          : "bg-[#2E2E3A] text-gray-200"
-                      } shadow-[0_0_15px_rgba(147,51,234,0.2)] animate-pop`}>
-                        <div className="flex items-start">
-                          {message.sender === "user" ? (
-                            <User className="h-5 w-5 mr-2 mt-1" />
-                          ) : (
-                            <Bot className="h-5 w-5 mr-2 mt-1" />
-                          )}
-                          <p>{message.text}</p>
+                    <div key={message.id}>
+                      <div className={`flex ${message.sender === "user" ? "justify-end" : "justify-start"} mb-4`}>
+                        <div className={`max-w-[70%] rounded-lg p-3 ${
+                          message.sender === "user" 
+                            ? "bg-gradient-to-r from-[#9333EA] to-[#7E22CE] text-white" 
+                            : "bg-[#2E2E3A] text-gray-200"
+                        } shadow-[0_0_15px_rgba(147,51,234,0.2)] animate-pop`}>
+                          <div className="flex items-start">
+                            {message.sender === "user" ? (
+                              <User className="h-5 w-5 mr-2 mt-1" />
+                            ) : (
+                              <Bot className="h-5 w-5 mr-2 mt-1" />
+                            )}
+                            <p>{message.text}</p>
+                          </div>
                         </div>
                       </div>
+                      
+                      {/* Show references if available */}
+                      {message.references && message.references.length > 0 && (
+                        <div className="ml-12 mb-4 space-y-2">
+                          <h4 className="text-white/90 text-sm font-medium">References:</h4>
+                          {message.references.map((ref, idx) => (
+                            <ReferenceCard 
+                              key={idx} 
+                              reference={ref}
+                            />
+                          ))}
+                        </div>
+                      )}
+
+                      {/* Show lawyer recommendations if available */}
+                      {message.lawyers && message.lawyers.length > 0 && (
+                        <div className="ml-12 mb-4 space-y-2">
+                          <h4 className="text-white/90 text-sm font-medium">Recommended Lawyers:</h4>
+                          {message.lawyers.map((lawyer, idx) => (
+                            <LawyerRecommendationCard 
+                              key={idx}
+                              lawyer={lawyer}
+                              onContact={handleContact}
+                            />
+                          ))}
+                        </div>
+                      )}
                     </div>
                   ))}
 
@@ -382,7 +811,7 @@ export function ChatbotPage() {
                         <div className="flex items-center">
                           <Bot className="h-5 w-5 mr-2" />
                           <Loader2 className="h-5 w-5 animate-spin mr-2" />
-                          <p>{processing === "thinking" ? "Thinking..." : "Searching the web..."}</p>
+                          <p>{processing === "Cooking Best Results..." ? "Cooking Best Results..." : "Searching the web..."}</p>
                         </div>
                       </div>
                     </div>

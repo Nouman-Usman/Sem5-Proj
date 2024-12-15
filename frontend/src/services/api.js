@@ -1,4 +1,5 @@
 import axios from 'axios';
+// import { console } from 'inspector';
 
 const API_BASE_URL = 'http://localhost:5000/api';
 
@@ -61,134 +62,6 @@ export const apiService = {
     const token = localStorage.getItem("token");
     try {
       const chatTopic = await api.get('/topics');
-      // const chatTopic = {
-      //   "data": {
-      //       "Time": [
-      //           "Sat, 14 Dec 2024 09:53:46 GMT",
-      //           "Sat, 14 Dec 2024 09:44:23 GMT",
-      //           "Sat, 14 Dec 2024 09:38:02 GMT",
-      //           "Fri, 13 Dec 2024 16:01:14 GMT",
-      //           "Fri, 13 Dec 2024 15:54:58 GMT",
-      //           "Fri, 13 Dec 2024 15:30:55 GMT",
-      //           "Fri, 13 Dec 2024 15:27:02 GMT",
-      //           "Fri, 13 Dec 2024 15:23:34 GMT",
-      //           "Fri, 13 Dec 2024 15:17:40 GMT",
-      //           "Fri, 13 Dec 2024 15:12:18 GMT",
-      //           "Fri, 13 Dec 2024 14:51:19 GMT",
-      //           "Fri, 13 Dec 2024 14:47:53 GMT",
-      //           "Fri, 13 Dec 2024 14:27:54 GMT",
-      //           "Fri, 13 Dec 2024 14:27:19 GMT",
-      //           "Fri, 13 Dec 2024 14:21:10 GMT",
-      //           "Fri, 13 Dec 2024 14:19:39 GMT",
-      //           "Fri, 13 Dec 2024 14:09:15 GMT",
-      //           "Fri, 13 Dec 2024 13:58:50 GMT",
-      //           "Fri, 13 Dec 2024 13:51:42 GMT",
-      //           "Fri, 13 Dec 2024 13:02:41 GMT",
-      //           "Fri, 13 Dec 2024 12:55:36 GMT",
-      //           "Fri, 13 Dec 2024 12:54:13 GMT",
-      //           "Fri, 13 Dec 2024 09:52:15 GMT",
-      //           "Fri, 13 Dec 2024 09:47:03 GMT",
-      //           "Fri, 13 Dec 2024 09:46:31 GMT",
-      //           "Fri, 13 Dec 2024 09:45:59 GMT"
-      //       ],
-      //       "chat_sessions": [
-      //           26,
-      //           25,
-      //           24,
-      //           23,
-      //           22,
-      //           21,
-      //           20,
-      //           19,
-      //           18,
-      //           17,
-      //           16,
-      //           15,
-      //           14,
-      //           13,
-      //           12,
-      //           11,
-      //           10,
-      //           9,
-      //           8,
-      //           7,
-      //           6,
-      //           5,
-      //           4,
-      //           3,
-      //           2,
-      //           1
-      //       ],
-      //       "chat_topics": [
-      //           "Pakistan Parliament Works",
-      //           "Pakistan Parliament Works",
-      //           "Know Law Order",
-      //           "Alert Case Zainab",
-      //           "Friend Stabbed",
-      //           "Added Amendment Constitution Language Schedule",
-      //           "Define Law",
-      //           "Alert Case Know Zainab",
-      //           "Alert Case Consequences Explain Zainab",
-      //           "Alert Case Consequences Explain Zainab",
-      //           "Legislation meant",
-      //           "Definw law",
-      //           "Ok",
-      //           "Goof morning",
-      //           "Ok",
-      //           "Define law order",
-      //           "Adn define law order",
-      //           "America parliament working",
-      //           "Australia parliament working",
-      //           "Parliament working",
-      //           "According explain legislation pakistan",
-      //           "According explain legislation pakistan",
-      //           "Friend stabbed",
-      //           "2018 explain law",
-      //           "2018 explain law",
-      //           "2018 explain law"
-      //       ]
-      //   },
-      //   "status": 200,
-      //   "statusText": "OK",
-      //   "headers": {
-      //       "content-length": "1562",
-      //       "content-type": "application/json"
-      //   },
-      //   "config": {
-      //       "transitional": {
-      //           "silentJSONParsing": true,
-      //           "forcedJSONParsing": true,
-      //           "clarifyTimeoutError": false
-      //       },
-      //       "adapter": [
-      //           "xhr",
-      //           "http",
-      //           "fetch"
-      //       ],
-      //       "transformRequest": [
-      //           null
-      //       ],
-      //       "transformResponse": [
-      //           null
-      //       ],
-      //       "timeout": 0,
-      //       "xsrfCookieName": "XSRF-TOKEN",
-      //       "xsrfHeaderName": "X-XSRF-TOKEN",
-      //       "maxContentLength": -1,
-      //       "maxBodyLength": -1,
-      //       "env": {},
-      //       "headers": {
-      //           "Accept": "application/json, text/plain, /",
-      //           "Content-Type": "application/json",
-      //           "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTczNDE1MTA2MiwianRpIjoiYzk1MzMxZWItZWUxYi00MjExLWFhOTMtYzljNzQwZTJiMDE1IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6MSwibmJmIjoxNzM0MTUxMDYyLCJjc3JmIjoiNGY0NTI4OGEtZTc3OS00NTIxLWE1OWItMTZmNDBkMDcyOWZlIiwiZXhwIjoxNzM0MTY5MDYyLCJyb2xlIjoiY2xpZW50IiwiZW1haWwiOiJub3VtYW5tdWdoYWwwMTIzQGdtYWlsLmNvbSIsIm5hbWUiOiJOb3VtYW4iLCJ1c2VyX2lkIjoxfQ.vObfyIV5ZqIqOneRGbEozt4RknNkhPyAEUfXK06Uqw4"
-      //       },
-      //       "baseURL": "http://localhost:5000/api",
-      //       "method": "get",
-      //       "url": "/topics"
-      //   },
-        // "request": {}
-    // }
-      // console.log("chat topic is ", chatTopic)
       return {
         topic: chatTopic.data.chat_topics,
         session_id: chatTopic.data.chat_sessions || null,
@@ -211,31 +84,15 @@ export const apiService = {
   
   },
 
-  async askQuestion(question) {
+  async askQuestion(question, sessionId = null) {
     try {
       const response = await api.post('/ask', {
         question,
-        SessionId,
+        session_id: sessionId
       });
-
-      if (!response.data) {
-        throw new Error('Empty response received');
-      }
-
-      SessionId = response.data.session_id || SessionId;
-      console.log('SessionId:', SessionId);
-
-      return {
-        answer: response.data.answer,
-        references: response.data.references || [],
-        recommendedLawyers: response.data.recommended_lawyers || [],
-        session_id: response.data.session_id || null
-      };
+      return response.data;
     } catch (error) {
-      if (error.message.includes('Request timed out')) {
-        console.error('Request timed out. Please try again.');
-      }
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      console.error('Error asking question:', error);
       throw error;
     }
   },
@@ -377,6 +234,49 @@ export const apiService = {
   async checkHealth() {
     const response = await api.get('/health');
     return response.data;
+  }
+};
+
+// Add this to your fetchPDFAsBlob function
+const fetchPDFAsBlob = async (url) => {
+  try {
+    if (isGovtUrl(url)) {
+      console.warn('Accessing government website, SSL verification might be required');
+    }
+
+    const proxyUrl = `${apiService.API_BASE_URL}/proxy-pdf?url=${encodeURIComponent(url)}`;
+    
+    const response = await fetch(proxyUrl, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/pdf,*/*',
+        'Cache-Control': 'no-cache',
+      },
+      credentials: 'same-origin',
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const blob = await response.blob();
+    if (blob.size === 0) {
+      throw new Error('Empty PDF received');
+    }
+
+    // Verify it's actually a PDF
+    if (!blob.type.includes('pdf')) {
+      throw new Error('Invalid PDF format received');
+    }
+
+    return URL.createObjectURL(blob);
+  } catch (error) {
+    console.error('Error fetching PDF:', error);
+    throw new Error(
+      isGovtUrl(url) 
+        ? 'Government website access restricted. Please try opening in browser.' 
+        : error.message
+    );
   }
 };
 
