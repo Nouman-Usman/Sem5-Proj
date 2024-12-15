@@ -395,8 +395,6 @@ Question to route: {question}
 
     def update_query(self, question: str, chat_history: str) -> str:
         print("---UPDATE QUERY---")
-        print("Chat History: ", chat_history)
-
         prompt = f"""
         Given the following chat history, update the user's query to be more structured and clear:
         
@@ -477,6 +475,28 @@ Question to route: {question}
         try:
             if chat_history is None:
                 chat_history = []
+            else:
+                for message in chat_history:
+                    # Handle pyodbc.Row objects by accessing columns directly
+                    try:
+                        # Try dictionary access first
+                        role = message.get('Type') if isinstance(message, dict) else message.role
+                        content = message.get('content') if isinstance(message, dict) else message.content
+                        
+                        if role == 'Human Message' or role == 'user':
+                            self.memory.save_context({'input': content}, {'output': ''})
+                        elif role == 'AI Message' or role == 'assistant':
+                            self.memory.save_context({'input': ''}, {'output': content})
+                    except AttributeError:
+                        # If message is a tuple/row, try positional access
+                        # Assuming the order is (role, content, ...)
+                        if isinstance(message, tuple):
+                            role, content = message[0], message[1]
+                            if role in ('Human Message', 'user'):
+                                self.memory.save_context({'input': content}, {'output': ''})
+                            elif role in ('AI Message', 'assistant'):
+                                self.memory.save_context({'input': ''}, {'output': content})
+
             chat_context = self.memory.load_memory_variables({})["history"]
             updated_question = self.update_query(question, chat_context)
             sentiment = self.analyze_sentiment(updated_question)

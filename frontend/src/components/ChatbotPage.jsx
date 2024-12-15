@@ -413,6 +413,43 @@ const FormattedMessage = ({ content }) => {
   );
 };
 
+// Add this new component above the ChatbotPage component
+const ProcessingIndicator = ({ message }) => (
+  <div className="flex justify-start mb-4">
+    <div className="bg-gradient-to-r from-[#2E2E3A] to-[#1A1A2E] text-gray-200 rounded-lg p-4 
+      shadow-[0_0_15px_rgba(147,51,234,0.2)] animate-message border border-[#9333EA]/20 
+      backdrop-blur-sm relative overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#9333EA]/10 to-transparent 
+        animate-shimmer" style={{ backgroundSize: '200% 100%' }}></div>
+      <div className="relative flex items-center">
+        <div className="mr-4 bg-[#9333EA]/20 p-2 rounded-full">
+          <Bot className="h-5 w-5 text-purple-400" />
+        </div>
+        <div className="flex items-center">
+          <div className="flex space-x-1 mr-3">
+            <span className="w-2 h-2 bg-purple-400 rounded-full animate-bounce [animation-delay:-0.3s]"></span>
+            <span className="w-2 h-2 bg-purple-400 rounded-full animate-bounce [animation-delay:-0.15s]"></span>
+            <span className="w-2 h-2 bg-purple-400 rounded-full animate-bounce"></span>
+          </div>
+          <p className="text-purple-200 font-medium">
+            {message === "Cooking Best Results..." ? (
+              <span className="inline-flex items-center">
+                Cooking Best Results
+                <span className="inline-block ml-1 opacity-80 animate-pulse">✨</span>
+              </span>
+            ) : (
+              <span className="inline-flex items-center">
+                Searching the web
+                <span className="inline-block ml-1 opacity-80 animate-pulse">🔍</span>
+              </span>
+            )}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+);
+
 export function ChatbotPage() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -839,17 +876,7 @@ export function ChatbotPage() {
                     </div>
                   )}
 
-                  {processing && (
-                    <div className="flex justify-start mb-4">
-                      <div className="bg-[#2E2E3A] text-gray-200 rounded-lg p-3 shadow-[0_0_15px_rgba(147,51,234,0.2)] animate-message">
-                        <div className="flex items-center">
-                          <Bot className="h-5 w-5 mr-2" />
-                          <Loader2 className="h-5 w-5 animate-spin mr-2" />
-                          <p>{processing === "Cooking Best Results..." ? "Cooking Best Results..." : "Searching the web..."}</p>
-                        </div>
-                      </div>
-                    </div>
-                  )}
+                  {processing && <ProcessingIndicator message={processing} />}
                   <div ref={messagesEndRef} />
                 </div>
               </div>
@@ -1123,5 +1150,14 @@ export function ChatbotPage() {
   .ps .ps__rail-y:hover {
     background-color: rgba(147, 51, 234, 0.1) !important;
     width: 10px !important;
+  }
+
+  @keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+
+  .animate-shimmer {
+    animation: shimmer 3s linear infinite;
   }
 `}</style>

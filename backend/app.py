@@ -159,7 +159,7 @@ def ask_question():
         # Get session_id from request data
         question = data.get('question')
         session_id = data.get('session_id')  # This will be passed from frontend when URL has session param
-        print(session_id)
+        # print(session_id)
         if not question:
             logger.error("Missing question parameter")
             return jsonify({"error": "Missing required parameter: question"}), 400
@@ -179,7 +179,7 @@ def ask_question():
         
         if session_id:
             if not data_loaded:
-                history = db.get_chat_session_by_id(session_id=session_id)
+                history = db.get_chat_messages_by_session_id(session_id=session_id)
                 data_loaded = True
                 logger.info(f"Loaded existing session {session_id}")
             else:

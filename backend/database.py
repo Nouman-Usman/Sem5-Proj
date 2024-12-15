@@ -170,11 +170,11 @@ class Database:
             cursor.execute("SELECT * FROM Sessions WHERE Active = 1")
             return cursor.fetchall()
 
-    def get_chat_session_by_id(self, session_id):
-        with self.get_connection() as conn:
-            cursor = conn.cursor()
-            cursor.execute("SELECT * FROM Sessions WHERE SessionId = ?", session_id)
-            return cursor.fetchone()
+    # def get_chat_session_by_id(self, session_id):
+    #     with self.get_connection() as conn:
+    #         cursor = conn.cursor()
+    #         cursor.execute("SELECT * FROM Sessions WHERE SessionId = ?", session_id)
+    #         return cursor.fetchone()
 
     # ============= User Related Methods =============
     def get_user_by_email(self, email):
