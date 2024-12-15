@@ -563,19 +563,38 @@ class Database:
     ):
         with self.get_connection() as conn:
             cursor = conn.cursor()
-            query = """INSERT INTO Subscription 
-                      (UserId, CurrentSubscription, StartDate, ExpiryDate, RemainingCredits)
-                      VALUES (?, ?, ?, ?, ?)"""
-            cursor.execute(
-                query,
-                (
-                    user_id,
-                    subscription_type,
-                    start_date,
-                    expiry_date,
-                    remaining_credits,
-                ),
-            )
+            
+            # First check if user has an existing subscription
+            check_query = "SELECT SubsId FROM Subscription WHERE UserId = ?"
+            cursor.execute(check_query, (user_id,))
+            existing_subscription = cursor.fetchone()
+
+            if existing_subscription:
+                # Update existing subscription
+                update_query = """
+                    UPDATE Subscription 
+                    SET CurrentSubscription = ?,
+                        StartDate = ?,
+                        ExpiryDate = ?,
+                        RemainingCredits = ?
+                    WHERE UserId = ?
+                """
+                cursor.execute(
+                    update_query,
+                    (subscription_type, start_date, expiry_date, remaining_credits, user_id)
+                )
+            else:
+                # Create new subscription
+                insert_query = """
+                    INSERT INTO Subscription 
+                    (UserId, CurrentSubscription, StartDate, ExpiryDate, RemainingCredits)
+                    VALUES (?, ?, ?, ?, ?)
+                """
+                cursor.execute(
+                    insert_query,
+                    (user_id, subscription_type, start_date, expiry_date, remaining_credits)
+                )
+            
             conn.commit()
             return cursor.rowcount
 
