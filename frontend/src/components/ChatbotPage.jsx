@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Loader2, Send, User, Bot, ChevronLeft, ChevronRight, Star, History, Plus, LogOut, Settings, Star as StarIcon, BookOpen, ExternalLink, FileText, AlertCircle, Minus } from "lucide-react";
+import { Loader2, Send, User, Bot, ChevronLeft, ChevronRight, Star, History, Plus, LogOut, Settings, Star as StarIcon, BookOpen, ExternalLink, FileText, AlertCircle, Minus, ChevronDown, ArrowDown } from "lucide-react";
 import apiService from "@/services/api";
 import { useNavigate, useSearchParams, useLocation } from "react-router-dom";
 import PerfectScrollbar from 'react-perfect-scrollbar';
@@ -471,10 +471,31 @@ export function ChatbotPage() {
   const [typingText, setTypingText] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const [inputFocused, setInputFocused] = useState(false);
+  const [showScrollButton, setShowScrollButton] = useState(false);
 
+  // Updated scrollToBottom to target the correct container and scroll instantly
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    const scrollContainer = document.querySelector('.flex-1.flex-col.min-h-0.relative');
+    if (scrollContainer) {
+      scrollContainer.scrollTop = scrollContainer.scrollHeight;
+    }
+    // Alternatively, ensure messagesEndRef is correctly referenced
+    messagesEndRef.current?.scrollIntoView({ behavior: "auto" });
   };
+
+  // Update the scroll position check
+  const handleScroll = (e) => {
+    const element = e.target;
+    const atBottom = Math.abs((element.scrollHeight - element.scrollTop) - element.clientHeight) < 50;
+    setShowScrollButton(!atBottom);
+  };
+
+  // Add this useEffect to handle automatic scrolling for new messages
+  useEffect(() => {
+    if (!showScrollButton) {
+      scrollToBottom();
+    }
+  }, [messages, showScrollButton]);
 
   useEffect(() => {
     scrollToBottom();
@@ -802,6 +823,7 @@ export function ChatbotPage() {
                 wheelPropagation: true
               }}
               className="absolute inset-0"
+              onScroll={handleScroll}
             >
               <div className="max-w-4xl mx-auto p-4">
                 {error && (
@@ -881,6 +903,25 @@ export function ChatbotPage() {
                 </div>
               </div>
             </PerfectScrollbar>
+
+            {/* Add the scroll to bottom button */}
+            {showScrollButton && (
+              <button
+                onClick={scrollToBottom}
+                className="fixed bottom-32 right-8 p-3 rounded-full
+                  bg-gradient-to-r from-[#9333EA] to-[#7E22CE]
+                  shadow-[0_0_20px_rgba(147,51,234,0.5)]
+                  hover:shadow-[0_0_30px_rgba(147,51,234,0.8)]
+                  transition-all duration-300
+                  animate-pulse-subtle
+                  hover:scale-110
+                  group
+                  z-50
+                  opacity-90 hover:opacity-100"
+              >
+                <ArrowDown className="h-5 w-5 text-white group-hover:animate-bounce" />
+              </button>
+            )}
           </div>
 
           {/* Fixed Input Area */}
@@ -1159,5 +1200,21 @@ export function ChatbotPage() {
 
   .animate-shimmer {
     animation: shimmer 3s linear infinite;
+  }
+
+  @keyframes pulse-subtle {
+    0% {
+      box-shadow: 0 0 15px rgba(147,51,234,0.4);
+    }
+    50% {
+      box-shadow: 0 0 25px rgba(147,51,234,0.7);
+    }
+    100% {
+      box-shadow: 0 0 15px rgba(147,51,234,0.4);
+    }
+  }
+
+  .animate-pulse-subtle {
+    animation: pulse-subtle 2s infinite;
   }
 `}</style>
