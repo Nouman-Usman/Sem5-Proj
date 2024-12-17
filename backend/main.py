@@ -115,38 +115,61 @@ Please return only the category name that best fits the text: "{question}"
             self.retrieval_grader_prompt | self.llm | JsonOutputParser()
         )
 
+        # self.generate_prompt = PromptTemplate(
+        #     template="""<|begin_of_text|><|start_header_id|>system<|end_header_id|> You are a legal assistant for question-answering tasks in the context of Pakistani law. Structure your responses in Markdown format following this template:
+
+        # # Legal Law Number if applicable[Optional]
+        # ## Facts
+        # [Provide a summary of the facts of the case]
+
+        # # Previous Case
+        # [Provide a summary of the previous case between parties with case number]
+
+        # ## Case Description
+        # [Provide a detailed description of the case]
+
+        # ## Key Points
+        # [List the most important points or steps as bullet points]
+        # * Point 1
+        # * Point 2
+        # * Point 3
+
+        # ## What to do next
+        # [Provide a summary of the next steps or actions to be taken and also add a point that I've recommended some top lawyers with in your area]
+
+        # Previous conversation context:
+        # {chat_history}
+
+        # Question: {question} 
+        # Retrieved information: {context} 
+
+        # Remember to:
+        # 1. Use Markdown headers (# for main title, ## for sections)
+        # 2. Use bullet points (*) for lists
+        # 3. Use bold (**) for emphasis on important terms
+        # 4. Include relevant legal citations where applicable
+        # 5. Use <br> for line breaks
+
+        # <|eot_id|><|start_header_id|>assistant<|end_header_id|>""",
+        #     input_variables=["question", "context", "chat_history"],
+        # )
         self.generate_prompt = PromptTemplate(
-            template="""<|begin_of_text|><|start_header_id|>system<|end_header_id|> You are a legal assistant for question-answering tasks in the context of Pakistani law. Structure your responses in Markdown format following this template:
+            template="""<|begin_of_text|><|start_header_id|>system<|end_header_id|> You are a legal assistant for question-answering tasks in the context of Pakistani law. Structure your responses in Markdown format to aid in legal research. Bold the key terms like section or laws and use bullet points for lists. Provide a detailed response to the user's question.
 
-# Legal Response
-[Provide a clear, concise summary of the answer]
+        Previous conversation context:
+        {chat_history}
 
-## Detailed Explanation
-[Provide a detailed explanation of the legal concepts, requirements, or procedures]
+        Question: {question} 
+        Retrieved information: {context} 
 
-## Key Points
-[List the most important points or steps as bullet points]
-* Point 1
-* Point 2
-* Point 3
+        Remember to:
+        1. Use Markdown headers (# for main title, ## for sections)
+        2. Use bullet points (*) for lists
+        3. Use bold (**) for emphasis on important terms
+        4. Include relevant legal citations where applicable
+        5. Use <br> for line breaks
 
-## Legal Context
-[If relevant, provide any important legal context, citations, or references]
-
-Previous conversation context:
-{chat_history}
-
-Question: {question} 
-Retrieved information: {context} 
-
-Remember to:
-1. Use Markdown headers (# for main title, ## for sections)
-2. Use bullet points (*) for lists
-3. Use bold (**) for emphasis on important terms
-4. Include relevant legal citations where applicable
-5. Use <br> for line breaks
-
-<|eot_id|><|start_header_id|>assistant<|end_header_id|>""",
+        <|eot_id|><|start_header_id|>assistant<|end_header_id|>""",
             input_variables=["question", "context", "chat_history"],
         )
         self.rag_chain = self.generate_prompt | self.llm | StrOutputParser()
@@ -393,8 +416,13 @@ Question to route: {question}
             print(f"JSON decode error: {e}")
             return "useful"  # Fall back to accepting the generation
 
-    def update_query(self, question: str, chat_history: str) -> str:
+    def update_query(self, state: Dict) -> Dict:
+        """Updated version that works with state dictionary"""
         print("---UPDATE QUERY---")
+        question = state["question"]
+        chat_history = self.memory.load_memory_variables({}).get("history", "")
+        # print(f"Chat history: {chat_history}")
+        # breakpoint()
         prompt = f"""
         Given the following chat history, update the user's query to be more structured and clear:
         
@@ -407,7 +435,12 @@ Question to route: {question}
         """
         updated_query_result = self.llm.invoke(prompt)
         updated_query = updated_query_result.content.strip()
-        return updated_query
+        
+        return {
+            "question": updated_query,
+            "documents": state.get("documents", []),
+            "source": state.get("source", [])
+        }
 
     def get_chat_topic(self, question: str) -> str:
         print("---GET CHAT TOPIC---")
@@ -426,7 +459,7 @@ Question to route: {question}
         workflow.add_node("websearch", self.web_search)
         workflow.add_node("retrieve", self.retrieve)
         workflow.add_node("grade_documents", self.grade_documents)
-        workflow.add_node("update_query", self.update_query)  # Add update_query node
+        workflow.add_node("update_query", self.update_query)
         workflow.add_node(
             "generate",
             lambda x: {**x, "attempts": x.get("attempts", 0) + 1} | self.generate(x),
@@ -498,17 +531,26 @@ Question to route: {question}
                                 self.memory.save_context({'input': ''}, {'output': content})
 
             chat_context = self.memory.load_memory_variables({})["history"]
-            updated_question = self.update_query(question, chat_context)
+            
+            # Create initial state for query update
+            initial_state = {
+                "question": question,
+                "documents": [],
+                "source": []
+            }
+            
+            # Update query using state-based approach
+            updated_state = self.update_query(initial_state)
+            updated_question = updated_state["question"]
+            
             sentiment = self.analyze_sentiment(updated_question)
             logging.info(f"Sentiment: {sentiment}")
-            # recommendations = self.lawyer_store.get_top_lawyers(sentiment)
-            # logging.info(f"Lawyer recommendations: {recommendations}")
 
             app = self.build_workflow()
             inputs = {
                 "question": updated_question,
-                "chat_history": chat_context,
-                "source": [],  # Initialize source in initial state
+                "documents": [],
+                "source": [],
             }
             last_output = None
             try:
@@ -520,8 +562,6 @@ Question to route: {question}
                     gc.collect()
                 result = last_output["generation"]
                 logging.info(f"Result: {result}")
-                # print(f"Result: {last_output['source']}")
-                # breakpoint()
                 response_text = result if isinstance(result, str) else str(result)
                 response = {
                     "chat_response": response_text,
@@ -580,7 +620,6 @@ Question to route: {question}
         except Exception as e:
             logging.error(f"Error getting lawyer recommendations: {e}")
             return "Unable to retrieve lawyer recommendations at this time."
-
     def save_context(self, user_input: str, assistant_output: str):
         self.memory.save_context({"input": user_input}, {"output": assistant_output})
 
