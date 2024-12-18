@@ -22,7 +22,6 @@ from dotenv import load_dotenv
 import recommend_lawyer
 import gc
 from langchain.schema import HumanMessage, AIMessage, BaseMessage
-from lawyer_store import LawyerStore
 from langchain.memory import ConversationBufferWindowMemory
 import datetime
 import pyodbc
@@ -59,7 +58,6 @@ class RAGAgent:
         self.connection_string = os.getenv("SQL_CONN_STRING")
         if not self.connection_string:
             raise ValueError("SQL_CONN_STRING environment variable is not set")
-        self.lawyer_store = LawyerStore(connection_string=self.connection_string)
         gc.collect()
         self.max_context_length = 4096
         self.memory = ConversationBufferWindowMemory(k=5)
@@ -597,29 +595,6 @@ Question to route: {question}
             print(f"Error retrieving dataset: {e}")
             return []
 
-    def _get_lawyer_recommendations(self, category: str) -> str:
-        """Get formatted lawyer recommendations"""
-        try:
-            top_lawyers = self.lawyer_store.get_top_lawyers(category, limit=2)
-
-            if not top_lawyers:
-                return "No lawyers found for this specialty."
-
-            recommendation = "Top recommended lawyers:\n\n"
-            for lawyer in top_lawyers:
-                recommendation += (
-                    f"- {lawyer['name']}\n"
-                    f"  Specialty: {lawyer['specialization']}\n"
-                    f"  Experience: {lawyer['experience']}\n"
-                    f"  Rating: {lawyer['rating']}/5\n"
-                    f"  Location: {lawyer['location']}\n"
-                    f"  Contact: {lawyer['contact']}\n\n"
-                )
-
-            return recommendation
-        except Exception as e:
-            logging.error(f"Error getting lawyer recommendations: {e}")
-            return "Unable to retrieve lawyer recommendations at this time."
     def save_context(self, user_input: str, assistant_output: str):
         self.memory.save_context({"input": user_input}, {"output": assistant_output})
 

@@ -77,3 +77,6 @@ def recommend_top_lawyers(sentiment):
 
 
 
+if __name__ == "__main__":
+    # Test the functions
+    print(recommend_top_lawyers("Criminal"))

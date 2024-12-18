@@ -6,7 +6,7 @@ import uuid
 import httpx  
 import logging
 import tracemalloc
-import recommend_lawyer
+from recommend_lawyer import recommend_top_lawyers
 from main import RAGAgent
 from flask_cors import CORS
 from datetime import datetime
@@ -212,10 +212,12 @@ def ask_question():
                 references=result.get('references', [])
             )
 
-            sentiment = result.get('sentiment', 'neutral')
-            lawyer = recommend_lawyer.recommend_top_lawyers(sentiment)
-
-            response = {
+            sentiment = result.get('Sentiment', 'neutral')
+            print(sentiment)
+            lawyer = recommend_top_lawyers(sentiment)
+            print(lawyer)
+            breakpoint()
+            response = {    
                 "answer": result['chat_response'],
                 "references": result["references"],
                 "recommended_lawyers": lawyer,

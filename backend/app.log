@@ -1,0 +1,197 @@
+2024-12-19 00:13:30,829 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-19 00:14:16,603 - app - INFO - Creating lawyer profile for user ID: 6
+2024-12-19 00:14:16,666 - app - INFO - Successfully created lawyer profile for user ID: 6
+2024-12-19 00:14:39,157 - app - INFO - Created new session 42 for user 6
+2024-12-19 00:14:39,158 - app - INFO - Initializing RAG agent...
+2024-12-19 00:14:39,177 - pinecone_plugin_interface.logging - INFO - Discovering subpackages in _NamespacePath(['C:\\Users\\Nouma\\OneDrive\\Desktop\\GenAi x Xavour\\ApnaWaqeel\\venv\\Lib\\site-packages\\pinecone_plugins'])
+2024-12-19 00:14:39,181 - pinecone_plugin_interface.logging - INFO - Looking for plugins in pinecone_plugins.inference
+2024-12-19 00:14:39,359 - pinecone_plugin_interface.logging - INFO - Installing plugin inference into Pinecone
+2024-12-19 00:14:45,814 - datasets - INFO - PyTorch version 2.4.1 available.
+2024-12-19 00:14:49,889 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2024-12-19 00:14:49,890 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2024-12-19 00:15:04,624 - app - INFO - RAG agent initialized successfully
+2024-12-19 00:15:04,628 - app - INFO - Using new session 42
+2024-12-19 00:15:05,549 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:15:06,238 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:15:06,270 - root - INFO - Sentiment: Criminal
+2024-12-19 00:15:31,611 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:15:32,286 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:15:32,965 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:15:33,458 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:15:39,665 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:15:40,528 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:15:41,015 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:15:41,220 - root - INFO - Result: # Recent Rape Case Updates: A Comprehensive Overview
+
+## Introduction
+
+Rape is a serious crime that has been increasingly reported in various parts of the world. This document aims to provide an overview of recent rape cases, focusing on victim's identity, accused, location, and the current status of the cases.
+
+## Case 1: New York Post Report
+
+Title: **New York Post Report on Rape Cases**
+Content: The New York Post has reported on various rape cases across the world. In one such case, an accused predator was locked up on an unrelated charge when the rape allegations surfaced. The case is currently under investigation.
+
+## Case 2: India Rape Statistics
+
+Title: **Rape Statistics in India**
+Content: According to reports, rape is one of the most common crimes against women in India. In 2024, over 30,000 rape cases were reported, with 33,098 cases involving offenders known to the victims.
+
+## Case 3: Kolkata Rape Case
+
+Title: **Kolkata Rape Case Updates**
+Content: The Chief Justice of India (CJI) has commented on the status report submitted by the West Bengal government regarding the ongoing construction of a rape case in Kolkata. The case is currently under investigation.
+
+## Conclusion
+
+These recent rape cases highlight the need for stringent laws and measures to prevent such crimes. It is essential to ensure that victims receive justice and that the accused are held accountable for their actions.
+2024-12-19 00:15:41,483 - app - INFO - Successfully generated response for user 6 in session 42
+2024-12-19 00:16:39,429 - app - INFO - Loaded existing session 42
+2024-12-19 00:16:40,128 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:16:40,756 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:16:40,777 - root - INFO - Sentiment: Criminal
+2024-12-19 00:17:33,799 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:17:34,570 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:17:35,135 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:17:35,905 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:17:43,918 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:17:44,897 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:17:45,773 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:17:46,856 - root - INFO - Result: # Recent Rape Case in Kolkata: Detailed Information and Legal Implications
+
+## Case Overview
+
+The recent rape and murder case of a trainee doctor in Kolkata has garnered significant attention across the country. The incident has raised concerns about the prevalence of rape in India, with over 30,000 reported cases in 2024, many of which involve offenders known to the victims.
+
+## Victim's Identity and Accused
+
+The victim's identity has been made public, which has sparked controversy and legal action. Three individuals, including Dr. Kunal Sarkar, Dr. Suparna Goswami, and BJP's Locket Chatterjee, have been summoned by the police for revealing the victim's identity and spreading misinformation.
+
+## Location
+
+The incident occurred in Kolkata, a city in the eastern state of West Bengal, India.
+
+## Current Status of the Case
+
+The case is currently under investigation, with the police taking action against those who have revealed the victim's identity and spread misinformation. The legal implications of this case are significant, as it highlights the need for stricter laws and enforcement to protect victims' privacy and prevent the spread of false information.
+
+## Relevant Legal Citations
+
+- **Section 228A of the Indian Penal Code (IPC)**: This section prohibits the disclosure of the identity of victims of certain offenses, including rape. Violation of this section can lead to imprisonment for up to two years and a fine.
+
+- **Section 354 of the IPC**: This section pertains to assault or criminal force to woman with intent to outrage her modesty. It carries a punishment of up to two years' imprisonment, a fine, or both.
+
+- **Section 376 of the IPC**: This section deals with punishment for rape, which can range from seven years' imprisonment to life imprisonment, along with a fine.
+
+- **Section 505 of the IPC**: This section pertains to statements conducing to public mischief, which can lead to imprisonment for up to three years, a fine, or both.
+
+## Conclusion
+
+The recent rape and murder case in Kolkata has brought attention to the ongoing issue of rape in India and the importance of protecting victims' privacy. The legal implications of this case are significant, highlighting the need for stricter enforcement of laws related to victim privacy and the spread of false information.
+2024-12-19 00:17:47,352 - app - INFO - Successfully generated response for user 6 in session 42
+2024-12-19 00:22:55,795 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-19 00:23:24,255 - app - INFO - Initializing RAG agent...
+2024-12-19 00:23:24,492 - pinecone_plugin_interface.logging - INFO - Discovering subpackages in _NamespacePath(['C:\\Users\\Nouma\\OneDrive\\Desktop\\GenAi x Xavour\\ApnaWaqeel\\venv\\Lib\\site-packages\\pinecone_plugins'])
+2024-12-19 00:23:24,493 - pinecone_plugin_interface.logging - INFO - Looking for plugins in pinecone_plugins.inference
+2024-12-19 00:23:24,737 - pinecone_plugin_interface.logging - INFO - Installing plugin inference into Pinecone
+2024-12-19 00:23:31,117 - datasets - INFO - PyTorch version 2.4.1 available.
+2024-12-19 00:23:32,797 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2024-12-19 00:23:32,798 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2024-12-19 00:23:53,815 - app - INFO - RAG agent initialized successfully
+2024-12-19 00:23:53,884 - app - INFO - Loaded existing session 42
+2024-12-19 00:23:54,714 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:23:55,486 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:23:55,503 - root - INFO - Sentiment: Criminal
+2024-12-19 00:24:36,526 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:24:37,020 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:24:37,542 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:24:38,072 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:24:45,725 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:24:46,505 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:24:49,094 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:24:49,833 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:24:54,854 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:24:55,741 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:24:58,410 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:24:59,200 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:25:01,678 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:25:02,620 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:25:05,908 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:25:06,767 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:25:09,520 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:25:10,269 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:25:12,713 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:25:13,559 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:25:17,838 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:25:18,593 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:25:21,062 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:25:21,901 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:25:24,605 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:25:25,336 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:25:27,848 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:25:28,624 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:25:31,245 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:25:31,966 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:25:34,365 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:25:35,054 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:25:37,472 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:25:38,188 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:25:40,842 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:25:41,430 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2024-12-19 00:25:41,434 - groq._base_client - INFO - Retrying request to /openai/v1/chat/completions in 3.000000 seconds
+2024-12-19 00:25:45,000 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:26:26,883 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-19 00:26:32,891 - app - INFO - Initializing RAG agent...
+2024-12-19 00:26:32,922 - pinecone_plugin_interface.logging - INFO - Discovering subpackages in _NamespacePath(['C:\\Users\\Nouma\\OneDrive\\Desktop\\GenAi x Xavour\\ApnaWaqeel\\venv\\Lib\\site-packages\\pinecone_plugins'])
+2024-12-19 00:26:32,926 - pinecone_plugin_interface.logging - INFO - Looking for plugins in pinecone_plugins.inference
+2024-12-19 00:26:33,392 - pinecone_plugin_interface.logging - INFO - Installing plugin inference into Pinecone
+2024-12-19 00:26:41,363 - datasets - INFO - PyTorch version 2.4.1 available.
+2024-12-19 00:26:44,214 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2024-12-19 00:26:44,214 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2024-12-19 00:26:57,983 - app - INFO - RAG agent initialized successfully
+2024-12-19 00:26:58,021 - app - INFO - Loaded existing session 42
+2024-12-19 00:26:58,663 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:26:59,293 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:26:59,312 - root - INFO - Sentiment: Criminal
+2024-12-19 00:27:17,387 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:27:17,953 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:27:18,530 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:27:19,165 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:27:24,954 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:27:25,756 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:27:26,293 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:27:26,536 - root - INFO - Result: # Recent Developments in Rape Cases in Pakistan
+
+## Overview of the Issue
+
+Rape cases in Pakistan have been a significant concern in recent years. According to the Sustainable Social Development Organization, there were 7,010 rape cases reported in Pakistan in 2023, with almost 95% of them occurring in Punjab. However, due to social stigmas that discourage women from seeking help, the actual number of cases may be even higher.
+
+## Recent Case in Islamabad
+
+A recent rape case in Pakistan's capital, Islamabad, sparked massive protests but the uproar soon hushed down. Fury is hard to maintain, and developments in the case are nothing short of a challenge.
+
+## Police Response and Student Protests
+
+In a recent incident, police fired tear gas to disperse students protesting over an alleged on-campus rape in Punjab, in Rawalpindi, Pakistan, on October 17, 2024. This incident highlights the ongoing struggle for justice and the need for better law enforcement and societal support for victims of rape.
+
+## Legal Framework
+
+In Pakistan, rape is considered a criminal offense under the Pakistan Penal Code (PPC). **Section 375** of the PPC defines rape as "the act of a man having sexual intercourse with a woman under circumstances falling under any of the five following descriptions: First, against her will. Secondly, without her consent. Thirdly, with her consent, when her consent has been obtained by putting her or any person in whom she is interested in fear of death or of hurt. Fourthly, with her consent, when the man knows that he is not her husband, and that her consent is given because she believes that he is another man to whom she is or believes herself to be lawfully married. Fifthly, with or without her consent, when she is under sixteen years of age."
+
+## Challenges and Future Directions
+
+Despite the legal framework, rape cases in Pakistan face several challenges, including underreporting, lack of societal support, and inadequate law enforcement. To address these issues, there is a need for better awareness campaigns, improved law enforcement strategies, and stronger support systems for victims of rape.
+2024-12-19 00:27:59,300 - app - ERROR - Error generating response: 
+2024-12-19 00:28:26,461 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-19 00:28:33,306 - app - INFO - Initializing RAG agent...
+2024-12-19 00:28:33,337 - pinecone_plugin_interface.logging - INFO - Discovering subpackages in _NamespacePath(['C:\\Users\\Nouma\\OneDrive\\Desktop\\GenAi x Xavour\\ApnaWaqeel\\venv\\Lib\\site-packages\\pinecone_plugins'])
+2024-12-19 00:28:33,340 - pinecone_plugin_interface.logging - INFO - Looking for plugins in pinecone_plugins.inference
+2024-12-19 00:28:33,537 - pinecone_plugin_interface.logging - INFO - Installing plugin inference into Pinecone
+2024-12-19 00:28:39,999 - datasets - INFO - PyTorch version 2.4.1 available.
+2024-12-19 00:28:42,663 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2024-12-19 00:28:42,663 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2024-12-19 00:28:57,467 - app - INFO - RAG agent initialized successfully
+2024-12-19 00:28:57,476 - app - INFO - Loaded existing session 42
+2024-12-19 00:28:58,055 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:28:58,740 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:28:58,785 - root - INFO - Sentiment: Criminal
