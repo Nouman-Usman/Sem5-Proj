@@ -213,10 +213,10 @@ def ask_question():
             )
 
             sentiment = result.get('Sentiment', 'neutral')
-            print(sentiment)
+            # print(sentiment)
             lawyer = recommend_top_lawyers(sentiment)
-            print(lawyer)
-            breakpoint()
+            # print(lawyer)
+            # breakpoint()
             response = {    
                 "answer": result['chat_response'],
                 "references": result["references"],

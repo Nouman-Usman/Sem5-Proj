@@ -90,7 +90,6 @@ export const apiService = {
         question,
         session_id: sessionId
       });
-      console.log(response.data)
       return response.data;
     } catch (error) {
       console.error('Error asking question:', error);

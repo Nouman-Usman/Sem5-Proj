@@ -195,3 +195,192 @@ Despite the legal framework, rape cases in Pakistan face several challenges, inc
 2024-12-19 00:28:58,055 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
 2024-12-19 00:28:58,740 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
 2024-12-19 00:28:58,785 - root - INFO - Sentiment: Criminal
+2024-12-19 00:29:17,265 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:29:17,857 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:29:18,390 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:29:18,922 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:29:29,514 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:29:30,790 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:29:31,405 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:29:31,767 - root - INFO - Result: # Current Status of Rape Cases in Pakistan and Measures to Address It
+
+## Introduction
+
+Rape is a serious crime in Pakistan, and it has been a persistent issue in the country. The legal system in Pakistan has implemented various measures to address this issue, including stringent punishments and the establishment of special courts for rape cases.
+
+## Legal Framework
+
+The legal framework in Pakistan for dealing with rape cases is primarily governed by the Pakistan Penal Code (PPC), which defines rape as a criminal offense under Section 375. The PPC also provides for punishments for rape, including the death penalty or imprisonment for a term not less than ten years and not more than twenty-five years.
+
+In addition to the PPC, there are other laws and measures that have been enacted to address gender-based violence, including the Protection of Women (Criminal Laws Amendment) Act, 2006, and the Criminal Law (Amendment) Act, 2016. These laws aim to provide greater protection to victims of gender-based violence and to ensure that perpetrators are held accountable.
+
+## Measures to Address Rape Cases
+
+To address the issue of rape in Pakistan, the following measures have been taken:
+
+1. **Establishment of Special Courts for Rape Cases**: Over 1,000 special courts have been established across the country to deal with rape cases. These courts aim to provide a speedy and fair trial for victims of rape.
+
+2. **Stringent Punishments**: The PPC provides for stringent punishments for rape, including the death penalty or imprisonment for a term not less than ten years and not more than twenty-five years.
+
+3. **Investigation and Evidence Collection**: The police have been trained to handle rape cases sensitively and to collect evidence properly. This includes the use of DNA testing and other forensic techniques to ensure that the evidence collected is reliable and admissible in court.
+
+4. **Protection of Victims**: The legal system in Pakistan has implemented various measures to protect victims of rape, including the provision of legal aid and counseling services. Victims are also protected from harassment and intimidation during the trial process.
+
+5. **Awareness Campaigns**: Various awareness campaigns have been launched to educate the public about the seriousness of rape and the importance of reporting such incidents to the authorities.
+
+6. **Gender-Sensitive Training for Police**: Police officers are provided with gender-sensitive training to handle rape cases effectively and to ensure that victims receive appropriate support and care during the investigation and trial process.
+
+7. **Collaboration with NGOs**: The government and legal system in Pakistan collaborate with non-governmental organizations (NGOs) to provide support services to victims of rape and to raise awareness about gender-based violence.
+
+## Challenges and Future Directions
+
+Despite the measures taken to address rape cases in Pakistan, there are still several challenges that need to be addressed. These include:
+
+1. **Low Conviction Rates**: Conviction rates for rape cases in Pakistan are low, which can be attributed to various factors such as lack of evidence, witness intimidation, and societal attitudes towards victims of rape.
+
+2. **Societal Attitudes**: There is a need to change societal attitudes towards victims of rape, who often face stigma and blame for the crime committed against them.
+
+3. **Lack of Resources**: There is a need for more resources to be allocated to support victims of rape, including counseling services, legal aid, and shelter homes.
+
+4. **Improvement in Police Training**: There is a need for continuous training of police officers to handle rape cases effectively and to ensure that victims receive appropriate support and care during the investigation and trial process.
+
+5. **Strengthening the Legal Framework**: The legal framework in Pakistan needs to be strengthened to ensure that it provides adequate protection to victims of rape and holds perpetrators accountable for their actions.
+
+In conclusion, while significant measures have been taken to address rape cases in Pakistan, there are still several challenges that need to be addressed. The legal system and society as a whole must work together to ensure that victims of rape receive justice and that perpetrators are held accountable for their actions.
+2024-12-19 00:29:51,813 - app - ERROR - Error generating response: 
+2024-12-19 00:30:25,804 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-19 00:30:31,243 - app - INFO - Created new session 43 for user 6
+2024-12-19 00:30:31,244 - app - INFO - Initializing RAG agent...
+2024-12-19 00:30:31,260 - pinecone_plugin_interface.logging - INFO - Discovering subpackages in _NamespacePath(['C:\\Users\\Nouma\\OneDrive\\Desktop\\GenAi x Xavour\\ApnaWaqeel\\venv\\Lib\\site-packages\\pinecone_plugins'])
+2024-12-19 00:30:31,263 - pinecone_plugin_interface.logging - INFO - Looking for plugins in pinecone_plugins.inference
+2024-12-19 00:30:31,478 - pinecone_plugin_interface.logging - INFO - Installing plugin inference into Pinecone
+2024-12-19 00:30:38,984 - datasets - INFO - PyTorch version 2.4.1 available.
+2024-12-19 00:30:41,544 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2024-12-19 00:30:41,545 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2024-12-19 00:30:52,191 - app - INFO - RAG agent initialized successfully
+2024-12-19 00:30:52,192 - app - INFO - Using new session 43
+2024-12-19 00:30:52,758 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:30:53,270 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:30:53,286 - root - INFO - Sentiment: Criminal
+2024-12-19 00:31:01,138 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:31:01,637 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:31:02,097 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:31:02,597 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:31:09,476 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:31:10,262 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:31:10,814 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:31:11,076 - root - INFO - Result: # Rape Case Status in Pakistan and Measures to Address It
+
+## Introduction
+
+Rape is a serious crime in Pakistan, and the legal system has implemented various measures to address it. This section will provide an overview of the current status of rape cases in Pakistan and the measures being taken to address them.
+
+## Legal Framework
+
+The legal framework for rape cases in Pakistan is primarily governed by the Pakistan Penal Code (PPC), which defines rape as a criminal offense under Section 375. The PPC also provides for punishment for rape, including the death penalty or imprisonment for a term of not less than ten years or more than twenty-five years.
+
+## Current Status of Rape Cases
+
+According to a report by the War Against Rape (WAR), an advocacy organisation, 21,900 women were raped in Punjab alone from 2017 to 2023. This data was taken from the Punjab home department and the ministry of human rights. This indicates that rape remains a significant issue in Pakistan.
+
+## Measures to Address Rape Cases
+
+To address the issue of rape, the Pakistani government has taken several measures, including:
+
+### Establishment of Special Courts
+
+The government has established over 1,000 special courts for rape cases. These courts aim to provide a more efficient and effective way of handling rape cases, ensuring that justice is served promptly and victims receive the support they need.
+
+### Stricter Punishment
+
+The PPC provides for stringent punishment for rape, including the death penalty or imprisonment for a term of not less than ten years or more than twenty-five years. This aims to deter potential offenders and ensure that those who commit such crimes are held accountable.
+
+### Police Powers and Investigation
+
+The Code of Criminal Procedure (CrPC) grants police officers the power to investigate rape cases. Under Section 154 of the CrPC, police officers are required to record information about cognizable offenses, including rape, and conduct investigations accordingly. Additionally, Section 156 of the CrPC allows police officers to investigate cognizable offenses without the permission of the magistrate.
+
+### Prevention of Injury to Public Property
+
+Section 152 of the CrPC empowers police officers to take preventive measures to prevent injury to public property. This includes taking steps to prevent potential crimes, including rape, from occurring.
+
+### Inspection of Weights and Measures
+
+Section 153 of the CrPC grants police officers the power to inspect weights and measures to ensure that they conform to the standards established by law. This helps in maintaining public order and preventing potential crimes.
+
+## Conclusion
+
+In conclusion, the current status of rape cases in Pakistan indicates that it remains a significant issue. However, the government has taken various measures to address this issue, including the establishment of special courts, stricter punishment under the PPC, and granting police officers specific powers to investigate and prevent crimes. These measures aim to ensure that justice is served promptly and victims receive the support they need.
+2024-12-19 00:31:11,341 - app - INFO - Successfully generated response for user 6 in session 43
+2024-12-19 00:35:04,611 - app - INFO - Loaded existing session 43
+2024-12-19 00:35:05,244 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:35:05,882 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:35:05,900 - root - INFO - Sentiment: Criminal
+2024-12-19 00:35:42,552 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:35:43,108 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:35:43,686 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:35:44,322 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:35:57,886 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:35:59,305 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:35:59,805 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:36:00,487 - root - INFO - Result: # Murder Cases in Pakistan in 2024: An Overview
+## Introduction
+In 2024, Pakistan has witnessed a significant number of murder cases across various regions. This report aims to provide an overview of the murder cases reported in Pakistan during the year 2024.
+
+## Murder Cases by Region
+### Sindh
+Sindh recorded 21 out of 57 cases with 3 murders. This region has seen a considerable number of violent crimes, including muggings and mob justice.
+
+### Punjab
+Punjab recorded 13 cases while Islamabad recorded 8 cases. These regions have also experienced a rise in violent crimes, including murder.
+
+## Journalist Murders
+At least 39 journalists have been murdered in Pakistan since 1992, when CPJ first began tracking journalist killings. In the vast majority of these cases, the motive for the murder was related to the victim's work as a journalist.
+
+## Legal Framework
+Under the **Pakistan Penal Code (PPC)**, murder is considered a criminal offense and is punishable under **Section 302**. The punishment for murder can range from life imprisonment to death.
+
+## Conclusion
+The year 2024 has seen a significant number of murder cases in Pakistan, with Sindh, Punjab, and Islamabad being the most affected regions. The murder of journalists is particularly concerning, as it highlights the risks faced by those working in the media industry. The legal framework in Pakistan provides for punishment under the PPC, but more needs to be done to address the root causes of these crimes and ensure justice for the victims and their families.
+2024-12-19 00:36:00,902 - app - INFO - Successfully generated response for user 6 in session 43
+2024-12-19 00:40:05,769 - app - INFO - Created new session 44 for user 6
+2024-12-19 00:40:05,776 - app - INFO - Using new session 44
+2024-12-19 00:40:06,433 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:40:07,111 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:40:07,150 - root - INFO - Sentiment: Criminal
+2024-12-19 00:40:39,142 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:40:39,675 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:40:40,175 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:40:40,711 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:40:49,403 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:40:50,237 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:40:50,934 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 00:40:51,196 - root - INFO - Result: # Current Status of Rape Cases in Pakistan
+
+## Overview
+Rape cases in Pakistan have been a significant concern in recent years. According to the Sustainable Social Development Organization, there were 7,010 rape cases reported in Pakistan in 2023, with almost 95% of them occurring in Punjab. However, due to social stigmas and underreporting, the actual number of cases may be even higher.
+
+## Statistics
+- In 2018, there were 4,326 cases of recorded rape.
+- In 2019, there were 4,377 cases.
+- In 2020, there were 3,887 cases.
+- In 2021, there were 1,866 cases.
+
+## Legal Framework
+The legal framework in Pakistan for dealing with rape cases is primarily governed by the Pakistan Penal Code (PPC), which defines rape as an act of sexual assault involving non-consensual sexual intercourse with another person. The PPC also provides for punishment for the crime of rape, including imprisonment and death penalty in certain circumstances.
+
+## Challenges
+Despite the legal framework, there are several challenges in addressing rape cases in Pakistan, including:
+- **Social Stigma**: Victims often face social stigma, which discourages them from reporting the crime.
+- **Underreporting**: Due to the stigma and fear of societal backlash, many rape cases go unreported.
+- **Lack of Evidence**: In many cases, there is a lack of evidence, making it difficult to prove the crime.
+- **Delayed Justice**: The legal process can be slow, leading to delayed justice for victims.
+
+## Efforts to Address the Issue
+To address the issue of rape cases in Pakistan, various efforts have been made, including:
+- **Awareness Campaigns**: Public awareness campaigns have been launched to educate people about the importance of reporting rape cases and seeking justice.
+- **Legal Reforms**: There have been calls for legal reforms to strengthen the laws related to rape and ensure quicker justice for victims.
+- **Support Services**: Various organizations provide support services for victims of rape, including counseling and legal assistance.
+
+## Conclusion
+The current status of rape cases in Pakistan highlights the need for continued efforts to address the issue. This includes raising awareness, strengthening legal frameworks, and providing support services for victims.
+2024-12-19 00:40:52,984 - app - INFO - Successfully generated response for user 6 in session 44

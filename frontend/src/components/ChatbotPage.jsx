@@ -346,34 +346,51 @@ const LawyerRecommendationCard = ({ lawyer, onContact }) => (
         <div className="flex justify-between items-start">
           <div>
             <h3 className="font-bold text-white">{lawyer.name}</h3>
-            <p className="text-sm text-gray-400">{lawyer.specialization}</p>
+            <p className="text-sm text-purple-400">{lawyer.specialization}</p>
           </div>
-          <div className="flex items-center">
+          <div className="flex items-center bg-[#9333EA]/10 px-2 py-1 rounded-full">
             <Star className="h-4 w-4 text-yellow-400 fill-current" />
-            <span className="ml-1 text-sm text-gray-400">{lawyer.rating}</span>
+            <span className="ml-1 text-sm text-purple-300">{lawyer.rating}/5</span>
           </div>
         </div>
-        <p className="text-sm text-gray-300 mt-2">{lawyer.description}</p>
+        
+        {/* New section for experience and location */}
+        <div className="mt-3 flex items-center gap-4 text-sm text-gray-400">
+          <div className="flex items-center">
+            <div className="w-1 h-1 bg-purple-500 rounded-full mr-2"></div>
+            <span className="text-purple-300">{lawyer.experience} Years Experience</span>
+          </div>
+          <div className="flex items-center">
+            <div className="w-1 h-1 bg-purple-500 rounded-full mr-2"></div>
+            <span className="text-purple-300">{lawyer.location}</span>
+          </div>
+        </div>
+
+        <p className="text-sm text-gray-300 mt-3 leading-relaxed">
+          Specialized in {lawyer.specialization.toLowerCase()} law with extensive experience in handling complex cases.
+        </p>
+        
         <div className="mt-3 flex items-center gap-2">
           {lawyer.expertise?.map((tag, index) => (
             <span 
               key={index}
-              className="text-xs px-2 py-1 rounded-full bg-[#9333EA]/20 text-purple-300"
+              className="text-xs px-2 py-1 rounded-full bg-[#9333EA]/20 text-purple-300 border border-purple-500/20"
             >
               {tag}
             </span>
           ))}
         </div>
+
         <div className="mt-4 flex gap-2">
           <Button 
-            className="flex-1 bg-gradient-to-r from-[#9333EA] to-[#7E22CE] hover:opacity-90"
+            className="flex-1 bg-gradient-to-r from-[#9333EA] to-[#7E22CE] hover:opacity-90 transition-all duration-300 shadow-lg shadow-purple-500/20"
             onClick={() => onContact(lawyer)}
           >
-            Contact
+            Contact Now
           </Button>
           <Button 
             variant="outline" 
-            className="border-[#9333EA]/20 text-purple-400 hover:bg-white/5"
+            className="border-[#9333EA]/20 text-purple-400 hover:bg-white/5 transition-all duration-300"
             onClick={() => window.open(lawyer.profile_url, '_blank')}
           >
             View Profile
@@ -554,7 +571,6 @@ export function ChatbotPage() {
         return;
       }
 
-      // Get current session ID from URL
       const sessionId = searchParams.get('session');
       const response = await apiService.askQuestion(inputMessage, sessionId);
 
@@ -564,17 +580,28 @@ export function ChatbotPage() {
 
       await apiService.updateCredits(currentCredits - 1);
 
-      // If we got a new session ID from response and no existing session, update URL
       if (response.session_id && !sessionId) {
         setSearchParams({ session: response.session_id });
       }
+
+      // Transform lawyer recommendations to match expected format
+      const recommendedLawyers = response.recommended_lawyers?.map(lawyer => ({
+        id: lawyer.LawyerId,
+        name: lawyer.Name,
+        specialization: lawyer.Category,
+        rating: lawyer.Rating,
+        experience: lawyer.Experience,
+        location: lawyer.Location,
+        contact: lawyer.Contact,
+        avatar: null, // Add default avatar or handle this as needed
+      })) || [];
 
       const aiResponse = {
         id: messages.length + 2,
         text: response.answer,
         sender: "ai",
         references: response.references || [],
-        lawyers: response.recommendedLawyers || []
+        lawyers: recommendedLawyers // Add transformed lawyer recommendations
       };
 
       await simulateResponse(response.answer);
@@ -619,26 +646,39 @@ export function ChatbotPage() {
   const loadPreviousSession = async (session) => {
     try {
       const prevChat = await apiService.getChatsFromSessionId(session.id);
+      console.log("Previous Chat:", prevChat);
       if (prevChat == null) {
         setMessages([]);
-        // Update URL with session ID
         setSearchParams({ session: session.id });
         return;
       }
       
       const newChats = [];
       prevChat.data.data.forEach((chat) => {
+        // Transform lawyer data if present
+        const lawyers = chat.recommended_lawyers?.map(lawyer => ({
+          id: lawyer.LawyerId,
+          name: lawyer.Name,
+          specialization: lawyer.Category,
+          rating: lawyer.Rating,
+          experience: lawyer.Experience,
+          location: lawyer.Location,
+          contact: lawyer.Contact,
+          avatar: null,
+        })) || [];
+
         newChats.push({
           id: chat.message_id,
           text: chat.message,
           sender: chat.message_type === "AI Message" ? "ai" : "user",
           references: chat.references || [],
+          lawyers: lawyers, // Add transformed lawyer recommendations
         });
       });
-      setMessages(newChats);
       
-      // Update URL with session ID
+      setMessages(newChats);
       setSearchParams({ session: session.id });
+      
     } catch (error) {
       console.error("Error loading previous session:", error);
     }
