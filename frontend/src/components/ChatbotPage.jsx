@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Loader2, Send, User, Bot, ChevronLeft, ChevronRight, Star, History, Plus, LogOut, Settings, Star as StarIcon, BookOpen, ExternalLink, FileText, AlertCircle, Minus, ChevronDown, ArrowDown } from "lucide-react";
+import { Loader2, Send, User, Bot, ChevronLeft, ChevronRight, Star, History, Plus, LogOut, Settings, Star as StarIcon, BookOpen, ExternalLink, FileText, AlertCircle, Minus, ChevronDown, ArrowDown, Edit2, Trash2 } from "lucide-react";
 import apiService from "@/services/api";
 import { useNavigate, useSearchParams, useLocation } from "react-router-dom";
 import PerfectScrollbar from 'react-perfect-scrollbar';
@@ -32,7 +32,6 @@ const handlePdfError = (error) => {
   }
   return error.message;
 };
-
 // Add this utility function
 const isGovtUrl = (url) => {
   try {
@@ -333,73 +332,112 @@ const ReferenceCard = ({ reference }) => {
   );
 };
 
-const LawyerRecommendationCard = ({ lawyer, onContact }) => (
-  <Card className="p-4 bg-[#1A1A2E]/90 border border-[#9333EA]/20 backdrop-blur-lg shadow-[0_0_15px_rgba(147,51,234,0.2)] hover:shadow-[0_0_30px_rgba(147,51,234,0.3)] transition-all duration-300">
-    <div className="flex items-start space-x-4">
-      <Avatar className="h-12 w-12 ring-2 ring-[#9333EA]/50">
-        <AvatarImage src={lawyer.avatar} alt={lawyer.name} />
-        <AvatarFallback className="bg-[#2E2E3A] text-white">
-          {lawyer.name.split(' ').map(n => n[0]).join('')}
-        </AvatarFallback>
-      </Avatar>
-      <div className="flex-1">
-        <div className="flex justify-between items-start">
-          <div>
-            <h3 className="font-bold text-white">{lawyer.name}</h3>
-            <p className="text-sm text-purple-400">{lawyer.specialization}</p>
-          </div>
-          <div className="flex items-center bg-[#9333EA]/10 px-2 py-1 rounded-full">
-            <Star className="h-4 w-4 text-yellow-400 fill-current" />
-            <span className="ml-1 text-sm text-purple-300">{lawyer.rating}/5</span>
-          </div>
-        </div>
-        
-        {/* New section for experience and location */}
-        <div className="mt-3 flex items-center gap-4 text-sm text-gray-400">
-          <div className="flex items-center">
-            <div className="w-1 h-1 bg-purple-500 rounded-full mr-2"></div>
-            <span className="text-purple-300">{lawyer.experience} Years Experience</span>
-          </div>
-          <div className="flex items-center">
-            <div className="w-1 h-1 bg-purple-500 rounded-full mr-2"></div>
-            <span className="text-purple-300">{lawyer.location}</span>
-          </div>
-        </div>
+// Update the LawyerRecommendationCard component
+const LawyerRecommendationCard = ({ lawyerId, onContact }) => {
+  const [lawyerDetails, setLawyerDetails] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-        <p className="text-sm text-gray-300 mt-3 leading-relaxed">
-          Specialized in {lawyer.specialization.toLowerCase()} law with extensive experience in handling complex cases.
-        </p>
+  useEffect(() => {
+    const fetchLawyerDetails = async () => {
+      try {
+        setLoading(true);
+        setError(null);
         
-        <div className="mt-3 flex items-center gap-2">
-          {lawyer.expertise?.map((tag, index) => (
-            <span 
-              key={index}
-              className="text-xs px-2 py-1 rounded-full bg-[#9333EA]/20 text-purple-300 border border-purple-500/20"
-            >
-              {tag}
-            </span>
-          ))}
-        </div>
+        if (!lawyerId) {
+          throw new Error('Invalid lawyer ID');
+        }
 
-        <div className="mt-4 flex gap-2">
-          <Button 
-            className="flex-1 bg-gradient-to-r from-[#9333EA] to-[#7E22CE] hover:opacity-90 transition-all duration-300 shadow-lg shadow-purple-500/20"
-            onClick={() => onContact(lawyer)}
-          >
-            Contact Now
-          </Button>
-          <Button 
-            variant="outline" 
-            className="border-[#9333EA]/20 text-purple-400 hover:bg-white/5 transition-all duration-300"
-            onClick={() => window.open(lawyer.profile_url, '_blank')}
-          >
-            View Profile
-          </Button>
+        const response = await apiService.getLawyerDeatilsbyLawyerId(lawyerId);
+        if (response?.lawyer) {
+          setLawyerDetails(response.lawyer);
+        } else {
+          throw new Error('Invalid response data');
+        }
+      } catch (err) {
+        console.error('Error fetching lawyer details:', err);
+        setError(err.message || 'Unable to load lawyer details');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchLawyerDetails();
+  }, [lawyerId]);
+
+  // No need to fetch additional details since we already have them
+  const renderCard = () => {
+    if (!lawyerDetails || !lawyerDetails.id) {
+      return (
+        <Card className="p-4 bg-[#1A1A2E]/90 border border-[#9333EA]/20 backdrop-blur-lg">
+          <div className="text-center text-gray-400">
+            <AlertCircle className="h-6 w-6 mx-auto mb-2 text-red-400" />
+            <p>Lawyer information unavailable</p>
+          </div>
+        </Card>
+      );
+    }
+
+    return (
+      <Card className="p-4 bg-[#1A1A2E]/90 border border-[#9333EA]/20 backdrop-blur-lg shadow-[0_0_15px_rgba(147,51,234,0.2)] hover:shadow-[0_0_30px_rgba(147,51,234,0.3)] transition-all duration-300">
+        <div className="flex items-start space-x-4">
+          <Avatar className="h-12 w-12 ring-2 ring-[#9333EA]/50">
+            <AvatarImage src={lawyerDetails.avatar} alt={lawyerDetails.name} />
+            <AvatarFallback className="bg-[#2E2E3A] text-white">
+              {lawyerDetails.name?.split(' ').map(n => n[0]).join('')}
+            </AvatarFallback>
+          </Avatar>
+          <div className="flex-1">
+            <div className="flex justify-between items-start">
+              <div>
+                <h3 className="font-bold text-white">{lawyerDetails.name}</h3>
+                <p className="text-sm text-purple-400">{lawyerDetails.specialization}</p>
+              </div>
+              <div className="flex items-center bg-[#9333EA]/10 px-2 py-1 rounded-full">
+                <Star className="h-4 w-4 text-yellow-400 fill-current" />
+                <span className="ml-1 text-sm text-purple-300">{lawyerDetails.rating}/5</span>
+              </div>
+            </div>
+            
+            {/* Rest of the card content remains the same */}
+            <div className="mt-3 flex items-center gap-4 text-sm text-gray-400">
+              <div className="flex items-center">
+                <div className="w-1 h-1 bg-purple-500 rounded-full mr-2"></div>
+                <span className="text-purple-300">{lawyerDetails.experience} Years Experience</span>
+              </div>
+              <div className="flex items-center">
+                <div className="w-1 h-1 bg-purple-500 rounded-full mr-2"></div>
+                <span className="text-purple-300">{lawyerDetails.location}</span>
+              </div>
+            </div>
+
+            <p className="text-sm text-gray-300 mt-3 leading-relaxed">
+              Specialized in {lawyerDetails.specialization?.toLowerCase()} law with extensive experience in handling complex cases.
+            </p>
+
+            <div className="mt-4 flex gap-2">
+              <Button 
+                className="flex-1 bg-gradient-to-r from-[#9333EA] to-[#7E22CE] hover:opacity-90 transition-all duration-300 shadow-lg shadow-purple-500/20"
+                onClick={() => onContact(lawyerDetails)}
+              >
+                Contact Now
+              </Button>
+              <Button 
+                variant="outline" 
+                className="border-[#9333EA]/20 text-purple-400 hover:bg-white/5 transition-all duration-300"
+                onClick={() => window.open(lawyerDetails.profile_url, '_blank')}
+              >
+                View Profile
+              </Button>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-  </Card>
-);
+      </Card>
+    );
+  };
+
+  return renderCard();
+};
 
 const FormattedMessage = ({ content }) => {
   return (
@@ -489,6 +527,8 @@ export function ChatbotPage() {
   const [isTyping, setIsTyping] = useState(false);
   const [inputFocused, setInputFocused] = useState(false);
   const [showScrollButton, setShowScrollButton] = useState(false);
+  const [editingSessionId, setEditingSessionId] = useState(null);
+  const [editingTitle, setEditingTitle] = useState("");
 
   // Updated scrollToBottom to target the correct container and scroll instantly
   const scrollToBottom = () => {
@@ -601,7 +641,9 @@ export function ChatbotPage() {
         text: response.answer,
         sender: "ai",
         references: response.references || [],
-        lawyers: recommendedLawyers // Add transformed lawyer recommendations
+        lawyers: Array.isArray(response.recommended_lawyers) 
+        ? response.recommended_lawyers.map(id => typeof id === 'object' ? id.LawyerId : id)
+        : []
       };
 
       await simulateResponse(response.answer);
@@ -731,6 +773,46 @@ export function ChatbotPage() {
     setReferences([]);
   };
 
+  const handleEditSession = (session) => {
+    setEditingSessionId(session.id);
+    setEditingTitle(session.title);
+  };
+
+  const handleSaveEdit = async (sessionId) => {
+    try {
+      await apiService.updateChatTitle(sessionId, editingTitle);
+      // Update the session history
+      setSessionHistory(prevHistory =>
+        prevHistory.map(session =>
+          session.id === sessionId
+            ? { ...session, title: editingTitle }
+            : session
+        )
+      );
+      setEditingSessionId(null);
+    } catch (error) {
+      console.error("Failed to update chat title:", error);
+    }
+  };
+
+  const handleDeleteSession = async (sessionId) => {
+    if (window.confirm("Are you sure you want to delete this chat?")) {
+      try {
+        await apiService.deleteChat(sessionId);
+        setSessionHistory(prevHistory =>
+          prevHistory.filter(session => session.id !== sessionId)
+        );
+        
+        // If the deleted session is the current one, start a new chat
+        if (searchParams.get('session') === sessionId) {
+          handleNewChat();
+        }
+      } catch (error) {
+        console.error("Failed to delete chat:", error);
+      }
+    }
+  };
+
   return (
     <div className="flex h-screen overflow-hidden bg-[#030614]">
       {/* Sidebar with toggle button inside */}
@@ -782,16 +864,80 @@ export function ChatbotPage() {
                   {sessionHistory.map((session) => (
                     <div
                       key={session.id}
-                      onClick={() => loadPreviousSession(session)}
                       className="p-2 hover:bg-white/5 rounded-lg cursor-pointer border border-transparent 
-                        hover:border-[#9333EA]/20 transition-all duration-300"
+                        hover:border-[#9333EA]/20 transition-all duration-300 group"
                     >
-                      <h3 className="font-medium text-white/90 truncate">
-                        {isSidebarOpen && session.title}
-                      </h3>
-                      <p className="text-sm text-gray-400 truncate">
-                        {isSidebarOpen && session.date}
-                      </p>
+                      <div className="flex items-start justify-between">
+                        <div className="flex-1 min-w-0">
+                          {editingSessionId === session.id ? (
+                            <div className="flex items-center gap-2">
+                              <Input
+                                type="text"
+                                value={editingTitle}
+                                onChange={(e) => setEditingTitle(e.target.value)}
+                                className="h-7 bg-[#2E2E3A] border-[#9333EA]/20 text-white"
+                                onKeyPress={(e) => {
+                                  if (e.key === 'Enter') {
+                                    handleSaveEdit(session.id);
+                                  }
+                                }}
+                                autoFocus
+                              />
+                              <Button
+                                size="sm"
+                                variant="outline"
+                                onClick={() => handleSaveEdit(session.id)}
+                                className="h-7 px-2 border-[#9333EA]/20 text-purple-400"
+                              >
+                                Save
+                              </Button>
+                              <Button
+                                size="sm"
+                                variant="outline"
+                                onClick={() => setEditingSessionId(null)}
+                                className="h-7 px-2 border-[#9333EA]/20 text-purple-400"
+                              >
+                                Cancel
+                              </Button>
+                            </div>
+                          ) : (
+                            <>
+                              <h3 className="font-medium text-white/90 truncate">
+                                {isSidebarOpen && session.title}
+                              </h3>
+                              <p className="text-sm text-gray-400 truncate">
+                                {isSidebarOpen && session.date}
+                              </p>
+                            </>
+                          )}
+                        </div>
+                        {isSidebarOpen && !editingSessionId && (
+                          <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <Button
+                              size="sm"
+                              variant="ghost"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleEditSession(session);
+                              }}
+                              className="h-7 w-7 p-0 hover:bg-white/5 text-gray-400 hover:text-purple-400"
+                            >
+                              <Edit2 className="h-4 w-4" />
+                            </Button>
+                            <Button
+                              size="sm"
+                              variant="ghost"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleDeleteSession(session.id);
+                              }}
+                              className="h-7 w-7 p-0 hover:bg-white/5 text-gray-400 hover:text-red-400"
+                            >
+                              <Trash2 className="h-4 w-4" />
+                            </Button>
+                          </div>
+                        )}
+                      </div>
                     </div>
                   ))}
                 </div>
@@ -913,13 +1059,17 @@ export function ChatbotPage() {
                       {message.lawyers && message.lawyers.length > 0 && (
                         <div className="ml-12 mb-4 space-y-2">
                           <h4 className="text-white/90 text-sm font-medium">Recommended Lawyers:</h4>
-                          {message.lawyers.map((lawyer, idx) => (
-                            <LawyerRecommendationCard 
-                              key={idx}
-                              lawyer={lawyer}
-                              onContact={handleContact}
-                            />
-                          ))}
+                          {message.lawyers.map((lawyerId, idx) => {
+                            // Ensure lawyerId is a number
+                            const id = typeof lawyerId === 'object' ? lawyerId.LawyerId : lawyerId;
+                            return (
+                              <LawyerRecommendationCard 
+                                key={`${id}-${idx}`}
+                                lawyerId={id}
+                                onContact={handleContact}
+                              />
+                            );
+                          })}
                         </div>
                       )}
                     </div>

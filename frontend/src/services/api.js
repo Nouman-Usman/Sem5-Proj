@@ -81,7 +81,7 @@ export const apiService = {
       console.error('Failed to fetch session messages:', error.message);
       return null;
     }
-  
+
   },
 
   async askQuestion(question, sessionId = null) {
@@ -90,9 +90,37 @@ export const apiService = {
         question,
         session_id: sessionId
       });
+      console.log(response.data);
       return response.data;
     } catch (error) {
       console.error('Error asking question:', error);
+      throw error;
+    }
+  },
+
+  // Update the lawyer details fetch function
+  async getLawyerDeatilsbyLawyerId(lawyerId) {
+    try {
+      // Validate lawyerId
+      if (!lawyerId) {
+        throw new Error('Invalid lawyer ID');
+      }
+
+      // Ensure lawyerId is a number
+      const id = typeof lawyerId === 'object' ? lawyerId.LawyerId : parseInt(lawyerId);
+      if (isNaN(id)) {
+        throw new Error('Lawyer ID must be a valid number');
+      }
+
+      const response = await api.get(`/getlawyer/${id}`);
+      
+      if (!response.data || !response.data.lawyer) {
+        throw new Error('Invalid response format');
+      }
+
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching lawyer details:', error);
       throw error;
     }
   },
@@ -204,7 +232,7 @@ export const apiService = {
       return response.data;
     } catch (error) {
       console.error('Failed to create lawyer profile:', error.message);
-      return null; 
+      return null;
     }
 
   },
@@ -234,7 +262,39 @@ export const apiService = {
   async checkHealth() {
     const response = await api.get('/health');
     return response.data;
-  }
+  },
+
+  updateChatTitle: async (sessionId, newTitle) => {
+    const response = await fetch(`${API_BASE_URL}/chat/update-title/${sessionId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${getToken()}`
+      },
+      body: JSON.stringify({ title: newTitle })
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to update chat title');
+    }
+
+    return response.json();
+  },
+
+  deleteChat: async (sessionId) => {
+    const response = await fetch(`${API_BASE_URL}/chat/delete/${sessionId}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${getToken()}`
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to delete chat');
+    }
+
+    return response.json();
+  },
 };
 
 // Add this to your fetchPDFAsBlob function
@@ -245,7 +305,7 @@ const fetchPDFAsBlob = async (url) => {
     }
 
     const proxyUrl = `${apiService.API_BASE_URL}/proxy-pdf?url=${encodeURIComponent(url)}`;
-    
+
     const response = await fetch(proxyUrl, {
       method: 'GET',
       headers: {
@@ -273,8 +333,8 @@ const fetchPDFAsBlob = async (url) => {
   } catch (error) {
     console.error('Error fetching PDF:', error);
     throw new Error(
-      isGovtUrl(url) 
-        ? 'Government website access restricted. Please try opening in browser.' 
+      isGovtUrl(url)
+        ? 'Government website access restricted. Please try opening in browser.'
         : error.message
     );
   }

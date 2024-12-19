@@ -384,3 +384,616 @@ To address the issue of rape cases in Pakistan, various efforts have been made, 
 ## Conclusion
 The current status of rape cases in Pakistan highlights the need for continued efforts to address the issue. This includes raising awareness, strengthening legal frameworks, and providing support services for victims.
 2024-12-19 00:40:52,984 - app - INFO - Successfully generated response for user 6 in session 44
+2024-12-19 13:37:36,023 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-19 13:38:36,139 - app - INFO - Initializing RAG agent...
+2024-12-19 13:38:36,208 - pinecone_plugin_interface.logging - INFO - Discovering subpackages in _NamespacePath(['C:\\Users\\Nouma\\OneDrive\\Desktop\\GenAi x Xavour\\ApnaWaqeel\\venv\\Lib\\site-packages\\pinecone_plugins'])
+2024-12-19 13:38:36,214 - pinecone_plugin_interface.logging - INFO - Looking for plugins in pinecone_plugins.inference
+2024-12-19 13:38:36,472 - pinecone_plugin_interface.logging - INFO - Installing plugin inference into Pinecone
+2024-12-19 13:38:46,363 - datasets - INFO - PyTorch version 2.4.1 available.
+2024-12-19 13:38:49,816 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2024-12-19 13:38:49,817 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2024-12-19 13:39:10,184 - app - INFO - RAG agent initialized successfully
+2024-12-19 13:39:10,204 - app - INFO - Loaded existing session 41
+2024-12-19 13:39:12,005 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 13:39:12,679 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 13:39:12,703 - root - INFO - Sentiment: Criminal
+2024-12-19 13:39:41,749 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 13:39:42,523 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 13:39:42,991 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 13:39:43,619 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 13:39:50,709 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 13:39:52,186 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 13:39:55,179 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 13:39:56,024 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 13:39:56,537 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 13:39:56,855 - root - INFO - Result: # Finding a Reputable Lawyer for Rape Cases in Pakistan
+
+## Understanding the Importance of Expertise in Rape Law
+
+When seeking legal assistance for rape cases, it is crucial to find a lawyer who has extensive experience in this specific field. This is because rape laws can be complex and nuanced, and a lawyer with a deep understanding of these laws can provide the best possible representation.
+
+## Key Qualities to Look for in a Rape Lawyer
+
+1. **Experience in Rape Law**: Ensure that the lawyer has a proven track record of handling rape cases successfully. Ask about their past experiences and the outcomes of these cases.
+2. **Knowledge of Pakistani Laws**: The lawyer should be well-versed with the legal framework of Pakistan, particularly the laws related to rape and sexual assault.
+3. **Sensitivity and Empathy**: Rape cases can be emotionally challenging for victims. It is essential that the lawyer is sensitive and empathetic towards the victim's situation.
+4. **Confidentiality**: Ensure that the lawyer respects the victim's privacy and maintains confidentiality throughout the legal process.
+
+## How to Find a Reputable Rape Lawyer in Pakistan
+
+1. **Word of Mouth**: Ask for recommendations from trusted friends, family members, or professionals who have dealt with similar cases.
+2. **Online Research**: Look for lawyers who specialize in rape cases and have a good reputation online. Check their websites, reviews, and testimonials from previous clients.
+3. **Legal Associations**: Contact local legal associations or bar councils in Pakistan to find experienced rape lawyers in your area.
+4. **Free Consultation**: Many lawyers offer a free initial consultation. Use this opportunity to assess their expertise, communication style, and how comfortable you feel discussing your case with them.
+
+## Important Laws and Sections in Pakistan Regarding Rape
+
+1. **Section 375 of the Pakistan Penal Code (PPC)**: Defines rape and its punishment.
+2. **Section 376 of the PPC**: Deals with punishment for rape.
+3. **Criminal Law Amendment Act, 2016**: Also known as the Anti-Rape Bill, it aims to expedite rape trials and increase punishment for offenders.
+
+Remember, finding the right lawyer can significantly impact the outcome of your case. Take your time, do thorough research, and don't hesitate to ask questions during your initial consultations.
+2024-12-19 13:39:57,288 - app - INFO - Successfully generated response for user 1 in session 41
+2024-12-19 13:40:43,112 - app - ERROR - Exception on /api/chat/start [POST]
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\flask\app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\flask\app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\flask_cors\extension.py", line 194, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+                                                ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\flask_jwt_extended\view_decorators.py", line 170, in decorator
+    return current_app.ensure_sync(fn)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 256, in start_chat
+    chat_id = db.create_chat_session(initiator_id, recipient_id)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\database.py", line 109, in create_chat_session
+    cursor.execute(query, (initiator_id, recipient_id))
+pyodbc.ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid object name 'ChatSessions'. (208) (SQLExecDirectW); [42S02] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Statement(s) could not be prepared. (8180)")
+2024-12-19 13:40:43,762 - app - ERROR - Exception on /api/chat/start [POST]
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\flask\app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\flask\app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\flask_cors\extension.py", line 194, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+                                                ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\flask_jwt_extended\view_decorators.py", line 170, in decorator
+    return current_app.ensure_sync(fn)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 256, in start_chat
+    chat_id = db.create_chat_session(initiator_id, recipient_id)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\database.py", line 109, in create_chat_session
+    cursor.execute(query, (initiator_id, recipient_id))
+pyodbc.ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid object name 'ChatSessions'. (208) (SQLExecDirectW); [42S02] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Statement(s) could not be prepared. (8180)")
+2024-12-19 13:40:46,223 - app - ERROR - Exception on /api/chat/start [POST]
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\flask\app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\flask\app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\flask_cors\extension.py", line 194, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+                                                ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\flask_jwt_extended\view_decorators.py", line 170, in decorator
+    return current_app.ensure_sync(fn)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 256, in start_chat
+    chat_id = db.create_chat_session(initiator_id, recipient_id)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\database.py", line 109, in create_chat_session
+    cursor.execute(query, (initiator_id, recipient_id))
+pyodbc.ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid object name 'ChatSessions'. (208) (SQLExecDirectW); [42S02] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Statement(s) could not be prepared. (8180)")
+2024-12-19 13:40:46,318 - app - ERROR - Exception on /api/chat/start [POST]
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\flask\app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\flask\app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\flask_cors\extension.py", line 194, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+                                                ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\flask_jwt_extended\view_decorators.py", line 170, in decorator
+    return current_app.ensure_sync(fn)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 256, in start_chat
+    chat_id = db.create_chat_session(initiator_id, recipient_id)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\database.py", line 109, in create_chat_session
+    cursor.execute(query, (initiator_id, recipient_id))
+pyodbc.ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid object name 'ChatSessions'. (208) (SQLExecDirectW); [42S02] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Statement(s) could not be prepared. (8180)")
+2024-12-19 13:40:46,453 - app - ERROR - Exception on /api/chat/start [POST]
+Traceback (most recent call last):
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\flask\app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\flask\app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\flask_cors\extension.py", line 194, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+                                                ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\ApnaWaqeel\venv\Lib\site-packages\flask_jwt_extended\view_decorators.py", line 170, in decorator
+    return current_app.ensure_sync(fn)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\app.py", line 256, in start_chat
+    chat_id = db.create_chat_session(initiator_id, recipient_id)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nouma\OneDrive\Desktop\GenAi x Xavour\testing vercel\backend\database.py", line 109, in create_chat_session
+    cursor.execute(query, (initiator_id, recipient_id))
+pyodbc.ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid object name 'ChatSessions'. (208) (SQLExecDirectW); [42S02] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Statement(s) could not be prepared. (8180)")
+2024-12-19 13:45:55,377 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-19 13:45:59,965 - app - INFO - Initializing RAG agent...
+2024-12-19 13:45:59,998 - pinecone_plugin_interface.logging - INFO - Discovering subpackages in _NamespacePath(['C:\\Users\\Nouma\\OneDrive\\Desktop\\GenAi x Xavour\\ApnaWaqeel\\venv\\Lib\\site-packages\\pinecone_plugins'])
+2024-12-19 13:46:00,004 - pinecone_plugin_interface.logging - INFO - Looking for plugins in pinecone_plugins.inference
+2024-12-19 13:46:00,199 - pinecone_plugin_interface.logging - INFO - Installing plugin inference into Pinecone
+2024-12-19 13:46:09,835 - datasets - INFO - PyTorch version 2.4.1 available.
+2024-12-19 13:46:12,608 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2024-12-19 13:46:12,612 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2024-12-19 13:46:27,859 - app - INFO - RAG agent initialized successfully
+2024-12-19 13:46:27,893 - app - INFO - Loaded existing session 41
+2024-12-19 13:46:28,463 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 13:46:29,783 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 13:46:29,802 - root - INFO - Sentiment: 1. Civil
+2024-12-19 13:46:53,887 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 13:46:54,524 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 13:46:55,025 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 13:46:55,486 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 13:47:01,125 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 13:47:01,882 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 13:47:03,054 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 13:47:09,663 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 13:47:10,387 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 13:47:10,866 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 13:47:16,645 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 13:47:17,442 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 13:47:17,912 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 13:47:24,632 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 13:47:25,465 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 13:47:25,984 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 13:48:01,288 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-19 13:48:05,691 - app - INFO - Initializing RAG agent...
+2024-12-19 13:48:05,718 - pinecone_plugin_interface.logging - INFO - Discovering subpackages in _NamespacePath(['C:\\Users\\Nouma\\OneDrive\\Desktop\\GenAi x Xavour\\ApnaWaqeel\\venv\\Lib\\site-packages\\pinecone_plugins'])
+2024-12-19 13:48:05,722 - pinecone_plugin_interface.logging - INFO - Looking for plugins in pinecone_plugins.inference
+2024-12-19 13:48:05,902 - pinecone_plugin_interface.logging - INFO - Installing plugin inference into Pinecone
+2024-12-19 13:48:11,058 - datasets - INFO - PyTorch version 2.4.1 available.
+2024-12-19 13:48:12,711 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2024-12-19 13:48:12,712 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2024-12-19 13:48:24,560 - app - INFO - RAG agent initialized successfully
+2024-12-19 13:48:24,576 - app - INFO - Loaded existing session 41
+2024-12-19 13:48:25,122 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 13:48:25,616 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 13:48:25,629 - root - INFO - Sentiment: Criminal
+2024-12-19 13:48:55,441 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 13:48:56,696 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 13:48:57,225 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 13:48:57,814 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 13:49:03,864 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 13:49:04,690 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 13:49:05,199 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 13:49:05,493 - root - INFO - Result: # Recent Statistics and Trends Regarding Sexual Assault Cases in Pakistan
+
+## Overview of Sexual Assault Statistics
+
+The National Sexual Violence Resource Center (NSVRC) provides comprehensive statistics on sexual assault cases in Pakistan. According to the data, 81% of women and 43% of men reported experiencing some form of sexual harassment and/or assault in their lifetime. Moreover, about one in four male victims of completed or attempted rape first experienced it between the ages of 11 and 17.
+
+## Reporting of Sexual Assault Cases
+
+The statistics also reveal that only 40% of rapes and sexual assaults were reported to police in 2017, and this number decreased to about 25% in 2018. This indicates a significant underreporting of sexual assault cases in Pakistan.
+
+## Types of Sexual Abuse Offenders
+
+The data further highlights the primary sentencing guideline for sexual abuse offenders in FY 2021. The most common offenses include:
+
+- Production of Child Pornography: 49.2%
+- Travel for Prohibited Sexual Conduct: 31.7%
+- Rape: 10.1%
+- Statutory Rape: 3.7%
+- Abusive Sexual Contact: 2.5%
+- Other: 2.8%
+
+## Annual Victimisation Trends
+
+The data also provides an analysis of annual victimisation trends from 1992 through present. This includes a comparison of risk among different subgroups, including males and females, and college students.
+
+## Key Uses for Sexual Victimization Data
+
+The data can be used for various purposes, such as:
+
+- Annual rates and counts of rape and sexual assault victims
+- Annual rates and counts of rape and sexual assault victimisations
+- Analysis of annual victimisation trends from 1992 through present
+- Comparison of risk among different subgroups, including males and females, and college students
+
+## Legal Framework in Pakistan
+
+In Pakistan, sexual assault is criminalised under various laws, including the Pakistan Penal Code (PPC) and the Criminal Law Amendment Act, 2016. The PPC defines rape as an act of sexual assault that involves non-consensual sexual penetration of the victim's body. The Criminal Law Amendment Act, 2016, introduced stricter punishments for sexual offenders, including life imprisonment and death penalty in certain cases.
+
+## Conclusion
+
+The recent statistics and trends regarding sexual assault cases in Pakistan indicate a high prevalence of sexual violence and underreporting of such cases. It is essential to address these issues through awareness campaigns, strengthening of legal frameworks, and ensuring access to justice for victims of sexual assault.
+2024-12-19 13:49:06,115 - app - ERROR - Error generating response: Object of type Decimal is not JSON serializable
+2024-12-19 14:14:48,734 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-19 14:15:31,082 - app - INFO - Initializing RAG agent...
+2024-12-19 14:15:31,114 - pinecone_plugin_interface.logging - INFO - Discovering subpackages in _NamespacePath(['C:\\Users\\Nouma\\OneDrive\\Desktop\\GenAi x Xavour\\ApnaWaqeel\\venv\\Lib\\site-packages\\pinecone_plugins'])
+2024-12-19 14:15:31,121 - pinecone_plugin_interface.logging - INFO - Looking for plugins in pinecone_plugins.inference
+2024-12-19 14:15:31,356 - pinecone_plugin_interface.logging - INFO - Installing plugin inference into Pinecone
+2024-12-19 14:15:40,678 - datasets - INFO - PyTorch version 2.4.1 available.
+2024-12-19 14:15:44,782 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2024-12-19 14:15:44,784 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2024-12-19 14:16:09,120 - app - INFO - RAG agent initialized successfully
+2024-12-19 14:16:09,149 - app - INFO - Loaded existing session 41
+2024-12-19 14:16:10,016 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 14:16:10,625 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 14:16:10,648 - root - INFO - Sentiment: Constitutional
+2024-12-19 14:16:47,099 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 14:16:47,586 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 14:16:48,379 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 14:16:49,182 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 14:16:58,631 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 14:16:59,660 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 14:17:00,281 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 14:17:00,615 - root - INFO - Result: # Understanding the Concept of Law and Its Significance in Society
+
+## Definition of Law
+
+Law is a system of rules and regulations established by a governing authority to regulate behavior, maintain order, and ensure justice within a society. It is a multifaceted concept that is foundational to the functioning of societies and the governance of human behavior. The legal meaning of law encompasses various aspects, including positive law, natural law, legal realism, and cultural perspectives.
+
+## Significance of Law in Society
+
+Law plays an indispensable role in maintaining order, promoting justice, and safeguarding individual and collective rights. It governs interactions, resolves disputes, and upholds justice. The significance of law in society can be understood through the following points:
+
+* **Order and Stability**: Law provides a framework for order and stability in society by establishing clear rules and consequences for non-compliance.
+* **Justice and Fairness**: Law ensures that justice is upheld and fairness is maintained by providing equal opportunities and protection to all individuals.
+* **Protection of Rights**: Law safeguards individual and collective rights, including fundamental rights such as freedom of speech, religion, and assembly.
+* **Resolution of Disputes**: Law provides a mechanism for resolving disputes peacefully and efficiently, reducing the likelihood of violence and conflict.
+* **Promotion of Economic Growth**: Law fosters economic growth by providing a stable and predictable environment for businesses to operate in.
+* **Social Cohesion**: Law promotes social cohesion by establishing common values and norms that bind society together.
+
+## Technological Advancements and the Evolution of Law
+
+Technological advancements have given rise to new legal fields such as:
+
+* **Cyberlaw**: Covers crimes committed online or through technology-based platforms.
+* **Data Privacy Laws**: Safeguard sensitive information collected by companies.
+* **E-commerce Laws**: Govern online transactions.
+* **Social Media Law**: Deals with legal issues arising from the use of social media platforms.
+
+These new legal fields highlight the evolving nature of law, which adapts to address emerging challenges and issues in society.
+
+## Conclusion
+
+In conclusion, law is a vital component of society, providing a framework for order, justice, and fairness. Its significance extends beyond governing behavior and resolving disputes, as it also promotes economic growth, social cohesion, and the protection of rights. As society continues to evolve, so does the concept of law, adapting to address new challenges and issues.
+2024-12-19 14:17:00,993 - app - INFO - Successfully generated response for user 1 in session 41
+2024-12-19 14:17:05,893 - app - INFO - Loaded existing session 41
+2024-12-19 14:17:06,487 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 14:17:06,947 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 14:17:06,971 - root - INFO - Sentiment: Criminal
+2024-12-19 14:17:13,137 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 14:17:13,743 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 14:17:14,355 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 14:17:14,986 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 14:17:20,999 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 14:17:21,840 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 14:17:22,372 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 14:17:22,772 - root - INFO - Result: # Recent Statistics and Trends in Rape Cases
+
+## Global Perspective
+
+- **1 in 8 girls and women** alive today experienced rape or sexual assault before the age of 18, according to UNICEF estimates released in 2024. This translates to more than 370 million girls and women worldwide.
+
+## National Perspective
+
+- **81% of women and 43% of men** reported experiencing some form of sexual harassment and/or assault in their lifetime.
+- **1 in 4 male victims of completed or attempted rape** first experienced it between the ages of 11 and 17.
+- **40% of rapes and sexual assaults** were reported to police in 2017, but only about 25% were reported to police in 2018.
+- **Almost one in four undergraduate women** experienced sexual assault or misconduct at 33 of the nation's major universities.
+
+## Effects of Rape
+
+- **30% of women** who experience rape report PTSD symptoms 9 months after the rape.
+- **33% of women** contemplate suicide.
+- **13% of women** attempt suicide.
+
+## Perpetrators of Rape
+
+- **8 out of 10 rape cases** involve a perpetrator known to the victim.
+- **About half of all female victims of rape** reported being raped by an intimate partner.
+2024-12-19 14:17:23,223 - app - INFO - Successfully generated response for user 1 in session 41
+2024-12-19 14:17:24,689 - app - ERROR - Error fetching lawyer: ('22018', "[22018] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Conversion failed when converting the nvarchar value 'undefined' to data type int. (245) (SQLExecDirectW)")
+2024-12-19 14:17:24,704 - app - ERROR - Error fetching lawyer: ('22018', "[22018] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Conversion failed when converting the nvarchar value 'undefined' to data type int. (245) (SQLExecDirectW)")
+2024-12-19 14:17:24,733 - app - ERROR - Error fetching lawyer: ('22018', "[22018] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Conversion failed when converting the nvarchar value 'undefined' to data type int. (245) (SQLExecDirectW)")
+2024-12-19 14:17:24,754 - app - ERROR - Error fetching lawyer: ('22018', "[22018] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Conversion failed when converting the nvarchar value 'undefined' to data type int. (245) (SQLExecDirectW)")
+2024-12-19 14:30:57,324 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-19 14:32:35,639 - app - INFO - Created new session 45 for user 1
+2024-12-19 14:32:35,641 - app - INFO - Initializing RAG agent...
+2024-12-19 14:32:35,676 - pinecone_plugin_interface.logging - INFO - Discovering subpackages in _NamespacePath(['C:\\Users\\Nouma\\OneDrive\\Desktop\\GenAi x Xavour\\ApnaWaqeel\\venv\\Lib\\site-packages\\pinecone_plugins'])
+2024-12-19 14:32:35,686 - pinecone_plugin_interface.logging - INFO - Looking for plugins in pinecone_plugins.inference
+2024-12-19 14:32:35,885 - pinecone_plugin_interface.logging - INFO - Installing plugin inference into Pinecone
+2024-12-19 14:32:46,404 - datasets - INFO - PyTorch version 2.4.1 available.
+2024-12-19 14:32:52,811 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2024-12-19 14:32:52,811 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2024-12-19 14:33:19,381 - app - INFO - RAG agent initialized successfully
+2024-12-19 14:33:19,382 - app - INFO - Using new session 45
+2024-12-19 14:33:19,983 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 14:33:20,587 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 14:33:20,604 - root - INFO - Sentiment: Constitutional
+2024-12-19 14:33:50,836 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 14:33:51,335 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 14:33:52,521 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 14:33:53,054 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 14:33:59,640 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 14:34:00,369 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 14:34:00,877 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 14:34:01,101 - root - INFO - Result: # Definition of Law and Its Significance in Society
+
+## Introduction
+
+Law is a system of rules created and enforced by social or governmental institutions to regulate behaviour, maintain order, and establish norms within a society. It is a multifaceted concept that is foundational to the functioning of societies and the governance of human behaviour.
+
+## Definition of Law
+
+Law can be defined as a set of rules and guidelines that are enforced through social institutions to govern behaviour and resolve disputes. It is a system that aims to provide justice, maintain order, protect rights and liberties, and promote social welfare. The legal meaning of law is broad and encompasses not only the black letter of legal statutes or court decisions but also norms, rules, regulations, and what people think the law is or what they experience as law.
+
+## Significance of Law in Society
+
+Law plays a crucial role in maintaining social order and resolving disputes in a peaceful manner. It provides a framework for governing behaviour and ensures that individuals are treated fairly and equally. The significance of law in society can be understood through the following points:
+
+* **Maintaining Social Order**: Law helps to maintain social order by providing a set of rules that everyone must follow. This helps to prevent chaos and ensure that society functions smoothly.
+* **Resolving Disputes**: Law provides a mechanism for resolving disputes peacefully. It helps to settle conflicts between individuals, businesses, and the government, thereby promoting harmony and stability in society.
+* **Protecting Rights and Liberties**: Law protects the rights and liberties of individuals by providing them with certain freedoms and entitlements. It ensures that individuals are treated fairly and equally, regardless of their race, gender, religion, or social status.
+* **Promoting Social Welfare**: Law promotes social welfare by regulating behaviour and ensuring that individuals act in a manner that is beneficial to society as a whole. It helps to protect the environment, promote public health, and ensure that businesses operate in a fair and ethical manner.
+* **Providing Justice**: Law provides justice by punishing those who violate the rules and rewarding those who follow them. It helps to ensure that individuals are held accountable for their actions and that they are treated fairly and equally under the law.
+
+## Conclusion
+
+In conclusion, law is a vital component of society that helps to maintain social order, resolve disputes, protect rights and liberties, promote social welfare, and provide justice. It is a system that aims to ensure that individuals are treated fairly and equally, and that society functions smoothly and efficiently.
+2024-12-19 14:34:01,489 - app - INFO - Successfully generated response for user 1 in session 45
+2024-12-19 14:34:31,578 - app - INFO - Loaded existing session 45
+2024-12-19 14:34:32,188 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 14:34:32,624 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 14:34:32,650 - root - INFO - Sentiment: Criminal
+2024-12-19 14:34:41,292 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 14:34:41,818 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 14:34:42,618 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 14:34:43,209 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 14:34:48,992 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 14:34:49,984 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 14:34:50,696 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 14:34:51,697 - root - INFO - Result: # Recent Statistics and Trends Regarding Rape Cases in Pakistan
+
+## Overview of Rape Cases in Pakistan
+
+In the first six months of 2023, Pakistan witnessed a harrowing increase in child sexual abuse cases, with an average of 12 children sexually abused daily, totaling 2,227 cases. This alarming trend highlights the need for immediate action to address the issue of sexual violence in the country.
+
+## Annual Rape Case Statistics
+
+The following statistics provide a breakdown of rape and gang-rape cases registered in Pakistan over the past few years:
+
+- **2019:** 4,637 rape/gang-rape cases
+- **2020:** 4,133 rape/gang-rape cases
+- **2021:** 2,390 rape/gang-rape cases
+
+## Murder of Women in Pakistan
+
+In addition to the rising number of rape cases, there has also been a significant number of women murdered in Pakistan over the past few years:
+
+- **2019:** 1,578 women murdered
+- **2020:** 1,569 women murdered
+- **2021:** 840 women murdered
+
+## Sentencing Guidelines for Sexual Abuse Offenders
+
+The following data provides information on the primary sentencing guidelines for sexual abuse offenders in Pakistan for FY 2021:
+
+- **Production of Child Pornography:** 49.2%
+- **Travel for Prohibited Sexual Conduct:** 31.7%
+- **Rape:** 10.1%
+- **Statutory Rape:** 3.7%
+- **Abusive Sexual Contact:** 2.5%
+- **Other:** 2.8%
+
+The average sentence for offenders convicted of criminal sexual abuse (rape) was 190 months. Of these offenders, 20.8% were convicted of an offense carrying a mandatory minimum penalty, with an average sentence of 297 months.
+
+## Conclusion
+
+The recent statistics and trends regarding rape cases in Pakistan highlight the urgent need for effective measures to prevent and address sexual violence. It is crucial for the government, law enforcement agencies, and civil society to work together to ensure justice for victims and to create a safer environment for all individuals, particularly women and children.
+2024-12-19 14:34:53,570 - app - INFO - Successfully generated response for user 1 in session 45
+2024-12-19 14:42:29,518 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-19 14:42:48,664 - app - INFO - Initializing RAG agent...
+2024-12-19 14:42:48,695 - pinecone_plugin_interface.logging - INFO - Discovering subpackages in _NamespacePath(['C:\\Users\\Nouma\\OneDrive\\Desktop\\GenAi x Xavour\\ApnaWaqeel\\venv\\Lib\\site-packages\\pinecone_plugins'])
+2024-12-19 14:42:48,703 - pinecone_plugin_interface.logging - INFO - Looking for plugins in pinecone_plugins.inference
+2024-12-19 14:42:48,876 - pinecone_plugin_interface.logging - INFO - Installing plugin inference into Pinecone
+2024-12-19 14:42:55,169 - datasets - INFO - PyTorch version 2.4.1 available.
+2024-12-19 14:42:56,737 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2024-12-19 14:42:56,738 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2024-12-19 14:43:10,329 - app - INFO - RAG agent initialized successfully
+2024-12-19 14:43:10,351 - app - INFO - Loaded existing session 45
+2024-12-19 14:43:11,177 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 14:43:12,011 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 14:43:12,020 - root - INFO - Sentiment: Criminal
+2024-12-19 14:43:36,176 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 14:43:36,718 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 14:43:37,240 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 14:43:37,762 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 14:43:45,148 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 14:43:45,933 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 14:43:46,590 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 14:43:46,874 - root - INFO - Result: # Recent Statistics and Trends Regarding Rape Cases in Pakistan
+
+## Introduction
+
+Rape is a significant problem in Pakistan, with a rising trend in the number of cases over the past decade. This section provides an overview of the recent statistics and trends regarding rape cases in Pakistan.
+
+## Statistics
+
+According to a report published in 2022 by Pakistan's Human Rights Commission (HRCP), there were 5279 and 1084 registered cases of rape and child sexual abuse, respectively, in Pakistan in 2021. The total number of rape cases has increased by 200% over the past decade.
+
+In 2018, there were 4,456 cases of rape reported in the media. This number increased to 4,573 cases in 2019, dipped to 4,478 cases in 2020, and then rose to 5,169 cases in 2021. In 2022, the media reported 305 rape cases across the country.
+
+## Trends
+
+The trend in rape cases in Pakistan shows a significant increase in the number of cases reported over the years. This increase could be attributed to various factors such as improved reporting mechanisms, increased awareness about the issue, and a rise in the incidence of the crime itself.
+
+## Murder of Women
+
+In addition to rape cases, there has also been a significant number of women murdered in Pakistan. In 2019, there were 1,578 women murdered, which decreased to 1,569 in 2020 and further decreased to 840 in 2021.
+
+## Legal Framework
+
+The legal framework in Pakistan for dealing with rape cases includes the **Criminal Law Amendment Act of 2016**, which introduced stricter punishments for rapists, including the death penalty. The **Protection of Women Against Harassment at the Workplace Act of 2010** also provides protection against sexual harassment at work.
+
+## Conclusion
+
+In conclusion, the recent statistics and trends regarding rape cases in Pakistan show a significant increase in the number of cases reported over the years. The legal framework in Pakistan has been strengthened to deal with these cases, but more needs to be done to address the root causes of this crime and ensure justice for victims.
+2024-12-19 14:43:47,630 - app - INFO - Successfully generated response for user 1 in session 45
+2024-12-19 15:18:06,751 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-19 15:19:44,175 - app - INFO - Initializing RAG agent...
+2024-12-19 15:19:44,202 - pinecone_plugin_interface.logging - INFO - Discovering subpackages in _NamespacePath(['C:\\Users\\Nouma\\OneDrive\\Desktop\\GenAi x Xavour\\ApnaWaqeel\\venv\\Lib\\site-packages\\pinecone_plugins'])
+2024-12-19 15:19:44,207 - pinecone_plugin_interface.logging - INFO - Looking for plugins in pinecone_plugins.inference
+2024-12-19 15:19:44,327 - pinecone_plugin_interface.logging - INFO - Installing plugin inference into Pinecone
+2024-12-19 15:19:52,113 - datasets - INFO - PyTorch version 2.4.1 available.
+2024-12-19 15:19:55,930 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2024-12-19 15:19:55,932 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2024-12-19 15:20:21,257 - app - INFO - RAG agent initialized successfully
+2024-12-19 15:20:21,372 - app - INFO - Loaded existing session 45
+2024-12-19 15:20:22,349 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 15:20:23,683 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 15:20:23,701 - root - INFO - Sentiment: Criminal
+2024-12-19 15:20:52,657 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 15:20:53,189 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 15:20:53,657 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 15:20:54,153 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 15:21:01,557 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 15:21:02,315 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 15:21:03,510 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 15:21:03,837 - root - INFO - Result: # Current Status of Rape Cases in Pakistan
+
+## Overview
+
+Rape cases in Pakistan have been a persistent issue, with a significant number of cases reported annually. The statistics provided in the retrieved information indicate that the situation remains grim, with a woman being raped every 45 minutes in Pakistan.
+
+## Statistics
+
+- In 2023, 6,624 rape cases were registered.
+- Faisalabad reported the highest number of cases (728), followed by Lahore (721) and Sargodha (398).
+- Additionally, 626 women were kidnapped, and 120 were killed in the name of so-called 'honour.'
+
+## Legal Response
+
+- In 2022, 44 courts heard up to 1,301 cases of sexual assault against women.
+- In 2,856 cases, the police have filed charges.
+- However, only 4% of the cases went to trial.
+- The conviction rate in rape cases remained at an abysmal 0.2 percent.
+
+## Long-term Trends
+
+- Over the last six years, there have been at least 11 rape cases reported in Pakistan every day.
+- Over 22,000 rape cases have been reported to police across the country in the last six years, according to official statistics.
+
+## Challenges in the Legal System
+
+- Pakistan tops Anti-women bias in courts among other countries.
+
+## Relevant Laws and Policies
+
+- **Criminal Law Amendment Act, 2016**: This act introduced stricter punishments for rape, including the death penalty in certain cases.
+- **Protection of Women Against Harassment at the Workplace Act, 2010**: This act aims to protect women from harassment at work and provides a framework for reporting and addressing such incidents.
+
+## Conclusion
+
+The current status of rape cases in Pakistan indicates a persistent and troubling issue. The legal system faces challenges in addressing these crimes effectively, leading to low conviction rates and a lack of justice for victims. It is essential to address these issues through legal reform and societal change to ensure that women are protected and justice is served.
+2024-12-19 15:21:05,200 - app - INFO - Successfully generated response for user 1 in session 45
+2024-12-19 15:24:25,099 - app - INFO - Loaded existing session 45
+2024-12-19 15:24:25,974 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 15:24:26,472 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 15:24:26,488 - root - INFO - Sentiment: Criminal
+2024-12-19 15:24:48,996 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 15:24:49,489 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 15:24:49,965 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 15:24:50,439 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 15:24:56,114 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 15:24:57,084 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 15:24:57,621 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-19 15:24:57,984 - root - INFO - Result: # Current Status of Rape Cases in Pakistan
+
+## Overview of Rape Cases in Pakistan
+
+Rape is a severely under-reported crime in Pakistan due to social stigma, victim blaming, and gender-insensitive environments at police stations and courts. According to official data, only 41% of rape cases are reported to the police due to social pressures and legal loopholes.
+
+## Statistics of Rape Cases in Pakistan
+
+- **2018:** 4,326 cases of rape were reported
+- **2019:** 4,377 rape cases were reported
+- **2020:** 3,887 cases of rape were reported
+- **2021:** 1,866 cases of rape were reported
+
+## Laws and Regulations Regarding Rape in Pakistan
+
+The law includes:
+- Establishment of special courts for rape cases throughout the country
+- Use of DNA testing and other scientific evidence
+- Establishment of Anti-Rape Crisis cells
+- Special Sexual Investigation Units in every district
+- Speedy trial proceedings
+- In-camera trial
+- Legal assistance to the victims
+- Distance recording of testimonies through video-conferencing
+- Re-location of victims and witnesses
+
+## Distribution of Rape Cases Across Pakistan
+
+- **Punjab:** 18,609 rape cases registered in the last six years
+- **Sindh:** 1,873 rape cases registered in the last six years
+- **Khyber Pakhtunkhwa (KP):** 1,183 rape cases registered in the last six years
+- **Balochistan:** 129 rape cases registered in the last six years
+- **Islamabad:** 210 rape cases registered in the last six years
+
+## Conclusion
+
+Rape is a significant issue in Pakistan, with thousands of cases reported each year. However, the actual number of incidents is likely much higher due to under-reporting. The government has implemented various laws and regulations to address this issue, but more needs to be done to ensure justice for victims and to prevent further incidents.
+2024-12-19 15:24:58,646 - app - INFO - Successfully generated response for user 1 in session 45
+2024-12-19 15:25:09,702 - app - ERROR - Error fetching lawyer: 'pyodbc.Row' object has no attribute 'Name'
+2024-12-19 15:25:09,718 - app - ERROR - Error fetching lawyer: 'pyodbc.Row' object has no attribute 'Name'

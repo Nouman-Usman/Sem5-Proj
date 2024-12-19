@@ -204,23 +204,23 @@ def ask_question():
                 return jsonify({"error": "Failed to generate response"}), 500
 
             # Store AI response
+
+            sentiment = result.get('Sentiment', 'neutral')
+
+            # print(sentiment)
+            lawyers = recommend_top_lawyers(sentiment)
+            lawyer_ids = [lawyer['LawyerId'] for lawyer in lawyers]
             db.create_chat_message(
                 session_id=session_id,
                 message=result['chat_response'],
                 msg_type="AI Message",
-                recommended_lawyers=result.get('recommended_lawyers', []),
+                recommended_lawyers=lawyer_ids,  # Store just the IDs
                 references=result.get('references', [])
             )
-
-            sentiment = result.get('Sentiment', 'neutral')
-            # print(sentiment)
-            lawyer = recommend_top_lawyers(sentiment)
-            # print(lawyer)
-            # breakpoint()
             response = {    
                 "answer": result['chat_response'],
                 "references": result["references"],
-                "recommended_lawyers": lawyer,
+                "recommended_lawyers": lawyer_ids,  # Return just the IDs
                 "session_id": session_id,
             }
 
@@ -543,6 +543,44 @@ def add_lawyer_profile():
 
     finally:
         logger.debug("Finished processing lawyer profile creation request")
+
+# App route for getting lawyer details by lawyer id
+@app.route('/api/getlawyer/<lawyer_id>', methods=['GET'])
+def get_lawyer_details(lawyer_id):
+    try        # Validate lawyer_id from URL parameter
+        if not lawyer_id:
+            return jsonify({"error": "No lawyer ID provided"}), 400
+            
+        # Convert and validate lawyer_id
+        try:
+            lawyer_id = int(lawyer_id)
+        except (ValueError, TypeError):
+            return jsonify({"error": "Lawyer ID must be a valid number"}), 400
+
+        # Retrieve the lawyer details from the database
+        lawyer = db.get_lawyer_by_id(lawyer_id)
+        if not lawyer:
+            return jsonify({"error": "Lawyer not found"}), 404
+            
+        # Convert lawyer object to dictionary
+        lawyer_data = {
+            "LawyerId": lawyer.LawyerId,
+            "Name": lawyer.Name,
+            "Email": lawyer.Email,
+            "Contact": lawyer.Contact,
+            "Location": lawyer.Location,
+            "Category": lawyer.Category,
+            "Experience": lawyer.Experience,
+            "Rating": float(lawyer.Rating) if lawyer.Rating else 0.0,
+            "avatar": None  # Add default avatar or handle as needed
+        }
+            
+        return jsonify({
+            "lawyer": lawyer_data
+        }), 200
+    except Exception as e:
+        logger.error(f"Error fetching lawyer: {str(e)}")
+        return jsonify({"error": "Failed to fetch lawyer"}), 500
 
 @app.route('/api/l/profile', methods=['GET'])
 @jwt_required()

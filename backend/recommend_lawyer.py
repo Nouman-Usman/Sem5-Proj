@@ -60,11 +60,8 @@ def recommend_top_lawyers(sentiment):
         if not lawyers:
             print("No lawyers found in database")
             return []
-        
-        # Pass entire lawyer object instead of just LawyerId
         scores = [(lawyer, get_recommendation_score(lawyer)) for lawyer in lawyers]
-        scores.sort(key=lambda x: x[1], reverse=True)
-        
+        scores.sort(key=lambda x: x[1], reverse=True)        
         top_lawyers = [lawyer for lawyer, _ in scores[:2]]
         for lawyer in top_lawyers:
             update_recommendation_history(lawyer)
