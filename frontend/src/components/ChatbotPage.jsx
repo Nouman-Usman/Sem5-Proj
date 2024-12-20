@@ -529,6 +529,7 @@ export function ChatbotPage() {
   const [showScrollButton, setShowScrollButton] = useState(false);
   const [editingSessionId, setEditingSessionId] = useState(null);
   const [editingTitle, setEditingTitle] = useState("");
+  const textareaRef = useRef(null);
 
   // Updated scrollToBottom to target the correct container and scroll instantly
   const scrollToBottom = () => {
@@ -593,6 +594,11 @@ export function ChatbotPage() {
   const handleSendMessage = async (e) => {
     e.preventDefault();
     if (inputMessage.trim() === "") return;
+
+    // Reset textarea height to initial state
+    if (textareaRef.current) {
+      textareaRef.current.style.height = '60px';
+    }
 
     const newUserMessage = { id: messages.length + 1, text: inputMessage, sender: "user" };
     setMessages(prev => [...prev, newUserMessage]);
@@ -1117,29 +1123,49 @@ export function ChatbotPage() {
           {/* Fixed Input Area */}
           <div className="flex-shrink-0 bg-[#1A1A2E]/90 border-t border-[#9333EA]/20 p-4">
             <div className="max-w-4xl mx-auto">
-              <form onSubmit={handleSendMessage} className="flex gap-2">
-                <div className="flex-1 bg-[#2E2E3A] rounded-lg border border-[#9333EA]/20">
-                  <Input
-                    type="text"
+              <form onSubmit={handleSendMessage} className="relative">
+                <div className="flex-1 bg-[#2E2E3A] rounded-[24px] border border-[#9333EA]/20">
+                  <textarea
+                    ref={textareaRef}
                     placeholder="Type your message here..."
                     value={inputMessage}
-                    onChange={(e) => setInputMessage(e.target.value)}
-                    className="w-full bg-transparent text-white placeholder:text-gray-400 focus:outline-none px-4 py-2"
+                    onChange={(e) => {
+                      setInputMessage(e.target.value);
+                      // Adjust height automatically
+                      e.target.style.height = '60px';
+                      e.target.style.height = `${Math.min(e.target.scrollHeight, 200)}px`;
+                    }}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' && !e.shiftKey) {
+                        e.preventDefault();
+                        handleSendMessage(e);
+                      }
+                    }}
+                    className="w-full bg-transparent text-white placeholder:text-gray-400 
+                      focus:outline-none px-6 py-4 min-h-[60px] max-h-[200px] rounded-[24px] 
+                      resize-none overflow-auto scrollbar-thin scrollbar-thumb-[#9333EA] 
+                      scrollbar-track-transparent pr-[60px]"
+                    style={{
+                      height: '60px',
+                    }}
                   />
+                  <button 
+                    type="submit"
+                    className="absolute right-2 top-1/2 -translate-y-1/2 p-3 rounded-full
+                      bg-gradient-to-r from-[#9333EA] to-[#7E22CE] hover:opacity-90 
+                      transition-all duration-300 flex items-center justify-center
+                      shadow-lg shadow-purple-500/20 hover:shadow-purple-500/40"
+                  >
+                    <Send className="h-5 w-5 text-white" />
+                  </button>
                 </div>
-                <Button 
-                  type="submit"
-                  className="bg-gradient-to-r from-[#9333EA] to-[#7E22CE] hover:opacity-90 transition-all duration-300 flex items-center px-4"
-                >
-                  <Send className="h-5 w-5 mr-2" />
-                  Send
-                </Button>
               </form>
-              <div className="text-center text-gray-400 text-sm mt-2">
-                Apna Waqeel can make mistakes. Check important info.
+              <div className="text-center text-gray-400 text-xs mt-2 flex items-center justify-center gap-2">
+                <span>Apna Waqeel can make mistakes. Check important info.</span>
               </div>
             </div>
           </div>
+
         </div>
       </div>
 
