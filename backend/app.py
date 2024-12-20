@@ -547,7 +547,7 @@ def add_lawyer_profile():
 # App route for getting lawyer details by lawyer id
 @app.route('/api/getlawyer/<lawyer_id>', methods=['GET'])
 def get_lawyer_details(lawyer_id):
-    try        # Validate lawyer_id from URL parameter
+    try:        # Validate lawyer_id from URL parameter
         if not lawyer_id:
             return jsonify({"error": "No lawyer ID provided"}), 400
             
