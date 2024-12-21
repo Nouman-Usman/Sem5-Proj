@@ -86,7 +86,7 @@ Please return only the category name that best fits the text: "{question}"
 """
         sentiment_result = self.llm.invoke(prompt)
         sentiment = sentiment_result.content.strip()
-        print(f"Sentiment: {sentiment}")
+
         return sentiment
 
     def _initialize_vectorstore(self):
@@ -281,6 +281,28 @@ Question to route: {question}
             "source": [],  # Initialize empty source list
         }
 
+    def _safe_parse_json(self, text: str) -> dict:
+        """Safely parse JSON from LLM output, handling tool calls and other formats"""
+        try:
+            # First try direct JSON parsing
+            return json.loads(text)
+        except json.JSONDecodeError:
+            try:
+                # Check for tool call format
+                if "<tool_call>" in text:
+                    # Extract JSON from tool call
+                    start = text.find("{")
+                    end = text.rfind("}") + 1
+                    if start != -1 and end != -1:
+                        json_str = text[start:end]
+                        tool_call = json.loads(json_str)
+                        # Extract score from arguments if present
+                        if "arguments" in tool_call:
+                            return {"score": "yes" if "yes" in str(tool_call).lower() else "no"}
+                return {"score": "no"}  # Default to no if parsing fails
+            except Exception:
+                return {"score": "no"}  # Default to no for any other errors
+
     def grade_documents(self, state: Dict) -> Dict:
         print("---CHECK DOCUMENT RELEVANCE TO QUESTION---")
         question = state["question"]
@@ -288,19 +310,36 @@ Question to route: {question}
         source = state["source"]
         filtered_docs = []
         web_search = "No"
+
         for d in documents:
-            score = self.retrieval_grader.invoke(
-                {"question": question, "document": d.page_content}
-            )
-            grade = score["score"]
-            if grade.lower() == "yes":
-                print("---GRADE: DOCUMENT RELEVANT---")
-                filtered_docs.append(d)
-                # filtered_metadata.append(m)
-            else:
-                print("---GRADE: DOCUMENT NOT RELEVANT---")
+            try:
+                # Skip documents with invalid content
+                if not d.page_content or d.page_content.strip().replace(" ", "").isnumeric():
+                    continue
+                    
+                response = self.retrieval_grader.invoke(
+                    {"question": question, "document": d.page_content}
+                )
+                
+                if isinstance(response, str):
+                    score = self._safe_parse_json(response)
+                else:
+                    score = response
+
+                grade = score.get("score", "no").lower()
+                
+                if grade == "yes":
+                    print("---GRADE: DOCUMENT RELEVANT---")
+                    filtered_docs.append(d)
+                else:
+                    print("---GRADE: DOCUMENT NOT RELEVANT---")
+                    web_search = "Yes"
+                    
+            except Exception as e:
+                print(f"Document grading error: {e}")
                 web_search = "Yes"
                 continue
+
         return {
             "documents": filtered_docs,
             "question": question,
@@ -377,11 +416,9 @@ Question to route: {question}
         print("---CHECK HALLUCINATIONS---")
         question = state["question"]
         documents = state["documents"]
-        source = state["source"]
         generation = state["generation"]
-        attempts = state.get("attempts", 0)  # Track retry attempts
+        attempts = state.get("attempts", 0)
 
-        # If we've tried too many times, return the result anyway
         if attempts >= 2:
             print("---MAX RETRIES REACHED, RETURNING CURRENT GENERATION---")
             return "useful"
@@ -390,28 +427,39 @@ Question to route: {question}
             score = self.hallucination_grader.invoke(
                 {"documents": documents, "generation": generation}
             )
-            grade = score["score"]
-            if grade.lower() == "yes":
+            
+            if isinstance(score, str):
+                parsed_score = self._safe_parse_json(score)
+            else:
+                parsed_score = score
+
+            grade = parsed_score.get("score", "no").lower()
+            
+            if grade == "yes":
                 print("---DECISION: GENERATION IS GROUNDED IN DOCUMENTS---")
                 score = self.answer_grader.invoke(
                     {"question": question, "generation": generation}
                 )
-                grade = score["score"]
-                if grade.lower() == "yes":
+                
+                if isinstance(score, str):
+                    parsed_score = self._safe_parse_json(score)
+                else:
+                    parsed_score = score
+                    
+                grade = parsed_score.get("score", "no").lower()
+                
+                if grade == "yes":
                     print("---DECISION: GENERATION ADDRESSES QUESTION---")
                     return "useful"
                 else:
                     print("---DECISION: GENERATION DOES NOT ADDRESS QUESTION---")
-                    if attempts < 2:
-                        return "not useful"
-                    return "useful"
+                    return "not useful" if attempts < 2 else "useful"
             else:
                 print("---DECISION: GENERATION IS NOT GROUNDED IN DOCUMENTS, RE-TRY---")
-                if attempts < 2:
-                    return "not supported"
-                return "useful"
-        except json.JSONDecodeError as e:
-            print(f"JSON decode error: {e}")
+                return "not supported" if attempts < 2 else "useful"
+                
+        except Exception as e:
+            print(f"Generation grading error: {e}")
             return "useful"  # Fall back to accepting the generation
 
     def update_query(self, state: Dict) -> Dict:
@@ -542,7 +590,6 @@ Question to route: {question}
             updated_question = updated_state["question"]
             
             sentiment = self.analyze_sentiment(updated_question)
-            logging.info(f"Sentiment: {sentiment}")
 
             app = self.build_workflow()
             inputs = {

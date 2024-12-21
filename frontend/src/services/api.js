@@ -75,13 +75,13 @@ export const apiService = {
 
   async getChatsFromSessionId(sessionId) {
     try {
-      const chats = await api.get(`/chats/${sessionId}`);
-      return chats
+      const response = await api.get(`/chats/${sessionId}`);
+      console.log("API Response:", response.data); // Debug log
+      return response;
     } catch (error) {
-      console.error('Failed to fetch session messages:', error.message);
-      return null;
+      console.error('Failed to fetch session messages:', error);
+      throw error; // Propagate error to be handled by the component
     }
-
   },
 
   async askQuestion(question, sessionId = null) {
@@ -101,23 +101,21 @@ export const apiService = {
   // Update the lawyer details fetch function
   async getLawyerDeatilsbyLawyerId(lawyerId) {
     try {
-      // Validate lawyerId
-      if (!lawyerId) {
-        throw new Error('Invalid lawyer ID');
-      }
-
+      console.log("Fetching lawyer details for ID:", lawyerId); // Debug log
+      
       // Ensure lawyerId is a number
       const id = typeof lawyerId === 'object' ? lawyerId.LawyerId : parseInt(lawyerId);
-      if (isNaN(id)) {
-        throw new Error('Lawyer ID must be a valid number');
+      if (!id || isNaN(id)) {
+        throw new Error('Invalid lawyer ID');
       }
-
+  
       const response = await api.get(`/getlawyer/${id}`);
+      console.log("Lawyer details response:", response.data); // Debug log
       
       if (!response.data || !response.data.lawyer) {
         throw new Error('Invalid response format');
       }
-
+  
       return response.data;
     } catch (error) {
       console.error('Error fetching lawyer details:', error);

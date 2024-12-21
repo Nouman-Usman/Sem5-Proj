@@ -349,11 +349,14 @@ const LawyerRecommendationCard = ({ lawyerId, onContact }) => {
         }
 
         const response = await apiService.getLawyerDeatilsbyLawyerId(lawyerId);
-        if (response?.lawyer) {
-          setLawyerDetails(response.lawyer);
-        } else {
-          throw new Error('Invalid response data');
+        
+        // Add validation for required fields
+        const lawyer = response?.lawyer;
+        if (!lawyer || !lawyer.LawyerId || !lawyer.Name) {
+          throw new Error('Invalid lawyer data received');
         }
+
+        setLawyerDetails(lawyer);
       } catch (err) {
         console.error('Error fetching lawyer details:', err);
         setError(err.message || 'Unable to load lawyer details');
@@ -365,78 +368,82 @@ const LawyerRecommendationCard = ({ lawyerId, onContact }) => {
     fetchLawyerDetails();
   }, [lawyerId]);
 
-  // No need to fetch additional details since we already have them
-  const renderCard = () => {
-    if (!lawyerDetails || !lawyerDetails.id) {
-      return (
-        <Card className="p-4 bg-[#1A1A2E]/90 border border-[#9333EA]/20 backdrop-blur-lg">
-          <div className="text-center text-gray-400">
-            <AlertCircle className="h-6 w-6 mx-auto mb-2 text-red-400" />
-            <p>Lawyer information unavailable</p>
-          </div>
-        </Card>
-      );
-    }
-
+  if (loading) {
     return (
-      <Card className="p-4 bg-[#1A1A2E]/90 border border-[#9333EA]/20 backdrop-blur-lg shadow-[0_0_15px_rgba(147,51,234,0.2)] hover:shadow-[0_0_30px_rgba(147,51,234,0.3)] transition-all duration-300">
-        <div className="flex items-start space-x-4">
-          <Avatar className="h-12 w-12 ring-2 ring-[#9333EA]/50">
-            <AvatarImage src={lawyerDetails.avatar} alt={lawyerDetails.name} />
-            <AvatarFallback className="bg-[#2E2E3A] text-white">
-              {lawyerDetails.name?.split(' ').map(n => n[0]).join('')}
-            </AvatarFallback>
-          </Avatar>
-          <div className="flex-1">
-            <div className="flex justify-between items-start">
-              <div>
-                <h3 className="font-bold text-white">{lawyerDetails.name}</h3>
-                <p className="text-sm text-purple-400">{lawyerDetails.specialization}</p>
-              </div>
-              <div className="flex items-center bg-[#9333EA]/10 px-2 py-1 rounded-full">
-                <Star className="h-4 w-4 text-yellow-400 fill-current" />
-                <span className="ml-1 text-sm text-purple-300">{lawyerDetails.rating}/5</span>
-              </div>
-            </div>
-            
-            {/* Rest of the card content remains the same */}
-            <div className="mt-3 flex items-center gap-4 text-sm text-gray-400">
-              <div className="flex items-center">
-                <div className="w-1 h-1 bg-purple-500 rounded-full mr-2"></div>
-                <span className="text-purple-300">{lawyerDetails.experience} Years Experience</span>
-              </div>
-              <div className="flex items-center">
-                <div className="w-1 h-1 bg-purple-500 rounded-full mr-2"></div>
-                <span className="text-purple-300">{lawyerDetails.location}</span>
-              </div>
-            </div>
-
-            <p className="text-sm text-gray-300 mt-3 leading-relaxed">
-              Specialized in {lawyerDetails.specialization?.toLowerCase()} law with extensive experience in handling complex cases.
-            </p>
-
-            <div className="mt-4 flex gap-2">
-              <Button 
-                className="flex-1 bg-gradient-to-r from-[#9333EA] to-[#7E22CE] hover:opacity-90 transition-all duration-300 shadow-lg shadow-purple-500/20"
-                onClick={() => onContact(lawyerDetails)}
-              >
-                Contact Now
-              </Button>
-              <Button 
-                variant="outline" 
-                className="border-[#9333EA]/20 text-purple-400 hover:bg-white/5 transition-all duration-300"
-                onClick={() => window.open(lawyerDetails.profile_url, '_blank')}
-              >
-                View Profile
-              </Button>
-            </div>
-          </div>
+      <Card className="p-4 bg-[#1A1A2E]/90 border border-[#9333EA]/20 backdrop-blur-lg">
+        <div className="flex items-center justify-center">
+          <Loader2 className="h-6 w-6 animate-spin text-purple-400" />
         </div>
       </Card>
     );
-  };
+  }
 
-  return renderCard();
+  if (error || !lawyerDetails) {
+    return (
+      <Card className="p-4 bg-[#1A1A2E]/90 border border-[#9333EA]/20 backdrop-blur-lg">
+        <div className="text-center text-gray-400">
+          <AlertCircle className="h-6 w-6 mx-auto mb-2 text-red-400" />
+          <p>{error || 'Lawyer information unavailable'}</p>
+        </div>
+      </Card>
+    );
+  }
+
+  return (
+    <Card className="p-4 bg-[#1A1A2E]/90 border border-[#9333EA]/20 backdrop-blur-lg shadow-[0_0_15px_rgba(147,51,234,0.2)] hover:shadow-[0_0_30px_rgba(147,51,234,0.3)] transition-all duration-300">
+      <div className="flex items-start space-x-4">
+        <Avatar className="h-12 w-12 ring-2 ring-[#9333EA]/50">
+          <AvatarImage src={lawyerDetails.avatar} alt={lawyerDetails.Name} />
+          <AvatarFallback className="bg-[#2E2E3A] text-white">
+            {lawyerDetails.Name?.split(' ').map(n => n[0]).join('')}
+          </AvatarFallback>
+        </Avatar>
+        <div className="flex-1">
+          <div className="flex justify-between items-start">
+            <div>
+              <h3 className="font-bold text-white">{lawyerDetails.Name}</h3>
+              <p className="text-sm text-purple-400">{lawyerDetails.Category}</p>
+            </div>
+            <div className="flex items-center bg-[#9333EA]/10 px-2 py-1 rounded-full">
+              <Star className="h-4 w-4 text-yellow-400 fill-current" />
+              <span className="ml-1 text-sm text-purple-300">{lawyerDetails.Rating}/5</span>
+            </div>
+          </div>
+          
+          <div className="mt-3 flex items-center gap-4 text-sm text-gray-400">
+            <div className="flex items-center">
+              <div className="w-1 h-1 bg-purple-500 rounded-full mr-2"></div>
+              <span className="text-purple-300">{lawyerDetails.Experience} Years Experience</span>
+            </div>
+            <div className="flex items-center">
+              <div className="w-1 h-1 bg-purple-500 rounded-full mr-2"></div>
+              <span className="text-purple-300">{lawyerDetails.Location}</span>
+            </div>
+          </div>
+
+          <p className="text-sm text-gray-300 mt-3 leading-relaxed">
+            Specialized in {lawyerDetails.Category?.toLowerCase()} law with extensive experience in handling complex cases.
+          </p>
+
+          <div className="mt-4 flex gap-2">
+            <Button 
+              className="flex-1 bg-gradient-to-r from-[#9333EA] to-[#7E22CE] hover:opacity-90 transition-all duration-300 shadow-lg shadow-purple-500/20"
+              onClick={() => onContact(lawyerDetails)}
+            >
+              Contact Now
+            </Button>
+            <Button 
+              variant="outline" 
+              className="border-[#9333EA]/20 text-purple-400 hover:bg-white/5 transition-all duration-300"
+              onClick={() => window.open(`/lawyer/${lawyerDetails.LawyerId}`, '_blank')}
+            >
+              View Profile
+            </Button>
+          </div>
+        </div>
+      </div>
+    </Card>
+  );
 };
 
 const FormattedMessage = ({ content }) => {
@@ -693,56 +700,61 @@ export function ChatbotPage() {
 
   const loadPreviousSession = async (session) => {
     try {
+      setProcessing("Loading previous chat...");
+      setError(null);
+      
       const prevChat = await apiService.getChatsFromSessionId(session.id);
-      console.log("Previous Chat:", prevChat);
-      if (prevChat == null) {
-        setMessages([]);
+      console.log("Previous chat data:", prevChat); // Debug log
+      
+      if (!prevChat?.data?.data) {
+        setMessages([{
+          id: 1,
+          text: "Hello! How can I assist you with your legal question?",
+          sender: "ai"
+        }]);
         setSearchParams({ session: session.id });
         return;
       }
+  
+      const newChats = prevChat.data.data.map((chat, index) => ({
+        id: chat.message_id || index + 1,
+        text: chat.message,
+        sender: chat.message_type === "AI Message" ? "ai" : "user",
+        references: chat.references || [],
+        lawyers: Array.isArray(chat.recommended_lawyers) ? chat.recommended_lawyers : []
+      }));
+  
+      console.log("Processed chat messages:", newChats); // Debug log
       
-      const newChats = [];
-      prevChat.data.data.forEach((chat) => {
-        // Transform lawyer data if present
-        const lawyers = chat.recommended_lawyers?.map(lawyer => ({
-          id: lawyer.LawyerId,
-          name: lawyer.Name,
-          specialization: lawyer.Category,
-          rating: lawyer.Rating,
-          experience: lawyer.Experience,
-          location: lawyer.Location,
-          contact: lawyer.Contact,
-          avatar: null,
-        })) || [];
-
+      if (newChats.length === 0) {
         newChats.push({
-          id: chat.message_id,
-          text: chat.message,
-          sender: chat.message_type === "AI Message" ? "ai" : "user",
-          references: chat.references || [],
-          lawyers: lawyers, // Add transformed lawyer recommendations
+          id: 1,
+          text: "Hello! How can I assist you with your legal question?",
+          sender: "ai"
         });
-      });
+      }
       
       setMessages(newChats);
       setSearchParams({ session: session.id });
       
     } catch (error) {
       console.error("Error loading previous session:", error);
+      setError("Failed to load previous chat. Please try again.");
+    } finally {
+      setProcessing(null);
     }
   };
 
   // Add useEffect to check URL params on mount
   useEffect(() => {
     const sessionId = searchParams.get('session');
-    if (sessionId) {
-      // Find the session in history and load it
+    if (sessionId && sessionHistory.length > 0) {
       const session = sessionHistory.find(s => s.id === sessionId);
       if (session) {
         loadPreviousSession(session);
       }
     }
-  }, [sessionHistory]); // Depends on sessionHistory to ensure it's loaded
+  }, [sessionHistory, searchParams]); // Added searchParams as dependency
 
   const handleGoPremium = () => {
     const user = JSON.parse(localStorage.getItem('user'));
@@ -872,6 +884,7 @@ export function ChatbotPage() {
                       key={session.id}
                       className="p-2 hover:bg-white/5 rounded-lg cursor-pointer border border-transparent 
                         hover:border-[#9333EA]/20 transition-all duration-300 group"
+                      onClick={() => loadPreviousSession(session)} // Add this onClick handler
                     >
                       <div className="flex items-start justify-between">
                         <div className="flex-1 min-w-0">

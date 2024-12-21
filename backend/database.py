@@ -456,7 +456,30 @@ class Database:
     def get_lawyer_by_id(self, lawyer_id):
         with self.get_connection() as conn:
             cursor = conn.cursor()
-            cursor.execute("SELECT * FROM Lawyer WHERE LawyerId = ?", lawyer_id)
+            query = """
+            SELECT 
+                l.LawyerId,
+                u.Name,
+                u.Email,
+                l.Contact,
+                l.Location,
+                l.Specialization as Category,
+                l.Experience,
+                CAST(COALESCE(AVG(CAST(lr.Stars AS FLOAT)), 0) AS DECIMAL(3,2)) as Rating
+            FROM Lawyer l
+            JOIN [User] u ON l.UserId = u.UserId
+            LEFT JOIN LawyerReview lr ON l.UserId = lr.LawyerId
+            WHERE l.LawyerId = ? AND l.Paid = 1
+            GROUP BY 
+                l.LawyerId,
+                u.Name,
+                u.Email,
+                l.Contact,
+                l.Location,
+                l.Specialization,
+                l.Experience
+            """
+            cursor.execute(query, lawyer_id)
             return cursor.fetchone()
 
     def get_lawyer_by_Userid(self, user_id):

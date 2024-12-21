@@ -547,31 +547,30 @@ def add_lawyer_profile():
 # App route for getting lawyer details by lawyer id
 @app.route('/api/getlawyer/<lawyer_id>', methods=['GET'])
 def get_lawyer_details(lawyer_id):
-    try:        # Validate lawyer_id from URL parameter
+    try:
         if not lawyer_id:
             return jsonify({"error": "No lawyer ID provided"}), 400
             
-        # Convert and validate lawyer_id
         try:
             lawyer_id = int(lawyer_id)
         except (ValueError, TypeError):
             return jsonify({"error": "Lawyer ID must be a valid number"}), 400
 
-        # Retrieve the lawyer details from the database
+        # Get lawyer data
         lawyer = db.get_lawyer_by_id(lawyer_id)
         if not lawyer:
             return jsonify({"error": "Lawyer not found"}), 404
             
-        # Convert lawyer object to dictionary
+        # Convert row to dictionary with correct field mapping
         lawyer_data = {
-            "LawyerId": lawyer.LawyerId,
-            "Name": lawyer.Name,
-            "Email": lawyer.Email,
-            "Contact": lawyer.Contact,
-            "Location": lawyer.Location,
-            "Category": lawyer.Category,
-            "Experience": lawyer.Experience,
-            "Rating": float(lawyer.Rating) if lawyer.Rating else 0.0,
+            "LawyerId": lawyer[0],
+            "Name": lawyer[1],
+            "Email": lawyer[2],
+            "Contact": lawyer[3],
+            "Location": lawyer[4],
+            "Category": lawyer[5],
+            "Experience": lawyer[6],
+            "Rating": float(lawyer[7]) if lawyer[7] is not None else 0.0,
             "avatar": None  # Add default avatar or handle as needed
         }
             

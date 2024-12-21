@@ -16,6 +16,7 @@ import LawyerDashboard from './components/lawyer_dashboard';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import AccountSettings from './components/AccountSettings.jsx';
 import AdminDashboard from './components/AdminDashboard.jsx';
+import LawyerProfilePage from '@/views/LawyerProfilePage';
 
 function App() {
   const location = useLocation();
@@ -75,6 +76,7 @@ function App() {
         <Route path="/login" element={<LoginSignup />} />
         <Route path="/" element={<Home />} />
         <Route path="/admin-dashboard" element={<AdminDashboard />} />
+        <Route path="/lawyer/:id" element={<LawyerProfilePage />} />
       </Routes>
     </div>
   );
