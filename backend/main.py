@@ -15,16 +15,11 @@ from pprint import pprint
 import blob
 from pinecone import Pinecone
 import json
-from transformers import pipeline
 import logging
-import csv
 from dotenv import load_dotenv
-import recommend_lawyer
 import gc
 from langchain.schema import HumanMessage, AIMessage, BaseMessage
 from langchain.memory import ConversationBufferWindowMemory
-import datetime
-import pyodbc
 
 load_dotenv()
 

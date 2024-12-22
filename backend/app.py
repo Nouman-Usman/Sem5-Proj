@@ -42,8 +42,6 @@ tracemalloc.start()
 def log_memory_usage():
     snapshot = tracemalloc.take_snapshot()
     top_stats = snapshot.statistics('lineno')
-
-    logger.info("[ Top 10 memory usage ]")
     for stat in top_stats[:10]:
         logger.info(stat)
 
@@ -56,18 +54,14 @@ def get_agent():
     global agent
     if agent is None:
         try:
-            logger.info("Initializing RAG agent...")
             agent = RAGAgent()
-            logger.info("RAG agent initialized successfully")
         except Exception as e:
-            logger.error(f"Failed to initialize RAG agent: {e}")
             raise
     return agent
 
 
 app.config['SECRET_KEY'] = 'your_secret_key' 
 app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(hours=5)
-
 jwt = JWTManager(app)
 
 VALID_USER_TYPES = ['client', 'lawyer']
@@ -135,13 +129,11 @@ def get_pdf_with_ssl_handling(url, headers):
             allow_redirects=True
         )
         if response.status_code == 200:
-            logger.warning(f"Retrieved PDF without SSL verification from: {url}")
             return response
 
         raise requests.RequestException(f"Failed to fetch PDF. Status: {response.status_code}")
 
     except requests.RequestException as e:
-        logger.error(f"Error fetching PDF from {url}: {str(e)}")
         raise
 
 # ============= Chat Related Routes =============
@@ -163,7 +155,6 @@ def ask_question():
         session_id = data.get('session_id')  
         # print(session_id)
         if not question:
-            logger.error("Missing question parameter")
             return jsonify({"error": "Missing required parameter: question"}), 400
             
         # If no session_id provided, create new session
@@ -173,7 +164,6 @@ def ask_question():
             key_phrases = vectorizer.get_feature_names_out()
             chat_topic = " ".join(sorted(key_phrases)).title()
             session_id = db.create_session(user_id=current_user_id, topic=chat_topic)
-            logger.info(f"Created new session {session_id} for user {current_user_id}")
             data_loaded = True
             
         rag_agent = get_agent()
@@ -182,12 +172,7 @@ def ask_question():
         if session_id:
             if not data_loaded:
                 history = db.get_chat_messages_by_session_id(session_id=session_id)
-                data_loaded = True
-                logger.info(f"Loaded existing session {session_id}")
-            else:
-                logger.info(f"Using new session {session_id}")
-        else:
-            logger.warning(f"No valid session ID available")
+                data_loaded = True            
 
         try:
             result = rag_agent.run(question, history)
@@ -200,15 +185,11 @@ def ask_question():
                 }), 500
                 
             if not result or 'chat_response' not in result:
-                logger.error("Invalid or empty response from RAG agent")
                 return jsonify({"error": "Failed to generate response"}), 500
 
             # Store AI response
             sentiment = result.get('Sentiment', 'neutral')
             lawyers = recommend_top_lawyers(sentiment)
-            
-            if not lawyers:
-                logger.warning(f"No lawyers found for sentiment: {sentiment}")
                 
             lawyer_ids = [lawyer['LawyerId'] for lawyer in lawyers] if lawyers else []
             
@@ -221,8 +202,7 @@ def ask_question():
                     references=result.get('references', [])
                 )
             except Exception as e:
-                logger.error(f"Failed to store chat message: {e}")
-                # Continue execution even if storage fails
+                print(f"Error storing chat message: {e}")
                 
             response = {    
                 "answer": result['chat_response'],
@@ -234,11 +214,9 @@ def ask_question():
             return jsonify(response), 200
 
         except Exception as e:
-            logger.error(f"Error generating response: {str(e)}")
             return jsonify({"error": "Failed to generate response"}), 500
 
     except Exception as e:
-        logger.error(f"Error processing question: {str(e)}", exc_info=True)
         return jsonify({
             "error": "An unexpected error occurred",
             "details": str(e) if app.debug else "Please try again later"
@@ -284,7 +262,6 @@ def get_user_chats():
         response = db.get_chat_topics(user_id)
         return jsonify(response), 200
     except Exception as e:
-        logger.error(f"Error fetching chats: {str(e)}")
         return jsonify({"error": "Failed to fetch chats"}), 500
 
 @app.route('/api/chats', methods=['GET'])
@@ -296,7 +273,6 @@ def get_chats():
             "count": len(chat_sessions)
         }), 200
     except Exception as e:
-        logger.error(f"Error fetching chat sessions: {str(e)}")
         return jsonify({"error": "Failed to fetch chat sessions"}), 500
 
 @app.route('/api/chats/<session_id>', methods=['GET'])
@@ -322,7 +298,6 @@ def get_chat(session_id):
         }), 200
 
     except Exception as e:
-        logger.error(f"Error fetching chat session: {str(e)}")
         return jsonify({"error": "Failed to fetch chat session"}), 500
 
 # ============= Auth Related Routes =============
@@ -372,7 +347,6 @@ def signup():
     except ValueError as e:
         return jsonify({"error": str(e)}), 400
     except Exception as e:
-        logger.error(f"Signup error: {str(e)}")
         return jsonify({"error": "Failed to create user"}), 500
 
 @app.route('/api/auth/login', methods=['POST'])
@@ -408,7 +382,6 @@ def login():
             }
         }), 200
     except Exception as e:
-        logger.error(f"Login error: {str(e)}")
         return jsonify({"error": "Login failed"}), 500
 
 # ============= Profile Related Routes =============
@@ -465,8 +438,6 @@ def add_client_profile():
         }), 201
 
     except Exception as e:
-        logger.error(f"Client profile creation error: {str(e)}")
-        # Clean up uploaded file if profile creation fails
         if 'image_filename' in locals() and image_filename != 'default.jpg':
             try:
                 os.remove(os.path.join(UPLOAD_FOLDER, image_filename))
@@ -480,11 +451,9 @@ def add_lawyer_profile():
     try:
         data = request.get_json()
         if not data:
-            logger.error("No JSON data received in lawyer profile creation")
             return jsonify({"error": "No data provided"}), 400
             
         current_user_id = get_jwt_identity()
-        logger.info(f"Creating lawyer profile for user ID: {current_user_id}")
         
         # Check if lawyer profile already exists
         existing_lawyer = db.get_lawyer_by_user_id(current_user_id)
@@ -494,7 +463,6 @@ def add_lawyer_profile():
         required_fields = ['cnic', 'licenseNumber', 'location', 'experience', 'specialization', 'contact', 'email']
         missing_fields = [field for field in required_fields if not data.get(field)]
         if missing_fields:
-            logger.error(f"Missing required fields: {missing_fields}")
             return jsonify({"error": f"Missing required fields: {', '.join(missing_fields)}"}), 400
 
         # Validate data types and formats
@@ -503,15 +471,12 @@ def add_lawyer_profile():
             if experience < 0:
                 raise ValueError("Experience must be a positive number")
         except (ValueError, TypeError):
-            logger.error(f"Invalid experience value: {data.get('experience')}")
             return jsonify({"error": "Experience must be a valid positive number"}), 400
 
         if not data['cnic'].isdigit() or len(data['cnic']) != 13:
-            logger.error(f"Invalid CNIC format: {data['cnic']}")
             return jsonify({"error": "Invalid CNIC format. Must be 13 digits"}), 400
 
         if not '@' in data['email']:
-            logger.error(f"Invalid email format: {data['email']}")
             return jsonify({"error": "Invalid email format"}), 400
 
         lawyer_data = {
@@ -535,7 +500,6 @@ def add_lawyer_profile():
             }), 201
 
         except ValueError as ve:
-            logger.error(f"Validation error while creating lawyer profile: {str(ve)}")
             return jsonify({"error": str(ve)}), 400
             
     except Exception as e:

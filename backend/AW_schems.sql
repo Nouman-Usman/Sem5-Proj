@@ -1,14 +1,3 @@
-USE [master]
-GO
-/****** Object:  Database [AW_Database]    Script Date: 12/16/2024 4:07:36 PM ******/
-CREATE DATABASE [AW_Database]
- CONTAINMENT = NONE
- ON  PRIMARY 
-( NAME = N'AW_Database', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL16.NOUMAN\MSSQL\DATA\AW_Database.mdf' , SIZE = 8192KB , MAXSIZE = UNLIMITED, FILEGROWTH = 65536KB )
- LOG ON 
-( NAME = N'AW_Database_log', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL16.NOUMAN\MSSQL\DATA\AW_Database_log.ldf' , SIZE = 8192KB , MAXSIZE = 2048GB , FILEGROWTH = 65536KB )
- WITH CATALOG_COLLATION = DATABASE_DEFAULT, LEDGER = OFF
-GO
 ALTER DATABASE [AW_Database] SET COMPATIBILITY_LEVEL = 160
 GO
 IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
@@ -84,7 +73,7 @@ ALTER DATABASE [AW_Database] SET QUERY_STORE (OPERATION_MODE = READ_WRITE, CLEAN
 GO
 USE [AW_Database]
 GO
-/****** Object:  Table [dbo].[Activities]    Script Date: 12/16/2024 4:07:37 PM ******/
+/****** Object:  Table [dbo].[Activities]    Script Date: 12/22/2024 10:20:47 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -100,7 +89,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Appointments]    Script Date: 12/16/2024 4:07:37 PM ******/
+/****** Object:  Table [dbo].[Appointments]    Script Date: 12/22/2024 10:20:47 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -118,7 +107,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Cases]    Script Date: 12/16/2024 4:07:37 PM ******/
+/****** Object:  Table [dbo].[Cases]    Script Date: 12/22/2024 10:20:47 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -137,7 +126,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[ChatMessages]    Script Date: 12/16/2024 4:07:37 PM ******/
+/****** Object:  Table [dbo].[ChatMessages]    Script Date: 12/22/2024 10:20:47 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -156,7 +145,7 @@ CREATE TABLE [dbo].[ChatMessages](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Client]    Script Date: 12/16/2024 4:07:37 PM ******/
+/****** Object:  Table [dbo].[Client]    Script Date: 12/22/2024 10:20:47 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -174,7 +163,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Lawyer]    Script Date: 12/16/2024 4:07:37 PM ******/
+/****** Object:  Table [dbo].[Lawyer]    Script Date: 12/22/2024 10:20:47 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -202,7 +191,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[LawyerReview]    Script Date: 12/16/2024 4:07:37 PM ******/
+/****** Object:  Table [dbo].[LawyerReview]    Script Date: 12/22/2024 10:20:47 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -220,7 +209,7 @@ CREATE TABLE [dbo].[LawyerReview](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Sessions]    Script Date: 12/16/2024 4:07:37 PM ******/
+/****** Object:  Table [dbo].[Sessions]    Script Date: 12/22/2024 10:20:47 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -237,7 +226,7 @@ CREATE TABLE [dbo].[Sessions](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Subscription]    Script Date: 12/16/2024 4:07:37 PM ******/
+/****** Object:  Table [dbo].[Subscription]    Script Date: 12/22/2024 10:20:47 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -255,7 +244,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[User]    Script Date: 12/16/2024 4:07:37 PM ******/
+/****** Object:  Table [dbo].[User]    Script Date: 12/22/2024 10:20:47 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1460,6 +1449,1280 @@ Enforcement mechanisms are essential components of legislation as they ensure th
 ## Legal Context
 In the context of Pakistani law, the Competition Act, 2010, is a prime example of legislation that aims to promote fair competition and protect consumers from anti-competitive practices. The Act outlines the purpose, scope, and enforcement mechanisms for competition law in Pakistan, including preventive measures, investigative powers, and punitive actions.', N'AI Message', CAST(N'2024-12-16T08:50:25.953' AS DateTime), N'["https://lawsandmore.com/regulatory-framework/", "https://uow.libguides.com/law/find-purpose-scope-intention-legislation", "https://intensitylaw.com/blog/what-are-provisions-in-law/", "https://apnawaqeel.blob.core.windows.net/pdfs/THE_MOTION_PICTURES_ORDINANCE2C_1979.doc.pdf?se=2024-12-16T04%3A50%3A23Z&sp=r&sv=2024-11-04&sr=b&sig=c3r9hyagKW7d05n8ykmOY4keOEL9MRVG1hmA4SctreA%3D"]', NULL)
 GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (157, 41, N'hey suggest me a legal advice any kind', N'Human Message', CAST(N'2024-12-16T16:38:51.850' AS DateTime), NULL, NULL)
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (158, 41, N'# Legal Response
+You can get legal advice on various legal matters through ABA Free Legal Answers, a virtual legal advice clinic where you can post your questions to be answered by pro bono attorneys licensed in your state. The platform covers a range of topics including Family, Divorce, Custody, Housing, Eviction, Homelessness, Consumer Rights, Financial, Work, Employment, Unemployment, Health and Disability, Civil Rights, Income Maintenance, Juvenile and Education Law.
+
+## Detailed Explanation
+ABA Free Legal Answers is a website where you can submit your questions about civil (non-criminal) legal issues and receive answers from pro bono lawyers in your state. You just need an internet connection to access this service. The platform is designed to provide legal advice on a variety of topics, including but not limited to Family, Divorce, Custody, Housing, Eviction, Homelessness, Consumer Rights, Financial, Work, Employment, Unemployment, Health and Disability, Civil Rights, Income Maintenance, Juvenile and Education Law.
+
+## Key Points
+* ABA Free Legal Answers is a virtual legal advice clinic.
+* You can post your questions about civil legal issues.
+* Pro bono lawyers licensed in your state will answer your questions.
+* The platform covers a range of topics including Family, Divorce, Custody, Housing, Eviction, Homelessness, Consumer Rights, Financial, Work, Employment, Unemployment, Health and Disability, Civil Rights, Income Maintenance, Juvenile and Education Law.
+
+## Legal Context
+ABA Free Legal Answers is a service provided by the American Bar Association (ABA) to help individuals get free legal advice on various civil matters. It is not a substitute for legal representation, but it can provide valuable insights and guidance on legal issues.', N'AI Message', CAST(N'2024-12-16T16:38:51.857' AS DateTime), N'["https://www.avvo.com/ask-a-lawyer", "https://www.abafreelegalanswers.org/", "https://www.americanbar.org/groups/probono_public_service/projects_awards/free-legal-answers/", "https://apnawaqeel.blob.core.windows.net/pdfs/38-criminal-law-special-provisions-ordinance-1968-ii-of-1968-pdf.pdf?se=2024-12-16T12%3A38%3A49Z&sp=r&sv=2024-11-04&sr=b&sig=kptZtMhEUfauQW4IMqFveyR/NcEptz0PYU3p4YQsAxE%3D"]', NULL)
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (159, 40, N'Salary Issue', N'Human Message', CAST(N'2024-12-17T09:43:37.440' AS DateTime), NULL, NULL)
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (160, 40, N'# Legal Response
+Your query has been updated to include a request for assistance with a salary issue. To address this, you can use a complaint letter template to raise the issue with your employer. Ensure that you specify the period for which the salary is unpaid and the total amount.
+
+## Detailed Explanation
+In Pakistan, the Payment of Wages Act, 1936, governs the payment of wages to employees. Under this Act, employers are required to pay wages to their employees on the specified date. If there is a delay in payment, the employer must provide a written explanation for the delay. Employees have the right to file a complaint with the Labour Court if their wages are not paid on time.
+
+## Key Points
+* Specify the period for which the salary is unpaid
+* Mention the total amount of the unpaid salary
+* Use a complaint letter template to raise the issue with your employer
+* File a complaint with the Labour Court if the issue is not resolved
+
+## Legal Context
+The Payment of Wages Act, 1936, is the primary legislation governing the payment of wages in Pakistan. Section 3 of the Act states that "Every employer shall pay to every person employed by him the wages due to such person before the expiry of the seventh day after the last day of the wage period in respect of which the wages are payable."', N'AI Message', CAST(N'2024-12-17T09:43:37.460' AS DateTime), N'["https://englishtemplates.com/salary-slip-request-email-letter-to-hr-boss-company-etc/", "https://requestletters.com/home/3-templates-to-resolve-unpaid-salary-issues-fast", "https://myforeverchild.biz/salary-dispute-email-sample/", "https://apnawaqeel.blob.core.windows.net/pdfs/administratorce13ec87456dc55c756d400cc19d3602.pdf?se=2024-12-17T05%3A43%3A35Z&sp=r&sv=2024-11-04&sr=b&sig=FDg5E2X6XHsYw3KCjiqM7v5FUyiMRqy7ZVNi9l/klzg%3D"]', NULL)
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (161, 40, N'Salary Issues', N'Human Message', CAST(N'2024-12-17T09:49:04.507' AS DateTime), NULL, NULL)
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (162, 40, N'# Compensation Issues in the Workforce
+## Case Description
+The case revolves around the dissatisfaction of employees with their current compensation packages, leading to a high likelihood of them leaving the organization. It highlights the need for addressing shifting employee expectations while staying aligned with industry standards, market trends, and new regulations.
+
+## Key Points
+* 31% of employees are unhappy with their current compensation.
+* 52% of those unhappy employees are likely to leave the organization.
+* The case emphasizes the importance of addressing compensation issues to prevent employee turnover.
+* It suggests the need for an updated compensation philosophy that considers competitive pay, performance-based pay, managing pay compression, and identifying and paying for critical skills and positions.
+
+## What to do next
+To address the current salary issues and prevent employee turnover, the following steps can be taken:
+1. **Conduct a compensation analysis**: Review the current compensation packages and compare them with industry standards and market trends to identify discrepancies.
+2. **Develop an updated compensation philosophy**: Define what the organization considers competitive pay, how it will pay for performance, manage pay compression, and identify and pay for critical skills and positions.
+3. **Communicate with employees**: Engage in open and transparent communication with employees about the compensation changes and the reasoning behind them.
+4. **Provide training for managers**: Ensure that front-line managers and HR professionals are equipped to address employee concerns and provide guidance on the new compensation philosophy.
+5. **Monitor and adjust**: Continuously monitor employee satisfaction with the new compensation packages and make adjustments as necessary to ensure alignment with industry standards and market trends.', N'AI Message', CAST(N'2024-12-17T09:49:04.573' AS DateTime), N'["https://www.aihr.com/blog/compensation-issues/", "https://www.salary.com/resources/hr-glossary/10-usual-compensation-issues-in-hrm-and-how-to-solve-them", "https://www.shrm.org/topics-tools/news/benefits-compensation/how-employers-managing-compensation-challenges-2023"]', NULL)
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (163, 40, N'Wage issues in Pakistan', N'Human Message', CAST(N'2024-12-17T09:53:36.567' AS DateTime), NULL, NULL)
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (164, 40, N'# Wage Issues in Pakistan: A Comprehensive Analysis
+## Introduction
+The current wage issues in Pakistan have been a subject of concern for many, as the minimum wage is not sufficient to cover the basic cost of living. This has led to many citizens struggling to pay for necessities such as food, housing, and healthcare. The government has promised to take action to address these issues, but it remains to be seen how effective these measures will be.
+
+## Facts
+- The current minimum wage in Pakistan is around Rs20,000 ($138) per month.
+- Many citizens struggle to pay for necessities such as food, housing, and healthcare.
+- The government has promised to take action to address these issues.
+
+## Previous Case
+Title: Case No. 1234/2021
+Parties: Government of Pakistan vs. Labor Unions
+Facts: In 2021, labor unions filed a case against the government, demanding an increase in the minimum wage to match the rising cost of living. The case highlighted the struggles of workers who were unable to afford basic necessities due to low wages.
+
+## Case Description
+The case brought attention to the plight of workers in Pakistan, who were facing immense hardship due to low wages. The labor unions argued that the current minimum wage was not sufficient to cover the basic cost of living, leading to poverty and social disparities. The government responded by promising to review the minimum wage policy and implement changes to address the issues raised by the labor unions.
+
+## Key Points
+- The current minimum wage in Pakistan is insufficient to cover the basic cost of living.
+- Labor unions have demanded an increase in the minimum wage to match the rising cost of living.
+- The government has promised to review the minimum wage policy and implement changes.
+
+## What to do next
+- Labor unions should continue to advocate for an increase in the minimum wage.
+- The government should fulfill its promise to review the minimum wage policy and implement changes.
+- Public awareness campaigns should be initiated to highlight the struggles of workers and the importance of fair wages.', N'AI Message', CAST(N'2024-12-17T09:53:36.580' AS DateTime), N'["https://newsoutline.com/low-wages-and-rising-inflation-in-pakistan/", "https://economictimes.indiatimes.com/news/international/world-news/pakistan-struggles-with-soaring-inflation-and-widening-wage-disparities/articleshow/109709196.cms", "https://www.zawya.com/en/world/indian-sub-continent/pakistan-struggles-with-soaring-inflation-and-widening-wage-disparities-tcsyk377"]', NULL)
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (165, 40, N'I bought a land from some party and now he refuses to convert that land into my property though I''ve completed all the transactions decided ', N'Human Message', CAST(N'2024-12-17T09:58:26.723' AS DateTime), NULL, NULL)
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (166, 40, N'I apologize, but I encountered an error processing your request.', N'AI Message', CAST(N'2024-12-17T09:58:26.733' AS DateTime), NULL, NULL)
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (167, 40, N'I bought a land from some party and now he refuses to convert that land into my property though I''ve completed all the transactions decided', N'Human Message', CAST(N'2024-12-17T10:01:26.543' AS DateTime), NULL, NULL)
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (168, 40, N'I apologize, but I encountered an error processing your request.', N'AI Message', CAST(N'2024-12-17T10:01:26.560' AS DateTime), NULL, NULL)
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (169, 40, N'I bought a land from some party and now he refuses to convert that land into my property though I''ve completed all the transactions decided', N'Human Message', CAST(N'2024-12-17T10:20:06.037' AS DateTime), NULL, NULL)
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (170, 40, N'# Legal Law Number 1234/2021
+## Parties
+- **Plaintiff**: [Your Name], residing at [Your Address]
+- **Defendant**: [Seller''s Name], residing at [Seller''s Address]
+
+## Facts
+The plaintiff and defendant entered into a written agreement on [Date of Agreement]. The defendant was the absolute owner of the immovable property described in the agreement. On [Date of Payment], the plaintiff tendered [Amount] to the defendant and demanded a transfer of the property by a sufficient instrument. However, the defendant refused to transfer the property to the plaintiff on [Date of Refusal]. The plaintiff is still ready and willing to pay the purchase money of the property to the defendant.
+
+## Previous Case
+[Provide a summary of the previous case between parties with case number]
+
+## Case Description
+The case revolves around a dispute over the transfer of property ownership. The plaintiff has fulfilled all agreed-upon transactions and is now seeking legal action to enforce the transfer of the property into their name.
+
+## Key Points
+- The plaintiff and defendant entered into a written agreement.
+- The plaintiff tendered the agreed-upon amount to the defendant.
+- The defendant refused to transfer the property to the plaintiff.
+- The plaintiff is still ready and willing to pay the purchase money.
+
+## What to do next
+1. **Consult a Lawyer**: It is recommended to consult a lawyer specializing in property disputes to discuss the legal options available.
+2. **File a Lawsuit**: If the seller continues to refuse the transfer, filing a lawsuit for specific performance may be necessary.
+3. **Seek Legal Advice**: Consult with a legal professional to understand the legal implications and the best course of action.
+
+I''ve recommended some top lawyers with expertise in property disputes in your area.', N'AI Message', CAST(N'2024-12-17T10:20:06.060' AS DateTime), N'["https://apnawaqeel.blob.core.windows.net/pdfs/code-of-civil-procedure-1908-dated-15-02-2021-doc-1-1-pdf.pdf?se=2024-12-17T06%3A20%3A04Z&sp=r&sv=2024-11-04&sr=b&sig=vbRU%2Bt8IqUBqUneg4iU58biBn4XKgf/Dlb90CN6WrIs%3D", "https://apnawaqeel.blob.core.windows.net/pdfs/administrator6598dabbad120033d4d42d717dcf9755.pdf?se=2024-12-17T06%3A20%3A04Z&sp=r&sv=2024-11-04&sr=b&sig=Gj9IXpFOs623GtfNrocJioioazmlhKxG2WZOb0bsRVc%3D", "https://apnawaqeel.blob.core.windows.net/pdfs/administrator6598dabbad120033d4d42d717dcf9755.pdf?se=2024-12-17T06%3A20%3A04Z&sp=r&sv=2024-11-04&sr=b&sig=Gj9IXpFOs623GtfNrocJioioazmlhKxG2WZOb0bsRVc%3D", "https://apnawaqeel.blob.core.windows.net/pdfs/code-of-civil-procedure-1908-dated-15-02-2021-doc-1-1-pdf.pdf?se=2024-12-17T06%3A20%3A04Z&sp=r&sv=2024-11-04&sr=b&sig=vbRU%2Bt8IqUBqUneg4iU58biBn4XKgf/Dlb90CN6WrIs%3D"]', NULL)
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (171, 40, N'I bought a land from some party and now he refuses to convert that land into my property though I''ve completed all the transactions decided', N'Human Message', CAST(N'2024-12-17T10:54:06.487' AS DateTime), NULL, NULL)
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (172, 40, N'# Legal Law Number 1234/2021
+## Parties
+- **Plaintiff:** [Your Name]
+- **Defendant:** [Seller''s Name]
+
+## Facts
+The plaintiff and defendant entered into a written agreement on [Date] for the transfer of immovable property. The plaintiff tendered [Amount] to the defendant and demanded a transfer of the property by a sufficient instrument on [Date]. The defendant refused to transfer the property to the plaintiff on [Date]. The plaintiff is still ready and willing to pay the purchase money of the property to the defendant.
+
+# Previous Case
+[Provide a summary of the previous case between parties with case number]
+
+## Case Description
+The case revolves around a dispute over the transfer of immovable property. The plaintiff and defendant entered into a written agreement for the transfer of the property, and the plaintiff has already tendered the agreed amount. However, the defendant has refused to transfer the property to the plaintiff.
+
+## Key Points
+- Written agreement between the plaintiff and defendant for the transfer of immovable property
+- Plaintiff tendered the agreed amount to the defendant
+- Defendant refused to transfer the property to the plaintiff
+- Plaintiff is still ready and willing to pay the purchase money of the property to the defendant
+
+## What to do next
+- Seek legal advice from a qualified attorney specializing in property disputes
+- File a lawsuit for specific performance of the agreement
+- Gather all relevant documents and evidence related to the case
+- Prepare for legal proceedings and potential negotiations with the defendant
+- I''ve recommended some top lawyers with expertise in property disputes in your area.', N'AI Message', CAST(N'2024-12-17T10:54:06.497' AS DateTime), N'["https://apnawaqeel.blob.core.windows.net/pdfs/code-of-civil-procedure-1908-dated-15-02-2021-doc-1-1-pdf.pdf?se=2024-12-17T06%3A54%3A04Z&sp=r&sv=2024-11-04&sr=b&sig=FItl1DL21iCKVADpyJ49cUgCKgpmCt%2BJYyOpv7xCNjY%3D", "https://apnawaqeel.blob.core.windows.net/pdfs/administrator6598dabbad120033d4d42d717dcf9755.pdf?se=2024-12-17T06%3A54%3A04Z&sp=r&sv=2024-11-04&sr=b&sig=4/sdoLE87O/Pq4A4QAa4dIm5L2UEgrKis3rFkoEyiqc%3D", "https://apnawaqeel.blob.core.windows.net/pdfs/administrator9c9e9721a3e79a2ba8d267c20dfdc0ec.pdf?se=2024-12-17T06%3A54%3A04Z&sp=r&sv=2024-11-04&sr=b&sig=oQRB9xQl4fujWSxY3r2%2BlDa0c5BjAbRloDYtDjnAGNo%3D"]', NULL)
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (173, 40, N'I bought a land from some party and now he refuses to convert that land into my property though I''ve completed all the transactions decided', N'Human Message', CAST(N'2024-12-17T11:03:11.630' AS DateTime), NULL, NULL)
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (174, 40, N'# Specific Performance Case
+## Facts
+The plaintiff recently purchased a piece of land from the defendant and completed all agreed-upon transactions. However, the defendant is now refusing to transfer the property into the plaintiff''s name.
+
+## Previous Case
+There is no previous case mentioned in the context provided.
+
+## Case Description
+The case revolves around a dispute over the transfer of property ownership. The plaintiff and defendant entered into an agreement in writing, and the plaintiff tendered the agreed-upon amount to the defendant. Despite this, the defendant has refused to transfer the property to the plaintiff.
+
+## Key Points
+* The plaintiff and defendant entered into a written agreement.
+* The plaintiff tendered the agreed-upon amount to the defendant.
+* The defendant refused to transfer the property to the plaintiff.
+* The plaintiff is still ready and willing to pay the purchase money.
+
+## What to do next
+The next steps would be to:
+1. **Seek legal advice**: Consult with a lawyer specializing in property disputes to understand your rights and options under Pakistani law.
+2. **File a lawsuit for specific performance**: If the defendant continues to refuse the transfer, the plaintiff may need to file a lawsuit for specific performance, which would require the defendant to fulfill their obligations under the agreement.
+3. **Gather evidence**: Collect all relevant documents, including the written agreement and proof of payment, to support the case.
+
+I''ve recommended some top lawyers in your area who specialize in property disputes. It would be beneficial to schedule a consultation with them to discuss your case in detail.', N'AI Message', CAST(N'2024-12-17T11:03:11.643' AS DateTime), N'["https://apnawaqeel.blob.core.windows.net/pdfs/code-of-civil-procedure-1908-dated-15-02-2021-doc-1-1-pdf.pdf?se=2024-12-17T07%3A03%3A07Z&sp=r&sv=2024-11-04&sr=b&sig=arsGc1a8ZpL4hQOevZHWvvHmGYM1CpHDekstYUqK1g4%3D", "https://apnawaqeel.blob.core.windows.net/pdfs/administrator6598dabbad120033d4d42d717dcf9755.pdf?se=2024-12-17T07%3A03%3A07Z&sp=r&sv=2024-11-04&sr=b&sig=vHg4pU/5SqFPmvngvHZCtZJLOqueu9UvQtc3gForiWo%3D", "https://apnawaqeel.blob.core.windows.net/pdfs/administrator6598dabbad120033d4d42d717dcf9755.pdf?se=2024-12-17T07%3A03%3A07Z&sp=r&sv=2024-11-04&sr=b&sig=vHg4pU/5SqFPmvngvHZCtZJLOqueu9UvQtc3gForiWo%3D", "https://apnawaqeel.blob.core.windows.net/pdfs/code-of-civil-procedure-1908-dated-15-02-2021-doc-1-1-pdf.pdf?se=2024-12-17T07%3A03%3A07Z&sp=r&sv=2024-11-04&sr=b&sig=arsGc1a8ZpL4hQOevZHWvvHmGYM1CpHDekstYUqK1g4%3D"]', NULL)
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (175, 40, N'I''ve raped someone ', N'Human Message', CAST(N'2024-12-17T11:07:28.390' AS DateTime), NULL, NULL)
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (176, 40, N'# Understanding the Legal and Emotional Implications of Non-Consensual Actions
+## Facts
+You have been involved in a situation where you have caused harm to someone through non-consensual actions. This situation may have legal and emotional implications for both parties involved.
+
+## Previous Case
+There is no previous case mentioned in the context provided.
+
+## Case Description
+Non-consensual actions can lead to legal consequences and emotional distress for victims. These actions can result in physical harm, sexually transmitted infections, and unintended pregnancies. Victims may also experience psychological trauma, social isolation, and physical harm. The legal implications can include criminal charges, fines, and imprisonment.
+
+## Key Points
+* Non-consensual actions can lead to legal consequences and emotional distress for victims.
+* Victims may experience physical harm, sexually transmitted infections, and unintended pregnancies.
+* Legal implications can include criminal charges, fines, and imprisonment.
+* Victims may experience psychological trauma, social isolation, and physical harm.
+
+## What to do next
+It is important to seek legal advice to understand the specific legal implications of your actions. You should also consider seeking counseling to address any emotional distress caused by the situation. I recommend consulting with a legal professional who specializes in criminal law and seeking support from a mental health professional.', N'AI Message', CAST(N'2024-12-17T11:07:29.233' AS DateTime), N'["https://link.springer.com/chapter/10.1007/978-3-031-30438-5_11", "https://en.wadaef.net/what-are-the-consequences-of-non-consensual-sex/", "https://www.tandfonline.com/doi/full/10.1080/13600834.2024.2408914", "https://apnawaqeel.blob.core.windows.net/pdfs/administratord5622ea3f15bfa00b17d2cf7770a8434.pdf?se=2024-12-17T07%3A07%3A25Z&sp=r&sv=2024-11-04&sr=b&sig=0ZuQzZPfM6fhNEqsI2L4tFgfKaQXfLKB2AugJOiCxzc%3D"]', NULL)
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (177, 40, N'I bought a land from some party and now he refuses to convert that land into my property though I''ve completed all the transactions decided', N'Human Message', CAST(N'2024-12-17T13:29:21.203' AS DateTime), NULL, NULL)
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (178, 40, N'# Specific Performance of a Property Agreement
+
+## Introduction
+
+In the context of Pakistani law, a specific performance of a property agreement is a legal remedy that compels a party to fulfill their obligations under a valid contract. This can be particularly relevant in cases where a seller refuses to transfer property ownership to the buyer after receiving full payment.
+
+## Legal Framework
+
+The legal framework for specific performance in Pakistan is primarily governed by the **Specific Relief Act, 1877**. This Act provides for the enforcement of specific performance of contracts, including those related to the transfer of property.
+
+## Relevant Sections of the Specific Relief Act, 1877
+
+- **Section 12**: This section states that specific performance of a contract may be enforced when there exists a contract of the nature described in section 9 or section 10, and the plaintiff has performed or has always been ready and willing to perform the essential part of his obligations under the contract.
+- **Section 22**: This section provides that in any case not provided for by section 12 or section 14, the court has the discretion to direct specific performance.
+
+## Procedure for Filing a Suit for Specific Performance
+
+To initiate a legal action for specific performance, the buyer must file a suit in the appropriate court. The following documents are typically required:
+
+- **Plaint**: This document outlines the facts of the case, including the agreement, payment details, and the seller''s refusal to transfer the property.
+- **Original Agreement**: A copy of the original agreement signed by both parties.
+- **Payment Receipts**: Evidence of payment made to the seller.
+- **Legal Notice**: A legal notice served to the seller demanding the transfer of the property.
+
+## Court Procedure
+
+Once the suit is filed, the court will issue a summons to the defendant (seller) requiring them to appear in court. The defendant may contest the claim or agree to transfer the property. If the defendant contests the claim, the court will hear evidence from both parties and make a decision based on the merits of the case.
+
+## Relevant Court Forms
+
+- **Form No. 48**: This form is used for a suit for specific performance of a contract.
+- **Form No. 32**: This form is used to issue a notice to a person in possession of moveable property sold in execution of a decree.
+- **Form No. 33**: This form is used to issue a prohibitory order against payment of debts sold in execution to any other than the purchaser.
+
+## Conclusion
+
+In conclusion, if a seller refuses to transfer property ownership after receiving full payment, the buyer can initiate a legal action for specific performance under the Specific Relief Act, 1877. The buyer must file a suit in the appropriate court with the required documents and follow the court procedure. The court may direct specific performance of the contract if it finds in favor of the buyer.', N'AI Message', CAST(N'2024-12-17T13:29:21.603' AS DateTime), N'["https://apnawaqeel.blob.core.windows.net/pdfs/code-of-civil-procedure-1908-dated-15-02-2021-doc-1-1-pdf.pdf?se=2024-12-17T09%3A29%3A16Z&sp=r&sv=2024-11-04&sr=b&sig=e0G6nlLHJsjVfot1frPreYh4wU9142bASz8%2B8ztqthA%3D", "https://apnawaqeel.blob.core.windows.net/pdfs/administrator6598dabbad120033d4d42d717dcf9755.pdf?se=2024-12-17T09%3A29%3A16Z&sp=r&sv=2024-11-04&sr=b&sig=D4EkTv5cjqu6VkYYgJqALkT%2Bt3ZeaG5QMmQroqYf4X4%3D", "https://apnawaqeel.blob.core.windows.net/pdfs/administrator6598dabbad120033d4d42d717dcf9755.pdf?se=2024-12-17T09%3A29%3A16Z&sp=r&sv=2024-11-04&sr=b&sig=D4EkTv5cjqu6VkYYgJqALkT%2Bt3ZeaG5QMmQroqYf4X4%3D", "https://apnawaqeel.blob.core.windows.net/pdfs/code-of-civil-procedure-1908-dated-15-02-2021-doc-1-1-pdf.pdf?se=2024-12-17T09%3A29%3A16Z&sp=r&sv=2024-11-04&sr=b&sig=e0G6nlLHJsjVfot1frPreYh4wU9142bASz8%2B8ztqthA%3D"]', NULL)
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (179, 40, N'My client has raped someone ', N'Human Message', CAST(N'2024-12-17T13:34:08.533' AS DateTime), NULL, NULL)
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (180, 40, N'I apologize, but I encountered an error processing your request.', N'AI Message', CAST(N'2024-12-17T13:34:08.560' AS DateTime), NULL, NULL)
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (181, 40, N'My client has raped someone', N'Human Message', CAST(N'2024-12-17T13:36:44.463' AS DateTime), NULL, NULL)
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (182, 40, N'# Defending Against False Rape Accusations in Pakistan
+
+## Understanding the Legal Framework
+
+In Pakistan, rape is considered a serious crime under the Pakistan Penal Code (PPC), 1860. Section 375 of the PPC defines rape as an act of sexual assault involving non-consensual sexual intercourse with another person. The punishment for rape can range from death to imprisonment for life, along with a fine.
+
+## Importance of Legal Representation
+
+If your client has been accused of rape, it is crucial to seek legal representation immediately. A qualified criminal defense attorney can help navigate the legal system and ensure that your client''s rights are protected throughout the process.
+
+## Gathering Evidence and Building a Defense
+
+To defend against false rape accusations, it is essential to gather all relevant evidence and build a strong defense strategy. This may involve:
+
+* Collecting witness statements
+* Gathering physical evidence (e.g., clothing, DNA samples)
+* Reviewing security footage
+* Conducting a thorough investigation into the accuser''s background and potential motives for making false accusations
+
+## Challenging the Accusation
+
+In court, the prosecution must prove the accused''s guilt beyond a reasonable doubt. Your client''s legal team should challenge the accusation by:
+
+* Questioning the credibility of the accuser
+* Highlighting inconsistencies in the accuser''s story
+* Presenting alternative explanations for any physical evidence
+* Raising doubts about the reliability of witness statements
+
+## Legal Precedents and Case Law
+
+In Pakistan, there have been several cases where false rape accusations have been exposed. For instance, in the case of **Mst. Farzana v. State** (2015), the Lahore High Court acquitted the accused after finding that the prosecution had failed to prove its case beyond a reasonable doubt.
+
+## Conclusion
+
+Defending against false rape accusations requires a thorough understanding of the legal framework and a strong defense strategy. It is crucial to gather all relevant evidence and challenge the accusation in court. Remember, being accused of a crime does not necessarily mean guilt, and it is the prosecution''s burden to prove the accused''s guilt beyond a reasonable doubt.', N'AI Message', CAST(N'2024-12-17T13:36:44.493' AS DateTime), N'["https://www.stevensoncriminaldefense.com/blog/2021/september/what-should-i-do-if-i-am-accused-of-rape-or-sexu/", "https://www.nicoleblankbecker.com/blog/how-do-i-defend-myself-against-rape-charges/", "https://www.criminaldefenselawyer.com/resources/criminal-defense/sex-crimes/im-being-charged-rape-what-should-i-do"]', NULL)
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (183, 40, N'I bought a land from some party and now he refuses to convert that land into my property though I''ve completed all the transactions decided', N'Human Message', CAST(N'2024-12-17T14:08:56.497' AS DateTime), NULL, NULL)
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (184, 40, N'# Specific Performance of a Contract: A Legal Remedy for Property Dispute
+
+## Introduction
+
+In the context of Pakistani law, a specific performance of a contract is a legal remedy that can be sought when one party fails to fulfill their obligations under an agreement. This remedy is particularly relevant in property disputes, such as the one described in the updated query.
+
+## Legal Framework
+
+The legal framework for specific performance of a contract in Pakistan is primarily governed by the **Specific Relief Act, 1877**. This Act provides for the enforcement of specific performance of contracts, including those related to the transfer of property.
+
+## Relevant Sections of the Specific Relief Act, 1877
+
+- **Section 9**: This section states that a contract for the sale or letting of immovable property cannot be specifically enforced. However, this does not apply to contracts for the sale or letting of immovable property that are registered and of which the ownership is in dispute and the value of which is less than five hundred rupees.
+- **Section 10**: This section provides that a contract for the sale or letting of immovable property may be enforced if the ownership of such property is in dispute and the plaintiff has done some act towards the performance of the contract.
+- **Section 12**: This section states that a contract for the sale or letting of immovable property may be enforced if the ownership of such property is not in dispute, or if, though originally in dispute, the dispute has been adjusted.
+
+## Procedure for Filing a Suit for Specific Performance
+
+To initiate a legal action for specific performance of a contract, the following steps should be taken:
+
+1. **Drafting the Plaint**: The plaintiff must draft a detailed plaint stating the facts of the case, including the agreement, the payment of consideration, and the defendant''s refusal to transfer the property. The plaint should also include the relief sought, which in this case would be the transfer of the property to the plaintiff.
+
+2. **Filing the Suit**: The plaint should be filed in the appropriate court, which in this case would be the civil court having jurisdiction over the property in question.
+
+3. **Service of Summons**: After filing the suit, the court will issue summons to the defendant, requiring them to appear in court and respond to the allegations made in the plaint.
+
+4. **Defendant''s Response**: The defendant will have the opportunity to file a written statement in response to the plaint, denying or admitting the allegations made by the plaintiff.
+
+5. **Evidence and Witnesses**: Both parties will have the opportunity to present evidence and call witnesses to support their claims.
+
+6. **Judgment**: After hearing both parties, the court will deliver a judgment. If the court finds in favor of the plaintiff, it may order the defendant to transfer the property to the plaintiff.
+
+## Relevant Case Laws
+
+- **Mst. Zohra Bibi vs. Mst. Sughra Bibi** (PLD 1984 SC 233): In this case, the Supreme Court of Pakistan held that a specific performance of a contract for the sale of immovable property can be enforced if the contract is in writing, signed by the parties, and attested by two witnesses.
+- **Mst. Sughra Bibi vs. Mst. Zohra Bibi** (PLD 1984 SC 233): The Supreme Court further held that the plaintiff must prove that they have performed their part of the contract and are ready and willing to perform the remaining obligations.
+
+## Conclusion
+
+In conclusion, the legal remedy for a property dispute such as the one described in the updated query is to file a suit for specific performance of the contract under the Specific Relief Act, 1877. The plaintiff must draft a detailed plaint, file the suit in the appropriate court, and present evidence and witnesses to support their claim. The court will then deliver a judgment based on the evidence presented, and if the plaintiff''s claim is successful, the court may order the defendant to transfer the property to the plaintiff.', N'AI Message', CAST(N'2024-12-17T14:08:56.670' AS DateTime), N'["https://apnawaqeel.blob.core.windows.net/pdfs/code-of-civil-procedure-1908-dated-15-02-2021-doc-1-1-pdf.pdf?se=2024-12-17T10%3A08%3A53Z&sp=r&sv=2024-11-04&sr=b&sig=PEtPkVYAn9IUoRS0mz5elTc1nSh/SFu4xhLUDDyRYZw%3D", "https://apnawaqeel.blob.core.windows.net/pdfs/administrator6598dabbad120033d4d42d717dcf9755.pdf?se=2024-12-17T10%3A08%3A53Z&sp=r&sv=2024-11-04&sr=b&sig=dGx74ptp4aSx/JGuGmEKCVLfNTed43%2B1rZRJfK%2BeSLs%3D", "https://apnawaqeel.blob.core.windows.net/pdfs/administrator6598dabbad120033d4d42d717dcf9755.pdf?se=2024-12-17T10%3A08%3A53Z&sp=r&sv=2024-11-04&sr=b&sig=dGx74ptp4aSx/JGuGmEKCVLfNTed43%2B1rZRJfK%2BeSLs%3D", "https://apnawaqeel.blob.core.windows.net/pdfs/code-of-civil-procedure-1908-dated-15-02-2021-doc-1-1-pdf.pdf?se=2024-12-17T10%3A08%3A53Z&sp=r&sv=2024-11-04&sr=b&sig=PEtPkVYAn9IUoRS0mz5elTc1nSh/SFu4xhLUDDyRYZw%3D"]', NULL)
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (185, 40, N'Rape Cases', N'Human Message', CAST(N'2024-12-17T14:17:20.460' AS DateTime), NULL, NULL)
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (186, 40, N'# Recent Statistics and Trends in Rape Cases
+
+## Overview
+Rape is a serious crime that affects millions of people worldwide. In Pakistan, the legal framework for dealing with rape cases is outlined in the Pakistan Penal Code (PPC), which defines rape as an act of sexual assault involving non-consensual sexual intercourse or other forms of sexual penetration. The PPC also provides for punishment for attempted rape and assault with intent to rape.
+
+## Trends in Rape Cases
+The trends in rape cases can be understood by looking at the statistics provided by various organizations and research studies. According to the National Crime Victimization Survey (NCVS), in the United States, there were approximately 433,648 victims of rape or sexual assault in 2019. This represents a rate of 0.4 per 1,000 people.
+
+In Pakistan, the situation is equally concerning. According to a report by the Human Rights Commission of Pakistan, there were over 3,000 reported cases of rape in 2020. This number does not include unreported cases, which are believed to be much higher.
+
+## Factors Contributing to Rape
+Several factors contribute to the prevalence of rape, including:
+
+* **Gender inequality**: In societies where women are not treated as equals, they are more likely to be victims of sexual violence.
+* **Lack of education**: Education plays a crucial role in promoting gender equality and challenging harmful gender norms.
+* **Poverty**: Poverty can lead to increased vulnerability to exploitation and abuse.
+* **Cultural attitudes**: Certain cultural attitudes that normalize or justify violence against women contribute to the prevalence of rape.
+
+## Legal Framework in Pakistan
+The legal framework in Pakistan for dealing with rape cases is outlined in the PPC. The PPC defines rape as an act of sexual assault involving non-consensual sexual intercourse or other forms of sexual penetration. The PPC also provides for punishment for attempted rape and assault with intent to rape.
+
+**Section 375 PPC**: This section defines rape and provides for punishment for the offense. It states that whoever commits rape shall be punished with death or imprisonment of either description for a term which may extend to twenty-five years, and shall also be liable to fine.
+
+**Section 376 PPC**: This section provides for punishment for attempted rape. It states that whoever attempts to commit rape shall be punished with imprisonment of either description for a term which may extend to ten years, and shall also be liable to fine.
+
+**Section 377 PPC**: This section provides for punishment for assault with intent to rape. It states that whoever assaults any person with intent to rape such person, shall be punished with imprisonment of either description for a term which may extend to ten years, and shall also be liable to fine.
+
+## Conclusion
+Rape is a serious crime that affects millions of people worldwide. In Pakistan, the legal framework for dealing with rape cases is outlined in the PPC, which defines rape and provides for punishment for the offense. Understanding the trends and factors contributing to rape can help in addressing this issue more effectively.', N'AI Message', CAST(N'2024-12-17T14:17:20.473' AS DateTime), N'["https://ucr.fbi.gov/crime-in-the-u.s/2018/crime-in-the-u.s.-2018/topic-pages/rape", "https://ucr.fbi.gov/crime-in-the-u.s/2019/crime-in-the-u.s.-2019/topic-pages/rape.pdf", "https://rainn.org/statistics"]', NULL)
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (187, 40, N'My clients friend satbbed him', N'Human Message', CAST(N'2024-12-17T14:47:46.777' AS DateTime), NULL, NULL)
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (188, 40, N'# Understanding the Legal Implications of Stabbing in Pakistan
+
+## Introduction
+
+Stabbing is considered a violent act and can lead to serious injuries or even death. In Pakistan, such acts are criminal offenses and can result in legal consequences. This guide aims to provide an overview of the legal implications of stabbing in Pakistan.
+
+## Relevant Laws and Sections
+
+In Pakistan, the legal framework for dealing with stabbing incidents is primarily governed by the **Pakistan Penal Code (PPC)**. The PPC is a comprehensive criminal code that outlines various criminal offenses and their corresponding punishments.
+
+- **Section 302 PPC**: This section deals with the punishment for murder. If the stabbing results in the death of the victim, the accused may be charged under this section. The punishment for murder is death or life imprisonment.
+
+- **Section 324 PPC**: This section pertains to voluntarily causing hurt by dangerous weapons or means. If the stabbing does not result in death but causes serious injuries, the accused may be charged under this section. The punishment for this offense is imprisonment for up to seven years, a fine, or both.
+
+- **Section 325 PPC**: This section covers punishment for voluntarily causing grievous hurt. If the stabbing causes grievous hurt, the accused may be charged under this section. The punishment for this offense is imprisonment for up to ten years, a fine, or both.
+
+## Legal Process
+
+In cases involving stabbing, the legal process typically begins with the filing of a First Information Report (FIR) at the local police station. The police will then conduct an investigation, gather evidence, and arrest the accused. After completing the investigation, the police will submit a charge sheet to the court.
+
+The court will then frame charges against the accused, and the trial will commence. During the trial, the prosecution will present evidence and witnesses to prove the guilt of the accused. The accused will have the opportunity to defend themselves and present their version of events.
+
+If the court finds the accused guilty, they will be sentenced according to the relevant section of the PPC. If the accused is acquitted, they will be released from custody.
+
+## Defenses Available
+
+In stabbing cases, the accused may raise various defenses to justify their actions. Some common defenses include:
+
+- **Self-defense**: The accused may argue that they stabbed the victim in self-defense. To establish this defense, the accused must show that they were in imminent danger and had no other means of protecting themselves.
+
+- **Provocation**: The accused may claim that they were provoked by the victim, leading them to commit the act. However, the provocation must be sufficient to cause a reasonable person to lose control.
+
+- **Insanity**: The accused may argue that they were not in control of their actions due to mental illness or insanity. This defense requires medical evidence to support the claim.
+
+## Conclusion
+
+Stabbing is a serious criminal offense in Pakistan, and those found guilty can face severe legal consequences. It is essential for individuals involved in such incidents to understand their legal rights and obligations. If you or someone you know is facing charges related to stabbing, it is crucial to seek legal advice from a qualified criminal lawyer.', N'AI Message', CAST(N'2024-12-17T14:47:46.833' AS DateTime), N'["https://www.newstatesman.com/culture/life/2024/03/when-your-friend-is-stabbed-your-own-problems-become-mere-annoyances", "https://www.reddit.com/r/AskReddit/comments/1b3006/whats_your_worst_friend_stabbed_your_back_story/", "https://quizlet.com/explanations/questions/during-a-support-group-session-a-client-says-my-husband-hit-me-a-lot-but-when-he-threatened-to-start-hitting-our-kids-i-stabbed-him-no-jury--f2a0b133-29c4c524-aa31-4e7c-a02f-0d74b513dea0", "https://apnawaqeel.blob.core.windows.net/pdfs/administrator677ba60f75cfd3eab21ac148b5e66a24.pdf?se=2024-12-17T10%3A47%3A43Z&sp=r&sv=2024-11-04&sr=b&sig=FwCI/EEj8rgPACXQ0k14EeOP%2BCpEONLEwsBzoxDnh8c%3D"]', NULL)
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (189, 42, N'Rape Case', N'Human Message', CAST(N'2024-12-19T00:15:41.453' AS DateTime), NULL, NULL)
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (190, 42, N'# Recent Rape Case Updates: A Comprehensive Overview
+
+## Introduction
+
+Rape is a serious crime that has been increasingly reported in various parts of the world. This document aims to provide an overview of recent rape cases, focusing on victim''s identity, accused, location, and the current status of the cases.
+
+## Case 1: New York Post Report
+
+Title: **New York Post Report on Rape Cases**
+Content: The New York Post has reported on various rape cases across the world. In one such case, an accused predator was locked up on an unrelated charge when the rape allegations surfaced. The case is currently under investigation.
+
+## Case 2: India Rape Statistics
+
+Title: **Rape Statistics in India**
+Content: According to reports, rape is one of the most common crimes against women in India. In 2024, over 30,000 rape cases were reported, with 33,098 cases involving offenders known to the victims.
+
+## Case 3: Kolkata Rape Case
+
+Title: **Kolkata Rape Case Updates**
+Content: The Chief Justice of India (CJI) has commented on the status report submitted by the West Bengal government regarding the ongoing construction of a rape case in Kolkata. The case is currently under investigation.
+
+## Conclusion
+
+These recent rape cases highlight the need for stringent laws and measures to prevent such crimes. It is essential to ensure that victims receive justice and that the accused are held accountable for their actions.', N'AI Message', CAST(N'2024-12-19T00:15:41.467' AS DateTime), N'["https://nypost.com/tag/rape/", "https://timesofindia.indiatimes.com/topic/rape", "https://www.hindustantimes.com/india-news/kolkata-rape-case-hearing-live-update-rg-kar-hospital-lates-news-today-101727673982178.html"]', NULL)
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (191, 42, N'Rape Case', N'Human Message', CAST(N'2024-12-19T00:17:47.313' AS DateTime), NULL, NULL)
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (192, 42, N'# Recent Rape Case in Kolkata: Detailed Information and Legal Implications
+
+## Case Overview
+
+The recent rape and murder case of a trainee doctor in Kolkata has garnered significant attention across the country. The incident has raised concerns about the prevalence of rape in India, with over 30,000 reported cases in 2024, many of which involve offenders known to the victims.
+
+## Victim''s Identity and Accused
+
+The victim''s identity has been made public, which has sparked controversy and legal action. Three individuals, including Dr. Kunal Sarkar, Dr. Suparna Goswami, and BJP''s Locket Chatterjee, have been summoned by the police for revealing the victim''s identity and spreading misinformation.
+
+## Location
+
+The incident occurred in Kolkata, a city in the eastern state of West Bengal, India.
+
+## Current Status of the Case
+
+The case is currently under investigation, with the police taking action against those who have revealed the victim''s identity and spread misinformation. The legal implications of this case are significant, as it highlights the need for stricter laws and enforcement to protect victims'' privacy and prevent the spread of false information.
+
+## Relevant Legal Citations
+
+- **Section 228A of the Indian Penal Code (IPC)**: This section prohibits the disclosure of the identity of victims of certain offenses, including rape. Violation of this section can lead to imprisonment for up to two years and a fine.
+
+- **Section 354 of the IPC**: This section pertains to assault or criminal force to woman with intent to outrage her modesty. It carries a punishment of up to two years'' imprisonment, a fine, or both.
+
+- **Section 376 of the IPC**: This section deals with punishment for rape, which can range from seven years'' imprisonment to life imprisonment, along with a fine.
+
+- **Section 505 of the IPC**: This section pertains to statements conducing to public mischief, which can lead to imprisonment for up to three years, a fine, or both.
+
+## Conclusion
+
+The recent rape and murder case in Kolkata has brought attention to the ongoing issue of rape in India and the importance of protecting victims'' privacy. The legal implications of this case are significant, highlighting the need for stricter enforcement of laws related to victim privacy and the spread of false information.', N'AI Message', CAST(N'2024-12-19T00:17:47.337' AS DateTime), N'["https://www.ndtv.com/india-news/kolkata-rape-murder-case-rg-kar-hospital-supreme-court-begins-hearing-in-kolkata-rape-murder-case-6375749", "https://timesofindia.indiatimes.com/topic/rape", "https://www.news18.com/india/kolkata-doctor-rape-murder-case-live-updates-protests-rg-kar-medical-college-cbi-tmc-bjp-mamata-banerjee-latest-news-liveblog-9018970.html"]', NULL)
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (193, 42, N'Rape Case in Pakistan', N'Human Message', CAST(N'2024-12-19T00:27:26.820' AS DateTime), NULL, NULL)
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (194, 42, N'# Recent Developments in Rape Cases in Pakistan
+
+## Overview of the Issue
+
+Rape cases in Pakistan have been a significant concern in recent years. According to the Sustainable Social Development Organization, there were 7,010 rape cases reported in Pakistan in 2023, with almost 95% of them occurring in Punjab. However, due to social stigmas that discourage women from seeking help, the actual number of cases may be even higher.
+
+## Recent Case in Islamabad
+
+A recent rape case in Pakistan''s capital, Islamabad, sparked massive protests but the uproar soon hushed down. Fury is hard to maintain, and developments in the case are nothing short of a challenge.
+
+## Police Response and Student Protests
+
+In a recent incident, police fired tear gas to disperse students protesting over an alleged on-campus rape in Punjab, in Rawalpindi, Pakistan, on October 17, 2024. This incident highlights the ongoing struggle for justice and the need for better law enforcement and societal support for victims of rape.
+
+## Legal Framework
+
+In Pakistan, rape is considered a criminal offense under the Pakistan Penal Code (PPC). **Section 375** of the PPC defines rape as "the act of a man having sexual intercourse with a woman under circumstances falling under any of the five following descriptions: First, against her will. Secondly, without her consent. Thirdly, with her consent, when her consent has been obtained by putting her or any person in whom she is interested in fear of death or of hurt. Fourthly, with her consent, when the man knows that he is not her husband, and that her consent is given because she believes that he is another man to whom she is or believes herself to be lawfully married. Fifthly, with or without her consent, when she is under sixteen years of age."
+
+## Challenges and Future Directions
+
+Despite the legal framework, rape cases in Pakistan face several challenges, including underreporting, lack of societal support, and inadequate law enforcement. To address these issues, there is a need for better awareness campaigns, improved law enforcement strategies, and stronger support systems for victims of rape.', N'AI Message', CAST(N'2024-12-19T00:27:26.837' AS DateTime), N'["https://apnews.com/article/pakistan-students-protest-campus-rape-lahore-241177c92924df13174f7247b73ba79d", "https://thediplomat.com/2023/02/no-safe-space-in-pakistan-for-women-rape-case-roils-islamabad/", "https://www.cnn.com/2024/10/17/asia/pakistan-protests-reported-campus-rape-intl-hnk/index.html"]', NULL)
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (195, 42, N'Rape Case in Pak', N'Human Message', CAST(N'2024-12-19T00:29:33.780' AS DateTime), NULL, NULL)
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (196, 42, N'# Current Status of Rape Cases in Pakistan and Measures to Address It
+
+## Introduction
+
+Rape is a serious crime in Pakistan, and it has been a persistent issue in the country. The legal system in Pakistan has implemented various measures to address this issue, including stringent punishments and the establishment of special courts for rape cases.
+
+## Legal Framework
+
+The legal framework in Pakistan for dealing with rape cases is primarily governed by the Pakistan Penal Code (PPC), which defines rape as a criminal offense under Section 375. The PPC also provides for punishments for rape, including the death penalty or imprisonment for a term not less than ten years and not more than twenty-five years.
+
+In addition to the PPC, there are other laws and measures that have been enacted to address gender-based violence, including the Protection of Women (Criminal Laws Amendment) Act, 2006, and the Criminal Law (Amendment) Act, 2016. These laws aim to provide greater protection to victims of gender-based violence and to ensure that perpetrators are held accountable.
+
+## Measures to Address Rape Cases
+
+To address the issue of rape in Pakistan, the following measures have been taken:
+
+1. **Establishment of Special Courts for Rape Cases**: Over 1,000 special courts have been established across the country to deal with rape cases. These courts aim to provide a speedy and fair trial for victims of rape.
+
+2. **Stringent Punishments**: The PPC provides for stringent punishments for rape, including the death penalty or imprisonment for a term not less than ten years and not more than twenty-five years.
+
+3. **Investigation and Evidence Collection**: The police have been trained to handle rape cases sensitively and to collect evidence properly. This includes the use of DNA testing and other forensic techniques to ensure that the evidence collected is reliable and admissible in court.
+
+4. **Protection of Victims**: The legal system in Pakistan has implemented various measures to protect victims of rape, including the provision of legal aid and counseling services. Victims are also protected from harassment and intimidation during the trial process.
+
+5. **Awareness Campaigns**: Various awareness campaigns have been launched to educate the public about the seriousness of rape and the importance of reporting such incidents to the authorities.
+
+6. **Gender-Sensitive Training for Police**: Police officers are provided with gender-sensitive training to handle rape cases effectively and to ensure that victims receive appropriate support and care during the investigation and trial process.
+
+7. **Collaboration with NGOs**: The government and legal system in Pakistan collaborate with non-governmental organizations (NGOs) to provide support services to victims of rape and to raise awareness about gender-based violence.
+
+## Challenges and Future Directions
+
+Despite the measures taken to address rape cases in Pakistan, there are still several challenges that need to be addressed. These include:
+
+1. **Low Conviction Rates**: Conviction rates for rape cases in Pakistan are low, which can be attributed to various factors such as lack of evidence, witness intimidation, and societal attitudes towards victims of rape.
+
+2. **Societal Attitudes**: There is a need to change societal attitudes towards victims of rape, who often face stigma and blame for the crime committed against them.
+
+3. **Lack of Resources**: There is a need for more resources to be allocated to support victims of rape, including counseling services, legal aid, and shelter homes.
+
+4. **Improvement in Police Training**: There is a need for continuous training of police officers to handle rape cases effectively and to ensure that victims receive appropriate support and care during the investigation and trial process.
+
+5. **Strengthening the Legal Framework**: The legal framework in Pakistan needs to be strengthened to ensure that it provides adequate protection to victims of rape and holds perpetrators accountable for their actions.
+
+In conclusion, while significant measures have been taken to address rape cases in Pakistan, there are still several challenges that need to be addressed. The legal system and society as a whole must work together to ensure that victims of rape receive justice and that perpetrators are held accountable for their actions.', N'AI Message', CAST(N'2024-12-19T00:29:33.860' AS DateTime), N'["https://arynews.tv/lahore-pgc-case-20-booked-for-spreading-misinformation/", "https://tribune.com.pk/story/2514890/the-grave-reality-of-violence-against-women-in-pakistan", "https://www.pakistantoday.com.pk/2024/08/14/rape-epidemic-a-legal-battle-for-victims/", "https://apnawaqeel.blob.core.windows.net/pdfs/administrator7db1e56f0f1d39a6e67573ec6b0944e2.pdf?se=2024-12-18T20%3A29%3A29Z&sp=r&sv=2024-11-04&sr=b&sig=O86bw4pRTEGn0OvkR%2Bq0qH0VMIdJmX3vRMmlUR%2BVHUE%3D"]', NULL)
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (197, 43, N'Rape Case in Pak', N'Human Message', CAST(N'2024-12-19T00:31:11.293' AS DateTime), NULL, NULL)
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (198, 43, N'# Rape Case Status in Pakistan and Measures to Address It
+
+## Introduction
+
+Rape is a serious crime in Pakistan, and the legal system has implemented various measures to address it. This section will provide an overview of the current status of rape cases in Pakistan and the measures being taken to address them.
+
+## Legal Framework
+
+The legal framework for rape cases in Pakistan is primarily governed by the Pakistan Penal Code (PPC), which defines rape as a criminal offense under Section 375. The PPC also provides for punishment for rape, including the death penalty or imprisonment for a term of not less than ten years or more than twenty-five years.
+
+## Current Status of Rape Cases
+
+According to a report by the War Against Rape (WAR), an advocacy organisation, 21,900 women were raped in Punjab alone from 2017 to 2023. This data was taken from the Punjab home department and the ministry of human rights. This indicates that rape remains a significant issue in Pakistan.
+
+## Measures to Address Rape Cases
+
+To address the issue of rape, the Pakistani government has taken several measures, including:
+
+### Establishment of Special Courts
+
+The government has established over 1,000 special courts for rape cases. These courts aim to provide a more efficient and effective way of handling rape cases, ensuring that justice is served promptly and victims receive the support they need.
+
+### Stricter Punishment
+
+The PPC provides for stringent punishment for rape, including the death penalty or imprisonment for a term of not less than ten years or more than twenty-five years. This aims to deter potential offenders and ensure that those who commit such crimes are held accountable.
+
+### Police Powers and Investigation
+
+The Code of Criminal Procedure (CrPC) grants police officers the power to investigate rape cases. Under Section 154 of the CrPC, police officers are required to record information about cognizable offenses, including rape, and conduct investigations accordingly. Additionally, Section 156 of the CrPC allows police officers to investigate cognizable offenses without the permission of the magistrate.
+
+### Prevention of Injury to Public Property
+
+Section 152 of the CrPC empowers police officers to take preventive measures to prevent injury to public property. This includes taking steps to prevent potential crimes, including rape, from occurring.
+
+### Inspection of Weights and Measures
+
+Section 153 of the CrPC grants police officers the power to inspect weights and measures to ensure that they conform to the standards established by law. This helps in maintaining public order and preventing potential crimes.
+
+## Conclusion
+
+In conclusion, the current status of rape cases in Pakistan indicates that it remains a significant issue. However, the government has taken various measures to address this issue, including the establishment of special courts, stricter punishment under the PPC, and granting police officers specific powers to investigate and prevent crimes. These measures aim to ensure that justice is served promptly and victims receive the support they need.', N'AI Message', CAST(N'2024-12-19T00:31:11.307' AS DateTime), N'["https://www.pakistantoday.com.pk/2024/08/14/rape-epidemic-a-legal-battle-for-victims/", "https://www.thenews.com.pk/print/1108197-war-against-rape-report-describes-alarming-surge-in-gender-based-violence-cases", "https://www.pakistantoday.com.pk/2024/08/01/combating-the-escalating-crisis-of-gang-rape-and-sexual-assault/", "https://apnawaqeel.blob.core.windows.net/pdfs/administrator7db1e56f0f1d39a6e67573ec6b0944e2.pdf?se=2024-12-18T20%3A31%3A09Z&sp=r&sv=2024-11-04&sr=b&sig=QUVziHFj0kdimTATUks3%2BxILBy6SSXQXkM6NARay/yo%3D"]', NULL)
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (199, 43, N'Murder Cases in 2024 in Pak', N'Human Message', CAST(N'2024-12-19T00:36:00.830' AS DateTime), NULL, NULL)
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (200, 43, N'# Murder Cases in Pakistan in 2024: An Overview
+## Introduction
+In 2024, Pakistan has witnessed a significant number of murder cases across various regions. This report aims to provide an overview of the murder cases reported in Pakistan during the year 2024.
+
+## Murder Cases by Region
+### Sindh
+Sindh recorded 21 out of 57 cases with 3 murders. This region has seen a considerable number of violent crimes, including muggings and mob justice.
+
+### Punjab
+Punjab recorded 13 cases while Islamabad recorded 8 cases. These regions have also experienced a rise in violent crimes, including murder.
+
+## Journalist Murders
+At least 39 journalists have been murdered in Pakistan since 1992, when CPJ first began tracking journalist killings. In the vast majority of these cases, the motive for the murder was related to the victim''s work as a journalist.
+
+## Legal Framework
+Under the **Pakistan Penal Code (PPC)**, murder is considered a criminal offense and is punishable under **Section 302**. The punishment for murder can range from life imprisonment to death.
+
+## Conclusion
+The year 2024 has seen a significant number of murder cases in Pakistan, with Sindh, Punjab, and Islamabad being the most affected regions. The murder of journalists is particularly concerning, as it highlights the risks faced by those working in the media industry. The legal framework in Pakistan provides for punishment under the PPC, but more needs to be done to address the root causes of these crimes and ensure justice for the victims and their families.', N'AI Message', CAST(N'2024-12-19T00:36:00.843' AS DateTime), N'["https://cpj.org/2024/10/if-you-scream-no-one-will-hear-you-pakistani-journalists-report-in-fear-amid-spike-in-media-killings/", "https://www.aninews.in/news/world/asia/2024-deadliest-year-for-pakistan-journalists-report20241101190200", "https://www.nytimes.com/2024/06/12/world/asia/karachi-violence-crime.html"]', NULL)
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (201, 44, N'Rape Cases in Pak', N'Human Message', CAST(N'2024-12-19T00:40:51.483' AS DateTime), NULL, NULL)
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (202, 44, N'# Current Status of Rape Cases in Pakistan
+
+## Overview
+Rape cases in Pakistan have been a significant concern in recent years. According to the Sustainable Social Development Organization, there were 7,010 rape cases reported in Pakistan in 2023, with almost 95% of them occurring in Punjab. However, due to social stigmas and underreporting, the actual number of cases may be even higher.
+
+## Statistics
+- In 2018, there were 4,326 cases of recorded rape.
+- In 2019, there were 4,377 cases.
+- In 2020, there were 3,887 cases.
+- In 2021, there were 1,866 cases.
+
+## Legal Framework
+The legal framework in Pakistan for dealing with rape cases is primarily governed by the Pakistan Penal Code (PPC), which defines rape as an act of sexual assault involving non-consensual sexual intercourse with another person. The PPC also provides for punishment for the crime of rape, including imprisonment and death penalty in certain circumstances.
+
+## Challenges
+Despite the legal framework, there are several challenges in addressing rape cases in Pakistan, including:
+- **Social Stigma**: Victims often face social stigma, which discourages them from reporting the crime.
+- **Underreporting**: Due to the stigma and fear of societal backlash, many rape cases go unreported.
+- **Lack of Evidence**: In many cases, there is a lack of evidence, making it difficult to prove the crime.
+- **Delayed Justice**: The legal process can be slow, leading to delayed justice for victims.
+
+## Efforts to Address the Issue
+To address the issue of rape cases in Pakistan, various efforts have been made, including:
+- **Awareness Campaigns**: Public awareness campaigns have been launched to educate people about the importance of reporting rape cases and seeking justice.
+- **Legal Reforms**: There have been calls for legal reforms to strengthen the laws related to rape and ensure quicker justice for victims.
+- **Support Services**: Various organizations provide support services for victims of rape, including counseling and legal assistance.
+
+## Conclusion
+The current status of rape cases in Pakistan highlights the need for continued efforts to address the issue. This includes raising awareness, strengthening legal frameworks, and providing support services for victims.', N'AI Message', CAST(N'2024-12-19T00:40:51.543' AS DateTime), N'["https://apnews.com/article/pakistan-students-protest-campus-rape-lahore-241177c92924df13174f7247b73ba79d", "https://www.thenews.com.pk/latest/743328-about-11-rape-cases-reported-in-pakistan-every-day-official-statistics-reveal", "https://www.pakistantoday.com.pk/2024/08/14/rape-epidemic-a-legal-battle-for-victims/"]', NULL)
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (203, 41, N'Recommend me a lawyer for rape case', N'Human Message', CAST(N'2024-12-19T13:39:57.160' AS DateTime), NULL, NULL)
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (204, 41, N'# Finding a Reputable Lawyer for Rape Cases in Pakistan
+
+## Understanding the Importance of Expertise in Rape Law
+
+When seeking legal assistance for rape cases, it is crucial to find a lawyer who has extensive experience in this specific field. This is because rape laws can be complex and nuanced, and a lawyer with a deep understanding of these laws can provide the best possible representation.
+
+## Key Qualities to Look for in a Rape Lawyer
+
+1. **Experience in Rape Law**: Ensure that the lawyer has a proven track record of handling rape cases successfully. Ask about their past experiences and the outcomes of these cases.
+2. **Knowledge of Pakistani Laws**: The lawyer should be well-versed with the legal framework of Pakistan, particularly the laws related to rape and sexual assault.
+3. **Sensitivity and Empathy**: Rape cases can be emotionally challenging for victims. It is essential that the lawyer is sensitive and empathetic towards the victim''s situation.
+4. **Confidentiality**: Ensure that the lawyer respects the victim''s privacy and maintains confidentiality throughout the legal process.
+
+## How to Find a Reputable Rape Lawyer in Pakistan
+
+1. **Word of Mouth**: Ask for recommendations from trusted friends, family members, or professionals who have dealt with similar cases.
+2. **Online Research**: Look for lawyers who specialize in rape cases and have a good reputation online. Check their websites, reviews, and testimonials from previous clients.
+3. **Legal Associations**: Contact local legal associations or bar councils in Pakistan to find experienced rape lawyers in your area.
+4. **Free Consultation**: Many lawyers offer a free initial consultation. Use this opportunity to assess their expertise, communication style, and how comfortable you feel discussing your case with them.
+
+## Important Laws and Sections in Pakistan Regarding Rape
+
+1. **Section 375 of the Pakistan Penal Code (PPC)**: Defines rape and its punishment.
+2. **Section 376 of the PPC**: Deals with punishment for rape.
+3. **Criminal Law Amendment Act, 2016**: Also known as the Anti-Rape Bill, it aims to expedite rape trials and increase punishment for offenders.
+
+Remember, finding the right lawyer can significantly impact the outcome of your case. Take your time, do thorough research, and don''t hesitate to ask questions during your initial consultations.', N'AI Message', CAST(N'2024-12-19T13:39:57.197' AS DateTime), N'["https://www.manlystewart.com/practice-areas/rape-attorneys", "https://www.crimevictimlawfirm.com/how-to-help-a-rape-victim/", "https://midwestinjurylawyers.com/blog/all-about-lawyers-for-sexual-assault-cases/"]', NULL)
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (205, 41, N'Sexually assault cases in Pakistan', N'Human Message', CAST(N'2024-12-19T13:49:06.053' AS DateTime), NULL, NULL)
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (206, 41, N'Define law', N'Human Message', CAST(N'2024-12-19T14:17:00.943' AS DateTime), NULL, NULL)
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (207, 41, N'# Understanding the Concept of Law and Its Significance in Society
+
+## Definition of Law
+
+Law is a system of rules and regulations established by a governing authority to regulate behavior, maintain order, and ensure justice within a society. It is a multifaceted concept that is foundational to the functioning of societies and the governance of human behavior. The legal meaning of law encompasses various aspects, including positive law, natural law, legal realism, and cultural perspectives.
+
+## Significance of Law in Society
+
+Law plays an indispensable role in maintaining order, promoting justice, and safeguarding individual and collective rights. It governs interactions, resolves disputes, and upholds justice. The significance of law in society can be understood through the following points:
+
+* **Order and Stability**: Law provides a framework for order and stability in society by establishing clear rules and consequences for non-compliance.
+* **Justice and Fairness**: Law ensures that justice is upheld and fairness is maintained by providing equal opportunities and protection to all individuals.
+* **Protection of Rights**: Law safeguards individual and collective rights, including fundamental rights such as freedom of speech, religion, and assembly.
+* **Resolution of Disputes**: Law provides a mechanism for resolving disputes peacefully and efficiently, reducing the likelihood of violence and conflict.
+* **Promotion of Economic Growth**: Law fosters economic growth by providing a stable and predictable environment for businesses to operate in.
+* **Social Cohesion**: Law promotes social cohesion by establishing common values and norms that bind society together.
+
+## Technological Advancements and the Evolution of Law
+
+Technological advancements have given rise to new legal fields such as:
+
+* **Cyberlaw**: Covers crimes committed online or through technology-based platforms.
+* **Data Privacy Laws**: Safeguard sensitive information collected by companies.
+* **E-commerce Laws**: Govern online transactions.
+* **Social Media Law**: Deals with legal issues arising from the use of social media platforms.
+
+These new legal fields highlight the evolving nature of law, which adapts to address emerging challenges and issues in society.
+
+## Conclusion
+
+In conclusion, law is a vital component of society, providing a framework for order, justice, and fairness. Its significance extends beyond governing behavior and resolving disputes, as it also promotes economic growth, social cohesion, and the protection of rights. As society continues to evolve, so does the concept of law, adapting to address new challenges and issues.', N'AI Message', CAST(N'2024-12-19T14:17:00.987' AS DateTime), N'["https://techbullion.com/law-understanding-its-scope-and-significance/", "https://juristopedia.com/law-definition/", "https://medium.com/@si5716490/defining-law-exploring-the-multifaceted-concept-of-legal-systems-4f2c63448b52"]', NULL)
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (208, 41, N'Rape Cases', N'Human Message', CAST(N'2024-12-19T14:17:23.120' AS DateTime), NULL, NULL)
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (209, 41, N'# Recent Statistics and Trends in Rape Cases
+
+## Global Perspective
+
+- **1 in 8 girls and women** alive today experienced rape or sexual assault before the age of 18, according to UNICEF estimates released in 2024. This translates to more than 370 million girls and women worldwide.
+
+## National Perspective
+
+- **81% of women and 43% of men** reported experiencing some form of sexual harassment and/or assault in their lifetime.
+- **1 in 4 male victims of completed or attempted rape** first experienced it between the ages of 11 and 17.
+- **40% of rapes and sexual assaults** were reported to police in 2017, but only about 25% were reported to police in 2018.
+- **Almost one in four undergraduate women** experienced sexual assault or misconduct at 33 of the nation''s major universities.
+
+## Effects of Rape
+
+- **30% of women** who experience rape report PTSD symptoms 9 months after the rape.
+- **33% of women** contemplate suicide.
+- **13% of women** attempt suicide.
+
+## Perpetrators of Rape
+
+- **8 out of 10 rape cases** involve a perpetrator known to the victim.
+- **About half of all female victims of rape** reported being raped by an intimate partner.', N'AI Message', CAST(N'2024-12-19T14:17:23.213' AS DateTime), N'["https://www.unicefusa.org/press/over-370-million-girls-and-women-globally-subjected-rape-or-sexual-assault-children-unicef", "https://nownyc.org/issues/get-the-facts-take-rape-seriously/", "https://www.nsvrc.org/statistics"]', N'[6]')
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (210, 45, N'Define law', N'Human Message', CAST(N'2024-12-19T14:34:01.360' AS DateTime), NULL, NULL)
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (211, 45, N'# Definition of Law and Its Significance in Society
+
+## Introduction
+
+Law is a system of rules created and enforced by social or governmental institutions to regulate behaviour, maintain order, and establish norms within a society. It is a multifaceted concept that is foundational to the functioning of societies and the governance of human behaviour.
+
+## Definition of Law
+
+Law can be defined as a set of rules and guidelines that are enforced through social institutions to govern behaviour and resolve disputes. It is a system that aims to provide justice, maintain order, protect rights and liberties, and promote social welfare. The legal meaning of law is broad and encompasses not only the black letter of legal statutes or court decisions but also norms, rules, regulations, and what people think the law is or what they experience as law.
+
+## Significance of Law in Society
+
+Law plays a crucial role in maintaining social order and resolving disputes in a peaceful manner. It provides a framework for governing behaviour and ensures that individuals are treated fairly and equally. The significance of law in society can be understood through the following points:
+
+* **Maintaining Social Order**: Law helps to maintain social order by providing a set of rules that everyone must follow. This helps to prevent chaos and ensure that society functions smoothly.
+* **Resolving Disputes**: Law provides a mechanism for resolving disputes peacefully. It helps to settle conflicts between individuals, businesses, and the government, thereby promoting harmony and stability in society.
+* **Protecting Rights and Liberties**: Law protects the rights and liberties of individuals by providing them with certain freedoms and entitlements. It ensures that individuals are treated fairly and equally, regardless of their race, gender, religion, or social status.
+* **Promoting Social Welfare**: Law promotes social welfare by regulating behaviour and ensuring that individuals act in a manner that is beneficial to society as a whole. It helps to protect the environment, promote public health, and ensure that businesses operate in a fair and ethical manner.
+* **Providing Justice**: Law provides justice by punishing those who violate the rules and rewarding those who follow them. It helps to ensure that individuals are held accountable for their actions and that they are treated fairly and equally under the law.
+
+## Conclusion
+
+In conclusion, law is a vital component of society that helps to maintain social order, resolve disputes, protect rights and liberties, promote social welfare, and provide justice. It is a system that aims to ensure that individuals are treated fairly and equally, and that society functions smoothly and efficiently.', N'AI Message', CAST(N'2024-12-19T14:34:01.480' AS DateTime), N'["https://juristopedia.com/law-definition/", "https://ashleytrubin.com/what-is-law-and-society-or-the-sociology-of-law/", "https://puresociology.com/sociology-and-law/"]', NULL)
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (212, 45, N'Rape Cases in Pakistan', N'Human Message', CAST(N'2024-12-19T14:34:53.063' AS DateTime), NULL, NULL)
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (213, 45, N'# Recent Statistics and Trends Regarding Rape Cases in Pakistan
+
+## Overview of Rape Cases in Pakistan
+
+In the first six months of 2023, Pakistan witnessed a harrowing increase in child sexual abuse cases, with an average of 12 children sexually abused daily, totaling 2,227 cases. This alarming trend highlights the need for immediate action to address the issue of sexual violence in the country.
+
+## Annual Rape Case Statistics
+
+The following statistics provide a breakdown of rape and gang-rape cases registered in Pakistan over the past few years:
+
+- **2019:** 4,637 rape/gang-rape cases
+- **2020:** 4,133 rape/gang-rape cases
+- **2021:** 2,390 rape/gang-rape cases
+
+## Murder of Women in Pakistan
+
+In addition to the rising number of rape cases, there has also been a significant number of women murdered in Pakistan over the past few years:
+
+- **2019:** 1,578 women murdered
+- **2020:** 1,569 women murdered
+- **2021:** 840 women murdered
+
+## Sentencing Guidelines for Sexual Abuse Offenders
+
+The following data provides information on the primary sentencing guidelines for sexual abuse offenders in Pakistan for FY 2021:
+
+- **Production of Child Pornography:** 49.2%
+- **Travel for Prohibited Sexual Conduct:** 31.7%
+- **Rape:** 10.1%
+- **Statutory Rape:** 3.7%
+- **Abusive Sexual Contact:** 2.5%
+- **Other:** 2.8%
+
+The average sentence for offenders convicted of criminal sexual abuse (rape) was 190 months. Of these offenders, 20.8% were convicted of an offense carrying a mandatory minimum penalty, with an average sentence of 297 months.
+
+## Conclusion
+
+The recent statistics and trends regarding rape cases in Pakistan highlight the urgent need for effective measures to prevent and address sexual violence. It is crucial for the government, law enforcement agencies, and civil society to work together to ensure justice for victims and to create a safer environment for all individuals, particularly women and children.', N'AI Message', CAST(N'2024-12-19T14:34:53.560' AS DateTime), N'["https://www.thenews.com.pk/print/1108197-war-against-rape-report-describes-alarming-surge-in-gender-based-violence-cases", "https://www.dawn.com/news/1715929", "https://www.ussc.gov/sites/default/files/pdf/research-and-publications/quick-facts/Sexual_Abuse_FY21.pdf"]', N'[6]')
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (214, 45, N'Rape Cases in Pakistan', N'Human Message', CAST(N'2024-12-19T14:43:47.313' AS DateTime), NULL, NULL)
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (215, 45, N'# Recent Statistics and Trends Regarding Rape Cases in Pakistan
+
+## Introduction
+
+Rape is a significant problem in Pakistan, with a rising trend in the number of cases over the past decade. This section provides an overview of the recent statistics and trends regarding rape cases in Pakistan.
+
+## Statistics
+
+According to a report published in 2022 by Pakistan''s Human Rights Commission (HRCP), there were 5279 and 1084 registered cases of rape and child sexual abuse, respectively, in Pakistan in 2021. The total number of rape cases has increased by 200% over the past decade.
+
+In 2018, there were 4,456 cases of rape reported in the media. This number increased to 4,573 cases in 2019, dipped to 4,478 cases in 2020, and then rose to 5,169 cases in 2021. In 2022, the media reported 305 rape cases across the country.
+
+## Trends
+
+The trend in rape cases in Pakistan shows a significant increase in the number of cases reported over the years. This increase could be attributed to various factors such as improved reporting mechanisms, increased awareness about the issue, and a rise in the incidence of the crime itself.
+
+## Murder of Women
+
+In addition to rape cases, there has also been a significant number of women murdered in Pakistan. In 2019, there were 1,578 women murdered, which decreased to 1,569 in 2020 and further decreased to 840 in 2021.
+
+## Legal Framework
+
+The legal framework in Pakistan for dealing with rape cases includes the **Criminal Law Amendment Act of 2016**, which introduced stricter punishments for rapists, including the death penalty. The **Protection of Women Against Harassment at the Workplace Act of 2010** also provides protection against sexual harassment at work.
+
+## Conclusion
+
+In conclusion, the recent statistics and trends regarding rape cases in Pakistan show a significant increase in the number of cases reported over the years. The legal framework in Pakistan has been strengthened to deal with these cases, but more needs to be done to address the root causes of this crime and ensure justice for victims.', N'AI Message', CAST(N'2024-12-19T14:43:47.597' AS DateTime), N'["https://www.sciencedirect.com/science/article/pii/S1752928X23001087", "https://www.ndtv.com/world-news/in-pakistan-a-woman-is-raped-every-2-hours-convictions-only-0-2-report-3428239", "https://www.dawn.com/news/1715929"]', N'[6]')
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (216, 45, N'Rape Cases in Pak', N'Human Message', CAST(N'2024-12-19T15:21:05.050' AS DateTime), NULL, NULL)
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (217, 45, N'# Current Status of Rape Cases in Pakistan
+
+## Overview
+
+Rape cases in Pakistan have been a persistent issue, with a significant number of cases reported annually. The statistics provided in the retrieved information indicate that the situation remains grim, with a woman being raped every 45 minutes in Pakistan.
+
+## Statistics
+
+- In 2023, 6,624 rape cases were registered.
+- Faisalabad reported the highest number of cases (728), followed by Lahore (721) and Sargodha (398).
+- Additionally, 626 women were kidnapped, and 120 were killed in the name of so-called ''honour.''
+
+## Legal Response
+
+- In 2022, 44 courts heard up to 1,301 cases of sexual assault against women.
+- In 2,856 cases, the police have filed charges.
+- However, only 4% of the cases went to trial.
+- The conviction rate in rape cases remained at an abysmal 0.2 percent.
+
+## Long-term Trends
+
+- Over the last six years, there have been at least 11 rape cases reported in Pakistan every day.
+- Over 22,000 rape cases have been reported to police across the country in the last six years, according to official statistics.
+
+## Challenges in the Legal System
+
+- Pakistan tops Anti-women bias in courts among other countries.
+
+## Relevant Laws and Policies
+
+- **Criminal Law Amendment Act, 2016**: This act introduced stricter punishments for rape, including the death penalty in certain cases.
+- **Protection of Women Against Harassment at the Workplace Act, 2010**: This act aims to protect women from harassment at work and provides a framework for reporting and addressing such incidents.
+
+## Conclusion
+
+The current status of rape cases in Pakistan indicates a persistent and troubling issue. The legal system faces challenges in addressing these crimes effectively, leading to low conviction rates and a lack of justice for victims. It is essential to address these issues through legal reform and societal change to ensure that women are protected and justice is served.', N'AI Message', CAST(N'2024-12-19T15:21:05.197' AS DateTime), N'["https://www.nation.com.pk/08-Oct-2024/alarming-rape-cases", "https://www.indiatimes.com/trending/social-relevance/woman-raped-every-2-hours-in-pakistan-582001.html", "https://www.thenews.com.pk/latest/743328-about-11-rape-cases-reported-in-pakistan-every-day-official-statistics-reveal"]', N'[6]')
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (218, 45, N'Rape Cases in Pak', N'Human Message', CAST(N'2024-12-19T15:24:58.497' AS DateTime), NULL, NULL)
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (219, 45, N'# Current Status of Rape Cases in Pakistan
+
+## Overview of Rape Cases in Pakistan
+
+Rape is a severely under-reported crime in Pakistan due to social stigma, victim blaming, and gender-insensitive environments at police stations and courts. According to official data, only 41% of rape cases are reported to the police due to social pressures and legal loopholes.
+
+## Statistics of Rape Cases in Pakistan
+
+- **2018:** 4,326 cases of rape were reported
+- **2019:** 4,377 rape cases were reported
+- **2020:** 3,887 cases of rape were reported
+- **2021:** 1,866 cases of rape were reported
+
+## Laws and Regulations Regarding Rape in Pakistan
+
+The law includes:
+- Establishment of special courts for rape cases throughout the country
+- Use of DNA testing and other scientific evidence
+- Establishment of Anti-Rape Crisis cells
+- Special Sexual Investigation Units in every district
+- Speedy trial proceedings
+- In-camera trial
+- Legal assistance to the victims
+- Distance recording of testimonies through video-conferencing
+- Re-location of victims and witnesses
+
+## Distribution of Rape Cases Across Pakistan
+
+- **Punjab:** 18,609 rape cases registered in the last six years
+- **Sindh:** 1,873 rape cases registered in the last six years
+- **Khyber Pakhtunkhwa (KP):** 1,183 rape cases registered in the last six years
+- **Balochistan:** 129 rape cases registered in the last six years
+- **Islamabad:** 210 rape cases registered in the last six years
+
+## Conclusion
+
+Rape is a significant issue in Pakistan, with thousands of cases reported each year. However, the actual number of incidents is likely much higher due to under-reporting. The government has implemented various laws and regulations to address this issue, but more needs to be done to ensure justice for victims and to prevent further incidents.', N'AI Message', CAST(N'2024-12-19T15:24:58.640' AS DateTime), N'["https://en.wikipedia.org/wiki/Rape_in_Pakistan", "https://thefridaytimes.com/23-Sep-2024/pakistan-faces-a-rape-epidemic-how-pakistan-has-failed-its-women", "https://www.thenews.com.pk/latest/743328-about-11-rape-cases-reported-in-pakistan-every-day-official-statistics-reveal"]', N'[6]')
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (220, 46, N'Rape Cases in Pak', N'Human Message', CAST(N'2024-12-21T12:35:16.437' AS DateTime), NULL, NULL)
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (221, 46, N'I apologize, but I encountered an error processing your request.', N'AI Message', CAST(N'2024-12-21T12:35:16.720' AS DateTime), NULL, NULL)
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (222, 46, N'Pakistan Rape Cases', N'Human Message', CAST(N'2024-12-21T14:05:59.630' AS DateTime), NULL, NULL)
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (223, 46, N'I apologize, but I encountered an error processing your request.', N'AI Message', CAST(N'2024-12-21T14:05:59.663' AS DateTime), NULL, NULL)
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (224, 46, N'Rape Cases in Pakistan by 2024', N'Human Message', CAST(N'2024-12-21T14:10:30.947' AS DateTime), NULL, NULL)
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (225, 46, N'I apologize, but I encountered an error processing your request.', N'AI Message', CAST(N'2024-12-21T14:10:30.957' AS DateTime), NULL, NULL)
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (226, 46, N'Explain legislation', N'Human Message', CAST(N'2024-12-21T14:13:01.137' AS DateTime), NULL, NULL)
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (227, 46, N'I apologize, but I encountered an error processing your request.', N'AI Message', CAST(N'2024-12-21T14:13:01.147' AS DateTime), NULL, NULL)
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (228, 40, N'Rape Cases in Pak', N'Human Message', CAST(N'2024-12-21T14:20:02.750' AS DateTime), NULL, NULL)
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (229, 40, N'I''m sorry but I do not have the capability to perform this task for you, I am happy to help you with any other queries you may have.', N'AI Message', CAST(N'2024-12-21T14:20:02.790' AS DateTime), N'["https://www.tezda.com/post/the-top-search-engines-in-2024", "https://www.wisitech.com/the-evolution-of-search-engines-how-bing-and-google-have-changed-in-2024/", "https://mangools.com/blog/search-engines/"]', NULL)
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (230, 47, N'Define law', N'Human Message', CAST(N'2024-12-21T16:56:59.633' AS DateTime), NULL, NULL)
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (231, 47, N'<tool_call>
+{"id": 0, "name": "lawyer_find_nearby", "arguments": {"location": "Lahore, Pakistan", "specialization": "Civil Law", "rating": 4.5}}
+</tool_call>', N'AI Message', CAST(N'2024-12-21T16:56:59.720' AS DateTime), N'["https://iq.govwin.com/neo/document/view/25112195", "https://www.indeed.com/career-advice/career-development/capabilities-vs-competencies", "https://www.govconwire.com/2024/12/kbr-dod-joint-mission-environment-test-capability-recompete-task-order/", "https://www.indeed.com/career-advice/career-development/capabilities-vs-competencies", "https://secure.ssa.gov/apps10/poms.nsf/lnx/0425015020", "https://www.govconwire.com/2024/12/kbr-dod-joint-mission-environment-test-capability-recompete-task-order/", "https://orangeslices.ai/credence-dynamo-awarded-air-force-contract-for-capability-area-enablers-advisory-and-assistance-services/", "https://technical-writing.co.in/2024/12/21/types-of-technical-writing/", "https://www.govconwire.com/2024/12/kbr-dod-joint-mission-environment-test-capability-recompete-task-order/"]', NULL)
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (232, 47, N'<tool_call>
+{"id": 0, "name": "law_info", "arguments": {"query": "What are the key elements of a valid contract under Pakistani law, and how can a party prove the existence of a contract in court if there''s no written agreement? Also, what are the possible legal outcomes if a party fails to perform their obligations under the contract? Please provide the information in a structured format with bullet points and bold key terms like laws and sections. Don''t make assumptions about what values to plug into functions. For each function call return a json object with function name and arguments within <tool_call></tool_call> XML tags as follows:
+<tool_call>
+{"name": <function-name>,"arguments": <args-dict>}
+</tool_call>"}}
+</tool_call>', N'AI Message', CAST(N'2024-12-21T17:04:23.420' AS DateTime), N'["https://medium.com/@oyekunlesarah21/query-folding-in-power-query-aa88da323b37", "https://www.examtopics.com/discussions/servicenow/view/113239-exam-csa-topic-1-question-144-discussion/", "https://www.govconwire.com/2024/12/kbr-dod-joint-mission-environment-test-capability-recompete-task-order/", "https://techstartups.com/2024/12/20/openai-unveils-o3-a-next-gen-reasoning-models-that-approaches-agi/", "https://www.bcg.com/publications/2024/gen-ai-increases-productivity-and-expands-capabilities", "https://www.trainingjournal.com/2024/content-type/blogs/the-future-of-work-from-skills-based-to-capability-driven/"]', NULL)
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (233, 47, N'<tool_call>
+{"id": 0, "name": "legal_research", "arguments": {"query": "What are the top 5 productivity apps in 2024 that are alternatives to Todoist and Any.do, and how can they help in task management and planning? Also, can you provide a brief overview of the latest trends in work arrangements and how these apps can assist in enhancing productivity in these setups? Please include any relevant legal or tech news updates from 2024 that might be of interest to users of these apps. Make sure the information is structured with headers, bullet points, and bold text for emphasis. Include a section on the importance of using these apps in the context of changing work arrangements, and how they can be integrated with other tools for better outcomes. Finally, provide a brief note on the limitations of these apps and how users can work around them. Don''t make assumptions about what the user wants to know. Just provide the information in the structured format requested.", "context": "user query about productivity apps and their features, and how they can be used in different work arrangements. The user also wants to know about the latest trends in work arrangements and any tech or legal news updates from 2024 that might be relevant. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function is in Python. The provided function', N'AI Message', CAST(N'2024-12-21T17:09:38.333' AS DateTime), N'["https://www.ntaskmanager.com/blog/best-todoist-alternatives/", "https://www.bls.gov/blog/2024/contingent-jobs-and-alternative-work-arrangements-what-you-need-to-know.htm", "https://www.fox21news.com/technology/ap-technology/ap-microsoft-pitches-ai-agents-that-can-perform-tasks-on-their-own-at-ignite-2024/", "https://clickup.com/blog/any-do-alternatives/", "https://crm.org/news/best-google-tasks-alternatives", "https://www.producthunt.com/products/tasks/alternatives"]', NULL)
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (234, 48, N'<tool_call>
+{"id": 0, "name": "queryUpdater", "arguments": {"query": "Rape Case Punishment in Pak", "history": ["Rape Case Punishment in Pak"]}}
+</tool_call>', N'AI Message', CAST(N'2024-12-21T17:15:31.757' AS DateTime), N'["https://en.wikipedia.org/wiki/Rape_in_Pakistan", "https://arynews.tv/common-crimes-legal-punishments/", "https://thefridaytimes.com/23-Sep-2024/pakistan-faces-a-rape-epidemic-how-pakistan-has-failed-its-women"]', NULL)
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (235, 48, N'<tool_call>
+{"id": 0, "name": "law_case_find", "arguments": {"query": "Rape Case in Pak"}}
+</tool_call>', N'AI Message', CAST(N'2024-12-21T17:39:42.970' AS DateTime), N'["https://www.bbc.com/news/world-asia-56660706", "https://www.thenews.com.pk/latest/743328-about-11-rape-cases-reported-in-pakistan-every-day-official-statistics-reveal", "https://www.pakistantoday.com.pk/2024/08/14/rape-epidemic-a-legal-battle-for-victims/"]', NULL)
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (236, 48, N'<tool_call>
+{"id": 0, "name": "law_case_search", "arguments": {"query": "Rape Case in Pak", "location": "Pakistan", "year_range": [2017, 2021]}}
+</tool_call>', N'AI Message', CAST(N'2024-12-21T17:44:27.993' AS DateTime), N'["https://www.thenews.com.pk/latest/743328-about-11-rape-cases-reported-in-pakistan-every-day-official-statistics-reveal", "https://www.pakistantoday.com.pk/2024/08/14/rape-epidemic-a-legal-battle-for-victims/", "https://en.wikipedia.org/wiki/Rape_in_Pakistan"]', NULL)
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (237, 48, N'<tool_call>
+{"id": 0, "name": "law_case_find", "arguments": {"query": "Rape cases in 2022"}}
+</tool_call>', N'AI Message', CAST(N'2024-12-21T17:52:07.167' AS DateTime), N'["https://www.thenews.com.pk/latest/743328-about-11-rape-cases-reported-in-pakistan-every-day-official-statistics-reveal", "https://en.wikipedia.org/wiki/Rape_in_Pakistan", "https://www.pakistantoday.com.pk/2024/08/14/rape-epidemic-a-legal-battle-for-victims/"]', N'[6]')
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (238, 48, N'<tool_call>
+{"id": 0, "name": "law_info_get", "arguments": {"query": "Pakistani law on rape cases"}}
+</tool_call>', N'AI Message', CAST(N'2024-12-21T20:39:00.690' AS DateTime), N'["https://www.thenews.com.pk/latest/743328-about-11-rape-cases-reported-in-pakistan-every-day-official-statistics-reveal", "https://www.pakistantoday.com.pk/2024/08/14/rape-epidemic-a-legal-battle-for-victims/", "https://en.wikipedia.org/wiki/Rape_in_Pakistan"]', N'[6]')
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (239, 48, N'I apologize, but I encountered an error processing your request.', N'AI Message', CAST(N'2024-12-21T20:41:49.473' AS DateTime), NULL, NULL)
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (240, 48, N'I apologize, but I encountered an error processing your request.', N'AI Message', CAST(N'2024-12-21T20:47:34.253' AS DateTime), NULL, NULL)
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (241, 48, N'I apologize, but I encountered an error processing your request.', N'AI Message', CAST(N'2024-12-21T20:52:27.920' AS DateTime), NULL, NULL)
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (242, 48, N'I apologize, but I encountered an error processing your request.', N'AI Message', CAST(N'2024-12-21T20:57:00.587' AS DateTime), NULL, NULL)
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (243, 48, N'I apologize, but I encountered an error processing your request.', N'AI Message', CAST(N'2024-12-21T21:10:47.917' AS DateTime), NULL, NULL)
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (244, 48, N'I apologize, but I encountered an error processing your request.', N'AI Message', CAST(N'2024-12-21T21:12:09.710' AS DateTime), NULL, NULL)
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (245, 48, N'<tool_call>
+{"id": 0, "name": "law_search", "arguments": {"query": "Pakistani law on organized crime"}}
+</tool_call>', N'AI Message', CAST(N'2024-12-21T21:53:03.767' AS DateTime), N'["https://en.wikipedia.org/wiki/Crime_in_Pakistan", "https://en.wikipedia.org/wiki/Organised_crime_in_Pakistan", "https://www.macrotrends.net/global-metrics/countries/PAK/pakistan/crime-rate-statistics", "https://en.wikipedia.org/wiki/Crime_in_Pakistan", "https://www.numbeo.com/crime/country_result.jsp?country=Pakistan", "https://www.macrotrends.net/global-metrics/countries/PAK/pakistan/crime-rate-statistics"]', N'[6]')
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (246, 49, N'<tool_call>
+{"id": 0, "name": "law_case_find", "arguments": {"query": "Rape cases in Pakistan"}}
+</tool_call>', N'AI Message', CAST(N'2024-12-21T21:57:18.610' AS DateTime), N'["https://www.thenews.com.pk/latest/743328-about-11-rape-cases-reported-in-pakistan-every-day-official-statistics-reveal", "https://www.pakistantoday.com.pk/2024/08/14/rape-epidemic-a-legal-battle-for-victims/", "https://en.wikipedia.org/wiki/Rape_in_Pakistan"]', N'[6]')
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (247, 49, N'### Rape Cases in Pakistan
+
+According to **official data**, there are at least **11 rape cases reported in Pakistan every day**. During the last six years, a total of **22,000 rape cases** were reported to the police across the country. The distribution of these cases among different provinces is as follows:
+
+- Punjab: **18,609 cases**
+- Sindh: **1,873 cases**
+- Khyber Pakhtunkhwa (KP): **1,183 cases**
+- Balochistan: **129 cases**
+- Islamabad: **210 cases**
+
+(Source: [Opinion Newspost Editorial Instep Money Matters YOU US TNS](<https://www.tns.thenews.com/ rape-epidemic-a-legal-battle-for-victims-pakistan-today>) and [Geo News investigation](<https://www.geo.tv/latest/393113-only-41-of-rape-cases-reported-in-pakistan-due-to-social-pressures-loopholes-in-law-and-order-system>)
+
+Another study conducted by a private TV channel in Pakistan found that between 2017 and 2021, up to **21,900 women** were reported to have been raped nationwide.
+
+(Source: [Pakistan Today](<https://www.pakistantoday.com.pk/2021/09/05/rape-epidemic-a-legal-battle-for-victims/>>)
+
+#### Legal Provisions and Punishments
+
+The **Punishment for rape in Pakistan** is either the **death penalty** or **imprisonment of between ten and twenty-five years**. In cases related to **gang rape**, the punishment is either the **death penalty** or **life imprisonment**. **DNA test** and other scientific evidence are used in prosecuting rape cases in Pakistan.
+
+(Source: [Pakistani laws](<https://www.pakistani.org/law/bill/2016/Criminal-Law-Amendment-Act-2016.html>)
+
+#### Legal Amendments and Challenges
+
+In 2016, several amendments were passed to strengthen the laws against assaulting children, harassment, and misdiagnosing victims. The Criminal Law Act also enhanced the evidence collection process by incorporating modern forensic tools into rape cases. However, addressing the problem of rape in Pakistan requires a **multipronged strategy** due to the frequent inexperience and lack of skill among law enforcement organizations in managing rape cases.
+
+(Source: [Pakistan Today](<https://www.pakistantoday.com.pk/2021/09/05/rape-epidemic-a-legal-battle-for-victims/>>)
+
+<br>
+
+*Last updated: 2023-03-20*', N'AI Message', CAST(N'2024-12-22T15:52:22.627' AS DateTime), N'["https://www.thenews.com.pk/latest/743328-about-11-rape-cases-reported-in-pakistan-every-day-official-statistics-reveal", "https://www.pakistantoday.com.pk/2024/08/14/rape-epidemic-a-legal-battle-for-victims/", "https://en.wikipedia.org/wiki/Rape_in_Pakistan"]', N'[6]')
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (248, 49, N'I apologize, but I encountered an error processing your request.', N'AI Message', CAST(N'2024-12-22T15:53:20.663' AS DateTime), NULL, NULL)
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (249, 47, N'# Law and its Types
+
+In the context of Pakistani law, it is essential to understand the different types of law that exist. These types of law are the foundation for the legal system and play a unique role in upholding justice and maintaining order in society.
+
+## Understanding Law
+
+**Law** is the discipline and profession concerned with the customs, practices, and rules of conduct of a community that are recognized as binding by the community.
+
+### Public Law
+
+Public law often refers to such laws as criminal laws, constitutional laws, and administrative laws. Within these categories are a number of other types of law, such as:
+
+- *Criminal Laws*: These are laws that define criminal offenses and specify the punishments for such offenses. Criminal laws can include everything from battery and trespassing to larceny and murder. ([Source](https://www.law.cornell.edu/wex/criminal_law))
+- *Constitutional Laws*: These are the laws that define the relationship between the different branches of government and the citizens of the country. Constitutional laws also protect the rights and freedoms of individuals. ([Source](https://www.law.cornell.edu/wex/constitutional_law))
+- *Administrative Laws*: These are the laws that govern the actions of government agencies and the procedures that these agencies must follow in making and implementing regulations. ([Source](https://www.law.cornell.edu/wex/administrative_law))
+
+## Other Types of Law
+
+In addition to public law, there are other types of law that are important to understand. These include:
+
+- *Agency Law*: This is the law that governs the relationships between principals and agents. ([Source](https://www.law.cornell.edu/wex/agency))
+- *Air Law*: This is the law that governs the use of airspace and the operation of aircraft. ([Source](https://www.law.cornell.edu/wex/air_law))
+- *Bankruptcy Law*: This is the law that governs the process of declaring bankruptcy and the distribution of assets to creditors. ([Source](https://www.law.cornell.edu/wex/bankruptcy))
+- *Carriage of Goods Law*: This is the law that governs the transportation of goods by land, sea, or air. ([Source](https://www.law.cornell.edu/wex/carriage_of_goods))
+- *Commercial Transaction Law*: This is the law that governs the buying and selling of goods and services. ([Source](https://www.law.cornell.edu/wex/commercial_transaction))
+- *Contract Law*: This is the law that governs the formation, performance, and enforcement of contracts. ([Source](https://www.law.cornell.edu/wex/contract))
+- *Comparative Law*: This is the law that compares the legal systems of different countries and examines the relationship of the law to the social sciences. ([Source](https://www.law.cornell.edu/wex/comparative_law))
+- *Procedural Law*: This is the law that governs the procedures and rules of courts and other tribunals. ([Source](https://www.law.cornell.edu/wex/procedural_law))
+- *Property Law*: This is the law that governs the rights and obligations related to the ownership of property. ([Source](https://www.law.cornell.edu/wex/property))
+- *Tax Law*: This is the law that governs the taxation of income, property, and other transactions. ([Source](https://www.law.cornell.edu/wex/tax))
+- *Tort Law*: This is the law that governs the compensation of individuals for harm caused by the actions or omissions of others. ([Source](https://www.law.cornell.edu/wex/tort))
+
+Understanding these different types of law is essential for legal research and practice in Pakistan.', N'AI Message', CAST(N'2024-12-22T16:38:50.600' AS DateTime), N'["https://lawbhoomi.com/seven-types-of-laws/", "https://www.britannica.com/topic/law", "https://www.mylawquestions.com/what-are-the-different-types-of-law.htm"]', NULL)
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (250, 47, N'# Rape Cases in Pakistan
+
+According to official data, there are at least **11 rape cases reported in Pakistan every day** with over **22,000 rape cases reported to police across the country in the last six years**. This information is based on statistics from various provinces including **Punjab (18,609 cases)**, **Sindh (1,873 cases)**, **Khyber Pakhtunkhwa (KP, 1,183 cases)**, **Balochistan (129 cases)**, and **Islamabad (210 cases)**.
+
+Additionally, a study conducted by a private TV channel in Pakistan found that between 2017 and 2021, up to **21,900 women were reported to have been raped nationwide**.
+
+## Legal Provisions and Amendments
+
+The **Pakistani laws** provide for **either death penalty or imprisonment of between ten and twenty-five years** as punishment for rape. In cases of gang rape, the punishment is either **death penalty or life imprisonment**. **DNA test and other scientific evidence** are used in prosecuting rape cases in Pakistan.
+
+In 2016, the **Criminal Law Act** was amended to strengthen the laws against assaulting children, harassment, and misdiagnosing victims. It also enhanced the evidence collection process by incorporating modern forensic tools into rape cases.
+
+## Challenges and Measures
+
+The problem of rape in Pakistan necessitates a **multipronged strategy** due to the frequent inexperience and lack of skill in managing rape cases within law enforcement organizations. Addressing social pressures and legal loopholes that contribute to the underreporting of only **41% of rape cases** is crucial for effective prevention and prosecution of rape cases.
+
+<br>
+
+Sources:
+- Opinion Newspost Editorial Instep Money Matters YOU US TNS
+- Pakistan Today
+- Pakistani laws, including the Pakistan Penal Code, Criminal Law Act, and local inquiry orders', N'AI Message', CAST(N'2024-12-22T16:45:02.697' AS DateTime), N'["https://www.thenews.com.pk/latest/743328-about-11-rape-cases-reported-in-pakistan-every-day-official-statistics-reveal", "https://www.pakistantoday.com.pk/2024/08/14/rape-epidemic-a-legal-battle-for-victims/", "https://en.wikipedia.org/wiki/Rape_in_Pakistan", "https://apnawaqeel.blob.core.windows.net/pdfs/administrator7db1e56f0f1d39a6e67573ec6b0944e2.pdf?se=2024-12-22T12%3A44%3A51Z&sp=r&sv=2024-11-04&sr=b&sig=Ct7NqZmeKcDJy1SJic6N/g8M/oAMbIYQQkoOcHcTNrU%3D"]', N'[6]')
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (251, 47, N'**Definition of "aw"**
+
+The term "aw" is an interjection used in the English language to express various emotions such as sympathy, tenderness, disapproval, or disbelief. Here are some detailed definitions from different sources:
+
+- **American Heritage® Dictionary of the English Language, Fifth Edition:** _Aw_ is an interjection used to express sympathy, tenderness, disapproval, or disbelief.
+
+- **The Free Dictionary:** The meaning of _aw_ is —used to express mild disappointment, gentle entreaty, or real or mock sympathy or sentiment.
+
+- **English dictionary definition of aw:** _Aw_ is an interjection used to express sympathy, tenderness, disapproval, or disbelief.
+
+It is important to note that this term is not a law or a legal term in the context of Pakistani law. It is an English language interjection and does not have any specific legal meaning or application.', N'AI Message', CAST(N'2024-12-22T16:56:04.930' AS DateTime), N'["https://www.thefreedictionary.com/aw", "https://www.yourdictionary.com/aw", "https://www.merriam-webster.com/dictionary/aw"]', NULL)
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (252, 47, N'# Legal Definition of Law
+
+In the context of Pakistani law, **law** can be defined as a system of rules and regulations established by a governing authority to maintain social order, justice, and peace. It is a binding force that governs the conduct of individuals and organizations in a society.
+
+## Different Types of Law
+
+There are several types of law in Pakistani legal system, including:
+
+- *Constitutional Law*: This is the highest form of law in Pakistan, which establishes the framework of the government and the fundamental rights of the citizens.
+
+- *Criminal Law*: This type of law deals with crimes and their punishments. It includes offences against persons, property, and the state.
+
+- *Civil Law*: This area of law deals with disputes between individuals or organizations. It includes areas such as contracts, torts, and family law.
+
+- *Administrative Law*: This type of law governs the relationship between the government and its citizens. It includes areas such as taxation, immigration, and social welfare.
+
+- *International Law*: This area of law governs the relationships between different countries. It includes areas such as trade, human rights, and war.
+
+## Key Provisions Related to Law in Pakistan
+
+The Constitution of Pakistan is the supreme law of the country. It lays down the principles and rules for the governance of the country. Some of the key provisions related to law in Pakistan are:
+
+- **Article 1**: This article establishes Pakistan as a federal republic, consisting of four provinces, Islamabad Capital Territory, and such other territories as may be specified.
+
+- **Article 4**: This article guarantees the fundamental rights and freedoms of the citizens, including the right to life and liberty, equality before law, and prohibition of discrimination on the basis of sex, religion, race, caste, or place of birth.
+
+- **Article 19**: This article guarantees the freedom of speech, expression, and the press.
+
+- **Article 20**: This article guarantees the right to form associations or unions.
+
+- **Article 25**: This article guarantees the equality of citizens before law and equal protection of law.
+
+## Relevant Legal Citations
+
+- Constitution of Pakistan, 1973
+- Pakistan Penal Code, 1860
+- Code of Criminal Procedure, 1898
+- Civil Procedure Code, 1908
+- Qanun-e-Shahadat Order, 1984
+- Negotiable Instruments Act, 1881
+
+<br>
+
+*This response is intended for informational purposes only and should not be construed as legal advice. Please consult with a qualified legal professional for advice specific to your situation.*', N'AI Message', CAST(N'2024-12-22T16:56:33.000' AS DateTime), N'["https://www.merriam-webster.com/dictionary/law", "https://www.oxfordlearnersdictionaries.com/definition/english/law", "https://www.collinsdictionary.com/dictionary/english/law"]', NULL)
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (253, 50, N'# Filing a Law Suit in Pakistan
+
+In Pakistan, the process of filing a civil suit involves several steps. Here''s a detailed guide on how to file a law suit in Pakistan:
+
+## Filing a Plaint
+
+The first step in filing a civil suit is to file a **plaint** in the court. The plaint is a written complaint that outlines the nature of the claim, the facts supporting the claim, the amount of damages sought, and the legal provisions relied upon.
+
+- The plaint should be accompanied by as many duplicate copies as there are defendants in the suit for service upon the defendants (Code of Civil Procedure 1908, Section 48(3)).
+- Where the plaintiff relies on any other document not in his possession or power as evidence in support of his claim, he shall enter such documents in a list to be appended to the plaint, giving reasons of relevancy of these documents to the claim in the plaint (Code of Civil Procedure 1908, Section 48(2)(g)).
+
+## Intimation to Defendant
+
+Once the plaint is filed, the court fixes a date for the appearance of the defendant, which shall not be more than fifteen days from the presentation of the plaint. The court then sends a notice or summons of the suit to the defendant through a process serving agency of the court, registered post acknowledgment due electronically or through courier, together with a copy of the plaint (Family Courts Act 1964, Section 10(1)(b)).
+
+## Defendant''s Written Statement
+
+In response to the plaint, the defendant files a **written statement**. This is a document filed by the defendant in response to the plaintiff''s initial claim.
+
+## Conclusion
+
+Understanding the process of filing a civil suit in Pakistan is essential for individuals seeking legal recourse in matters of a civil nature. Navigating the legal system can be complex, but by following the steps outlined above and seeking professional legal advice, individuals can effectively initiate a civil suit.', N'AI Message', CAST(N'2024-12-22T16:59:32.513' AS DateTime), N'["https://musheer.com/blog/a-comprehensive-guide-to-filing-civil-suits-in-pakistan-what-you-need-to-know/", "https://apnaqanoon.com/a-comprehensive-guide-to-the-suit-of-recovery-of-damages-in-pakistan/", "https://joshandmakinternational.com/basic-points-filing-civil-suit-pakistan/", "https://apnawaqeel.blob.core.windows.net/pdfs/family-courts-act-1964-xxxv-of-1964-pdf.pdf?se=2024-12-22T12%3A59%3A03Z&sp=r&sv=2024-11-04&sr=b&sig=yt7w/5ESI7odlmlSpSzYdETqmhnlFTUXhqEN%2BxHKdNo%3D"]', NULL)
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (254, 50, N'# Defending Against a Rape Charge in Pakistan
+
+In order to propose strong arguments for your client who has been involved unintentionally in a rape case, it is important to follow a systematic approach. Here are some steps to consider:
+
+## Develop a Strong Attorney-Client Relationship
+
+- It is crucial to have a strong attorney-client relationship when facing rape charges.
+- The defense attorney should take the time to listen to the client''s side of the story, answer all questions, and keep the client informed at every stage of the case.
+- Building trust and understanding between the attorney and client is essential for a successful defense.
+
+## Understand the Case and Its Strengths and Weaknesses
+
+- Take time to listen to the client and get to know him.
+- Discussing the case with the client will help identify its strengths and weaknesses.
+- This information is crucial in determining the best defense strategies.
+
+## Negotiate a Deal or Prepare for Trial
+
+- Based on the case''s strengths and weaknesses, the attorney can negotiate a deal with the prosecution.
+- If a deal cannot be reached, the attorney should prepare for trial and present a strong defense on behalf of the client.
+
+## Relevant Pakistani Laws and Citations
+
+In Pakistan, the **Pakistan Penal Code** (Act XLV of 1860) defines rape under section **375**. The punishment for rape is outlined in section **376**.
+
+> **375**. Whoever commits rape shall be punished with imprisonment of either description for a term which shall not be less than ten years and **shall also be liable to fine**.
+>
+> **376**. **Whoever,** except in the cases provided for in sub-section (2), commits rape **shall be punished with imprisonment of either description for a term which shall not be less than seven years and which may extend to imprisonment for life, and shall also be liable to fine**.
+
+It is important to note that the Pakistani legal system recognizes the possibility of unintentional involvement in a crime. The attorney can use this in the client''s defense, arguing that the client did not intentionally commit the crime.
+
+<br>
+
+In summary, defending a client who has been involved unintentionally in a rape case requires a strong attorney-client relationship, a thorough understanding of the case and its strengths and weaknesses, and the ability to negotiate a deal or prepare for trial. Relevant Pakistani laws and citations should be considered when proposing arguments for the client''s defense.', N'AI Message', CAST(N'2024-12-22T17:14:03.137' AS DateTime), N'["https://marshalldefense.com/services/rape/", "https://www.hartwiglaw.com/blog/2024/july/how-does-a-defense-attorney-build-a-case-against/", "https://www.meltzerandbell.com/news/a-rape-defense-lawyers-advice-for-handling-false-rape-allegations/"]', N'[6]')
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (255, 50, N'# Defense Strategy for Rape Charges in Pakistani Law
+
+In order to propose strong arguments for your client who has been involved unintentionally in a rape case, it is crucial to follow the steps below:
+
+## Establishing a Strong Attorney-Client Relationship
+
+- A good defense lawyer will take the time to listen to your client''s side of the story.
+- Answer all your client''s questions and keep them informed at every stage of the case.
+- Building a strong attorney-client relationship lays the foundation for an effective defense.
+
+## Presenting a Strong Defense
+
+- Call upon expert witnesses to support your client''s innocence.
+- Present evidence that underscores the strength of your defense.
+- Make persuasive arguments that highlight the weaknesses of the prosecution''s case.
+
+## Developing a Cohesive Defense Strategy
+
+- Craft a clear and compelling narrative that supports your client''s innocence.
+- Highlight the inconsistencies and contradictions in the prosecution''s evidence and witnesses.
+- Utilize the knowledge of a defense attorney experienced in rape cases to develop a strong criminal sexual conduct defense strategy.
+
+### Relevant Pakistani Laws and Statutes
+
+- The Pakistan Penal Code (Act XLV of 1860) contains the laws regarding rape and sexual assault in Pakistan.
+- Section 375 of the Pakistan Penal Code defines rape as:
+  - "A man is said to commit "rape" who, in spite of resistance offered by the victim, has sexual intercourse with a woman under circumstances falling under any of the six following descriptions:"
+- The six circumstances include cases where the woman is under 16 years of age, or is unable to understand the nature and consequences of the act, or is caused to fear death or hurt, etc.
+
+### Possible Defenses under Pakistani Law
+
+- Consent: If the accused can prove that the sexual act was consensual, it may serve as a defense.
+- Mistake of Fact: If the accused can prove that they were mistaken about the victim''s age or their own belief regarding the victim''s consent, it may serve as a defense.
+- Insanity: If the accused can prove that they were mentally incapable of understanding the nature and consequences of their actions, it may serve as a defense.
+
+### Legal Citations
+
+- Pakistan Penal Code (Act XLV of 1860), Section 375.
+- The Code of Criminal Procedure, 1898 (Act V of 1898), Section 242.
+
+By following these steps and utilizing the relevant Pakistani laws and statutes, you can propose a strong defense strategy for your client facing rape charges.', N'AI Message', CAST(N'2024-12-22T17:19:50.753' AS DateTime), N'["https://www.hartwiglaw.com/blog/2024/july/how-does-a-defense-attorney-build-a-case-against/", "https://www.combswaterkotte.com/2024/08/07/how-do-your-defense-attorneys-build-a-case-against-a-rape-accusation/", "https://www.nicoleblankbecker.com/blog/how-do-i-defend-myself-against-rape-charges/"]', N'[6]')
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (256, 49, N'**Physical Assault in the Context of Pakistani Law**
+
+In Pakistan, the legal framework for addressing physical assault, including assault by a family member, is primarily outlined in the Pakistan Penal Code (PPC). Here are some key points to consider:
+
+## **Understanding Assault**
+
+The PPC defines assault (Section 351) as:
+
+> Whoever makes any gesture or any preparation intending or knowing it to be likely that such gesture or preparation will cause any person present to apprehend that he who makes that gesture or preparation is about to use criminal force to that person, is said to commit an assault.
+
+This definition includes any act that is intended or likely to cause fear of immediate physical harm.
+
+## **Domestic Violence**
+
+While there isn''t a specific law in Pakistan addressing domestic violence, it can be prosecuted under various sections of the PPC. For instance:
+
+- **Hurt** (Section 337-H): Voluntarily causing hurt to any person by means of any instrument for shooting, stabbing, or cutting, or any instrument which, used as a weapon of offence, is likely to cause death, is punishable by up to seven years imprisonment, or fine, or both.
+
+- **Grievous Hurt** (Section 337-F): Voluntarily causing grievous hurt by dangerous weapons or means is punishable by up to ten years imprisonment, or fine, or both.
+
+- **Cruelty by Husband or Relatives of Husband** (Section 498-A): Whoever, being the husband or the relative of the husband of a woman, subjects such woman to cruelty shall be punished with imprisonment for a term which may extend to three years and shall also be liable to fine.
+
+## **Reporting the Incident**
+
+If you have been physically assaulted, it is crucial to report the incident to the local police station. You can file a First Information Report (FIR) under the relevant sections of the PPC. This is the first step towards legal action.
+
+## **Seeking Protection**
+
+You can also seek a protection order from a court. This is a court order that prohibits the abuser from threatening, harassing, or committing violence against you.
+
+Please note that this is a general guide and the specifics of your case may require different legal considerations. It is recommended to consult with a legal professional for advice tailored to your situation.', N'AI Message', CAST(N'2024-12-22T17:23:18.907' AS DateTime), N'["https://bizzierilaw.com/2024/10/physical-assault-by-a-family-member-navigating-legal-options/", "https://legalclarity.org/assault-on-family-members-legal-definitions-and-defenses/", "https://atx.legal/assault-causing-bodily-injury-family-violence/"]', NULL)
+GO
+INSERT [dbo].[ChatMessages] ([ChatId], [SessionId], [Message], [Type], [Time], [References], [RecommendedLawyers]) VALUES (257, 49, N'# Witnessing a Homicide in Pakistan: Your Legal Obligations and Options
+
+In a situation where your friend has **killed a person** in front of you and is now **threatening** you, it is crucial to understand the legal implications and the steps you should take. Here are the actions you should consider:
+
+## Call the Authorities
+
+1. **Call 15** immediately. This is the emergency helpline in Pakistan, equivalent to the 911 service in other countries. Report the homicide and provide all necessary details.
+
+## Document the Threat
+
+2. Keep any **evidence** of the threat, such as voicemails, text messages, emails, or witness statements. Documentation can be crucial for law enforcement and any potential legal actions.
+
+## Obtain a Restraining Order
+
+3. If you know the individual who threatened you, consider obtaining a **restraining order** or **order of protection** against them. This can be done through the local courts or police station.
+
+## Seek Protective Measures
+
+4. If you feel **threatened or unsafe**, inform the authorities. Law enforcement agencies can offer protective measures, such as anonymity or witness protection programs, to ensure your safety.
+
+## Legal Obligations and Consequences
+
+As a witness to a homicide, you have a legal obligation to tell the truth. If you fail to report the crime or lie about what you saw, you could face legal consequences. However, your safety is paramount, and you should not risk your life to report a crime. Consult with the authorities and legal advisors to ensure your safety while fulfilling your legal obligations.
+
+Remember, this advice is general in nature, and the specifics of your situation may require different actions. Always consult with a legal professional for advice tailored to your circumstances.', N'AI Message', CAST(N'2024-12-22T17:25:34.097' AS DateTime), N'["https://vannormanlaw.com/what-to-do-if-you-witnessed-a-homicide/", "https://kamanlaw.com/what-to-do-if-someone-threatens-to-kill-you/", "https://www.steinlaw.com/blog/legal-steps-to-take-if-you-witness-a-violent-crime/"]', N'[6]')
+GO
 SET IDENTITY_INSERT [dbo].[ChatMessages] OFF
 GO
 SET IDENTITY_INSERT [dbo].[Lawyer] ON 
@@ -1467,6 +2730,8 @@ GO
 INSERT [dbo].[Lawyer] ([LawyerId], [UserId], [CNIC], [LicenseNumber], [Location], [Paid], [ExpiryDate], [Experience], [Recommended], [Specialization], [Contact], [Email], [TimesClicked], [TimesShown], [LastRecommended], [RecommendationCount]) VALUES (1, 3, N'3520180667435', N'6e423432748', N'Lahore', 0, NULL, 14, 0, N'Constitutional', N'03228429291', N'noumanmughal0123@gmail.com', 0, 0, NULL, 0)
 GO
 INSERT [dbo].[Lawyer] ([LawyerId], [UserId], [CNIC], [LicenseNumber], [Location], [Paid], [ExpiryDate], [Experience], [Recommended], [Specialization], [Contact], [Email], [TimesClicked], [TimesShown], [LastRecommended], [RecommendationCount]) VALUES (5, 4, N'3520180667439', N'6e423432748', N'Lahore', 0, NULL, 12, 0, N'Constitutional', N'03228429291', N'noumanmughal0123@gmail.com', 0, 0, NULL, 0)
+GO
+INSERT [dbo].[Lawyer] ([LawyerId], [UserId], [CNIC], [LicenseNumber], [Location], [Paid], [ExpiryDate], [Experience], [Recommended], [Specialization], [Contact], [Email], [TimesClicked], [TimesShown], [LastRecommended], [RecommendationCount]) VALUES (6, 6, N'3520180667425', N'6e423432748', N'Lahore', 1, CAST(N'2025-01-19' AS Date), 12, 1, N'Criminal', N'03228429291', N'noumanmughal0123@gmail.com', 0, 0, N'Dec 22 2024  5:25PM', 21)
 GO
 SET IDENTITY_INSERT [dbo].[Lawyer] OFF
 GO
@@ -1554,13 +2819,33 @@ INSERT [dbo].[Sessions] ([SessionId], [UserId], [Time], [Topic], [Active]) VALUE
 GO
 INSERT [dbo].[Sessions] ([SessionId], [UserId], [Time], [Topic], [Active]) VALUES (41, 1, CAST(N'2024-12-16T08:49:15.423' AS DateTime), N'Explain Legislation', 1)
 GO
+INSERT [dbo].[Sessions] ([SessionId], [UserId], [Time], [Topic], [Active]) VALUES (42, 6, CAST(N'2024-12-19T00:14:39.150' AS DateTime), N'Case Rape', 1)
+GO
+INSERT [dbo].[Sessions] ([SessionId], [UserId], [Time], [Topic], [Active]) VALUES (43, 6, CAST(N'2024-12-19T00:30:31.240' AS DateTime), N'Case Pak Rape', 1)
+GO
+INSERT [dbo].[Sessions] ([SessionId], [UserId], [Time], [Topic], [Active]) VALUES (44, 6, CAST(N'2024-12-19T00:40:05.763' AS DateTime), N'Cases Pak Rape', 1)
+GO
+INSERT [dbo].[Sessions] ([SessionId], [UserId], [Time], [Topic], [Active]) VALUES (45, 1, CAST(N'2024-12-19T14:32:35.630' AS DateTime), N'Define Law', 1)
+GO
+INSERT [dbo].[Sessions] ([SessionId], [UserId], [Time], [Topic], [Active]) VALUES (46, 1, CAST(N'2024-12-21T12:33:50.590' AS DateTime), N'Cases Pak Rape', 1)
+GO
+INSERT [dbo].[Sessions] ([SessionId], [UserId], [Time], [Topic], [Active]) VALUES (47, 1, CAST(N'2024-12-21T16:55:13.287' AS DateTime), N'Define Law', 1)
+GO
+INSERT [dbo].[Sessions] ([SessionId], [UserId], [Time], [Topic], [Active]) VALUES (48, 1, CAST(N'2024-12-21T17:14:14.563' AS DateTime), N'Case Pak Punishment Rape', 1)
+GO
+INSERT [dbo].[Sessions] ([SessionId], [UserId], [Time], [Topic], [Active]) VALUES (49, 1, CAST(N'2024-12-21T21:56:07.723' AS DateTime), N'Cases Pak Rape', 1)
+GO
+INSERT [dbo].[Sessions] ([SessionId], [UserId], [Time], [Topic], [Active]) VALUES (50, 1, CAST(N'2024-12-22T16:58:46.907' AS DateTime), N'Filing Format Law Pak Suit', 1)
+GO
 SET IDENTITY_INSERT [dbo].[Sessions] OFF
 GO
 SET IDENTITY_INSERT [dbo].[Subscription] ON 
 GO
 INSERT [dbo].[Subscription] ([SubsId], [CurrentSubscription], [ExpiryDate], [RemainingCredits], [UserId], [StartDate]) VALUES (3, N'free', CAST(N'2024-12-17' AS Date), 4, 5, CAST(N'2024-12-14T11:38:47.8310000' AS DateTime2))
 GO
-INSERT [dbo].[Subscription] ([SubsId], [CurrentSubscription], [ExpiryDate], [RemainingCredits], [UserId], [StartDate]) VALUES (4, N'basic', CAST(N'2025-01-15' AS Date), 27, 1, CAST(N'2024-12-15T11:12:56.4210000' AS DateTime2))
+INSERT [dbo].[Subscription] ([SubsId], [CurrentSubscription], [ExpiryDate], [RemainingCredits], [UserId], [StartDate]) VALUES (4, N'basic', CAST(N'2025-01-21' AS Date), 38, 1, CAST(N'2024-12-21T16:55:56.9830000' AS DateTime2))
+GO
+INSERT [dbo].[Subscription] ([SubsId], [CurrentSubscription], [ExpiryDate], [RemainingCredits], [UserId], [StartDate]) VALUES (5, N'premium', CAST(N'2025-01-18' AS Date), 995, 6, CAST(N'2024-12-18T19:14:27.4880000' AS DateTime2))
 GO
 SET IDENTITY_INSERT [dbo].[Subscription] OFF
 GO
@@ -1576,17 +2861,19 @@ INSERT [dbo].[User] ([UserId], [Name], [Email], [Password], [Role]) VALUES (4, N
 GO
 INSERT [dbo].[User] ([UserId], [Name], [Email], [Password], [Role]) VALUES (5, N'1', N'1@gmail.com', N'scrypt:32768:8:1$p2nqdjekwLRPOVf2$10db55e212e17a9386ab7d913d9627d42a1493232778f2269ccede7cb0d6abf28aecfe2b7ba0bce75840c9f8e4a792404699b3395b654219da49a39bcc259ba1', N'client')
 GO
+INSERT [dbo].[User] ([UserId], [Name], [Email], [Password], [Role]) VALUES (6, N'apna-waqeel', N'noumanmughal01223@gmail.com', N'scrypt:32768:8:1$nOWI07FV2xH7yhXX$245d2182dcacd0c78662237f5c2b387c507a4117ee356279a2e3c833069bfd3f781b6eaccd13abaa6a49144371ffb12126c2bd348dcc0da02455ff64143635be', N'lawyer')
+GO
 SET IDENTITY_INSERT [dbo].[User] OFF
 GO
 SET ANSI_PADDING ON
 GO
-/****** Object:  Index [UQ__Lawyer__AA570FD450D08CE3]    Script Date: 12/16/2024 4:07:37 PM ******/
+/****** Object:  Index [UQ__Lawyer__AA570FD450D08CE3]    Script Date: 12/22/2024 10:20:47 PM ******/
 ALTER TABLE [dbo].[Lawyer] ADD UNIQUE NONCLUSTERED 
 (
 	[CNIC] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 GO
-/****** Object:  Index [IX_LawyerReview_LawyerId]    Script Date: 12/16/2024 4:07:37 PM ******/
+/****** Object:  Index [IX_LawyerReview_LawyerId]    Script Date: 12/22/2024 10:20:47 PM ******/
 CREATE NONCLUSTERED INDEX [IX_LawyerReview_LawyerId] ON [dbo].[LawyerReview]
 (
 	[LawyerId] ASC
@@ -1594,7 +2881,7 @@ CREATE NONCLUSTERED INDEX [IX_LawyerReview_LawyerId] ON [dbo].[LawyerReview]
 GO
 SET ANSI_PADDING ON
 GO
-/****** Object:  Index [UQ__User__A9D1053458E6CD7E]    Script Date: 12/16/2024 4:07:37 PM ******/
+/****** Object:  Index [UQ__User__A9D1053458E6CD7E]    Script Date: 12/22/2024 10:20:47 PM ******/
 ALTER TABLE [dbo].[User] ADD UNIQUE NONCLUSTERED 
 (
 	[Email] ASC
@@ -1677,8 +2964,4 @@ GO
 ALTER TABLE [dbo].[LawyerReview] CHECK CONSTRAINT [CHK_LawyerReview_Stars]
 GO
 ALTER TABLE [dbo].[User]  WITH CHECK ADD CHECK  (([Role]='system' OR [Role]='lawyer' OR [Role]='client'))
-GO
-USE [master]
-GO
-ALTER DATABASE [AW_Database] SET  READ_WRITE 
 GO
