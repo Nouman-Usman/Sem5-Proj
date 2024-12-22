@@ -25,8 +25,6 @@ from langchain.schema import HumanMessage, AIMessage, BaseMessage
 from langchain.memory import ConversationBufferWindowMemory
 import datetime
 import pyodbc
-# from langchain_core.pydantic_v1 import BaseModel, Field
-from crud import ChatMessageCRUD, ChatSessionCRUD  # Add this import
 
 load_dotenv()
 
@@ -38,6 +36,7 @@ class GraphState(TypedDict):
     documents: List[Document]
     source: List[str]
 
+
 class RAGAgent:
     def __init__(self):
         load_dotenv()
@@ -48,7 +47,7 @@ class RAGAgent:
         self.index = self.pc.Index(self.legal_index_name)
         self.web_search_index = self.pc.Index(self.web_search_index_name)
         self.llm = ChatGroq(
-            temperature=0, model="llama3-groq-70b-8192-tool-use-preview"
+            temperature=0, model="mixtral-8x7b-32768"
         )
         self.vectorstore = None
         self.retriever = None
@@ -63,105 +62,67 @@ class RAGAgent:
         self.memory = ConversationBufferWindowMemory(k=5)
         self.chats_loaded = False
 
-    def analyze_sentiment(self, question: str) -> str:
-        """Analyze sentiment with proper input validation and prompt handling"""
-        print("---SENTIMENT ANALYSIS---")
-        prompt_template = """You are a legal assistant analyzing the sentiment of text.
-            Analyze the following text and categorize it into exactly one of these categories:
-            Civil, Criminal, Corporate, Constitutional, Tax, Family, Intellectual Property, 
-            Labor and Employment, Immigration, Commercial, Environmental, Banking and Finance,
-            Cyber Law, Alternate Dispute Resolution (ADR)
-
-            Text: {text}
-
-            Return only the category name without any additional text."""
-
-            # Format prompt with actual text
-        prompt = prompt_template.format(text=question)
-
-            # Make LLM call with proper string input
-        sentiment_result = self.llm.invoke(prompt)
-        return sentiment_result.content
-            # Extract and clean response
-        # response = sentiment_result.content.strip()
-        # print(f"Sentiment analysis response: {response}")
-        #     # Handle tool call format if present
-        # if "<tool_call>" in response:
-        #         try:
-        #             parsed = self._safe_parse_json(response)
-        #             if parsed and "arguments" in parsed:
-        #                 if "category" in parsed["arguments"]:
-        #                     response = parsed["arguments"]["category"]
-        #         except Exception:
-        #             pass
-
-        #     # Validate against known categories
-        # valid_categories = {
-        #         "Civil", "Criminal", "Corporate", "Constitutional", "Tax",
-        #         "Family", "Intellectual Property", "Labor and Employment",
-        #         "Immigration", "Commercial", "Environmental", "Banking and Finance",
-        #         "Cyber Law", "Alternate Dispute Resolution"
-        #     }
-
-        # response = response.strip()
-        # if response in valid_categories:
-        #         return response
-
-        #     # Default to most relevant category if not exact match
-        # return self._find_closest_category(response, valid_categories)
-
-        # except Exception as e:
-        #     logging.error(f"Sentiment analysis error: {e}")
-        #     return "Civil"  # Default category on error
-
-    def _find_closest_category(self, text: str, categories: set) -> str:
-        """Find closest matching legal category"""
-        text = text.lower()
+    # def analyze_sentiment(self, question: str) -> str:
+    #     """Analyze the legal category of a given text question.
         
-        # Direct matches for common variations
-        category_variations = {
-            "civil law": "Civil",
-            "criminal law": "Criminal",
-            "corporate law": "Corporate",
-            "family law": "Family",
-            "tax law": "Tax",
-            "ip law": "Intellectual Property",
-            "employment law": "Labor and Employment",
-            "labor law": "Labor and Employment",
-            "immigration law": "Immigration",
-            "business law": "Commercial",
-            "environmental law": "Environmental",
-            "banking law": "Banking and Finance",
-            "cyber law": "Cyber Law",
-            "cybersecurity": "Cyber Law",
-            "adr": "Alternate Dispute Resolution",
-            "mediation": "Alternate Dispute Resolution",
-            "arbitration": "Alternate Dispute Resolution"
-        }
-
-        # Check for exact matches in variations
-        if text in category_variations:
-            return category_variations[text]
-
-        # Find best partial match
-        max_score = 0
-        best_match = "Civil"  # Default category
+    #     Args:
+    #         question (str): The text to analyze
+            
+    #     Returns:
+    #         str: The determined legal category
+            
+    #     Raises:
+    #         ValueError: If question is not a string
+    #     """
+    #     print("---SENTIMENT ANALYSIS---")
         
-        for category in categories:
-            # Calculate word overlap score
-            category_words = set(category.lower().split())
-            text_words = set(text.split())
-            common_words = category_words & text_words
-            
-            # Weight longer matches more heavily
-            score = len(common_words) / max(len(category_words), len(text_words))
-            
-            if score > max_score:
-                max_score = score
-                best_match = category
+    #     # Input validation
+    #     if not isinstance(question, str):
+    #         raise ValueError(f"Invalid question type: {type(question)}. Expected str.")
 
-        return best_match
+    #     VALID_CATEGORIES = {
+    #         "Civil", "Criminal", "Corporate", "Constitutional", "Tax",
+    #         "Family", "Intellectual Property", "Labor and Employment",
+    #         "Immigration", "Commercial", "Environmental", "Banking and Finance",
+    #         "Cyber Law", "Alternate Dispute Resolution"
+    #     }
 
+    #     try:
+    #         prompt = """You are a legal assistant analyzing the sentiment of text.
+    #             Analyze the following text and categorize it into exactly one of these categories:
+    #             {categories}
+
+    #             Text: {text}
+
+    #             Return only the category name without any additional text.""".format(
+    #                 categories=", ".join(sorted(VALID_CATEGORIES)),
+    #                 text=question
+    #             )
+    #         sentiment_result = self.llm.invoke(prompt)
+    #         response = sentiment_result.content.strip()
+    #         print(f"Sentiment analysis response: {response}")
+
+    #         # Handle tool call format
+    #         if "<tool_call>" in response:
+    #             try:
+    #                 parsed = self._safe_parse_json(response)
+    #                 if parsed and "arguments" in parsed:
+    #                     if "category" in parsed["arguments"]:
+    #                         response = parsed["arguments"]["category"]
+    #             except Exception as e:
+    #                 logging.warning(f"Failed to parse tool call: {e}")
+
+    #         # Clean and validate response
+    #         response = response.strip()
+    #         if response in VALID_CATEGORIES:
+    #             return response
+
+    #         # Find closest category match
+    #         return self._find_closest_category(response, VALID_CATEGORIES)
+
+    #     except Exception as e:
+    #         logging.error(f"Sentiment analysis error: {e}")
+    #         return "Civil"  
     def _initialize_vectorstore(self):
         embeddings = HuggingFaceEmbeddings(model_name="intfloat/multilingual-e5-large")
         self.vectorstore = PineconeVectorStore(index=self.index, embedding=embeddings)
@@ -170,28 +131,73 @@ class RAGAgent:
         print("Vectorstore initialized and documents added.")
 
     def _initialize_prompts(self):
+        self.analyze_sentiment_prompt = PromptTemplate(
+    template="""<|begin_of_text|><|start_header_id|>system<|end_header_id|> You are a legal assistant analyzing the sentiment of text. First, determine if the input text is related to a legal case or legal matter.
+    If the text is NOT related to legal matters, or the text is general query that does not need to be adressed by any lawyer then return exactly: None
+
+    If the text IS legal-related, analyze its sentiment and categorize it into exactly one of these categories: {categories}
+
+    Text: {text}
+
+    Return only 'None' for non-legal text, or just the category name for legal text without any additional explanation. <|eot_id|><|start_header_id|>assistant<|end_header_id|>""",
+        input_variables=["categories", "text"],
+    )
+        self.analyze_sentiment = self.analyze_sentiment_prompt | self.llm | StrOutputParser()        
         self.retrieval_grader_prompt = PromptTemplate(
-            template="""You are a legal document relevance validator.
-Determine if a document contains information relevant to a given question.
-
-You must respond with ONLY a JSON object in this exact format (no other text):
-{{"score": "yes"}} or {{"score": "no"}}
-
-RELEVANCE CRITERIA:
-1. The document contains information that directly or indirectly answers the question
-2. The document discusses related legal concepts or procedures
-3. The document references relevant laws, sections, or precedents
-
-Document: {document}
-Question: {question}""",
+            template="""<|begin_of_text|><|start_header_id|>system<|end_header_id|> You are a grader assessing relevance 
+            of a retrieved document to a user question. If the document contains keywords related to the user question, 
+            grade it as relevant. It does not need to be a stringent test. The goal is to filter out erroneous retrievals. \n
+            Give a binary score 'yes' or 'no' score to indicate whether the document is relevant to the question. \n
+            Provide the binary score as a JSON with a single key 'score' and no premable or explaination.
+             <|eot_id|><|start_header_id|>user<|end_header_id|>
+            Here is the retrieved document: \n\n {document} \n\n
+            Here is the user question: {question} \n <|eot_id|><|start_header_id|>assistant<|end_header_id|>
+            """,
             input_variables=["question", "document"],
         )
-        self.retrieval_grader = (
-            self.retrieval_grader_prompt 
-            | self.llm
-            | JsonOutputParser()
-        )
         
+        self.retrieval_grader = (
+            self.retrieval_grader_prompt | self.llm | JsonOutputParser()
+        )
+
+        # self.generate_prompt = PromptTemplate(
+        #     template="""<|begin_of_text|><|start_header_id|>system<|end_header_id|> You are a legal assistant for question-answering tasks in the context of Pakistani law. Structure your responses in Markdown format following this template:
+
+        # # Legal Law Number if applicable[Optional]
+        # ## Facts
+        # [Provide a summary of the facts of the case]
+
+        # # Previous Case
+        # [Provide a summary of the previous case between parties with case number]
+
+        # ## Case Description
+        # [Provide a detailed description of the case]
+
+        # ## Key Points
+        # [List the most important points or steps as bullet points]
+        # * Point 1
+        # * Point 2
+        # * Point 3
+
+        # ## What to do next
+        # [Provide a summary of the next steps or actions to be taken and also add a point that I've recommended some top lawyers with in your area]
+
+        # Previous conversation context:
+        # {chat_history}
+
+        # Question: {question} 
+        # Retrieved information: {context} 
+
+        # Remember to:
+        # 1. Use Markdown headers (# for main title, ## for sections)
+        # 2. Use bullet points (*) for lists
+        # 3. Use bold (**) for emphasis on important terms
+        # 4. Include relevant legal citations where applicable
+        # 5. Use <br> for line breaks
+
+        # <|eot_id|><|start_header_id|>assistant<|end_header_id|>""",
+        #     input_variables=["question", "context", "chat_history"],
+        # )
         self.generate_prompt = PromptTemplate(
             template="""<|begin_of_text|><|start_header_id|>system<|end_header_id|> You are a legal assistant for question-answering tasks in the context of Pakistani law. Structure your responses in Markdown format to aid in legal research. Bold the key terms like section or laws and use bullet points for lists. Provide a detailed response to the user's question.
 
@@ -203,10 +209,10 @@ Question: {question}""",
 
         Remember to:
         1. Use Markdown headers (# for main title, ## for sections)
-        2. Use bullet points (*) for lists
+        2. Use ordered list for steps
         3. Use bold (**) for emphasis on important terms
         4. Include relevant legal citations where applicable
-        5. Use <br> for line breaks
+        5. Use proper line breaks and formatting
 
         <|eot_id|><|start_header_id|>assistant<|end_header_id|>""",
             input_variables=["question", "context", "chat_history"],
@@ -214,13 +220,15 @@ Question: {question}""",
         self.rag_chain = self.generate_prompt | self.llm | StrOutputParser()
 
         self.hallucination_grader_prompt = PromptTemplate(
-            template="""You are evaluating if an answer is supported by given documents.
-Return ONLY a JSON response in this exact format:
-{{"score": "yes"}} - if the answer is supported
-{{"score": "no"}} - if the answer is not supported
-
-Documents: {documents}
-Answer to evaluate: {generation}""",
+            template=""" <|begin_of_text|><|start_header_id|>system<|end_header_id|> You are a grader assessing whether 
+            an answer is grounded in / supported by a set of facts. Give a binary score 'yes' or 'no' score to indicate 
+            whether the answer is grounded in / supported by a set of facts. Provide the binary score as a JSON with a 
+            single key 'score' and no preamble or explanation. <|eot_id|><|start_header_id|>user<|end_header_id|>
+            Here are the facts:
+            \n ------- \n
+            {documents} 
+            \n ------- \n
+            Here is the answer: {generation}  <|eot_id|><|start_header_id|>assistant<|end_header_id|>""",
             input_variables=["generation", "documents"],
         )
         self.hallucination_grader = (
@@ -228,13 +236,14 @@ Answer to evaluate: {generation}""",
         )
 
         self.answer_grader_prompt = PromptTemplate(
-            template="""You are evaluating if an answer is useful for a question.
-Return ONLY a JSON response in this exact format:
-{{"score": "yes"}} - if the answer is useful
-{{"score": "no"}} - if the answer is not useful
-
-Question: {question}
-Answer to evaluate: {generation}""",
+            template="""<|begin_of_text|><|start_header_id|>system<|end_header_id|> You are a grader assessing whether an 
+            answer is useful to resolve a question. Give a binary score 'yes' or 'no' to indicate whether the answer is 
+            useful to resolve a question. Provide the binary score as a JSON with a single key 'score' and no preamble or explanation.
+             <|eot_id|><|start_header_id|>user<|end_header_id|> Here is the answer:
+            \n ------- \n
+            {generation} 
+            \n ------- \n
+            Here is the question: {question} <|eot_id|><|start_header_id|>assistant<|end_header_id|>""",
             input_variables=["generation", "question"],
         )
         self.answer_grader = self.answer_grader_prompt | self.llm | JsonOutputParser()
@@ -270,6 +279,7 @@ Question to route: {question}
                 break
             doc_texts.append(doc_text)
             total_length += len(doc_text)
+            # Extract source from document metadata if available
             if isinstance(doc, Document):
                 if "source" in doc.metadata:
                     if not doc.metadata["source"].startswith("/kaggle"):                        
@@ -280,19 +290,12 @@ Question to route: {question}
         context = "\n".join(doc_texts)
         gc.collect()
         try:
-            # kwargs = {
-            #     "context": context,
-            #     "question": question,
-            #     "chat_history": chat_context
-            # }
-            kwargs = self.generate_prompt.format(
-                context=context,
-                question=question,
-                chat_history=chat_context
-            )
-            generation = self.llm.invoke(kwargs)
-            print("Generation response: ", generation)
-            breakpoint()
+            generation = self.rag_chain.invoke({
+                "context": context,
+                "question": question,
+                "chat_history": chat_context
+            })
+
             # Check if generation is an error message
             if any(phrase in generation.lower() for phrase in [
                 "i apologize", "i'm sorry", "i do not have the capability",
@@ -394,89 +397,46 @@ Question to route: {question}
             logging.error(f"JSON parsing error: {e}")
             return {"score": "no"}
 
-    def _process_grader_response(self, response: Any) -> Dict[str, str]:
-        """Helper to process and normalize grader responses"""
-        if isinstance(response, dict) and "score" in response:
-            return response
-            
-        if isinstance(response, str):
-            # Handle tool call format
-            if "<tool_call>" in response:
-                try:
-                    start = response.find("{")
-                    end = response.rfind("}") + 1
-                    if start >= 0 and end > start:
-                        data = json.loads(response[start:end])
-                        if "arguments" in data:
-                            return {"score": "yes"}  # Default to yes for tool calls
-                except:
-                    pass
-            # Try direct JSON parsing
-            try:
-                if response.startswith("{") and response.endswith("}"):
-                    data = json.loads(response)
-                    if "score" in data:
-                        return data
-            except:
-                pass
-                
-        return {"score": "no"}  # Default fallback
-
-    def _handle_tool_call_response(self, response: str) -> Dict[str, str]:
-        """Extract relevance score from tool call format"""
-        try:
-            start = response.find("{")
-            end = response.rfind("}") + 1
-            if start >= 0 and end > start:
-                data = json.loads(response[start:end])
-                
-                # Common tool call patterns
-                if "arguments" in data:
-                    args = data["arguments"]
-                    if any(key in args for key in ["score", "isRelevant", "relevant"]):
-                        return {"score": "yes"}
-                    if "document" in args and "question" in args:
-                        return {"score": "yes"}
-                
-                # Check for direct score in response
-                if "score" in data:
-                    return {"score": str(data["score"]).lower()}
-                    
-            return {"score": "no"}
-        except:
-            return {"score": "no"}
-
     def grade_documents(self, state: Dict) -> Dict:
         print("---CHECK DOCUMENT RELEVANCE TO QUESTION---")
         question = state["question"]
         documents = state["documents"]
+        source = state["source"]
         filtered_docs = []
         web_search = "No"
-        source = state["source"]
-        
-        # Check each document's relevance
+
         for d in documents:
-            prompt_value = self.retrieval_grader_prompt.format(
-                question=question,
-                document=d.page_content
-            )
-            llm_response = self.llm.invoke(prompt_value)
-            print(" Llm response: ", llm_response.content)
             try:
-                parsed_json = json.loads(llm_response.content)
-                if parsed_json.get("score") == "yes":
+                # Clean document content
+                d.page_content = d.page_content.replace("\\", "").replace('"', "")
+                print(f"Document: {d.page_content[:100]}...")
+                # Get grading response
+                response = self.retrieval_grader.invoke(
+                    {"question": question, "document": d.page_content}
+                )
+                
+                # Handle response parsing
+                if isinstance(response, dict):
+                    grade = response.get("score", "no")
+                else:
+                    parsed = self._safe_parse_json(response)
+                    grade = parsed.get("score", "no")
+
+                grade = str(grade).lower()
+                
+                if grade == "yes":
+                    print("---GRADE: DOCUMENT RELEVANT---")
                     filtered_docs.append(d)
                 else:
-                    print("Document not relevant")
+                    print("---GRADE: DOCUMENT NOT RELEVANT---")
                     web_search = "Yes"
-                    GraphState["web_search"] = "Yes"  
-            except json.JSONDecodeError:
-                web_search = "Yes"  # Set to Yes on parsing error
+
+            except Exception as e:
+                logging.error(f"Document grading error: {e}")
+                web_search = "Yes"
                 continue
 
-        # Return all state fields including web_search
         return {
-            **state,  # Preserve all existing state
             "documents": filtered_docs,
             "question": question,
             "web_search": web_search,
@@ -510,6 +470,7 @@ Question to route: {question}
                 )
             if documents:
                 web_documents.extend(documents)
+
         except Exception as e:
             print(f"Web search error: {e}")
             web_documents = documents
@@ -553,37 +514,68 @@ Question to route: {question}
         documents = state["documents"]
         generation = state["generation"]
         attempts = state.get("attempts", 0)
-
+        
         if attempts >= 2:
+            print("---MAX RETRIES REACHED, RETURNING CURRENT GENERATION---")
             return "useful"
 
         try:
-            # Check hallucination
-            prompt_value = self.hallucination_grader_prompt.format(
-                documents=documents,
-                generation=generation
-            )
-            llm_response = self.llm.invoke(prompt_value)
-            try:
-                parsed_json = json.loads(llm_response.content)
-                if parsed_json.get("score") == "yes":
-                    prompt_value = self.answer_grader_prompt.format(
-                        question=question,
-                        generation=generation
-                    )
-                    llm_response = self.llm.invoke(prompt_value)
-                    parsed_json = json.loads(llm_response.content)
-                    return "useful" if parsed_json.get("score") == "yes" else "not useful"
-                return "not supported"
-            except json.JSONDecodeError:
-                return "not supported" if attempts < 2 else "useful"
+            # Check for error messages in generation
+            if any(phrase in generation.lower() for phrase in [
+                "i apologize", "i'm sorry", "i do not have the capability",
+                "cannot assist", "cannot help", "not able to"
+            ]):
+                print("---DETECTED ERROR MESSAGE IN GENERATION---")
+                return "not useful"
 
+            score = self.hallucination_grader.invoke(
+                {"documents": documents, "generation": generation}
+            )
+            
+            if isinstance(score, str):
+                parsed_score = self._safe_parse_json(score)
+            else:
+                parsed_score = score
+
+            grade = parsed_score.get("score", "no").lower()
+            
+            if grade == "yes":
+                print("---DECISION: GENERATION IS GROUNDED IN DOCUMENTS---")
+                try:
+                    score = self.answer_grader.invoke(
+                        {"question": question, "generation": generation}
+                    )
+                    
+                    if isinstance(score, str):
+                        parsed_score = self._safe_parse_json(score)
+                    else:
+                        parsed_score = score
+                        
+                    grade = parsed_score.get("score", "no").lower()
+                except Exception as e:
+                    logging.error(f"Answer grading error: {e}")
+                    grade = "no"
+                
+                if grade == "yes":
+                    return "useful"
+                return "not useful" if attempts < 2 else "useful"
+            else:
+                print("---DECISION: GENERATION IS NOT GROUNDED IN DOCUMENTS, RE-TRY---")
+                attempts += 1
+                return "not supported" if attempts < 2 else "useful"
+                
         except Exception as e:
             logging.error(f"Generation grading error: {e}")
-            return "not supported" if attempts < 2 else "useful"
+            # If we get an error and the generation looks like an error message,
+            # try again rather than accepting it
+            if "sorry" in generation.lower() or "apologize" in generation.lower():
+                return "not supported" if attempts < 2 else "useful"
+            return "useful"
 
     def build_workflow(self):
         workflow = StateGraph(state_schema=GraphState)
+
+        # Add nodes with attempt tracking capabilities
         workflow.add_node("websearch", self.web_search)
         workflow.add_node("retrieve", self.retrieve)
         workflow.add_node("grade_documents", self.grade_documents)
@@ -609,7 +601,7 @@ Question to route: {question}
             self.decide_to_generate,
             {
                 "websearch": "websearch",
-                "generate": "generate",  
+                "generate": "generate",  # Direct to generate instead of update_query
             },
         )
 
@@ -653,10 +645,20 @@ Question to route: {question}
                                 self.memory.save_context({'input': content}, {'output': ''})
                             elif role in ('AI Message', 'assistant'):
                                 self.memory.save_context({'input': ''}, {'output': content})
-
+            VALID_CATEGORIES = {
+            "Civil", "Criminal", "Corporate", "Constitutional", "Tax",
+            "Family", "Intellectual Property", "Labor and Employment",
+            "Immigration", "Commercial", "Environmental", "Banking and Finance",
+            "Cyber Law", "Alternate Dispute Resolution"
+        }
             chat_context = self.memory.load_memory_variables({})["history"]
-            sentiment = self.analyze_sentiment(question=question)
-
+            sentiment = self.analyze_sentiment.invoke(
+                {
+                 "text": question,
+                 "categories": ", ".join(sorted(VALID_CATEGORIES))
+                }
+            )
+            print(f"Sentiment: {sentiment}")
             app = self.build_workflow()
             inputs = {
                 "question": question,
@@ -711,16 +713,10 @@ Question to route: {question}
     def save_context(self, user_input: str, assistant_output: str):
         self.memory.save_context({"input": user_input}, {"output": assistant_output})
 
-    def is_valid_uuid(self, uuid_str: str) -> bool:
-        try:
-            uuid.UUID(uuid_str)
-            return True
-        except (ValueError, AttributeError, TypeError):
-            return False
 
 if __name__ == "__main__":
     rag = RAGAgent()
     query = "What is the procedure for filing a lawsuit in Pakistan?"
-    question = "Rape Cases in Pakistan"
-    result = rag.run(question, [])
+    query = "Rape Cases In Pak"
+    result = rag.run(query, [])
     print(result)

@@ -1,0 +1,369 @@
+2024-12-22 15:50:30,211 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-22 15:51:17,799 - app - INFO - Initializing RAG agent...
+2024-12-22 15:51:17,823 - pinecone_plugin_interface.logging - INFO - Discovering subpackages in _NamespacePath(['C:\\Users\\Nouma\\OneDrive\\Desktop\\GenAi x Xavour\\ApnaWaqeel\\venv\\Lib\\site-packages\\pinecone_plugins'])
+2024-12-22 15:51:17,824 - pinecone_plugin_interface.logging - INFO - Looking for plugins in pinecone_plugins.inference
+2024-12-22 15:51:18,126 - pinecone_plugin_interface.logging - INFO - Installing plugin inference into Pinecone
+2024-12-22 15:51:25,635 - datasets - INFO - PyTorch version 2.4.1 available.
+2024-12-22 15:51:27,613 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2024-12-22 15:51:27,620 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2024-12-22 15:51:43,817 - app - INFO - RAG agent initialized successfully
+2024-12-22 15:51:43,855 - app - INFO - Loaded existing session 49
+2024-12-22 15:51:44,388 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-22 15:52:09,095 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-22 15:52:09,840 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-22 15:52:10,673 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-22 15:52:11,278 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-22 15:52:19,010 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-22 15:52:19,780 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-22 15:52:20,340 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2024-12-22 15:52:20,343 - groq._base_client - INFO - Retrying request to /openai/v1/chat/completions in 1.000000 seconds
+2024-12-22 15:52:22,026 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-22 15:52:22,231 - root - INFO - Result: ### Rape Cases in Pakistan
+
+According to **official data**, there are at least **11 rape cases reported in Pakistan every day**. During the last six years, a total of **22,000 rape cases** were reported to the police across the country. The distribution of these cases among different provinces is as follows:
+
+- Punjab: **18,609 cases**
+- Sindh: **1,873 cases**
+- Khyber Pakhtunkhwa (KP): **1,183 cases**
+- Balochistan: **129 cases**
+- Islamabad: **210 cases**
+
+(Source: [Opinion Newspost Editorial Instep Money Matters YOU US TNS](<https://www.tns.thenews.com/ rape-epidemic-a-legal-battle-for-victims-pakistan-today>) and [Geo News investigation](<https://www.geo.tv/latest/393113-only-41-of-rape-cases-reported-in-pakistan-due-to-social-pressures-loopholes-in-law-and-order-system>)
+
+Another study conducted by a private TV channel in Pakistan found that between 2017 and 2021, up to **21,900 women** were reported to have been raped nationwide.
+
+(Source: [Pakistan Today](<https://www.pakistantoday.com.pk/2021/09/05/rape-epidemic-a-legal-battle-for-victims/>>)
+
+#### Legal Provisions and Punishments
+
+The **Punishment for rape in Pakistan** is either the **death penalty** or **imprisonment of between ten and twenty-five years**. In cases related to **gang rape**, the punishment is either the **death penalty** or **life imprisonment**. **DNA test** and other scientific evidence are used in prosecuting rape cases in Pakistan.
+
+(Source: [Pakistani laws](<https://www.pakistani.org/law/bill/2016/Criminal-Law-Amendment-Act-2016.html>)
+
+#### Legal Amendments and Challenges
+
+In 2016, several amendments were passed to strengthen the laws against assaulting children, harassment, and misdiagnosing victims. The Criminal Law Act also enhanced the evidence collection process by incorporating modern forensic tools into rape cases. However, addressing the problem of rape in Pakistan requires a **multipronged strategy** due to the frequent inexperience and lack of skill among law enforcement organizations in managing rape cases.
+
+(Source: [Pakistan Today](<https://www.pakistantoday.com.pk/2021/09/05/rape-epidemic-a-legal-battle-for-victims/>>)
+
+<br>
+
+*Last updated: 2023-03-20*
+2024-12-22 15:53:12,115 - app - INFO - Loaded existing session 49
+2024-12-22 15:53:12,730 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-22 15:53:19,283 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-22 15:53:19,836 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-22 15:53:20,284 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-22 15:53:20,634 - app - WARNING - No lawyers found for sentiment: neutral
+2024-12-22 16:37:17,475 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-22 16:37:35,348 - app - INFO - Initializing RAG agent...
+2024-12-22 16:37:35,389 - pinecone_plugin_interface.logging - INFO - Discovering subpackages in _NamespacePath(['C:\\Users\\Nouma\\OneDrive\\Desktop\\GenAi x Xavour\\ApnaWaqeel\\venv\\Lib\\site-packages\\pinecone_plugins'])
+2024-12-22 16:37:35,397 - pinecone_plugin_interface.logging - INFO - Looking for plugins in pinecone_plugins.inference
+2024-12-22 16:37:36,125 - pinecone_plugin_interface.logging - INFO - Installing plugin inference into Pinecone
+2024-12-22 16:37:48,208 - datasets - INFO - PyTorch version 2.4.1 available.
+2024-12-22 16:37:51,697 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2024-12-22 16:37:51,699 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2024-12-22 16:38:15,907 - app - INFO - RAG agent initialized successfully
+2024-12-22 16:38:15,929 - app - INFO - Loaded existing session 47
+2024-12-22 16:38:16,798 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-22 16:38:40,270 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-22 16:38:41,426 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-22 16:38:41,870 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-22 16:38:42,342 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-22 16:38:48,208 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-22 16:38:49,424 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-22 16:38:49,992 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-22 16:38:50,224 - root - INFO - Result: # Law and its Types
+
+In the context of Pakistani law, it is essential to understand the different types of law that exist. These types of law are the foundation for the legal system and play a unique role in upholding justice and maintaining order in society.
+
+## Understanding Law
+
+**Law** is the discipline and profession concerned with the customs, practices, and rules of conduct of a community that are recognized as binding by the community.
+
+### Public Law
+
+Public law often refers to such laws as criminal laws, constitutional laws, and administrative laws. Within these categories are a number of other types of law, such as:
+
+- *Criminal Laws*: These are laws that define criminal offenses and specify the punishments for such offenses. Criminal laws can include everything from battery and trespassing to larceny and murder. ([Source](https://www.law.cornell.edu/wex/criminal_law))
+- *Constitutional Laws*: These are the laws that define the relationship between the different branches of government and the citizens of the country. Constitutional laws also protect the rights and freedoms of individuals. ([Source](https://www.law.cornell.edu/wex/constitutional_law))
+- *Administrative Laws*: These are the laws that govern the actions of government agencies and the procedures that these agencies must follow in making and implementing regulations. ([Source](https://www.law.cornell.edu/wex/administrative_law))
+
+## Other Types of Law
+
+In addition to public law, there are other types of law that are important to understand. These include:
+
+- *Agency Law*: This is the law that governs the relationships between principals and agents. ([Source](https://www.law.cornell.edu/wex/agency))
+- *Air Law*: This is the law that governs the use of airspace and the operation of aircraft. ([Source](https://www.law.cornell.edu/wex/air_law))
+- *Bankruptcy Law*: This is the law that governs the process of declaring bankruptcy and the distribution of assets to creditors. ([Source](https://www.law.cornell.edu/wex/bankruptcy))
+- *Carriage of Goods Law*: This is the law that governs the transportation of goods by land, sea, or air. ([Source](https://www.law.cornell.edu/wex/carriage_of_goods))
+- *Commercial Transaction Law*: This is the law that governs the buying and selling of goods and services. ([Source](https://www.law.cornell.edu/wex/commercial_transaction))
+- *Contract Law*: This is the law that governs the formation, performance, and enforcement of contracts. ([Source](https://www.law.cornell.edu/wex/contract))
+- *Comparative Law*: This is the law that compares the legal systems of different countries and examines the relationship of the law to the social sciences. ([Source](https://www.law.cornell.edu/wex/comparative_law))
+- *Procedural Law*: This is the law that governs the procedures and rules of courts and other tribunals. ([Source](https://www.law.cornell.edu/wex/procedural_law))
+- *Property Law*: This is the law that governs the rights and obligations related to the ownership of property. ([Source](https://www.law.cornell.edu/wex/property))
+- *Tax Law*: This is the law that governs the taxation of income, property, and other transactions. ([Source](https://www.law.cornell.edu/wex/tax))
+- *Tort Law*: This is the law that governs the compensation of individuals for harm caused by the actions or omissions of others. ([Source](https://www.law.cornell.edu/wex/tort))
+
+Understanding these different types of law is essential for legal research and practice in Pakistan.
+2024-12-22 16:38:50,516 - app - WARNING - No lawyers found for sentiment: The given text "Explain law and it's types" is a general request for information about law and its categories. It does not fall specifically into any of the provided categories. However, it can be argued that this text generally relates to the field of "Corporate" law, as understanding different types of law is crucial in a corporate setting. But since the text is not explicitly about any specific category, I would recommend categorizing it as "General Legal Information".
+2024-12-22 16:43:14,513 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-22 16:43:54,057 - app - INFO - Initializing RAG agent...
+2024-12-22 16:43:54,078 - pinecone_plugin_interface.logging - INFO - Discovering subpackages in _NamespacePath(['C:\\Users\\Nouma\\OneDrive\\Desktop\\GenAi x Xavour\\ApnaWaqeel\\venv\\Lib\\site-packages\\pinecone_plugins'])
+2024-12-22 16:43:54,081 - pinecone_plugin_interface.logging - INFO - Looking for plugins in pinecone_plugins.inference
+2024-12-22 16:43:54,233 - pinecone_plugin_interface.logging - INFO - Installing plugin inference into Pinecone
+2024-12-22 16:44:00,369 - datasets - INFO - PyTorch version 2.4.1 available.
+2024-12-22 16:44:02,645 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2024-12-22 16:44:02,657 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2024-12-22 16:44:17,569 - app - INFO - RAG agent initialized successfully
+2024-12-22 16:44:17,620 - app - INFO - Loaded existing session 47
+2024-12-22 16:44:18,191 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-22 16:44:43,731 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-22 16:44:44,237 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-22 16:44:44,719 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-22 16:44:46,016 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-22 16:44:51,105 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-22 16:44:51,788 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2024-12-22 16:44:51,792 - groq._base_client - INFO - Retrying request to /openai/v1/chat/completions in 2.000000 seconds
+2024-12-22 16:44:54,296 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-22 16:44:54,694 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2024-12-22 16:44:54,700 - groq._base_client - INFO - Retrying request to /openai/v1/chat/completions in 7.000000 seconds
+2024-12-22 16:45:02,196 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-22 16:45:02,445 - root - INFO - Result: # Rape Cases in Pakistan
+
+According to official data, there are at least **11 rape cases reported in Pakistan every day** with over **22,000 rape cases reported to police across the country in the last six years**. This information is based on statistics from various provinces including **Punjab (18,609 cases)**, **Sindh (1,873 cases)**, **Khyber Pakhtunkhwa (KP, 1,183 cases)**, **Balochistan (129 cases)**, and **Islamabad (210 cases)**.
+
+Additionally, a study conducted by a private TV channel in Pakistan found that between 2017 and 2021, up to **21,900 women were reported to have been raped nationwide**.
+
+## Legal Provisions and Amendments
+
+The **Pakistani laws** provide for **either death penalty or imprisonment of between ten and twenty-five years** as punishment for rape. In cases of gang rape, the punishment is either **death penalty or life imprisonment**. **DNA test and other scientific evidence** are used in prosecuting rape cases in Pakistan.
+
+In 2016, the **Criminal Law Act** was amended to strengthen the laws against assaulting children, harassment, and misdiagnosing victims. It also enhanced the evidence collection process by incorporating modern forensic tools into rape cases.
+
+## Challenges and Measures
+
+The problem of rape in Pakistan necessitates a **multipronged strategy** due to the frequent inexperience and lack of skill in managing rape cases within law enforcement organizations. Addressing social pressures and legal loopholes that contribute to the underreporting of only **41% of rape cases** is crucial for effective prevention and prosecution of rape cases.
+
+<br>
+
+Sources:
+- Opinion Newspost Editorial Instep Money Matters YOU US TNS
+- Pakistan Today
+- Pakistani laws, including the Pakistan Penal Code, Criminal Law Act, and local inquiry orders
+2024-12-22 16:55:47,672 - app - INFO - Loaded existing session 47
+2024-12-22 16:55:48,451 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-22 16:55:56,156 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-22 16:55:56,671 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-22 16:55:57,114 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-22 16:55:58,393 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-22 16:56:03,159 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-22 16:56:03,908 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-22 16:56:04,372 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-22 16:56:04,618 - root - INFO - Result: **Definition of "aw"**
+
+The term "aw" is an interjection used in the English language to express various emotions such as sympathy, tenderness, disapproval, or disbelief. Here are some detailed definitions from different sources:
+
+- **American Heritage® Dictionary of the English Language, Fifth Edition:** _Aw_ is an interjection used to express sympathy, tenderness, disapproval, or disbelief.
+
+- **The Free Dictionary:** The meaning of _aw_ is —used to express mild disappointment, gentle entreaty, or real or mock sympathy or sentiment.
+
+- **English dictionary definition of aw:** _Aw_ is an interjection used to express sympathy, tenderness, disapproval, or disbelief.
+
+It is important to note that this term is not a law or a legal term in the context of Pakistani law. It is an English language interjection and does not have any specific legal meaning or application.
+2024-12-22 16:56:04,897 - app - WARNING - No lawyers found for sentiment: None
+2024-12-22 16:56:15,593 - app - INFO - Loaded existing session 47
+2024-12-22 16:56:16,090 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-22 16:56:18,602 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-22 16:56:19,121 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-22 16:56:19,576 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-22 16:56:20,039 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-22 16:56:25,557 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-22 16:56:26,450 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-22 16:56:26,906 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2024-12-22 16:56:26,908 - groq._base_client - INFO - Retrying request to /openai/v1/chat/completions in 5.000000 seconds
+2024-12-22 16:56:32,450 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-22 16:56:32,711 - root - INFO - Result: # Legal Definition of Law
+
+In the context of Pakistani law, **law** can be defined as a system of rules and regulations established by a governing authority to maintain social order, justice, and peace. It is a binding force that governs the conduct of individuals and organizations in a society.
+
+## Different Types of Law
+
+There are several types of law in Pakistani legal system, including:
+
+- *Constitutional Law*: This is the highest form of law in Pakistan, which establishes the framework of the government and the fundamental rights of the citizens.
+
+- *Criminal Law*: This type of law deals with crimes and their punishments. It includes offences against persons, property, and the state.
+
+- *Civil Law*: This area of law deals with disputes between individuals or organizations. It includes areas such as contracts, torts, and family law.
+
+- *Administrative Law*: This type of law governs the relationship between the government and its citizens. It includes areas such as taxation, immigration, and social welfare.
+
+- *International Law*: This area of law governs the relationships between different countries. It includes areas such as trade, human rights, and war.
+
+## Key Provisions Related to Law in Pakistan
+
+The Constitution of Pakistan is the supreme law of the country. It lays down the principles and rules for the governance of the country. Some of the key provisions related to law in Pakistan are:
+
+- **Article 1**: This article establishes Pakistan as a federal republic, consisting of four provinces, Islamabad Capital Territory, and such other territories as may be specified.
+
+- **Article 4**: This article guarantees the fundamental rights and freedoms of the citizens, including the right to life and liberty, equality before law, and prohibition of discrimination on the basis of sex, religion, race, caste, or place of birth.
+
+- **Article 19**: This article guarantees the freedom of speech, expression, and the press.
+
+- **Article 20**: This article guarantees the right to form associations or unions.
+
+- **Article 25**: This article guarantees the equality of citizens before law and equal protection of law.
+
+## Relevant Legal Citations
+
+- Constitution of Pakistan, 1973
+- Pakistan Penal Code, 1860
+- Code of Criminal Procedure, 1898
+- Civil Procedure Code, 1908
+- Qanun-e-Shahadat Order, 1984
+- Negotiable Instruments Act, 1881
+
+<br>
+
+*This response is intended for informational purposes only and should not be construed as legal advice. Please consult with a qualified legal professional for advice specific to your situation.*
+2024-12-22 16:56:32,983 - app - WARNING - No lawyers found for sentiment: None
+2024-12-22 16:58:46,910 - app - INFO - Created new session 50 for user 1
+2024-12-22 16:58:46,911 - app - INFO - Using new session 50
+2024-12-22 16:58:47,519 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-22 16:58:55,346 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-22 16:58:55,798 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-22 16:58:56,275 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-22 16:58:56,924 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-22 16:59:03,014 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-22 16:59:04,314 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2024-12-22 16:59:04,318 - groq._base_client - INFO - Retrying request to /openai/v1/chat/completions in 10.000000 seconds
+2024-12-22 16:59:15,033 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-22 16:59:15,456 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2024-12-22 16:59:15,456 - groq._base_client - INFO - Retrying request to /openai/v1/chat/completions in 7.000000 seconds
+2024-12-22 16:59:22,953 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-22 16:59:23,514 - root - INFO - Result: # Filing a Law Suit in Pakistan
+
+In Pakistan, the process of filing a civil suit involves several steps. Here's a detailed guide on how to file a law suit in Pakistan:
+
+## Filing a Plaint
+
+The first step in filing a civil suit is to file a **plaint** in the court. The plaint is a written complaint that outlines the nature of the claim, the facts supporting the claim, the amount of damages sought, and the legal provisions relied upon.
+
+- The plaint should be accompanied by as many duplicate copies as there are defendants in the suit for service upon the defendants (Code of Civil Procedure 1908, Section 48(3)).
+- Where the plaintiff relies on any other document not in his possession or power as evidence in support of his claim, he shall enter such documents in a list to be appended to the plaint, giving reasons of relevancy of these documents to the claim in the plaint (Code of Civil Procedure 1908, Section 48(2)(g)).
+
+## Intimation to Defendant
+
+Once the plaint is filed, the court fixes a date for the appearance of the defendant, which shall not be more than fifteen days from the presentation of the plaint. The court then sends a notice or summons of the suit to the defendant through a process serving agency of the court, registered post acknowledgment due electronically or through courier, together with a copy of the plaint (Family Courts Act 1964, Section 10(1)(b)).
+
+## Defendant's Written Statement
+
+In response to the plaint, the defendant files a **written statement**. This is a document filed by the defendant in response to the plaintiff's initial claim.
+
+## Conclusion
+
+Understanding the process of filing a civil suit in Pakistan is essential for individuals seeking legal recourse in matters of a civil nature. Navigating the legal system can be complex, but by following the steps outlined above and seeking professional legal advice, individuals can effectively initiate a civil suit.
+2024-12-22 16:59:25,525 - app - WARNING - No lawyers found for sentiment: The text is related to a legal matter, specifically to Civil law, as it pertains to filing a lawsuit.
+2024-12-22 17:09:57,821 - app - INFO - Loaded existing session 50
+2024-12-22 17:09:59,023 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-22 17:10:20,311 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-22 17:10:20,890 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-22 17:10:21,423 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-22 17:10:22,666 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-22 17:10:30,385 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-22 17:10:31,206 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-22 17:10:33,884 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-22 17:10:34,740 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-22 17:10:36,507 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-22 17:10:37,149 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2024-12-22 17:10:37,152 - groq._base_client - INFO - Retrying request to /openai/v1/chat/completions in 17.000000 seconds
+2024-12-22 17:10:54,724 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-22 17:10:55,599 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2024-12-22 17:10:55,609 - groq._base_client - INFO - Retrying request to /openai/v1/chat/completions in 5.000000 seconds
+2024-12-22 17:11:01,980 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-22 17:11:03,511 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2024-12-22 17:11:03,519 - groq._base_client - INFO - Retrying request to /openai/v1/chat/completions in 17.000000 seconds
+2024-12-22 17:11:21,149 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-22 17:11:22,466 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2024-12-22 17:11:22,486 - groq._base_client - INFO - Retrying request to /openai/v1/chat/completions in 5.000000 seconds
+2024-12-22 17:11:28,776 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-22 17:11:30,394 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2024-12-22 17:11:30,396 - groq._base_client - INFO - Retrying request to /openai/v1/chat/completions in 17.000000 seconds
+2024-12-22 17:11:48,106 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-22 17:11:48,933 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2024-12-22 17:11:48,937 - groq._base_client - INFO - Retrying request to /openai/v1/chat/completions in 5.000000 seconds
+2024-12-22 17:11:55,219 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-22 17:11:56,647 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2024-12-22 17:11:56,684 - groq._base_client - INFO - Retrying request to /openai/v1/chat/completions in 17.000000 seconds
+2024-12-22 17:12:14,522 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-22 17:12:16,032 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2024-12-22 17:12:16,039 - groq._base_client - INFO - Retrying request to /openai/v1/chat/completions in 4.000000 seconds
+2024-12-22 17:12:21,236 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-22 17:13:05,302 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-22 17:13:08,615 - app - INFO - Initializing RAG agent...
+2024-12-22 17:13:08,634 - pinecone_plugin_interface.logging - INFO - Discovering subpackages in _NamespacePath(['C:\\Users\\Nouma\\OneDrive\\Desktop\\GenAi x Xavour\\ApnaWaqeel\\venv\\Lib\\site-packages\\pinecone_plugins'])
+2024-12-22 17:13:08,636 - pinecone_plugin_interface.logging - INFO - Looking for plugins in pinecone_plugins.inference
+2024-12-22 17:13:08,879 - pinecone_plugin_interface.logging - INFO - Installing plugin inference into Pinecone
+2024-12-22 17:13:15,205 - datasets - INFO - PyTorch version 2.4.1 available.
+2024-12-22 17:13:18,204 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2024-12-22 17:13:18,205 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2024-12-22 17:13:30,968 - app - INFO - RAG agent initialized successfully
+2024-12-22 17:13:30,981 - app - INFO - Loaded existing session 50
+2024-12-22 17:13:31,657 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-22 17:13:53,706 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-22 17:13:54,229 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-22 17:13:54,760 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-22 17:13:55,214 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-22 17:14:01,236 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-22 17:14:02,132 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-22 17:14:02,664 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-22 17:14:02,884 - root - INFO - Result: # Defending Against a Rape Charge in Pakistan
+
+In order to propose strong arguments for your client who has been involved unintentionally in a rape case, it is important to follow a systematic approach. Here are some steps to consider:
+
+## Develop a Strong Attorney-Client Relationship
+
+- It is crucial to have a strong attorney-client relationship when facing rape charges.
+- The defense attorney should take the time to listen to the client's side of the story, answer all questions, and keep the client informed at every stage of the case.
+- Building trust and understanding between the attorney and client is essential for a successful defense.
+
+## Understand the Case and Its Strengths and Weaknesses
+
+- Take time to listen to the client and get to know him.
+- Discussing the case with the client will help identify its strengths and weaknesses.
+- This information is crucial in determining the best defense strategies.
+
+## Negotiate a Deal or Prepare for Trial
+
+- Based on the case's strengths and weaknesses, the attorney can negotiate a deal with the prosecution.
+- If a deal cannot be reached, the attorney should prepare for trial and present a strong defense on behalf of the client.
+
+## Relevant Pakistani Laws and Citations
+
+In Pakistan, the **Pakistan Penal Code** (Act XLV of 1860) defines rape under section **375**. The punishment for rape is outlined in section **376**.
+
+> **375**. Whoever commits rape shall be punished with imprisonment of either description for a term which shall not be less than ten years and **shall also be liable to fine**.
+>
+> **376**. **Whoever,** except in the cases provided for in sub-section (2), commits rape **shall be punished with imprisonment of either description for a term which shall not be less than seven years and which may extend to imprisonment for life, and shall also be liable to fine**.
+
+It is important to note that the Pakistani legal system recognizes the possibility of unintentional involvement in a crime. The attorney can use this in the client's defense, arguing that the client did not intentionally commit the crime.
+
+<br>
+
+In summary, defending a client who has been involved unintentionally in a rape case requires a strong attorney-client relationship, a thorough understanding of the case and its strengths and weaknesses, and the ability to negotiate a deal or prepare for trial. Relevant Pakistani laws and citations should be considered when proposing arguments for the client's defense.
+2024-12-22 17:18:24,856 - waitress - INFO - Serving on http://127.0.0.1:5000
+2024-12-22 17:18:53,972 - app - INFO - Initializing RAG agent...
+2024-12-22 17:18:54,014 - pinecone_plugin_interface.logging - INFO - Discovering subpackages in _NamespacePath(['C:\\Users\\Nouma\\OneDrive\\Desktop\\GenAi x Xavour\\ApnaWaqeel\\venv\\Lib\\site-packages\\pinecone_plugins'])
+2024-12-22 17:18:54,023 - pinecone_plugin_interface.logging - INFO - Looking for plugins in pinecone_plugins.inference
+2024-12-22 17:18:54,256 - pinecone_plugin_interface.logging - INFO - Installing plugin inference into Pinecone
+2024-12-22 17:19:01,231 - datasets - INFO - PyTorch version 2.4.1 available.
+2024-12-22 17:19:02,793 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2024-12-22 17:19:02,794 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2024-12-22 17:19:16,732 - app - INFO - RAG agent initialized successfully
+2024-12-22 17:19:16,872 - app - INFO - Loaded existing session 50
+2024-12-22 17:19:18,735 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-22 17:19:41,247 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-22 17:19:41,972 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-22 17:19:42,411 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-22 17:19:42,878 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
