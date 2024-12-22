@@ -332,126 +332,11 @@ const ReferenceCard = ({ reference }) => {
   );
 };
 
-// Update the LawyerRecommendationCard component
-const LawyerRecommendationCard = ({ lawyerId, onContact }) => {
-  const [lawyerDetails, setLawyerDetails] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    const fetchLawyerDetails = async () => {
-      try {
-        setLoading(true);
-        setError(null);
-        
-        if (!lawyerId) {
-          throw new Error('Invalid lawyer ID');
-        }
-
-        const response = await apiService.getLawyerDeatilsbyLawyerId(lawyerId);
-        if (response?.lawyer) {
-          setLawyerDetails(response.lawyer);
-        } else {
-          throw new Error('Invalid response data');
-        }
-      } catch (err) {
-        console.error('Error fetching lawyer details:', err);
-        setError(err.message || 'Unable to load lawyer details');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchLawyerDetails();
-  }, [lawyerId]);
-
-  if (loading) {
-    return (
-      <Card className="p-4 bg-[#1A1A2E]/90 border border-[#9333EA]/20 backdrop-blur-lg">
-        <div className="flex items-center justify-center">
-          <Loader2 className="h-6 w-6 animate-spin text-purple-400" />
-        </div>
-      </Card>
-    );
-  }
-
-  if (error || !lawyerDetails) {
-    return (
-      <Card className="p-4 bg-[#1A1A2E]/90 border border-[#9333EA]/20 backdrop-blur-lg">
-        <div className="text-center text-gray-400">
-          <AlertCircle className="h-6 w-6 mx-auto mb-2 text-red-400" />
-          <p>{error || 'Lawyer information unavailable'}</p>
-        </div>
-      </Card>
-    );
-  }
-
-  return (
-    <Card className="p-4 bg-[#1A1A2E]/90 border border-[#9333EA]/20 backdrop-blur-lg shadow-[0_0_15px_rgba(147,51,234,0.2)] hover:shadow-[0_0_30px_rgba(147,51,234,0.3)] transition-all duration-300">
-      <div className="flex items-start space-x-4">
-        <Avatar className="h-12 w-12 ring-2 ring-[#9333EA]/50">
-          <AvatarImage src={lawyerDetails.avatar} alt={lawyerDetails.Name} />
-          <AvatarFallback className="bg-[#2E2E3A] text-white">
-            {lawyerDetails.Name?.split(' ').map(n => n[0]).join('')}
-          </AvatarFallback>
-        </Avatar>
-        <div className="flex-1">
-          <div className="flex justify-between items-start">
-            <div>
-              <h3 className="font-bold text-white">{lawyerDetails.Name}</h3>
-              <p className="text-sm text-purple-400">{lawyerDetails.Category}</p>
-            </div>
-            <div className="flex items-center bg-[#9333EA]/10 px-2 py-1 rounded-full">
-              <Star className="h-4 w-4 text-yellow-400 fill-current" />
-              <span className="ml-1 text-sm text-purple-300">{lawyerDetails.Rating}/5</span>
-            </div>
-          </div>
-          
-          <div className="mt-3 flex items-center gap-4 text-sm text-gray-400">
-            <div className="flex items-center">
-              <div className="w-1 h-1 bg-purple-500 rounded-full mr-2"></div>
-              <span className="text-purple-300">{lawyerDetails.Experience} Years Experience</span>
-            </div>
-            <div className="flex items-center">
-              <div className="w-1 h-1 bg-purple-500 rounded-full mr-2"></div>
-              <span className="text-purple-300">{lawyerDetails.Location}</span>
-            </div>
-          </div>
-
-          <p className="text-sm text-gray-300 mt-3 leading-relaxed">
-            Specialized in {lawyerDetails.Category?.toLowerCase()} law with extensive experience in handling complex cases.
-          </p>
-
-          <div className="mt-4 flex gap-2">
-            <Button 
-              className="flex-1 bg-gradient-to-r from-[#9333EA] to-[#7E22CE] hover:opacity-90 transition-all duration-300 shadow-lg shadow-purple-500/20"
-              onClick={() => onContact(lawyerDetails)}
-            >
-              Contact Now
-            </Button>
-            <Button 
-              variant="outline" 
-              className="border-[#9333EA]/20 text-purple-400 hover:bg-white/5 transition-all duration-300"
-              onClick={() => window.open(`/lawyer/${lawyerDetails.LawyerId}`, '_blank')}
-            >
-              View Profile
-            </Button>
-          </div>
-        </div>
-      </div>
-    </Card>
-  );
-};
-
 const FormattedMessage = ({ content }) => {
   return (
     <div className="prose prose-invert max-w-none">
       <ReactMarkdown
         components={{
-          h1: ({node, ...props}) => <h1 className="text-2xl font-bold text-purple-400 mb-4" {...props} />,
-          h2: ({node, ...props}) => <h2 className="text-xl font-semibold text-purple-300 mb-3" {...props} />,
-          h3: ({node, ...props}) => <h3 className="text-lg font-medium text-purple-200 mb-2" {...props} />,
-          p: ({node, ...props}) => <p className="text-gray-300 mb-4" {...props} />,
           ul: ({node, ...props}) => <ul className="list-disc list-inside space-y-2 mb-4" {...props} />,
           ol: ({node, ...props}) => <ol className="list-decimal list-inside space-y-2 mb-4" {...props} />,
           li: ({node, ...props}) => <li className="text-gray-300" {...props} />,
@@ -472,7 +357,6 @@ const FormattedMessage = ({ content }) => {
   );
 };
 
-// Add this new component above the ChatbotPage component
 const ProcessingIndicator = ({ message }) => (
   <div className="flex justify-start mb-4">
     <div className="bg-gradient-to-r from-[#2E2E3A] to-[#1A1A2E] text-gray-200 rounded-lg p-4 
@@ -509,7 +393,7 @@ const ProcessingIndicator = ({ message }) => (
   </div>
 );
 
-export function ChatbotPage() {
+export default function LawyerChatbotPage() {
   const navigate = useNavigate();
   const location = useLocation();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -634,26 +518,11 @@ export function ChatbotPage() {
         setSearchParams({ session: response.session_id });
       }
 
-      // Transform lawyer recommendations to match expected format
-      const recommendedLawyers = response.recommended_lawyers?.map(lawyer => ({
-        id: lawyer.LawyerId,
-        name: lawyer.Name,
-        specialization: lawyer.Category,
-        rating: lawyer.Rating,
-        experience: lawyer.Experience,
-        location: lawyer.Location,
-        contact: lawyer.Contact,
-        avatar: null, // Add default avatar or handle this as needed
-      })) || [];
-
       const aiResponse = {
         id: messages.length + 2,
         text: response.answer,
         sender: "ai",
-        references: response.references || [],
-        lawyers: Array.isArray(response.recommended_lawyers) 
-        ? response.recommended_lawyers.map(id => typeof id === 'object' ? id.LawyerId : id)
-        : []
+        references: response.references || []
       };
 
       await simulateResponse(response.answer);
@@ -1068,24 +937,6 @@ export function ChatbotPage() {
                               reference={ref}
                             />
                           ))}
-                        </div>
-                      )}
-
-                      {/* Show lawyer recommendations if available */}
-                      {message.lawyers && message.lawyers.length > 0 && (
-                        <div className="ml-12 mb-4 space-y-2">
-                          <h4 className="text-white/90 text-sm font-medium">Recommended Lawyers:</h4>
-                          {message.lawyers.map((lawyerId, idx) => {
-                            // Ensure lawyerId is a number
-                            const id = typeof lawyerId === 'object' ? lawyerId.LawyerId : lawyerId;
-                            return (
-                              <LawyerRecommendationCard 
-                                key={`${id}-${idx}`}
-                                lawyerId={id}
-                                onContact={handleContact}
-                              />
-                            );
-                          })}
                         </div>
                       )}
                     </div>

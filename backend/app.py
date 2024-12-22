@@ -158,7 +158,9 @@ def ask_question():
         
         # Get session_id from request data
         question = data.get('question')
-        session_id = data.get('session_id')  # This will be passed from frontend when URL has session param
+        # print(question)
+        # breakpoint()
+        session_id = data.get('session_id')  
         # print(session_id)
         if not question:
             logger.error("Missing question parameter")
@@ -190,49 +192,45 @@ def ask_question():
         try:
             result = rag_agent.run(question, history)
             
-            # Store user message
-            db.create_chat_message(
-                session_id=session_id,
-                message=question,
-                msg_type="Human Message",
-                references=None,
-                recommended_lawyers=None
-            )
-
-            if not result or 'chat_response' not in result or not result['chat_response']:
+            # Handle tool call responses
+            if isinstance(result, dict) and result.get("error"):
+                return jsonify({
+                    "error": "Failed to generate response",
+                    "details": result.get("error_message", "Unknown error occurred")
+                }), 500
+                
+            if not result or 'chat_response' not in result:
                 logger.error("Invalid or empty response from RAG agent")
                 return jsonify({"error": "Failed to generate response"}), 500
 
             # Store AI response
-
             sentiment = result.get('Sentiment', 'neutral')
-
-            # print(sentiment)
             lawyers = recommend_top_lawyers(sentiment)
-            lawyer_ids = [lawyer['LawyerId'] for lawyer in lawyers]
-            db.create_chat_message(
-                session_id=session_id,
-                message=result['chat_response'],
-                msg_type="AI Message",
-                recommended_lawyers=lawyer_ids,  # Store just the IDs
-                references=result.get('references', [])
-            )
+            
+            if not lawyers:
+                logger.warning(f"No lawyers found for sentiment: {sentiment}")
+                
+            lawyer_ids = [lawyer['LawyerId'] for lawyer in lawyers] if lawyers else []
+            
+            try:
+                db.create_chat_message(
+                    session_id=session_id,
+                    message=result['chat_response'],
+                    msg_type="AI Message",
+                    recommended_lawyers=lawyer_ids,
+                    references=result.get('references', [])
+                )
+            except Exception as e:
+                logger.error(f"Failed to store chat message: {e}")
+                # Continue execution even if storage fails
+                
             response = {    
                 "answer": result['chat_response'],
-                "references": result["references"],
-                "recommended_lawyers": lawyer_ids,  # Return just the IDs
+                "references": result.get("references", []),
+                "recommended_lawyers": lawyer_ids,
                 "session_id": session_id,
             }
 
-            access_token = create_access_token(
-                identity=current_user_id,
-                additional_claims={
-                    "session_id": session_id,
-                    "user_id": current_user_id
-                }
-            )
-
-            logger.info(f"Successfully generated response for user {current_user_id} in session {session_id}")
             return jsonify(response), 200
 
         except Exception as e:
@@ -241,7 +239,10 @@ def ask_question():
 
     except Exception as e:
         logger.error(f"Error processing question: {str(e)}", exc_info=True)
-        return jsonify({"error": "An unexpected error occurred"}), 500
+        return jsonify({
+            "error": "An unexpected error occurred",
+            "details": str(e) if app.debug else "Please try again later"
+        }), 500
 
 @app.route('/api/chat/start', methods=['POST'])
 @jwt_required()

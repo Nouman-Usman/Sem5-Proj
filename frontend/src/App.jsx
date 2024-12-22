@@ -1,4 +1,3 @@
-// App.jsx
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import Home from './components/Home.jsx';
@@ -17,6 +16,7 @@ import { ProtectedRoute } from './components/ProtectedRoute';
 import AccountSettings from './components/AccountSettings.jsx';
 import AdminDashboard from './components/AdminDashboard.jsx';
 import LawyerProfilePage from '@/views/LawyerProfilePage';
+import LawyerChatbotPage from './components/LawyerChatbot.jsx';
 
 function App() {
   const location = useLocation();
@@ -49,6 +49,11 @@ function App() {
         <Route path="/lawyer-profile" element={
           <ProtectedRoute allowedRoles={['lawyer']}>
             <LawyerProfile />
+          </ProtectedRoute>
+        } />
+        <Route path="/lawyer-chatbot" element={
+          <ProtectedRoute allowedRoles={['client']}>
+            <LawyerChatbotPage />
           </ProtectedRoute>
         } />
         <Route path="/lawyer-subscription" element={

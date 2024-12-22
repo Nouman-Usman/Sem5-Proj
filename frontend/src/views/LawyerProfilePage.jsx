@@ -89,7 +89,7 @@ export default function LawyerProfilePage() {
                   className="bg-gradient-to-r from-[#9333EA] to-[#7E22CE] text-white px-6"
                   onClick={() => {/* Handle contact */}}
                 >
-                  Contact Lawyer
+                  Appoint Now
                 </Button>
               </div>
             </div>
