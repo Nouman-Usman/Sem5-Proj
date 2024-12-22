@@ -270,7 +270,6 @@ Question to route: {question}
                 break
             doc_texts.append(doc_text)
             total_length += len(doc_text)
-            # Extract source from document metadata if available
             if isinstance(doc, Document):
                 if "source" in doc.metadata:
                     if not doc.metadata["source"].startswith("/kaggle"):                        
@@ -281,12 +280,19 @@ Question to route: {question}
         context = "\n".join(doc_texts)
         gc.collect()
         try:
-            generation = self.rag_chain.invoke({
-                "context": context,
-                "question": question,
-                "chat_history": chat_context
-            })
-
+            # kwargs = {
+            #     "context": context,
+            #     "question": question,
+            #     "chat_history": chat_context
+            # }
+            kwargs = self.generate_prompt.format(
+                context=context,
+                question=question,
+                chat_history=chat_context
+            )
+            generation = self.llm.invoke(kwargs)
+            print("Generation response: ", generation)
+            breakpoint()
             # Check if generation is an error message
             if any(phrase in generation.lower() for phrase in [
                 "i apologize", "i'm sorry", "i do not have the capability",
@@ -442,8 +448,6 @@ Question to route: {question}
 
     def grade_documents(self, state: Dict) -> Dict:
         print("---CHECK DOCUMENT RELEVANCE TO QUESTION---")
-        print("State: ", state)
-        breakpoint()
         question = state["question"]
         documents = state["documents"]
         filtered_docs = []
@@ -464,7 +468,8 @@ Question to route: {question}
                     filtered_docs.append(d)
                 else:
                     print("Document not relevant")
-                    web_search = "Yes"  # Set to Yes if any document is not relevant
+                    web_search = "Yes"
+                    GraphState["web_search"] = "Yes"  
             except json.JSONDecodeError:
                 web_search = "Yes"  # Set to Yes on parsing error
                 continue
@@ -533,8 +538,6 @@ Question to route: {question}
     def decide_to_generate(self, state: Dict) -> str:
         print("---ASSESS GRADED DOCUMENTS---")
         web_search = state["web_search"]
-        print(f"Web search: {web_search}")
-        breakpoint()
         if (web_search == "Yes"):
             print(
                 "---DECISION: ALL DOCUMENTS ARE NOT RELEVANT TO QUESTION, INCLUDE WEB SEARCH---"
@@ -564,7 +567,6 @@ Question to route: {question}
             try:
                 parsed_json = json.loads(llm_response.content)
                 if parsed_json.get("score") == "yes":
-                    # Check usefulness
                     prompt_value = self.answer_grader_prompt.format(
                         question=question,
                         generation=generation
@@ -582,8 +584,6 @@ Question to route: {question}
 
     def build_workflow(self):
         workflow = StateGraph(state_schema=GraphState)
-
-        # Add nodes with attempt tracking capabilities
         workflow.add_node("websearch", self.web_search)
         workflow.add_node("retrieve", self.retrieve)
         workflow.add_node("grade_documents", self.grade_documents)
