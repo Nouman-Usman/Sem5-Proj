@@ -698,6 +698,37 @@ def getIsLayerIdCompleted(user_id):
         logger.error(f"Error fetching lawyer: {str(e)}")
         return jsonify({"error": "Failed to fetch lawyer"}), 500
 
+@app.route('/api/lawyers/paid', methods=['GET'])
+def get_paid_lawyers():
+    try:
+        lawyers = db.get_paid_lawyers()
+        if not lawyers:
+            return jsonify({"lawyers": [], "count": 0}), 200
+            
+        formatted_lawyers = [
+            {
+                "id": lawyer[0],
+                "name": lawyer[1],
+                "email": lawyer[2],
+                "contact": lawyer[3],
+                "location": lawyer[4],
+                "specialization": lawyer[5],
+                "experience": lawyer[6],
+                "rating": float(lawyer[7]) if lawyer[7] is not None else 0.0,
+                "avatar": None
+            }
+            for lawyer in lawyers
+        ]
+        
+        return jsonify({
+            "lawyers": formatted_lawyers,
+            "count": len(formatted_lawyers)
+        }), 200
+        
+    except Exception as e:
+        logger.error(f"Error fetching paid lawyers: {str(e)}")
+        return jsonify({"error": "Failed to fetch lawyers"}), 500
+
 # ============= Client Related Routes =============
 @app.route('/api/clients', methods=['GET'])
 def get_clients():

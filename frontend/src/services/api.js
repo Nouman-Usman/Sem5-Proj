@@ -1,7 +1,6 @@
 import axios from 'axios';
-// import { console } from 'inspector';
 
-const API_BASE_URL = 'http://localhost:5000/api';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000';
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -76,7 +75,6 @@ export const apiService = {
   async getChatsFromSessionId(sessionId) {
     try {
       const response = await api.get(`/chats/${sessionId}`);
-      console.log("API Response:", response.data); // Debug log
       return response;
     } catch (error) {
       console.error('Failed to fetch session messages:', error);
@@ -90,7 +88,6 @@ export const apiService = {
         question,
         session_id: sessionId
       });
-      console.log(response.data);
       return response.data;
     } catch (error) {
       console.error('Error asking question:', error);
@@ -101,7 +98,6 @@ export const apiService = {
   // Update the lawyer details fetch function
   async getLawyerDeatilsbyLawyerId(lawyerId) {
     try {
-      console.log("Fetching lawyer details for ID:", lawyerId); // Debug log
       
       // Ensure lawyerId is a number
       const id = typeof lawyerId === 'object' ? lawyerId.LawyerId : parseInt(lawyerId);
@@ -110,7 +106,6 @@ export const apiService = {
       }
   
       const response = await api.get(`/getlawyer/${id}`);
-      console.log("Lawyer details response:", response.data); // Debug log
       
       if (!response.data || !response.data.lawyer) {
         throw new Error('Invalid response format');
@@ -221,9 +216,7 @@ export const apiService = {
   },
 
   async createLawyerProfile(profileData) {
-    console.log(profileData)
     try {
-      console.log("profile data is ", profileData)
       const response = await api.post('/lw/profile', profileData);
 
       localStorage.setItem('isProfileCompleted', true);

@@ -731,7 +731,40 @@ class Database:
             cursor.execute(query, (credits, user_id, user_id))
             conn.commit()
             return cursor.rowcount
+    def get_paid_lawyers(self):
+        with self.get_connection() as conn:
+            cursor = conn.cursor()
+            # id": lawyer[0],
+            #     "name": lawyer[1],
+            #     "email": lawyer[2],
+            #     "contact": lawyer[3],
+            #     "location": lawyer[4],
+            #     "specialization": lawyer[5],
+            #     "experience": lawyer[6],
+            #     "rating": float(lawyer[7]) if lawyer[7] is not None else 0.0,
+            #     "avatar": None
+            query = """
+            SELECT
+            l.LawyerId,
+            l.name,
+            l.email,
+            l.contact,
+            l.location,
+            l.specialization,
+            l.experience,
+            l.rating,
+            l.avatar
+            FROM Lawyer l
+            JOIN Subscription s ON l.id = s.LawyerId
+            WHERE s.ExpiryDate > GETDATE()
+            """
 
+            # query = """
+            # Select * from Lawyer 
+            # Where Paid = 1
+            # """
+            cursor.execute(query)
+            return cursor.fetchall()
     # ============= Review Related Methods =============
     def create_lawyer_review(self, lawyer_id, client_id, stars, review_message=None):
         # Updated validation to match SQL constraints
