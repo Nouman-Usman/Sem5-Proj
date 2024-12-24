@@ -765,6 +765,7 @@ export function ChatbotPage() {
   const handleLogout = () => {
     apiService.logout();
     navigate('/login');
+    window.location.reload(); // Add this line to refresh the page
   };
 
   const handleNewChat = () => {

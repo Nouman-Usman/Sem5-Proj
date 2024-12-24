@@ -38,6 +38,11 @@ export function Navbar() {
     }
   };
 
+  const handleLogout = () => {
+    authService.logout();
+    window.location.reload();
+  };
+
   const navbarClasses = `
     w-full 
     transition-all duration-300 
@@ -145,7 +150,7 @@ export function Navbar() {
                   <Menu.Item>
                     {({ active }) => (
                       <button
-                        onClick={authService.logout}
+                        onClick={handleLogout}
                         className={`
                           ${active ? 'bg-white/10' : ''} 
                           flex items-center px-4 py-2 
@@ -224,7 +229,7 @@ export function Navbar() {
                 Account Settings
               </a>
               <button
-                onClick={authService.logout}
+                onClick={handleLogout}
                 className="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-gray-200"
               >
                 Logout
